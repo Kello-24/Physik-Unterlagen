@@ -1,0 +1,44 @@
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex(busy)
+*.bbl
+*.bcf
+*.blg
+*.run.xml
+*.nav
+*.snm
+*.vrb
+*.dvi
+*.xdv
+*.ps
+
+# exam class point/grade tracking
+*.pgd
+*.pgs
+
+# LaTeX auxiliary/build directories
+build/
+*.auxdir/
+
+# TikZ/PGF externalized figures
+*.pdf.pgf-plot.*
+*-figure*.md5
+*-figure*.dpth
+*-figure*.pdf
+
+# Editor/OS cruft
+*~
+*.bak
+.DS_Store
+Thumbs.db
+
+# Compiled PDFs are build output, not source - keep them out of version control
+*.pdf

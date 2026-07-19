@@ -1,0 +1,116 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Vorlage: Unterrichtsfolien (Beamer)
+% Kantonsschule KFR – Physik
+%
+% Verwendung:
+%   1. Diese Datei nach folien/<klasse>/<semester>/<thema>/ kopieren und
+%      sinnvoll umbenennen, z. B.
+%      folien/5-klasse/1-hs/thermodynamik/waermeleitung-folien.tex
+%   2. Titel/Thema/Datum in \title/\subtitle/\date anpassen.
+%   3. Folien mit \begin{frame}{Folientitel} ... \end{frame} ergänzen.
+%
+% Theme: bewusst kein Warsaw/Berlin/Madrid & Co. — stattdessen ein
+% schlankes, selbst konfiguriertes Theme mit grosser Schrift, hohem
+% Kontrast und minimalem Chrome (keine Navigationssymbole, keine
+% Sidebar), damit die Folien auch von hinten im Klassenzimmer lesbar
+% sind.
+% =============================================================================
+\documentclass[14pt,aspectratio=169]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{circuitikz}
+
+% --- KFR-Theme: minimal, hoher Kontrast, grosse Schrift ---------------------
+\usetheme{default}
+\usefonttheme{professionalfonts}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{sidebar}{}
+\setbeamertemplate{headline}{}
+\beamertemplatenavigationsymbolsempty
+
+\definecolor{kfrblau}{RGB}{20,58,94}
+\definecolor{kfrgrau}{RGB}{90,90,90}
+
+\setbeamercolor{normal text}{fg=black,bg=white}
+\setbeamercolor{structure}{fg=kfrblau}
+\setbeamercolor{title}{fg=kfrblau,bg=white}
+\setbeamercolor{frametitle}{fg=white,bg=kfrblau}
+\setbeamercolor{footline}{fg=kfrgrau,bg=white}
+\setbeamercolor{page number in head/foot}{fg=kfrgrau}
+\setbeamercolor{itemize item}{fg=kfrblau}
+\setbeamercolor{itemize subitem}{fg=kfrblau}
+
+\setbeamerfont{frametitle}{size=\Large,series=\bfseries}
+\setbeamerfont{title}{size=\LARGE,series=\bfseries}
+\setbeamerfont{itemize item}{size=\normalsize}
+
+\setbeamertemplate{itemize item}{\textbullet}
+\setbeamertemplate{itemize subitem}{--}
+
+% Schlichte Fusszeile: nur Seitenzahl, kein Autoren-/Konferenz-Ballast
+\setbeamertemplate{footline}{%
+  \hfill%
+  \usebeamercolor[fg]{page number in head/foot}%
+  \usebeamerfont{page number in head/foot}%
+  \insertframenumber\,/\,\inserttotalframenumber\hspace{1em}\vspace{0.5em}
+}
+
+% Schlichter Frametitle-Balken (voller Breite, kein Untertitel-Chrome)
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip
+  \begin{beamercolorbox}[wd=\paperwidth,ht=1.4em,dp=0.4em,leftskip=0.5em]{frametitle}
+    \usebeamerfont{frametitle}\insertframetitle
+  \end{beamercolorbox}
+}
+
+% Werte für Titelfolie zentral setzen
+\title{Newtonsche Gesetze}
+\subtitle{Mechanik}
+\author{}
+\institute{Kantonsschule KFR}
+\date{XX.XX.20XX}
+
+\begin{document}
+
+% --- Titelfolie --------------------------------------------------------------
+\begin{frame}[plain]
+  \centering
+  {\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par}
+  \vspace{0.3em}
+  {\large\insertsubtitle\par}
+  \vspace{1.5em}
+  {\normalsize\insertinstitute\ -- \insertdate\par}
+\end{frame}
+
+% --- Beispiel: Inhaltsfolie mit Aufzählung -----------------------------------
+\begin{frame}{Die drei Newtonschen Gesetze}
+  \begin{itemize}
+    \item \textbf{1. Gesetz (Trägheit):} Ein Körper bleibt in Ruhe oder
+      gleichförmiger Bewegung, solange keine resultierende Kraft wirkt.
+    \item \textbf{2. Gesetz (Aktionsprinzip):} $F = m \cdot a$
+    \item \textbf{3. Gesetz (Wechselwirkung):} Kraft $=$ Gegenkraft
+      (actio $=$ reactio)
+  \end{itemize}
+\end{frame}
+
+% --- Beispiel: Folie mit Platzhalter für TikZ-Diagramm/Bild ------------------
+\begin{frame}{Freikörperdiagramm}
+  \centering
+  \begin{tikzpicture}[scale=1.2]
+    % Platzhalter-Rahmen für ein Diagramm oder Bild
+    \draw[kfrgrau, dashed] (-2.5,-2) rectangle (2.5,2);
+    \node[kfrgrau] at (0,0) {\small Platzhalter für Diagramm/Bild};
+
+    % Beispiel-Kraftvektor (durch echtes Diagramm ersetzen)
+    \draw[-Latex, thick, kfrblau] (0,-1.8) -- (0,-0.3) node[midway, right] {$F_G$};
+  \end{tikzpicture}
+\end{frame}
+
+\end{document}

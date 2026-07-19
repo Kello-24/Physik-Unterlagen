@@ -1,0 +1,186 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Vorlage: Praktikum (Laborhandout)
+% Kantonsschule KFR – Physik
+%
+% Verwendung:
+%   1. Diese Datei nach praktika/ kopieren und sinnvoll umbenennen,
+%      z. B. praktika/freier-fall-praktikum.tex
+%   2. Kopfzeile (Klasse/Datum/Thema/Titel) anpassen.
+%   3. Lernziele, Materialliste, Theorie, Durchführung und
+%      Auswertung/Fragen für das jeweilige Praktikum ausfüllen.
+%   4. Lösungen ein-/ausblenden: \printanswers (Lehrerexemplar) bzw.
+%      \noprintanswers (Schülerexemplar, Standard) weiter unten umschalten.
+%      Erwartete Auswertungsresultate/Musterlösungen gehören in
+%      \begin{solution}...\end{solution}, damit sie im Schülerexemplar
+%      ausgeblendet bleiben.
+% =============================================================================
+\documentclass[addpoints,12pt,a4paper]{exam}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{circuitikz}
+\usepackage{enumitem}
+
+\geometry{a4paper, margin=2.5cm, headheight=14pt}
+
+% --- Lösungen ein-/ausblenden -----------------------------------------------
+% Schülerexemplar (Standard): \noprintanswers
+% Lehrer-/Musterlösungsexemplar: \printanswers
+\noprintanswers
+% \printanswers
+
+% --- Punkteformat (falls Auswertungsfragen bewertet werden) -----------------
+\pointname{~P.}
+\pointsinmargin
+
+% --- Lösungsbox auf Deutsch --------------------------------------------------
+\renewcommand{\solutiontitle}{\noindent\textbf{Musterlösung:}\enspace}
+
+% --- Fusszeile auf Deutsch (exam-Klasse zeigt sonst "Page N") ---------------
+\cfoot{Seite \thepage}
+
+% --- Kopfzeile: Klasse / Datum / Thema / Titel ------------------------------
+% Einheitliches Layout für Arbeitsblatt, Prüfung und Praktikum.
+\newcommand{\Kopfzeile}[4]{%
+  \begin{center}
+    {\Large\bfseries #4}
+  \end{center}
+  \vspace{0.3em}
+  \noindent\textbf{Klasse:}~#1 \hfill \textbf{Datum:}~#2 \hfill \textbf{Thema:}~#3
+  \vspace{0.3em}
+
+  \hrule
+  \vspace{0.8em}
+}
+
+% --- Antwortraum: ca. 2.5 cm Platz pro Punkt für handschriftliche Antworten -
+\newlength{\antwortraumlen}
+\newcommand{\Antwortraum}[1]{%
+  \pgfmathsetlength{\antwortraumlen}{#1*2.5cm}%
+  \vspace{\antwortraumlen}%
+  \par
+}
+
+% --- Praktikums-Abschnittsüberschrift ---------------------------------------
+\newcommand{\Abschnitt}[1]{%
+  \vspace{0.8em}
+  {\large\bfseries #1}
+  \vspace{0.3em}
+
+  \hrule
+  \vspace{0.5em}
+}
+
+% Werte für Kopfzeile zentral setzen
+\newcommand{\Klasse}{5b}
+\newcommand{\Datum}{XX.XX.20XX}
+\newcommand{\Thema}{Mechanik}
+\newcommand{\PraktikumsTitel}{Praktikum: Freier Fall}
+
+\begin{document}
+
+\Kopfzeile{\Klasse}{\Datum}{\Thema}{\PraktikumsTitel}
+
+\begin{tabular}{@{}ll@{}}
+  \textbf{Name:} \makebox[6cm]{\hrulefill} & \textbf{Gruppe:} \makebox[3cm]{\hrulefill}
+\end{tabular}
+
+% --- Lernziele ---------------------------------------------------------------
+\Abschnitt{Lernziele}
+
+Nach diesem Praktikum können Sie...
+\begin{itemize}[nosep]
+  \item die Fallbeschleunigung $g$ experimentell bestimmen.
+  \item Messunsicherheiten abschätzen und im Ergebnis angeben.
+  \item ein $t$-$s$-Diagramm auswerten, um daraus $g$ zu berechnen.
+\end{itemize}
+
+% --- Materialliste ------------------------------------------------------------
+\Abschnitt{Materialliste}
+
+\begin{itemize}[nosep]
+  \item Fallschnur mit Massestück
+  \item Lichtschranken (2×) mit Zeitmessgerät
+  \item Massstab / Bandmass
+  \item Stativmaterial
+\end{itemize}
+
+% --- Theorie ------------------------------------------------------------------
+\Abschnitt{Theorie}
+
+Beim freien Fall (ohne Luftwiderstand) gilt für die Fallstrecke $s$ in
+Abhängigkeit von der Fallzeit $t$:
+\[
+  s = \frac{1}{2} g t^2
+\]
+mit der Fallbeschleunigung $g \approx \SI{9.81}{\meter\per\second\squared}$.
+Durch Auftragen von $s$ gegen $t^2$ ergibt sich eine Gerade mit Steigung
+$\frac{g}{2}$.
+
+% --- Durchführung ---------------------------------------------------------------
+\Abschnitt{Durchführung}
+
+\begin{enumerate}[nosep]
+  \item Bauen Sie den Versuchsaufbau gemäss Skizze auf der Wandtafel auf.
+  \item Messen Sie die Fallstrecke $s$ zwischen den beiden Lichtschranken
+    und notieren Sie sie in Tabelle~1.
+  \item Lassen Sie das Massestück fallen und messen Sie die Fallzeit $t$.
+    Wiederholen Sie die Messung 5-mal für dieselbe Strecke.
+  \item Wiederholen Sie Schritte 2--3 für mindestens 4 weitere Fallstrecken.
+\end{enumerate}
+
+\vspace{0.5em}
+\noindent\textbf{Tabelle 1: Messwerte}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+  \hline
+  $s$ [\si{\meter}] & $t_1$ [\si{\second}] & $t_2$ [\si{\second}] & $t_3$ [\si{\second}] & $t_4$ [\si{\second}] & $t_5$ [\si{\second}] & $\overline{t}$ [\si{\second}] \\
+  \hline
+   & & & & & & \\[1.5em]
+  \hline
+   & & & & & & \\[1.5em]
+  \hline
+   & & & & & & \\[1.5em]
+  \hline
+   & & & & & & \\[1.5em]
+  \hline
+   & & & & & & \\[1.5em]
+  \hline
+\end{tabular}
+\end{center}
+
+% --- Auswertung / Fragen -------------------------------------------------------
+\Abschnitt{Auswertung / Fragen}
+
+\begin{questions}
+
+  \question[3] Tragen Sie $s$ gegen $\overline{t}^2$ in einem Diagramm auf
+  (Millimeterpapier oder digital) und bestimmen Sie die Steigung der
+  Ausgleichsgeraden.
+  \Antwortraum{3}
+
+  \question[3] Berechnen Sie aus der Steigung den Wert für $g$ und
+  vergleichen Sie ihn mit dem Literaturwert $\SI{9.81}{\meter\per\second\squared}$.
+  \Antwortraum{3}
+
+  \begin{solution}
+    Steigung $= g/2$, also $g = 2 \times \text{Steigung}$. Der berechnete
+    Wert sollte innerhalb der Messunsicherheit nahe bei
+    $\SI{9.81}{\meter\per\second\squared}$ liegen.
+  \end{solution}
+
+  \question[2] Nennen Sie zwei mögliche Fehlerquellen in diesem Experiment
+  und wie sie sich auf das Ergebnis auswirken.
+  \Antwortraum{2}
+
+\end{questions}
+
+\end{document}

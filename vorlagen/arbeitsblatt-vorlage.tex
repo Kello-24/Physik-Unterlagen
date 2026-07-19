@@ -1,0 +1,220 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Vorlage: Arbeitsblatt (nicht bewertet, Übungsmaterial für den Unterricht)
+% Kantonsschule KFR – Physik
+%
+% Verwendung:
+%   1. Diese Datei nach arbeitsblaetter/<klasse>/<semester>/<thema>/ kopieren
+%      und sinnvoll umbenennen, z. B.
+%      arbeitsblaetter/5-klasse/1-hs/thermodynamik/waermeleitung-arbeitsblatt.tex
+%   2. \Klasse/\Thema/\ArbeitsblattTitel anpassen (weiter unten, vor
+%      \begin{document}). \Datum füllt sich automatisch mit dem aktuellen
+%      Datum (\today); Lehrperson ist fest auf "Loris Keller" gesetzt.
+%      Kein Tabellenraster mehr -- Klasse/Datum/Thema/Lehrperson stehen als
+%      einfache Textzeile unter dem Titel-Banner.
+%   3. Jedes Arbeitsblatt beginnt mit einem Lernziele-Block (\begin{infobox})
+%      direkt nach der Kopfzeile, noch vor der ersten Aufgabe -- Stichpunkte
+%      pro Arbeitsblatt anpassen, den Block selbst nicht entfernen.
+%   4. Aufgaben mit \question[Punktzahl] ... ergänzen, Lösung jeweils in
+%      \begin{solution}...\end{solution} setzen. \begin{taskbox}...\end{taskbox}
+%      ist optional und rahmt eine Aufgabe farbig ein, \begin{infobox} eignet
+%      sich für Theorieinput/Merksätze ausserhalb der nummerierten Aufgaben.
+%   5. Lösungen ein-/ausblenden: \printanswers (Lehrerexemplar) bzw.
+%      \noprintanswers (Schülerexemplar, Standard) weiter unten umschalten.
+% =============================================================================
+\documentclass[addpoints,11pt,a4paper]{exam}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.2cm,headheight=14pt]{geometry}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{array,booktabs,tabularx,multirow}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{circuitikz}
+\usepackage[most]{tcolorbox}
+\usepackage{lastpage}
+
+\usetikzlibrary{arrows.meta,calc,angles,quotes}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+
+% -----------------------------
+% Farben (Corporate-Farbschema Physik KFR)
+% -----------------------------
+\definecolor{titleblue}{HTML}{183A6B}
+\definecolor{accentblue}{HTML}{2E6F9E}
+\definecolor{lightblue}{HTML}{EAF4FB}
+\definecolor{verylightblue}{HTML}{F7FBFE}
+\definecolor{lightgray}{HTML}{F4F6F8}
+\definecolor{darkgray}{HTML}{4A4A4A}
+
+% -----------------------------
+% Spaltentypen
+% -----------------------------
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% -----------------------------
+% Boxen
+% -----------------------------
+\newtcolorbox{titlebox}{
+  enhanced,
+  colback=titleblue,
+  colframe=titleblue,
+  boxrule=0pt,
+  arc=3mm,
+  left=3mm,right=3mm,top=3mm,bottom=3mm
+}
+
+% exam.cls rückt die questions-Liste um die Breite von "10." (plus \labelsep)
+% ein (Platz für die Nummerierung "1.", "2." ...); wir messen dieselbe Distanz
+% hier unabhängig nach.
+\newlength{\aufgabenindent}
+\settowidth{\aufgabenindent}{10.\hskip\labelsep}
+
+% left/right-Padding bewusst grosszügiger als bei answerbox: exam.cls hängt
+% die Nummerierung von \question bündig an den inneren Rand des
+% Textbereichs -- bei zu knappem Padding sitzt diese Nummer direkt auf dem
+% Rahmen der Box statt sichtbar innerhalb davon.
+% infobox steht ausserhalb von questions (z.B. beim Lernziele-Block auf
+% Dokumentebene) und braucht deshalb KEINE Korrektur -- \linewidth entspricht
+% dort bereits \textwidth.
+\newtcolorbox{infobox}{
+  enhanced,
+  breakable,
+  colback=lightblue,
+  colframe=accentblue,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+% taskbox steht direkt in der questions-Liste (vor dem ersten \question),
+% also innerhalb von deren Einrückung. Empirisch (per Pixelvergleich mit der
+% Kopfzeilen-Tabelle) verschiebt "enlarge left by" hier die GESAMTE Box
+% (nicht nur ihren linken Rand) -- ein positiver Wert schiebt sie nach
+% RECHTS, nicht nach links, entgegen der naheliegenden Lesart des
+% Schlüsselnamens. Ein negativer Wert (-\aufgabenindent) schiebt die Box
+% exakt um die Listen-Einrückung nach links; width=\textwidth stellt danach
+% wieder die volle Breite her, sodass beide Kanten mit der Tabelle
+% übereinstimmen (verifiziert per Pixelmessung, Abweichung <=1px @300dpi).
+% Falls taskbox künftig auch ausserhalb von questions verwendet wird, muss
+% diese Korrektur analog zu infobox entfernt werden.
+\newtcolorbox{taskbox}[1][]{
+  enhanced,
+  breakable,
+  colback=verylightblue,
+  colframe=accentblue,
+  title=#1,
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  enlarge left by=-\aufgabenindent,
+  width=\textwidth,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+\newtcolorbox{answerbox}{
+  breakable,
+  colback=white,
+  colframe=gray!55,
+  boxrule=0.5pt,
+  arc=1.5mm,
+  left=2mm,right=2mm,top=2mm,bottom=2mm
+}
+
+% --- Lösungen ein-/ausblenden -----------------------------------------------
+% Schülerexemplar (Standard): \noprintanswers
+% Lehrer-/Lösungsexemplar:    \printanswers
+\noprintanswers
+% \printanswers
+
+% --- Punkteformat: "(3 P.)" statt "(3 points)", inline statt in der Marginalie
+% (inline, da die Punktzahl in der Marginalie mit dem Rand der taskbox-Box
+% kollidieren würde)
+\pointname{~P.}
+
+% --- Lösungsbox auf Deutsch, farblich abgesetzt -----------------------------
+\renewcommand{\solutiontitle}{\noindent\color{titleblue}\textbf{Lösung:}\enspace}
+
+% --- Kopf-/Fusszeile: Thema/Titel oben, Seitenzahl unten --------------------
+\pagestyle{headandfoot}
+\cfoot{\textcolor{darkgray}{Seite \thepage\ von \pageref{LastPage}}}
+
+% --- Kopfzeile: Klasse / Datum / Thema / Titel ------------------------------
+% Einheitliches Layout für Arbeitsblatt, Prüfung und Praktikum. Ohne Tabelle:
+% Klasse/Datum/Thema/Lehrperson stehen als einfache Textzeile unter dem
+% Titel-Banner.
+\newcommand{\Kopfzeile}[4]{%
+  \begin{titlebox}
+    {\color{white}\sffamily\bfseries\Large #4}
+  \end{titlebox}
+  \vspace{0.5em}
+  \noindent\textbf{Klasse:}~#1 \hfill \textbf{Datum:}~#2 \hfill \textbf{Thema:}~#3
+    \hfill \textbf{Lehrperson:}~Loris Keller
+  \vspace{0.8em}
+  \lhead{\textcolor{darkgray}{#3}}
+  \rhead{\textcolor{darkgray}{#4}}
+}
+
+% --- Antwortraum: ca. 2.5 cm Platz pro Punkt, als umrandetes Feld -----------
+\newlength{\antwortraumlen}
+\newcommand{\Antwortraum}[1]{%
+  \pgfmathsetlength{\antwortraumlen}{#1*2.5cm}%
+  \begin{answerbox}
+    \rule{0pt}{\antwortraumlen}%
+  \end{answerbox}%
+}
+
+% Werte für Kopfzeile zentral setzen
+\newcommand{\Klasse}{5b}
+\newcommand{\Datum}{\today}
+\newcommand{\Thema}{Kinematik}
+\newcommand{\ArbeitsblattTitel}{Arbeitsblatt: Kinematik}
+
+\begin{document}
+
+\Kopfzeile{\Klasse}{\Datum}{\Thema}{\ArbeitsblattTitel}
+
+% --- Lernziele: fester Einstieg, vor der ersten Aufgabe ---------------------
+\begin{infobox}
+\textbf{Lernziele}\\
+Am Ende dieser Einheit kann ich \dots
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.25em]
+  \item \dots
+  \item \dots
+\end{itemize}
+\end{infobox}
+
+\begin{questions}
+
+  \begin{taskbox}[Aufgabe 1]
+  \question[4] Ein Zug fährt mit konstanter Geschwindigkeit
+  $v = \SI{80}{\kilo\meter\per\hour}$.
+
+  \begin{parts}
+    \part[2] Rechnen Sie $v$ in $\si{\meter\per\second}$ um.
+    \Antwortraum{2}
+
+    \part[2] Wie weit fährt der Zug in $\SI{5}{\minute}$?
+    \Antwortraum{2}
+  \end{parts}
+
+  \begin{solution}
+    \textbf{a)} $v = \SI{80}{\kilo\meter\per\hour} = \frac{80\,000\,\si{\meter}}{3600\,\si{\second}} \approx \SI{22.2}{\meter\per\second}$
+
+    \textbf{b)} $s = v \cdot t = \SI{22.2}{\meter\per\second} \cdot \SI{300}{\second} \approx \SI{6667}{\meter}$
+  \end{solution}
+  \end{taskbox}
+
+\end{questions}
+
+\end{document}

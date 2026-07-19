@@ -1,0 +1,179 @@
+# Physik-Unterlagen-KFR
+
+LaTeX source for physics worksheets, exams, lab handouts (Praktika), and
+lesson slides for Gymnasium/Maturität-level physics at Kantonsschule KFR,
+Zürich. All student-facing material is in German.
+
+## House style
+
+### Engine and language
+
+- Compile with **pdflatex** (MiKTeX). No LuaLaTeX/XeLaTeX-only features.
+- `\usepackage[T1]{fontenc}` + `\usepackage[utf8]{inputenc}` +
+  `\usepackage[ngerman]{babel}` in every document.
+- **Swiss orthography: never use `ß`.** Always write `ss` (e.g. `Masse`,
+  `dass`, `Grösse` not `Größe`). This is the one deliberate deviation from
+  `ngerman`'s default hyphenation habits — it doesn't enforce spelling, so
+  watch for `ß` sneaking in via autocomplete/copy-paste.
+- Math is written in plain LaTeX math mode (`$...$`, `align`, etc.) — no
+  KaTeX, no MathJax, no HTML output. Everything targets PDF.
+- Units and quantities: use `siunitx` (`\SI{9.81}{\meter\per\second\squared}`,
+  `\si{\newton}`) rather than hand-typed unit spacing.
+
+### Document classes and diagrams
+
+- Worksheets, exams, Praktika: `exam` document class. It's the source of
+  truth for question/part numbering, point tracking, and the solutions
+  toggle — don't reimplement any of that manually.
+- Slides: `beamer` with the custom `KFR` theme (see
+  `vorlagen/folien-vorlage.tex`) — large fonts, high contrast, minimal
+  chrome. Do not switch to a stock theme like Warsaw/Berlin/Madrid.
+- Diagrams: `tikz` for figures (vectors, force diagrams, ray diagrams, ...)
+  and `circuitikz` for circuit schematics. Prefer these over imported raster
+  images so figures stay editable and print sharply. Also load the
+  `physics` package (`\dv`, `\pdv`, bra-ket notation, `\vb{}` for bold
+  vectors) — it's a math-notation package, not a diagram tool, but it's
+  used constantly enough in physics documents to belong in every preamble
+  alongside `tikz`/`circuitikz`. (Note: there is no CTAN/MiKTeX package
+  actually named "tikz-physics" — don't `\usepackage{tikz-physics}`, it
+  doesn't exist.)
+
+### Templates are self-contained, not DRY
+
+Each file in `vorlagen/` carries its own full preamble rather than pulling
+in a shared `.sty`. This is intentional: a teacher (or Claude) should be
+able to copy one template into `pruefungen/`, `arbeitsblaetter/`, etc., rename it, and
+have it compile with no other repo state required. The cost is that a house
+style change (e.g. a new package, a header tweak) has to be applied to each
+template in `vorlagen/` by hand — there are only four, so this is cheap and
+keeps every document legible standalone.
+
+### Header block
+
+Every worksheet/exam/Praktikum starts with the same header block (see
+`\Kopfzeile{...}` in each template's preamble): **Klasse**, **Datum**, and
+**Thema**, plus a title line. Keep the four pieces of information — class,
+date, topic, title — in that order and in that visual position across
+templates so students recognize the layout instantly.
+
+### Exercises and points
+
+- Use the `exam` class's native `\question[n]` / `\part[n]` for numbering —
+  `n` is the point value, and it's what drives `\numpoints` (the auto-summed
+  total) and the per-question point display. Don't hand-write "(3 Punkte)"
+  next to a question; let the class print it (`\pointname`/`\pointsinmargin`
+  are configured in the preamble).
+- Leave blank answer space sized to the point value: **~2.5 cm of vertical
+  space per point** for handwritten answers (`\Antwortraum{n}` helper in the
+  templates multiplies this out). Err generous rather than cramped — Swiss
+  students write calculations out in full (Ansatz, Einsetzen, Resultat), not
+  just a final number.
+
+### Solutions toggle
+
+Solutions live inline in the source, wrapped in the `exam` class's native
+`solution` environment:
+
+```latex
+\begin{solution}
+  ...worked solution / expected answer...
+\end{solution}
+```
+
+Toggle visibility with a single line near the top of the preamble:
+
+```latex
+\printanswers   % show solutions — teacher/answer-key copy
+% \noprintanswers  % hide solutions — student copy (default)
+```
+
+Student copies ship with `\noprintanswers` (or the line commented out,
+which is the class default). Never delete or duplicate exercise content to
+make a "solutions" version — always the same source, toggled.
+
+### Grading scale (exams)
+
+Default conversion formula, printed in a "Bewertung" box on the exam's
+first page, computed from the class's auto-summed `\numpoints`:
+
+```
+Note = 1 + 3 × (erreichte Punkte / Maximalpunkte)
+Bestehensgrenze: 60 % der Maximalpunkte = Note 4
+```
+
+This is linear with the passing grade (4.0) pinned at 60% and the maximum
+(6.0) at 100%. It's the default in `vorlagen/pruefung-vorlage.tex` — override
+per-exam only if a specific exam needs a different curve, and say so
+explicitly in that exam's file (don't change the template's default).
+
+### Exam duration
+
+Default exam length is **45 minutes** (single lesson), shown in the header
+as `Zeit: 45 Minuten`. Override per-exam for double-period Klausuren (90
+min) by editing that field directly in the copied file.
+
+### Folder structure
+
+`vorlagen/` is flat (canonical starting points — copy, don't edit in
+place). `pruefungen/` and `praktika/` are also flat, one file per
+Prüfung/Praktikum.
+
+`uebungen/`, `arbeitsblaetter/`, and `folien/` instead mirror the school's
+**Stoffplan** (curriculum plan, `Stoffplan Physik KFR + Praktika.xlsx`,
+sheet "Stoffplan"): `<Klasse>/<Semester>/<Thema>/`, e.g.
+`uebungen/5-klasse/1-hs/thermodynamik/`. This lets Klasse/Semester folders
+sort correctly (numeric prefixes: `3-klasse` … `6-klasse`, `1-hs` before
+`2-fs` — HS/Herbstsemester is chronologically first, so don't rely on
+alphabetical order alone) and keeps material findable by *when it's
+taught*, not just by topic:
+
+```
+<root>/3-klasse/2-fs/{einfuehrung,optik,mechanik}/
+<root>/4-klasse/1-hs/mechanik/
+<root>/4-klasse/2-fs/{mechanik,hydrostatik,erhaltungssaetze}/
+<root>/5-klasse/1-hs/{mechanik,statik,thermodynamik,elektrizitaet}/
+<root>/5-klasse/2-fs/pam/{mechanik,erhaltungssaetze,thermodynamik,elektrizitaet-magnetismus}/
+<root>/6-klasse/1-hs/{mechanik,erhaltungssaetze,thermodynamik,elektrizitaet-magnetismus}/
+<root>/6-klasse/1-hs/pam/{schwingungen-wellen,wellenoptik,wellen-teilchen,quantenmechanik}/
+<root>/6-klasse/2-fs/{elektrizitaet-magnetismus,schwingungen-wellen}/
+<root>/6-klasse/2-fs/pam/{spezielle-relativitaetstheorie,kern-teilchenphysik,astrophysik}/
+```
+
+(`<root>` is `uebungen/`, `arbeitsblaetter/`, or `folien/`.)
+
+From 5. Klasse onward the Stoffplan splits into two tracks with different
+content per semester: the standard track ("EF für Sprachprofil und BC")
+and **PAM**. Topics that only exist in the PAM curriculum for a given
+Klasse/Semester live in a `pam/` subfolder alongside that
+Klasse/Semester's standard-track topic folders (5. Klasse has no
+standard-track 2. Semester at all — that slot is PAM-only). Some topics
+(e.g. `schwingungen-wellen`) appear in *both* tracks but at different
+points in time, so the same topic name can legitimately exist twice in
+the tree (once under the standard track's semester, once under the PAM
+`pam/` subfolder of its own, earlier or later, semester) — that's
+intentional, not a duplicate to merge.
+
+If the Stoffplan itself changes (new topic, moved semester, track
+restructured), update these folders to match it — the spreadsheet is the
+source of truth, not this file; re-derive from it rather than patching
+folder names ad hoc.
+
+Filename convention: `<thema>-<typ>.tex`, e.g. `newtonsche-gesetze-arbeitsblatt.tex`,
+`kinematik-pruefung.tex`. Keep filenames (and folder names) lowercase,
+hyphenated, no umlauts (use `ae`/`oe`/`ue` — avoids encoding surprises
+across tools/OSes even though the document content itself uses proper
+umlauts).
+
+### When adding new material
+
+- Start from the matching file in `vorlagen/`, not from a blank file or an
+  existing exercise — the templates carry the header, point/answer-space
+  conventions, and solutions toggle already wired up correctly.
+- Single reusable exercises go in the matching `uebungen/<klasse>/<semester>/<thema>/`
+  (or `.../pam/<thema>/`) leaf folder as standalone `exam`-class fragments
+  (own `\question`, no full exam wrapper) so they can be `\input{}`ed into
+  multiple worksheets/exams later. Ask before building out that `\input`
+  composition workflow if it isn't set up yet — it isn't as of this
+  writing; exercises are currently standalone documents.
+- `arbeitsblaetter/` and `folien/` follow the same `<klasse>/<semester>/<thema>/`
+  layout as `uebungen/`. `pruefungen/` and `praktika/` stay flat.
