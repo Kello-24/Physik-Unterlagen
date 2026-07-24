@@ -11,26 +11,26 @@ specified.
 ## Repo layout
 
 ```
-exercises/{mechanics,electricity,optics,thermodynamics}/
-templates/
+uebungen/{mechanik,elektrizitaet,optik,thermodynamik}/
+vorlagen/
 institutionen/
-  KFR/{exams,worksheets,praktika,slides}/
-  UZH-Praktikum-I/{exams,worksheets,praktika,slides,reflexion}/
-  UZH-Praktikum-II/{exams,worksheets,praktika,slides,reflexion}/
+  KFR/{pruefungen,arbeitsblaetter,praktika,folien}/
+  UZH-Praktikum-I/{pruefungen,arbeitsblaetter,praktika,folien,reflexion}/
+  UZH-Praktikum-II/{pruefungen,arbeitsblaetter,praktika,folien,reflexion}/
 diplomarbeit/
 ```
 
-- `exercises/` is a shared bank of reusable physics exercises, organized by
+- `uebungen/` is a shared bank of reusable physics exercises, organized by
   topic and not tied to any one school or placement. Draw from it when
-  building worksheets/exams for any institution.
-- `templates/` holds the canonical worksheet, exam, praktikum, and beamer
+  building Arbeitsblätter/Prüfungen for any institution.
+- `vorlagen/` holds the canonical worksheet, exam, praktikum, and beamer
   templates — also shared across all contexts. Copy one out into the
   relevant `institutionen/<name>/` subfolder, don't edit in place.
 - `institutionen/` holds institution-specific output: `KFR/` (Kantonsschule
   KFR), `UZH-Praktikum-I/`, and `UZH-Praktikum-II/` (the two UZH teaching
-  placements). Each has `exams/`, `worksheets/`, `praktika/`, and `slides/`;
-  the two UZH folders additionally have `reflexion/` for lesson reports and
-  supervisor feedback (KFR has no equivalent).
+  placements). Each has `pruefungen/`, `arbeitsblaetter/`, `praktika/`, and
+  `folien/`; the two UZH folders additionally have `reflexion/` for lesson
+  reports and supervisor feedback (KFR has no equivalent).
 - `diplomarbeit/` holds material spanning both UZH placements — portfolio,
   final report — that doesn't belong to either placement individually.
 
@@ -67,7 +67,7 @@ exam length) over to UZH material.
   truth for question/part numbering, point tracking, and the solutions
   toggle — don't reimplement any of that manually.
 - Slides: `beamer` with the custom `KFR` theme (see
-  `templates/folien-vorlage.tex`) — large fonts, high contrast, minimal
+  `vorlagen/folien-vorlage.tex`) — large fonts, high contrast, minimal
   chrome. Do not switch to a stock theme like Warsaw/Berlin/Madrid.
 - Diagrams: `tikz` for figures (vectors, force diagrams, ray diagrams, ...)
   and `circuitikz` for circuit schematics. Prefer these over imported raster
@@ -81,14 +81,14 @@ exam length) over to UZH material.
 
 ### Templates are self-contained, not DRY
 
-Each file in `templates/` carries its own full preamble rather than pulling
+Each file in `vorlagen/` carries its own full preamble rather than pulling
 in a shared `.sty`. This is intentional: a teacher (or Claude) should be
-able to copy one template into `institutionen/<name>/exams/`,
-`institutionen/<name>/worksheets/`, etc., rename it, and have it compile
-with no other repo state required. The cost is that a house style change
-(e.g. a new package, a header tweak) has to be applied to each template in
-`templates/` by hand — there are only four, so this is cheap and keeps
-every document legible standalone.
+able to copy one template into `institutionen/<name>/pruefungen/`,
+`institutionen/<name>/arbeitsblaetter/`, etc., rename it, and have it
+compile with no other repo state required. The cost is that a house style
+change (e.g. a new package, a header tweak) has to be applied to each
+template in `vorlagen/` by hand — there are only four, so this is cheap and
+keeps every document legible standalone.
 
 ### Header block
 
@@ -144,7 +144,7 @@ Bestehensgrenze: 60 % der Maximalpunkte = Note 4
 ```
 
 This is linear with the passing grade (4.0) pinned at 60% and the maximum
-(6.0) at 100%. It's the default in `templates/pruefung-vorlage.tex` — this
+(6.0) at 100%. It's the default in `vorlagen/pruefung-vorlage.tex` — this
 is a **KFR** default; see "Institution-specific conventions" above before
 assuming it applies to UZH material. Override per-exam only if a specific
 exam needs a different curve, and say so explicitly in that exam's file
@@ -158,18 +158,18 @@ min) by editing that field directly in the copied file.
 
 ### Folder structure
 
-`templates/` is flat (canonical starting points — copy, don't edit in
+`vorlagen/` is flat (canonical starting points — copy, don't edit in
 place). See "Repo layout" above for the top-level shape.
 
-`exercises/` is flat by topic (`mechanics/`, `electricity/`, `optics/`,
-`thermodynamics/`) — a shared bank not tied to any institution's curriculum
+`uebungen/` is flat by topic (`mechanik/`, `elektrizitaet/`, `optik/`,
+`thermodynamik/`) — a shared bank not tied to any institution's curriculum
 schedule, so it does not mirror any school's Stoffplan.
 
-Within `institutionen/KFR/`, `exams/` and `praktika/` are flat, one file per
-Prüfung/Praktikum. `worksheets/` and `slides/` instead mirror **KFR's**
-Stoffplan (curriculum plan, `Stoffplan Physik KFR + Praktika.xlsx`, sheet
-"Stoffplan"): `<Klasse>/<Semester>/<Thema>/`, e.g.
-`institutionen/KFR/worksheets/5-klasse/1-hs/thermodynamik/`. This lets
+Within `institutionen/KFR/`, `pruefungen/` and `praktika/` are flat, one
+file per Prüfung/Praktikum. `arbeitsblaetter/` and `folien/` instead mirror
+**KFR's** Stoffplan (curriculum plan, `Stoffplan Physik KFR +
+Praktika.xlsx`, sheet "Stoffplan"): `<Klasse>/<Semester>/<Thema>/`, e.g.
+`institutionen/KFR/arbeitsblaetter/5-klasse/1-hs/thermodynamik/`. This lets
 Klasse/Semester folders sort correctly (numeric prefixes: `3-klasse` …
 `6-klasse`, `1-hs` before `2-fs` — HS/Herbstsemester is chronologically
 first, so don't rely on alphabetical order alone) and keeps material
@@ -187,12 +187,12 @@ findable by *when it's taught*, not just by topic:
 <root>/6-klasse/2-fs/pam/{spezielle-relativitaetstheorie,kern-teilchenphysik,astrophysik}/
 ```
 
-(`<root>` is `institutionen/KFR/worksheets/` or `institutionen/KFR/slides/`.
-This Stoffplan mirroring is KFR-specific — the UZH placement folders under
-`institutionen/UZH-Praktikum-I/` and `institutionen/UZH-Praktikum-II/` don't
-necessarily follow it; ask if unsure how UZH material should be organized
-within its `exams/`, `worksheets/`, `praktika/`, `slides/`, `reflexion/`
-subfolders.)
+(`<root>` is `institutionen/KFR/arbeitsblaetter/` or
+`institutionen/KFR/folien/`. This Stoffplan mirroring is KFR-specific — the
+UZH placement folders under `institutionen/UZH-Praktikum-I/` and
+`institutionen/UZH-Praktikum-II/` don't necessarily follow it; ask if
+unsure how UZH material should be organized within its `pruefungen/`,
+`arbeitsblaetter/`, `praktika/`, `folien/`, `reflexion/` subfolders.)
 
 From 5. Klasse onward the Stoffplan splits into two tracks with different
 content per semester: the standard track ("EF für Sprachprofil und BC")
@@ -219,18 +219,18 @@ umlauts).
 
 ### When adding new material
 
-- Start from the matching file in `templates/`, not from a blank file or an
+- Start from the matching file in `vorlagen/`, not from a blank file or an
   existing exercise — the templates carry the header, point/answer-space
   conventions, and solutions toggle already wired up correctly.
-- Single reusable exercises go in the matching `exercises/<topic>/` folder
+- Single reusable exercises go in the matching `uebungen/<topic>/` folder
   as standalone `exam`-class fragments (own `\question`, no full exam
-  wrapper) so they can be `\input{}`ed into multiple worksheets/exams later,
-  for any institution. Ask before building out that `\input` composition
-  workflow if it isn't set up yet — it isn't as of this writing; exercises
-  are currently standalone documents.
-- Worksheets, exams, praktika, and slides for a specific institution go
-  under `institutionen/<name>/`. If the task doesn't say which institution,
-  ask — don't assume KFR. Within `institutionen/KFR/`, `worksheets/` and
-  `slides/` follow the `<klasse>/<semester>/<thema>/` Stoffplan layout;
-  `exams/` and `praktika/` stay flat. The UZH placement folders may need a
-  different layout — ask if it isn't obvious.
+  wrapper) so they can be `\input{}`ed into multiple Arbeitsblätter/
+  Prüfungen later, for any institution. Ask before building out that
+  `\input` composition workflow if it isn't set up yet — it isn't as of
+  this writing; exercises are currently standalone documents.
+- Arbeitsblätter, Prüfungen, Praktika, and Folien for a specific
+  institution go under `institutionen/<name>/`. If the task doesn't say
+  which institution, ask — don't assume KFR. Within `institutionen/KFR/`,
+  `arbeitsblaetter/` and `folien/` follow the `<klasse>/<semester>/<thema>/`
+  Stoffplan layout; `pruefungen/` and `praktika/` stay flat. The UZH
+  placement folders may need a different layout — ask if it isn't obvious.
