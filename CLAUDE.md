@@ -56,10 +56,32 @@ exam length) over to UZH material.
   `dass`, `Grösse` not `Größe`). This is the one deliberate deviation from
   `ngerman`'s default hyphenation habits — it doesn't enforce spelling, so
   watch for `ß` sneaking in via autocomplete/copy-paste.
+- **Avoid unnecessary hyphen-family punctuation in Fliesstext** — both
+  Bindestriche in compound words and `--`/`---` Gedankenstriche used to
+  bolt a parenthetical or explanatory clause onto a sentence. Prefer the
+  German default of Zusammenschreibung (`Autotacho`, not `Auto-Tacho`) for
+  compounds, and restructure sentences that lean on `--` instead: split
+  into two sentences, or use a comma/colon/parentheses, whichever reads
+  most naturally (`ändert -- nicht Y.` → `ändert. Sie beschreibt nicht
+  Y.`; `X -- weil Y` → `X: Y` or `X, weil Y`). This does **not** apply to
+  hyphens German orthography actually requires: physics/diagram notation
+  (`$s$-$t$-Diagramm`, `v-t-Linie`, ...), abbreviation-compounds
+  (`SBB-App`, `GPS-Sender`, `S-Bahn`, `E-Bike`), or numeral-compounds
+  (`Tempo-30-Zone`) — none of those are the kind of hyphen this rule
+  targets, and TikZ path syntax (`\draw ... -- (1,1);`) isn't punctuation
+  at all. Run the `bindestrich-stil-reviewer` agent over drafted/edited
+  prose before treating a worksheet/exam as done (see "When adding new
+  material"
+  below); it knows the full exception list and fixes in place.
 - Math is written in plain LaTeX math mode (`$...$`, `align`, etc.) — no
   KaTeX, no MathJax, no HTML output. Everything targets PDF.
 - Units and quantities: use `siunitx` (`\SI{9.81}{\meter\per\second\squared}`,
-  `\si{\newton}`) rather than hand-typed unit spacing.
+  `\si{\newton}`) rather than hand-typed unit spacing. Compound units must
+  render as a real stacked fraction, not inline slash/exponent notation:
+  every template sets `\sisetup{per-mode=fraction,fraction-command=\frac}`
+  right after `\usepackage{siunitx}` — carry this line into any new
+  document that loads `siunitx` directly instead of copying a `vorlagen/`
+  template.
 
 ### Document classes and diagrams
 
@@ -97,6 +119,64 @@ Every worksheet/exam/Praktikum starts with the same header block (see
 **Thema**, plus a title line. Keep the four pieces of information — class,
 date, topic, title — in that order and in that visual position across
 templates so students recognize the layout instantly.
+
+### Theorie-Block (Arbeitsblätter)
+
+Every Arbeitsblatt follows a fixed order: **Kopfzeile → Lernziele (blue
+`infobox`) → Theorie (green `theoriebox`) → Aufgaben (blue `taskbox`)**. The
+Theorie block is real physics content — definitions, formulas, worked
+derivations, Merksätze — not filler; it's the material the exercises that
+follow actually depend on. Write it *before* drafting the exercises, and
+write it as if a student should be able to read the Theorie block and then
+attempt the Aufgaben without needing the textbook.
+
+Use the `theoriebox` environment (defined in
+`vorlagen/arbeitsblatt-vorlage.tex`, green colour scheme, distinct from the
+blue `infobox`/`taskbox`) for this section — don't reuse `infobox` or plain
+prose for it. This convention is **Arbeitsblätter-specific**: Prüfungen
+don't carry a theory recap (they test recall/application under exam
+conditions, no reference material), and Praktika already have their own
+`\Abschnitt{Theorie}` section serving the same purpose.
+
+**Highlighted terms inside a `theoriebox` are bold *and* italic, not just
+italic.** Use `\textbf{\emph{...}}` (not bare `\emph{...}`) for every
+defined/highlighted term or phrase within Theorie content, so key
+vocabulary stands out at a glance while reading the theory recap. This
+rule is scoped to `theoriebox` content specifically — `\emph{...}` alone
+is still correct everywhere else (`beispielbox`, exercise text, etc.),
+where emphasis is ordinary in-line stress, not a term definition.
+
+**The unit of a newly introduced quantity is stated right where it's
+introduced, not left to a diagram axis label or a later paragraph.** The
+first time a `theoriebox` defines a physical quantity or its formula
+(whether or not the quantity had a prior formula in the same document —
+e.g. `$s$`, `$t$`, `$v$`, `$a$`), attach its SI unit immediately: either
+inline in the defining sentence (`$a$ (Einheit: $\si{\meter\per\second\squared}$)`)
+or appended to the display equation itself
+(`v = \dfrac{\Delta s}{\Delta t}, \qquad \text{Einheit von } v\colon\ \si{\meter\per\second}.`).
+A `tikzpicture` axis label like `$s$ in m` doesn't satisfy this — it's easy
+to skip past while reading the prose derivation, and each Arbeitsblatt
+must stand on its own without relying on an earlier lesson's worksheet
+having already established the unit. Exception: a box whose entire
+purpose is a unit conversion (e.g. m/s ↔ km/h) is already unit-explicit
+throughout and doesn't need a separate tag; likewise a formula followed
+immediately (next sentence) by a dimensional-analysis walkthrough that
+derives the resulting unit already satisfies this rule.
+
+### Gruppenarbeit-Boxen (Arbeitsblätter)
+
+Any exercise that has students work in pairs or groups (Partnerarbeit,
+Gruppenarbeit, "besprecht zu zweit", ...) must use the `groupbox`
+environment (defined in `vorlagen/arbeitsblatt-vorlage.tex`, teal/petrol
+colour scheme) instead of the regular blue `taskbox`. This is a dedicated
+third colour, distinct from both `taskbox` (blue, individual exercises)
+and `theoriebox` (green, theory) — a student should be able to tell at a
+glance, before reading a word of the task, whether an exercise is meant to
+be done alone or with a partner. `groupbox` is structurally identical to
+`taskbox` (same indentation correction, same usage inside `questions`) —
+only the colour and default title (`Gruppenarbeit`) differ; pass a custom
+title the same way as `taskbox`, e.g.
+`\begin{groupbox}[Partnerarbeit: ...]`.
 
 ### Exercises and points
 
@@ -234,3 +314,7 @@ umlauts).
   `arbeitsblaetter/` and `folien/` follow the `<klasse>/<semester>/<thema>/`
   Stoffplan layout; `pruefungen/` and `praktika/` stay flat. The UZH
   placement folders may need a different layout — ask if it isn't obvious.
+- Once prose (Theorie/Beispiele/Aufgabentext/Lösungen) is drafted or
+  edited, run the `bindestrich-stil-reviewer` agent on the file — it fixes
+  avoidable Bindestriche in place per the house-style rule above, before
+  the worksheet/exam is considered done.

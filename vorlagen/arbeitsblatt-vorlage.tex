@@ -15,11 +15,16 @@
 %   3. Jedes Arbeitsblatt beginnt mit einem Lernziele-Block (\begin{infobox})
 %      direkt nach der Kopfzeile, noch vor der ersten Aufgabe -- Stichpunkte
 %      pro Arbeitsblatt anpassen, den Block selbst nicht entfernen.
-%   4. Aufgaben mit \question[Punktzahl] ... ergänzen, Lösung jeweils in
+%   4. Direkt danach folgt IMMER ein Theorie-Block (\begin{theoriebox}) --
+%      die fachliche Grundlage (Definitionen, Formeln, Merksätze), die für
+%      die nachfolgenden Aufgaben gebraucht wird, in eigener grüner Box.
+%      Reihenfolge im Dokument ist fest: Lernziele (blau) -> Theorie (grün)
+%      -> Aufgaben (blau, taskbox). Theorie-Inhalt vor den Aufgaben
+%      ausformulieren, nicht als Lückenfüller stehen lassen.
+%   5. Aufgaben mit \question[Punktzahl] ... ergänzen, Lösung jeweils in
 %      \begin{solution}...\end{solution} setzen. \begin{taskbox}...\end{taskbox}
-%      ist optional und rahmt eine Aufgabe farbig ein, \begin{infobox} eignet
-%      sich für Theorieinput/Merksätze ausserhalb der nummerierten Aufgaben.
-%   5. Lösungen ein-/ausblenden: \printanswers (Lehrerexemplar) bzw.
+%      ist optional und rahmt eine Aufgabe farbig ein.
+%   6. Lösungen ein-/ausblenden: \printanswers (Lehrerexemplar) bzw.
 %      \noprintanswers (Schülerexemplar, Standard) weiter unten umschalten.
 % =============================================================================
 \documentclass[addpoints,11pt,a4paper]{exam}
@@ -31,6 +36,9 @@
 \usepackage[a4paper,margin=2.2cm,headheight=14pt]{geometry}
 \usepackage{amsmath}
 \usepackage{siunitx}
+% Hausstil: zusammengesetzte Einheiten immer als echter Bruch (\frac), nicht
+% als Inline-Schrägstrich oder \tfrac -- gilt global für jedes \si/\SI.
+\sisetup{per-mode=fraction,fraction-command=\frac}
 \usepackage{array,booktabs,tabularx,multirow}
 \usepackage{enumitem}
 \usepackage{xcolor}
@@ -43,8 +51,17 @@
 
 \usetikzlibrary{arrows.meta,calc,angles,quotes}
 
+\usepackage{setspace}
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{0.45em}
+\setlength{\parskip}{0.6em}
+% Hausstil v2: etwas grosszügigerer Zeilenabstand als Standard-LaTeX (1.0),
+% damit Fliesstext innerhalb der Boxen weniger gedrängt wirkt -- 1.08 ist
+% bewusst dezent gewählt (nicht \onehalfspacing/1.5), um nicht unnötig
+% Platz/Seiten zu kosten.
+\setstretch{1.08}
+% Etwas grosszügigerer Standardabstand zwischen Listenpunkten (gilt für
+% jede \begin{itemize}, sofern nicht lokal überschrieben).
+\setlist[itemize]{itemsep=0.4em}
 
 % -----------------------------
 % Farben (Corporate-Farbschema Physik KFR)
@@ -55,6 +72,16 @@
 \definecolor{verylightblue}{HTML}{F7FBFE}
 \definecolor{lightgray}{HTML}{F4F6F8}
 \definecolor{darkgray}{HTML}{4A4A4A}
+% Theorie-Block: eigene Farbe (grün), damit er sich auf einen Blick von den
+% blauen Lernziele-/Aufgaben-Boxen abhebt.
+\definecolor{theorygreen}{HTML}{2E7D4F}
+\definecolor{lighttheorygreen}{HTML}{EAF7EF}
+% Gruppenarbeit-Box: eigene Farbe (Petrol/Teal), damit Partner-/Gruppenarbeit
+% sich auf einen Blick von normalen Einzelaufgaben (blau, taskbox) und vom
+% Theorie-Block (grün, theoriebox) abhebt. Siehe Regel weiter unten bei
+% \newtcolorbox{groupbox}.
+\definecolor{groupteal}{HTML}{1B7F72}
+\definecolor{lightgroupteal}{HTML}{E8F5F3}
 
 % -----------------------------
 % Spaltentypen
@@ -65,6 +92,12 @@
 % -----------------------------
 % Boxen
 % -----------------------------
+% Hausstil v2: einheitlicher Abstand VOR/NACH jeder Box (Titelbox, Info-,
+% Theorie-, Task-, Beispiel-, Gruppen-, Antwortbox), damit Boxen nicht
+% direkt am umgebenden Fliesstext oder aneinander kleben. Als globale
+% tcolorbox-Vorgabe gesetzt statt einzeln pro Box, damit sie für alle
+% \newtcolorbox-Definitionen unten automatisch gilt.
+\tcbset{before skip=10pt, after skip=10pt}
 \newtcolorbox{titlebox}{
   enhanced,
   colback=titleblue,
@@ -94,7 +127,29 @@
   colframe=accentblue,
   boxrule=0.7pt,
   arc=2mm,
-  left=5mm,right=5mm,top=2mm,bottom=2mm
+  left=6mm,right=6mm,top=3.5mm,bottom=3.5mm
+}
+
+% theoriebox: wie infobox, aber grün und mit farbigem Titelbalken (analog zu
+% taskbox), damit der Theorie-Block auf einen Blick von Lernziele (blau,
+% ohne Titelbalken) und Aufgaben (blau, mit Titelbalken) unterscheidbar ist.
+% Steht wie infobox ausserhalb von questions -- KEINE Einrückungskorrektur
+% nötig (siehe Kommentar bei infobox oben).
+% Regel: hervorgehobene/definierte Begriffe INNERHALB einer theoriebox
+% immer mit \textbf{\emph{...}} setzen (fett UND kursiv), nicht mit blossem
+% \emph{...} -- damit Fachbegriffe beim Durchlesen der Theorie sofort
+% auffallen. Ausserhalb von theoriebox (beispielbox, Aufgabentext, ...)
+% bleibt \emph{...} allein korrekt.
+\newtcolorbox{theoriebox}[1][Theorie]{
+  enhanced,
+  breakable,
+  colback=lighttheorygreen,
+  colframe=theorygreen,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=6mm,right=6mm,top=3.5mm,bottom=3.5mm
 }
 
 % taskbox steht direkt in der questions-Liste (vor dem ersten \question),
@@ -113,13 +168,34 @@
   breakable,
   colback=verylightblue,
   colframe=accentblue,
-  title=#1,
+  title={#1},
   fonttitle=\bfseries,
   boxrule=0.7pt,
   arc=2mm,
   enlarge left by=-\aufgabenindent,
   width=\textwidth,
-  left=5mm,right=5mm,top=2mm,bottom=2mm
+  left=6mm,right=6mm,top=3.5mm,bottom=3.5mm
+}
+
+% groupbox: Regel -- JEDE Aufgabe, bei der Schülerinnen/Schüler zu zweit
+% oder in einer Gruppe zusammenarbeiten (Partnerarbeit, Gruppenarbeit,
+% Diskussion zu zweit, ...), bekommt diese Box statt der blauen taskbox.
+% Farbe (Petrol/Teal) ist bewusst weder blau (taskbox/infobox) noch grün
+% (theoriebox), damit "hier braucht es eine Partnerin/einen Partner" auf
+% einen Blick erkennbar ist. Strukturell identisch zu taskbox (gleiche
+% Einrückungskorrektur, da auch groupbox innerhalb von questions steht).
+\newtcolorbox{groupbox}[1][Gruppenarbeit]{
+  enhanced,
+  breakable,
+  colback=lightgroupteal,
+  colframe=groupteal,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  enlarge left by=-\aufgabenindent,
+  width=\textwidth,
+  left=6mm,right=6mm,top=3.5mm,bottom=3.5mm
 }
 
 \newtcolorbox{answerbox}{
@@ -137,10 +213,14 @@
 \noprintanswers
 % \printanswers
 
-% --- Punkteformat: "(3 P.)" statt "(3 points)", inline statt in der Marginalie
-% (inline, da die Punktzahl in der Marginalie mit dem Rand der taskbox-Box
-% kollidieren würde)
-\pointname{~P.}
+% --- Punkte bleiben intern, werden aber nicht gedruckt ----------------------
+% Arbeitsblätter sind nicht benotet. \question[n]/\part[n] bekommen trotzdem
+% eine Punktzahl n -- rein als interner Anhaltspunkt, der 1:1 an
+% \Antwortraum{n} weitergereicht wird, um die Antwortraum-Grösse zu
+% bestimmen. \pointformat{} (Aufruf, nicht \renewcommand!) unterdrückt die
+% von der exam-Klasse sonst automatisch gedruckte Punktanzeige ("(n P.)")
+% vollständig, ohne die interne Punktezählung (\numpoints) zu beeinflussen.
+\pointformat{}
 
 % --- Lösungsbox auf Deutsch, farblich abgesetzt -----------------------------
 \renewcommand{\solutiontitle}{\noindent\color{titleblue}\textbf{Lösung:}\enspace}
@@ -157,10 +237,8 @@
   \begin{titlebox}
     {\color{white}\sffamily\bfseries\Large #4}
   \end{titlebox}
-  \vspace{0.5em}
   \noindent\textbf{Klasse:}~#1 \hfill \textbf{Datum:}~#2 \hfill \textbf{Thema:}~#3
     \hfill \textbf{Lehrperson:}~Loris Keller
-  \vspace{0.8em}
   \lhead{\textcolor{darkgray}{#3}}
   \rhead{\textcolor{darkgray}{#4}}
 }
@@ -188,11 +266,18 @@
 \begin{infobox}
 \textbf{Lernziele}\\
 Am Ende dieser Einheit kann ich \dots
-\begin{itemize}[leftmargin=1.2cm,itemsep=0.25em]
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.4em]
   \item \dots
   \item \dots
 \end{itemize}
 \end{infobox}
+
+% --- Theorie: fachliche Grundlage für die Aufgaben, immer vor der ersten
+%     Aufgabe. Definitionen/Formeln/Merksätze ausformulieren -- kein
+%     Platzhalter, den man überspringen kann. ---------------------------------
+\begin{theoriebox}
+\dots
+\end{theoriebox}
 
 \begin{questions}
 

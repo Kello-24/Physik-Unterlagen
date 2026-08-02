@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pdflatex -interaction=nonstopmode -halt-on-error *)",
+      "Bash(echo \"EXIT: $?\")",
+      "Bash(kpsewhich exam.cls)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/compile-on-save.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

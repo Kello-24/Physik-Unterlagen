@@ -24,6 +24,9 @@
 \usepackage{geometry}
 \usepackage{amsmath}
 \usepackage{siunitx}
+% Hausstil: zusammengesetzte Einheiten immer als echter Bruch (\frac), nicht
+% als Inline-Schrägstrich oder \tfrac -- gilt global für jedes \si/\SI.
+\sisetup{per-mode=fraction,fraction-command=\frac}
 \usepackage{tikz}
 \usepackage{physics}
 \usepackage{circuitikz}

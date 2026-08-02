@@ -1,0 +1,1232 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Arbeitsblatt: Beschleunigung (nicht bewertet, Übungsmaterial für den Unterricht)
+% Kantonsschule KFR – Physik, 4. Klasse, 1. HS, Mechanik
+%
+% Kopiert aus vorlagen/arbeitsblatt-vorlage.tex und um dieselben
+% Farb-/Boxdefinitionen ergänzt wie s-t-diagramm-arbeitsblatt.tex /
+% v-t-diagramm-arbeitsblatt.tex (selbes Thema-Cluster, direkt anschliessende
+% Lektion) -- Templates sind selbstständig/nicht DRY, siehe CLAUDE.md.
+%
+% Stand: Lernziele, Einstieg, Theorie und Aufgaben fertig (Reihenfolge =
+% Dokumentreihenfolge, siehe Kommentar vor der Lernziele-infobox unten,
+% entspricht hier zufällig auch der Reihenfolge aus lernziele.md, da
+% Backward-Design-Reihenfolge und pädagogisch sinnvolle Dokumentreihenfolge
+% hier bereits übereinstimmen).
+% =============================================================================
+\documentclass[addpoints,11pt,a4paper]{exam}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.2cm,headheight=14pt]{geometry}
+\usepackage{amsmath}
+\usepackage{siunitx}
+% Hausstil: zusammengesetzte Einheiten immer als echter Bruch (\frac), nicht
+% als Inline-Schrägstrich oder \tfrac -- gilt global für jedes \si/\SI.
+\sisetup{per-mode=fraction,fraction-command=\frac}
+\usepackage{array,booktabs,tabularx,multirow}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{circuitikz}
+\usepackage[most]{tcolorbox}
+\usepackage{lastpage}
+\usepackage{needspace}
+
+\usetikzlibrary{arrows.meta,calc,angles,quotes}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+
+% -----------------------------
+% Farben (Corporate-Farbschema Physik KFR)
+% -----------------------------
+\definecolor{titleblue}{HTML}{183A6B}
+\definecolor{accentblue}{HTML}{2E6F9E}
+\definecolor{lightblue}{HTML}{EAF4FB}
+\definecolor{verylightblue}{HTML}{F7FBFE}
+\definecolor{lightgray}{HTML}{F4F6F8}
+\definecolor{darkgray}{HTML}{4A4A4A}
+% Für Diagramme mit zwei verschiedenen Funktionen/Linien: titleblue (dunkles
+% Blau) + accentorange (Orange) sind weit genug auseinander (auch in
+% Graustufen/für Farbenblinde unterscheidbar), im Gegensatz zu
+% titleblue+accentblue, die beide Blautöne sind.
+\definecolor{accentorange}{HTML}{D9720C}
+% Für Diagramme mit DREI Linien: dritte Farbe nötig, die sich sowohl von
+% titleblue als auch von accentorange klar unterscheidet -- auch in
+% Graustufen/für Farbenblinde. Violett liegt weit genug von Blau und Orange
+% entfernt, um als dritte Linie eindeutig unterscheidbar zu bleiben.
+\definecolor{accentpurple}{HTML}{7B2D8E}
+% Theorie-Block: eigene Farbe (grün), damit er sich auf einen Blick von den
+% blauen Lernziele-/Aufgaben-Boxen abhebt.
+\definecolor{theorygreen}{HTML}{2E7D4F}
+\definecolor{lighttheorygreen}{HTML}{EAF7EF}
+% Gruppenarbeit-Box: eigene Farbe (Petrol/Teal), damit Partner-/Gruppenarbeit
+% sich auf einen Blick von normalen Einzelaufgaben (blau, taskbox) und vom
+% Theorie-Block (grün, theoriebox) abhebt. Siehe Regel weiter unten bei
+% \newtcolorbox{groupbox}.
+\definecolor{groupteal}{HTML}{1B7F72}
+\definecolor{lightgroupteal}{HTML}{E8F5F3}
+
+% -----------------------------
+% Spaltentypen
+% -----------------------------
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% -----------------------------
+% Boxen
+% -----------------------------
+\newtcolorbox{titlebox}{
+  enhanced,
+  colback=titleblue,
+  colframe=titleblue,
+  boxrule=0pt,
+  arc=3mm,
+  left=3mm,right=3mm,top=3mm,bottom=3mm
+}
+
+% exam.cls rückt die questions-Liste um die Breite von "10." (plus \labelsep)
+% ein (Platz für die Nummerierung "1.", "2." ...); wir messen dieselbe Distanz
+% hier unabhängig nach.
+\newlength{\aufgabenindent}
+\settowidth{\aufgabenindent}{10.\hskip\labelsep}
+
+% left/right-Padding bewusst grosszügiger als bei answerbox: exam.cls hängt
+% die Nummerierung von \question bündig an den inneren Rand des
+% Textbereichs -- bei zu knappem Padding sitzt diese Nummer direkt auf dem
+% Rahmen der Box statt sichtbar innerhalb davon.
+% infobox steht ausserhalb von questions (z.B. beim Lernziele-Block auf
+% Dokumentebene) und braucht deshalb KEINE Korrektur -- \linewidth entspricht
+% dort bereits \textwidth.
+\newtcolorbox{infobox}{
+  enhanced,
+  breakable,
+  colback=lightblue,
+  colframe=accentblue,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+% theoriebox: wie infobox, aber grün und mit farbigem Titelbalken (analog zu
+% taskbox), damit der Theorie-Block auf einen Blick von Lernziele (blau,
+% ohne Titelbalken) und Aufgaben (blau, mit Titelbalken) unterscheidbar ist.
+% Steht wie infobox ausserhalb von questions -- KEINE Einrückungskorrektur
+% nötig (siehe Kommentar bei infobox oben).
+% Regel: hervorgehobene/definierte Begriffe INNERHALB einer theoriebox
+% immer mit \textbf{\emph{...}} setzen (fett UND kursiv), nicht mit blossem
+% \emph{...} -- damit Fachbegriffe beim Durchlesen der Theorie sofort
+% auffallen. Ausserhalb von theoriebox (beispielbox, Aufgabentext, ...)
+% bleibt \emph{...} allein korrekt.
+\newtcolorbox{theoriebox}[1][Theorie]{
+  enhanced,
+  breakable,
+  colback=lighttheorygreen,
+  colframe=theorygreen,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+% taskbox steht direkt in der questions-Liste (vor dem ersten \question),
+% also innerhalb von deren Einrückung. Empirisch (per Pixelvergleich mit der
+% Kopfzeilen-Tabelle) verschiebt "enlarge left by" hier die GESAMTE Box
+% (nicht nur ihren linken Rand) -- ein positiver Wert schiebt sie nach
+% RECHTS, nicht nach links, entgegen der naheliegenden Lesart des
+% Schlüsselnamens. Ein negativer Wert (-\aufgabenindent) schiebt die Box
+% exakt um die Listen-Einrückung nach links; width=\textwidth stellt danach
+% wieder die volle Breite her, sodass beide Kanten mit der Tabelle
+% übereinstimmen (verifiziert per Pixelmessung, Abweichung <=1px @300dpi).
+% Falls taskbox künftig auch ausserhalb von questions verwendet wird, muss
+% diese Korrektur analog zu infobox entfernt werden.
+\newtcolorbox{taskbox}[1][]{
+  enhanced,
+  breakable,
+  colback=verylightblue,
+  colframe=accentblue,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  enlarge left by=-\aufgabenindent,
+  width=\textwidth,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+% beispielbox: wie taskbox (blau), aber ausserhalb von questions -- deshalb
+% wie infobox/theoriebox KEINE Einrückungskorrektur nötig (siehe Kommentar
+% bei infobox oben). Für Beispiele in der Theorie: farblich blau wie
+% Aufgaben, damit "Beispiel" sich auf einen Blick von der grünen Theorie
+% abhebt (Hausstil: grün = Theorie, blau = Beispiele/Aufgaben).
+\newtcolorbox{beispielbox}[1][Beispiel]{
+  enhanced,
+  breakable,
+  colback=verylightblue,
+  colframe=accentblue,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+% groupbox: Regel -- JEDE Aufgabe, bei der Schülerinnen/Schüler zu zweit
+% oder in einer Gruppe zusammenarbeiten (Partnerarbeit, Gruppenarbeit,
+% Diskussion zu zweit, ...), bekommt diese Box statt der blauen taskbox.
+% Farbe (Petrol/Teal) ist bewusst weder blau (taskbox/infobox) noch grün
+% (theoriebox), damit "hier braucht es eine Partnerin/einen Partner" auf
+% einen Blick erkennbar ist. Strukturell identisch zu taskbox (gleiche
+% Einrückungskorrektur, da auch groupbox innerhalb von questions steht).
+\newtcolorbox{groupbox}[1][Gruppenarbeit]{
+  enhanced,
+  breakable,
+  colback=lightgroupteal,
+  colframe=groupteal,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  enlarge left by=-\aufgabenindent,
+  width=\textwidth,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+% hinweisbox: eigene Farbe (Orange, wiederverwendet accentorange statt
+% einer neuen Farbe), für wichtige Klarstellungen, die über eine normale
+% Inline-Bemerkung (wie das bestehende "\textbf{Wichtig:}" innerhalb einer
+% theoriebox) hinausgehen, etwa eine Vorausschau auf ein späteres Thema
+% oder eine explizite Warnung vor einer häufigen Verwechslung. Steht wie
+% infobox/theoriebox/beispielbox ausserhalb von questions, KEINE
+% Einrückungskorrektur nötig (siehe Kommentar bei infobox oben).
+\definecolor{lightorange}{HTML}{FCEEE0}
+\newtcolorbox{hinweisbox}[1][Hinweis]{
+  enhanced,
+  breakable,
+  colback=lightorange,
+  colframe=accentorange,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+\newtcolorbox{answerbox}{
+  breakable,
+  colback=white,
+  colframe=gray!55,
+  boxrule=0.5pt,
+  arc=1.5mm,
+  left=2mm,right=2mm,top=2mm,bottom=2mm
+}
+
+% --- Lösungen ein-/ausblenden -----------------------------------------------
+% Schülerexemplar (Standard): \noprintanswers
+% Lehrer-/Lösungsexemplar:    \printanswers
+\noprintanswers
+% \printanswers
+
+% --- Punkte bleiben intern, werden aber nicht gedruckt ----------------------
+% Arbeitsblätter sind nicht benotet. \question[n]/\part[n] bekommen trotzdem
+% eine Punktzahl n -- rein als interner Anhaltspunkt, der 1:1 an
+% \Antwortraum{n} weitergereicht wird, um die Antwortraum-Grösse zu
+% bestimmen. \pointformat{} (Aufruf, nicht \renewcommand!) unterdrückt die
+% von der exam-Klasse sonst automatisch gedruckte Punktanzeige ("(n P.)")
+% vollständig, ohne die interne Punktezählung (\numpoints) zu beeinflussen.
+\pointformat{}
+
+% --- Lösungsbox auf Deutsch, farblich abgesetzt -----------------------------
+\renewcommand{\solutiontitle}{\noindent\color{titleblue}\textbf{Lösung:}\enspace}
+
+% --- Kopf-/Fusszeile: Thema/Titel oben, Seitenzahl unten --------------------
+\pagestyle{headandfoot}
+\cfoot{\textcolor{darkgray}{Seite \thepage\ von \pageref{LastPage}}}
+
+% --- Kopfzeile: Klasse / Datum / Thema / Titel ------------------------------
+% Einheitliches Layout für Arbeitsblatt, Prüfung und Praktikum. Ohne Tabelle:
+% Klasse/Datum/Thema/Lehrperson stehen als einfache Textzeile unter dem
+% Titel-Banner.
+\newcommand{\Kopfzeile}[4]{%
+  \begin{titlebox}
+    {\color{white}\sffamily\bfseries\Large #4}
+  \end{titlebox}
+  \vspace{0.5em}
+  \noindent\textbf{Klasse:}~#1 \hfill \textbf{Datum:}~#2 \hfill \textbf{Thema:}~#3
+    \hfill \textbf{Lehrperson:}~Loris Keller
+  \vspace{0.8em}
+  \lhead{\textcolor{darkgray}{#3}}
+  \rhead{\textcolor{darkgray}{#4}}
+}
+
+% --- Antwortraum: ca. 2.5 cm Platz pro Punkt, als umrandetes Feld -----------
+\newlength{\antwortraumlen}
+\newcommand{\Antwortraum}[1]{%
+  \pgfmathsetlength{\antwortraumlen}{#1*2.5cm}%
+  \begin{answerbox}
+    \rule{0pt}{\antwortraumlen}%
+  \end{answerbox}%
+}
+
+% Werte für Kopfzeile zentral setzen
+\newcommand{\Klasse}{4a}
+\newcommand{\Datum}{04.09.2026}
+\newcommand{\Thema}{Beschleunigung}
+\newcommand{\ArbeitsblattTitel}{Arbeitsblatt: Beschleunigung}
+
+\begin{document}
+
+\Kopfzeile{\Klasse}{\Datum}{\Thema}{\ArbeitsblattTitel}
+
+% --- Lernziele: aus lernziele.md (Backward-Design, Stufe 1) übernommen --
+% LZ1..LZ4 und LZ6 hier entsprechen der Reihenfolge, in der die
+% zugehörigen Theorieboxen/Übungen im Dokument erscheinen (wie im
+% s-t-Diagramm- und v-t-Diagramm-Arbeitsblatt: LZ1 = das im Arbeitsblatt
+% zuerst behandelte Lernziel). Bei diesem Thema stimmt das zufällig mit
+% der ursprünglichen Backward-Design-Reihenfolge überein, keine
+% Umnummerierung nötig, die Theorie-Reihenfolge wurde von Anfang an
+% entsprechend geplant.
+% Reihenfolge: LZ1 (Beschleunigung von Geschwindigkeit unterscheiden) ->
+% LZ2/LZ3 (Durchschnitts-/Momentanbeschleunigung als Sekante/Tangente im
+% v-t-Diagramm) -> LZ4 (Vorzeichen der Beschleunigung, auch bei
+% Verzögerung) -> LZ6 (Geschwindigkeit vs. Beschleunigung unterscheiden,
+% keine eigene Theoriebox, wird über eine noch zu schreibende Übung
+% abgedeckt, Position vorläufig ans Ende gesetzt und bei Bedarf
+% anzupassen, sobald die Aufgaben feststehen).
+% LZ5 (Beschleunigung am Umkehrpunkt) bewusst NICHT in diesem Arbeitsblatt:
+% Umkehrpunkt/Jongleur-Szenario wird zu einem eigenen Thema (eigenes
+% künftiges Arbeitsblatt), deshalb hier entfernt statt nur verschoben.
+% lernziele.md selbst NICHT anpassen (siehe Kommentar dort), die
+% Zuordnung von LZ5 zu einem künftigen Arbeitsblatt bei Bedarf im
+% Backward-Design-Dokument nachführen.
+\begin{infobox}
+\textbf{Lernziele}\\
+Am Ende dieser Einheit kann ich \dots
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.25em]
+  \item den Begriff der Beschleunigung als Änderungsrate der Geschwindigkeit von der Geschwindigkeit selbst unterscheiden. (LZ1)
+  \item aus einem v-t-Diagramm die Durchschnittsbeschleunigung zwischen zwei Zeitpunkten als Sekantensteigung berechnen. (LZ2)
+  \item an einem markierten Punkt eines v-t-Diagramms die Momentanbeschleunigung qualitativ aus der Tangente abschätzen. (LZ3)
+  \item das Vorzeichen einer Beschleunigung relativ zu einem gewählten Koordinatensystem korrekt interpretieren, auch bei Verzögerung. (LZ4)
+  \item in einer gegebenen Bewegungssituation entscheiden, ob nach der Geschwindigkeit oder nach der Beschleunigung gefragt ist. (LZ6)
+\end{itemize}
+\end{infobox}
+
+% --- Einstieg: Hook vor der formalen Theorie, Bild aus Bilder/ -------------
+\begin{beispielbox}[Einstieg: Der schnellste Beschleuniger der Welt]
+\begin{center}
+\includegraphics[width=0.85\linewidth]{Bilder/mythen.jpg}\\
+\footnotesize Der Elektrorennwagen \emph{mythen} des Teams AMZ (ETH Zürich).
+\end{center}
+
+% Lehrperson: Rekordwert und Jahr vor Verwendung im Unterricht verifizieren
+% (Quelle: Guinness-Weltrekord AMZ Racing, ETH Zürich, "mythen").
+Das Studierendenteam AMZ (Akademischer Motorsportverein Zürich) der ETH
+Zürich baut jedes Jahr einen eigenen Elektrorennwagen. Mit dem Fahrzeug
+\emph{mythen} stellte das Team 2018 einen Guinness-Weltrekord auf: Der
+Wagen beschleunigt von $\SI{0}{\kilo\meter\per\hour}$ auf
+$\SI{100}{\kilo\meter\per\hour}$ in weniger als $\SI{1.5}{\second}$,
+schneller als jedes andere Elektroauto der Welt.
+
+Wie schafft ein Elektroauto das? Ein Elektromotor liefert seine volle
+Kraft bereits ab der ersten Umdrehung, während ein Benzinmotor erst
+hochdrehen muss, bevor er seine grösste Kraft erreicht. Zusätzlich sitzt
+bei \emph{mythen} an jedem der vier Räder ein eigener Motor, und das
+Fahrzeug wiegt dank seiner Carbon-Bauweise nur einen Bruchteil eines
+gewöhnlichen Autos. Viel Antriebskraft bei sehr wenig Gewicht: genau das
+braucht es für eine derart extreme Beschleunigung.
+
+Was fällt dir auf, wenn du diese Bewegung mit den gleichförmigen
+Bewegungen vergleichst, die wir bisher untersucht haben? Bei
+\emph{mythen} ist die Geschwindigkeit die ganze Zeit über
+\textbf{\emph{unterschiedlich}}, sie nimmt laufend zu. Genau diese
+Änderung der Geschwindigkeit über die Zeit nennen wir
+\textbf{\emph{Beschleunigung}}, das Thema dieses Arbeitsblatts.
+
+Manche Darstellungen einer solchen Bewegung sehen im $s$-$t$-Diagramm
+so aus:
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+  \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (6,8);
+  \draw[->] (-0.3,0) -- (6.5,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-0.3) -- (0,8.5) node[above] {\scriptsize $s$};
+  \draw[thick,titleblue] (0,0) -- (2,1) -- (4,3.5) -- (6,8);
+  \filldraw[black] (0,0) circle (1.6pt);
+  \filldraw[black] (2,1) circle (1.6pt);
+  \filldraw[black] (4,3.5) circle (1.6pt);
+  \filldraw[black] (6,8) circle (1.6pt);
+\end{tikzpicture}
+\end{center}
+
+Ist das eine korrekte Darstellung der Wirklichkeit? Überlege: Was
+passiert an den beiden Knicken mit der Geschwindigkeit, und ist das
+physikalisch möglich? Wir kommen weiter unten auf diese Frage zurück,
+sobald wir Beschleunigung genauer definiert haben.
+\end{beispielbox}
+
+% =============================================================================
+% Theorie: fachliche Grundlage für die Aufgaben, in eigene Boxen unterteilt
+% (je Unterthema eine theoriebox), Reihenfolge = Lernziele-Reihenfolge oben.
+% =============================================================================
+\begin{theoriebox}[Beschleunigung: Änderungsrate der Geschwindigkeit]
+Die \textbf{\emph{Beschleunigung}} $a$ (Einheit: $\si{\meter\per\second\squared}$)
+eines Objekts beschreibt, wie schnell sich seine \textbf{\emph{Geschwindigkeit}}
+$v$ mit der Zeit ändert. Sie beschreibt nicht, wie schnell sich das Objekt
+selbst bewegt.
+
+Ein Objekt kann sehr schnell unterwegs sein (grosses $v$) und dabei
+trotzdem überhaupt nicht beschleunigen, wenn seine Geschwindigkeit
+konstant bleibt ($a=0$). Umgekehrt kann ein Objekt, das sich erst
+langsam bewegt, stark beschleunigen, wenn sich seine Geschwindigkeit
+sehr schnell ändert.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+  \draw[->] (-0.3,0) -- (6.2,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-0.3) -- (0,4) node[above] {\scriptsize $v$};
+  \draw[thick,titleblue] (0,3.2) -- (5.7,3.2) node[right] {\scriptsize Zug: konstant $\SI{120}{\kilo\meter\per\hour}$ ($a=0$)};
+  \draw[thick,accentorange] (0,0) -- (5.7,1) node[right] {\scriptsize Fahrrad: $0$ auf $\SI{10}{\kilo\meter\per\hour}$ ($a\neq0$)};
+\end{tikzpicture}
+\end{center}
+
+\textbf{Wichtig:} \emph{Schnell sein} (grosses $v$) und \emph{stark
+beschleunigen} (grosses $a$) sind zwei ganz unterschiedliche Dinge, die
+häufig verwechselt werden. Der Zug oben ist die ganze Zeit viel
+schneller als das Fahrrad, beschleunigt aber gar nicht.
+\end{theoriebox}
+
+\begin{hinweisbox}
+Beschleunigung ist die Änderungsrate der \textbf{\emph{Geschwindigkeit}}
+$v$, also einer gerichteten Grösse, nicht der \textbf{\emph{Schnelligkeit}}
+$\lvert v\rvert$, die nur den Betrag angibt. Meistens ändern sich beide
+zusammen, aber nicht immer. Beim späteren Thema \emph{Kreisbewegungen}
+wirst du sehen, dass ein Objekt beschleunigt sein kann, obwohl seine
+Schnelligkeit die ganze Zeit konstant bleibt: Wenn sich nur die Richtung
+der Bewegung ändert, etwa bei einer Kurvenfahrt mit konstantem Tempo,
+liegt trotzdem eine Beschleunigung vor, weil sich die Geschwindigkeit als
+gerichtete Grösse ändert.
+\end{hinweisbox}
+
+\begin{theoriebox}[Zwei Grundtypen der Bewegung im Vergleich]
+Ob eine Bewegung im $s$-$t$-, $v$-$t$- und $a$-$t$-Diagramm als Gerade,
+waagrechte Linie oder Kurve erscheint, hängt davon ab, \emph{was} konstant
+bleibt: die Geschwindigkeit oder die Beschleunigung. Die beiden
+wichtigsten Grundtypen im Vergleich:
+
+\textbf{\emph{Gleichförmige Bewegung}} ($v=\text{konst.}$, also $a=0$):
+
+\begin{center}
+\begin{minipage}{0.30\linewidth}\centering
+\begin{tikzpicture}[scale=0.62]
+  \draw[->] (-0.3,0) -- (5,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-0.3) -- (0,4.3) node[above] {\scriptsize $s$};
+  \draw[thick,titleblue] (0,0) -- (4.5,3.6);
+\end{tikzpicture}\\[-0.2em]
+{\scriptsize $s$-$t$: Gerade (Steigung $=v$)}
+\end{minipage}\hfill
+\begin{minipage}{0.30\linewidth}\centering
+\begin{tikzpicture}[scale=0.62]
+  \draw[->] (-0.3,0) -- (5,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-0.3) -- (0,4.3) node[above] {\scriptsize $v$};
+  \draw[thick,titleblue] (0,2.4) -- (4.5,2.4);
+\end{tikzpicture}\\[-0.2em]
+{\scriptsize $v$-$t$: waagrecht}
+\end{minipage}\hfill
+\begin{minipage}{0.30\linewidth}\centering
+\begin{tikzpicture}[scale=0.62]
+  \draw[->] (-0.3,0) -- (5,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-1.1) -- (0,3.5) node[above] {\scriptsize $a$};
+  \draw[thick,titleblue] (0,0) -- (4.5,0);
+\end{tikzpicture}\\[-0.2em]
+{\scriptsize $a$-$t$: auf der $t$-Achse ($a=0$)}
+\end{minipage}
+\end{center}
+
+\textbf{\emph{Gleichmässig beschleunigte Bewegung}} ($a=\text{konst.}\neq0$):
+
+\begin{center}
+\begin{minipage}{0.30\linewidth}\centering
+\begin{tikzpicture}[scale=0.62]
+  \draw[->] (-0.3,0) -- (5,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-0.3) -- (0,4.3) node[above] {\scriptsize $s$};
+  \draw[thick,accentorange,domain=0:4.5,samples=60,smooth] plot (\x,{0.18*\x*\x});
+\end{tikzpicture}\\[-0.2em]
+{\scriptsize $s$-$t$: Parabel (immer steiler)}
+\end{minipage}\hfill
+\begin{minipage}{0.30\linewidth}\centering
+\begin{tikzpicture}[scale=0.62]
+  \draw[->] (-0.3,0) -- (5,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-0.3) -- (0,4.3) node[above] {\scriptsize $v$};
+  \draw[thick,accentorange] (0,0) -- (4.5,3.6);
+\end{tikzpicture}\\[-0.2em]
+{\scriptsize $v$-$t$: Gerade (Steigung $=a$)}
+\end{minipage}\hfill
+\begin{minipage}{0.30\linewidth}\centering
+\begin{tikzpicture}[scale=0.62]
+  \draw[->] (-0.3,0) -- (5,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-1.1) -- (0,3.5) node[above] {\scriptsize $a$};
+  \draw[thick,accentorange] (0,2.4) -- (4.5,2.4);
+\end{tikzpicture}\\[-0.2em]
+{\scriptsize $a$-$t$: waagrecht, aber $\neq0$}
+\end{minipage}
+\end{center}
+
+\textbf{Wichtig:} Bei konstanter Geschwindigkeit ist das $v$-$t$-Diagramm
+waagrecht und das $a$-$t$-Diagramm liegt auf der Nulllinie. Bei
+konstanter Beschleunigung ist stattdessen das $v$-$t$-Diagramm eine
+Gerade und das $a$-$t$-Diagramm waagrecht, während das $s$-$t$-Diagramm
+zu einer immer steiler werdenden Kurve wird. Das $a$-$t$-Diagramm allein
+verrät also nicht, ob sich ein Objekt überhaupt bewegt. Dafür braucht
+es das $v$-$t$- oder $s$-$t$-Diagramm.
+\end{theoriebox}
+
+\begin{questions}
+\begin{taskbox}[Übung: Realistisches Beschleunigungsdiagramm]
+\question[3] Im Einstieg oben hast du ein $s$-$t$-Diagramm mit mehreren
+geraden Streckenabschnitten und Knicken dazwischen gesehen. An jedem
+Knick würde sich die Steigung, also die Geschwindigkeit, in null Zeit
+sprunghaft ändern, das entspräche einer unendlich grossen Beschleunigung
+für einen einzelnen Moment und ist physikalisch nicht möglich. Skizziere
+stattdessen ein $s$-$t$-Diagramm für dieselbe Bewegung (Start bei
+$s=0$, ungefähr dieselbe Endposition), bei dem die Geschwindigkeit
+\textbf{\emph{kontinuierlich}} zunimmt.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+  \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (6,8);
+  \draw[->] (-0.3,0) -- (6.5,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-0.3) -- (0,8.5) node[above] {\scriptsize $s$};
+\end{tikzpicture}
+\end{center}
+
+\begin{solution}
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+  \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (6,8);
+  \draw[->] (-0.3,0) -- (6.5,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-0.3) -- (0,8.5) node[above] {\scriptsize $s$};
+  \draw[thick,accentorange,domain=0:6,samples=60,smooth] plot (\x,{(2/9)*\x*\x});
+  \filldraw[black] (0,0) circle (1.6pt);
+  \filldraw[black] (6,8) circle (1.6pt);
+\end{tikzpicture}
+\end{center}
+Wie im Vergleich weiter oben gezeigt (\glqq Gleichmässig beschleunigte
+Bewegung\grqq{}): Bei kontinuierlicher Beschleunigung ist das
+$s$-$t$-Diagramm eine glatte Kurve, zum Beispiel eine Parabel bei
+konstanter Beschleunigung, nicht eine Folge von Geradenstücken mit
+Knicken. Ein Knick würde bedeuten, dass sich die Geschwindigkeit in null
+Zeit ändert, und das ist physikalisch nicht möglich.
+\end{solution}
+\end{taskbox}
+\end{questions}
+
+\begin{theoriebox}[Durchschnitts- und Momentanbeschleunigung]
+Analog zur Geschwindigkeit im $s$-$t$-Diagramm lässt sich die
+Beschleunigung im $v$-$t$-Diagramm als Steigung ablesen.
+
+Zwischen zwei Zeitpunkten $t_1$ und $t_2$ berechnet sich die
+\textbf{\emph{Durchschnittsbeschleunigung}} als Sekantensteigung:
+\[
+  \bar a = \frac{\Delta v}{\Delta t} = \frac{v_2 - v_1}{t_2 - t_1}, \qquad
+  \text{Einheit von } a \colon\ \si{\meter\per\second\squared}.
+\]
+
+Will man wissen, wie stark ein Objekt zu einem einzelnen Zeitpunkt $t_0$
+beschleunigt, braucht man die \textbf{\emph{Momentanbeschleunigung}}
+$a(t_0)$: Ist der Graph im $v$-$t$-Diagramm eine Gerade, ist die
+Momentanbeschleunigung überall gleich der Durchschnittsbeschleunigung.
+Ist der Graph gekrümmt, zeichnet man an der Stelle $t_0$ die
+\textbf{\emph{Tangente}} und liest deren Steigung ab, genau wie bei der
+Momentangeschwindigkeit im $s$-$t$-Diagramm.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+  \draw[->] (-0.3,0) -- (6.7,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-0.3) -- (0,6) node[above] {\scriptsize $v$};
+  \draw[thick,titleblue,domain=0:6,samples=60,smooth] plot (\x,{0.15*\x*\x});
+  \draw[thick,accentorange] (1,0.15) -- (5,3.75) node[right] {\scriptsize Sekante: $\bar a$};
+  \draw[thick,accentpurple] (2.5,0.6) -- (5.5,4.2) node[right] {\scriptsize Tangente: $a(t_0)$};
+  \filldraw[black] (1,0.15) circle (1.6pt);
+  \filldraw[black] (5,3.75) circle (1.6pt);
+  \filldraw[black] (4,2.4) circle (1.6pt);
+  \draw (1,0.05) -- (1,-0.05) node[below] {\scriptsize $t_1$};
+  \draw (4,0.05) -- (4,-0.05) node[below] {\scriptsize $t_0$};
+  \draw (5,0.05) -- (5,-0.05) node[below] {\scriptsize $t_2$};
+\end{tikzpicture}
+\end{center}
+
+Auch hier gilt: Die Momentanbeschleunigung ist der Grenzwert der
+Durchschnittsbeschleunigung für $\Delta t \to 0$.
+\end{theoriebox}
+
+\begin{questions}
+\begin{taskbox}[Übung: Fläche unter der a-t-Kurve]
+Du kennst bereits aus dem $v$-$t$-Diagramm: Die Fläche zwischen der Kurve
+und der $t$-Achse entspricht der Ortsänderung $s$. Überlege mit demselben
+Gedankengang, was die Fläche unter einer $a$-$t$-Kurve wohl bedeutet.
+
+\question[4] Ein E-Trottinett startet aus dem Stand und beschleunigt
+$\SI{4}{\second}$ lang konstant mit $a=\SI{1.5}{\meter\per\second\squared}$.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+  \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (5,3);
+  \draw[->] (-0.3,0) -- (5.5,0) node[right] {\scriptsize $t$ in s};
+  \draw[->] (0,-0.3) -- (0,3.3) node[above] {\scriptsize $a$ in $\si{\meter\per\second\squared}$};
+  \foreach \x in {1,2,3,4} \draw (\x,0.1) -- (\x,-0.1) node[below] {\scriptsize \x};
+  \foreach \y in {1,1.5,2} \draw (0.1,\y) -- (-0.1,\y) node[left] {\scriptsize \y};
+  \filldraw[lightblue] (0,0) rectangle (4,1.5);
+  \draw[thick,titleblue] (0,1.5) -- (4,1.5);
+  \draw[dashed,gray] (4,0) -- (4,1.5);
+\end{tikzpicture}
+\end{center}
+
+\begin{parts}
+  \part[1] Welche Einheit erhält man, wenn man $a$ (in
+  $\si{\meter\per\second\squared}$) mit $t$ (in $\si{\second}$)
+  multipliziert? Zu welcher physikalischen Grösse passt diese Einheit?
+  \Antwortraum{1}
+  \begin{solution}
+  $\si{\meter\per\second\squared}\cdot\si{\second} = \si{\meter\per\second}$.
+  Das ist die Einheit einer \emph{Geschwindigkeit}.
+  \end{solution}
+
+  \part[1] Berechne die Fläche unter der $a$-$t$-Kurve oben.
+  \Antwortraum{1}
+  \begin{solution}
+  Fläche $= a\cdot\Delta t = \SI{1.5}{\meter\per\second\squared}\cdot\SI{4}{\second} = \SI{6}{\meter\per\second}$.
+  \end{solution}
+
+  \part[2] Welche physikalische Grösse stellt diese Fläche dar? Überprüfe
+  dein Ergebnis mit der Formel für die Durchschnittsbeschleunigung.
+  \Antwortraum{2}
+  \begin{solution}
+  Die Fläche entspricht der Geschwindigkeitsänderung $\Delta v$. Probe
+  über $\bar a = \Delta v/\Delta t$, umgestellt nach $\Delta v = \bar
+  a\cdot\Delta t = \SI{1.5}{\meter\per\second\squared}\cdot\SI{4}{\second}
+  = \SI{6}{\meter\per\second}$. Das stimmt mit der Fläche überein.
+
+  \textbf{Allgemein:} Genau wie die Fläche unter einer $v$-$t$-Kurve die
+  Ortsänderung $\Delta s$ ergibt, ergibt die Fläche unter einer
+  $a$-$t$-Kurve die Geschwindigkeitsänderung $\Delta v$.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\begin{questions}
+\begin{taskbox}[Übung: Strecke bei gleichmässig beschleunigter Bewegung]
+\question[6] Ein Auto fährt bereits mit $v_0=\SI{15}{\meter\per\second}$
+auf die Einfädelspur der Autobahn. Danach beschleunigt es
+$\SI{6}{\second}$ lang konstant mit $a=\SI{1.5}{\meter\per\second\squared}$,
+um sich in den fliessenden Verkehr einzufädeln.
+
+\begin{parts}
+  \part[1] Bestimme die Geschwindigkeit $v_1$ am Ende der $\SI{6}{\second}$.
+  \Antwortraum{1}
+  \begin{solution}
+  $v_1 = v_0 + a\cdot t = \SI{15}{\meter\per\second} +
+  \SI{1.5}{\meter\per\second\squared}\cdot\SI{6}{\second} =
+  \SI{24}{\meter\per\second}$.
+  \end{solution}
+
+  \part[2] Zeichne das zugehörige $v$-$t$-Diagramm für diese
+  $\SI{6}{\second}$.
+
+  \begin{center}
+  \begin{tikzpicture}[xscale=0.85,yscale=0.28]
+    \draw[gray!20] (0,0) grid[xstep=1,ystep=5] (7,26);
+    \draw[->] (-0.3,0) -- (7.3,0) node[right] {\scriptsize $t$ in s};
+    \draw[->] (0,-1) -- (0,27) node[above] {\scriptsize $v$ in $\si{\meter\per\second}$};
+    \foreach \x in {1,2,3,4,5,6} \draw (\x,0.5) -- (\x,-0.5) node[below] {\scriptsize \x};
+    \foreach \y in {5,10,15,20,25} \draw (0.15,\y) -- (-0.15,\y) node[left] {\scriptsize \y};
+  \end{tikzpicture}
+  \end{center}
+  \begin{solution}
+  \begin{center}
+  \begin{tikzpicture}[xscale=0.85,yscale=0.28]
+    \draw[gray!20] (0,0) grid[xstep=1,ystep=5] (7,26);
+    \draw[->] (-0.3,0) -- (7.3,0) node[right] {\scriptsize $t$ in s};
+    \draw[->] (0,-1) -- (0,27) node[above] {\scriptsize $v$ in $\si{\meter\per\second}$};
+    \foreach \x in {1,2,3,4,5,6} \draw (\x,0.5) -- (\x,-0.5) node[below] {\scriptsize \x};
+    \foreach \y in {5,10,15,20,25} \draw (0.15,\y) -- (-0.15,\y) node[left] {\scriptsize \y};
+    \draw (0.15,24) -- (-0.15,24) node[left] {\scriptsize 24};
+    \filldraw[lightblue] (0,0) -- (0,15) -- (6,24) -- (6,0) -- cycle;
+    \draw[thick,titleblue] (0,15) -- (6,24);
+    \draw[dashed,gray] (6,0) -- (6,24);
+    \draw[dashed,gray] (0,24) -- (6,24);
+    \node[above right] at (0.15,15) {\scriptsize $v_0$};
+  \end{tikzpicture}
+  \end{center}
+  \end{solution}
+
+  \part[3] Bestimme mithilfe der Fläche in deinem $v$-$t$-Diagramm die in
+  diesen $\SI{6}{\second}$ zurückgelegte Strecke $s$.
+  \Antwortraum{3}
+  \begin{solution}
+  Die Fläche ist ein Trapez, das man in ein Rechteck und ein Dreieck
+  aufteilen kann:\\
+  Rechteck ($v_0$ bis zur $t$-Achse): $v_0\cdot t =
+  \SI{15}{\meter\per\second}\cdot\SI{6}{\second} = \SI{90}{\meter}$.\\
+  Dreieck (Geschwindigkeitszuwachs oberhalb von $v_0$): $\tfrac{1}{2}\cdot
+  (v_1-v_0)\cdot t = \tfrac{1}{2}\cdot\SI{9}{\meter\per\second}\cdot
+  \SI{6}{\second} = \SI{27}{\meter}$.\\
+  $s = \SI{90}{\meter} + \SI{27}{\meter} = \SI{117}{\meter}$.
+
+  \textbf{Probe} (Trapezformel): $s = \tfrac{1}{2}(v_0+v_1)\cdot t =
+  \tfrac{1}{2}\cdot\SI{39}{\meter\per\second}\cdot\SI{6}{\second} =
+  \SI{117}{\meter}$. Das stimmt überein.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\begin{theoriebox}[Vorzeichen der Beschleunigung]
+Wie die Geschwindigkeit trägt auch die Beschleunigung ein
+\textbf{\emph{Vorzeichen}}, das ihre Richtung relativ zu einem gewählten
+Koordinatensystem angibt, unabhängig davon, ob das Objekt schneller
+oder langsamer wird.
+
+\textbf{Wichtig:} Eine \emph{negative} Beschleunigung bedeutet
+\textbf{nicht} automatisch \textbf{\emph{Verzögerung}} (langsamer
+werden), und eine \emph{positive} Beschleunigung bedeutet nicht
+automatisch schneller werden. Entscheidend ist, ob $v$ und $a$ dasselbe
+oder unterschiedliches Vorzeichen haben:
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.25em]
+  \item $v$ und $a$ haben \textbf{\emph{dasselbe}} Vorzeichen
+  $\Rightarrow$ das Objekt wird schneller (der Betrag von $v$ nimmt zu).
+  \item $v$ und $a$ haben \textbf{\emph{unterschiedliches}} Vorzeichen
+  $\Rightarrow$ das Objekt wird langsamer, es \textbf{\emph{verzögert}}
+  (der Betrag von $v$ nimmt ab).
+\end{itemize}
+
+\begin{center}
+\begin{minipage}{0.47\linewidth}\centering
+\begin{tikzpicture}[scale=0.75,>=Latex]
+  \draw[->,thick,titleblue] (-2.3,0) -- (2.6,0) node[right] {\scriptsize positive Richtung};
+  \draw[->,thick,red] (-1.8,-0.6) -- (1.3,-0.6) node[midway,above] {\scriptsize $v$};
+  \draw[->,thick,green!55!black] (-1.8,-1.3) -- (0.3,-1.3) node[midway,above] {\scriptsize $a$};
+\end{tikzpicture}\\[-0.2em]
+{\scriptsize dasselbe Vorzeichen $\Rightarrow$ schneller}
+\end{minipage}\hfill
+\begin{minipage}{0.47\linewidth}\centering
+\begin{tikzpicture}[scale=0.75,>=Latex]
+  \draw[->,thick,titleblue] (-2.3,0) -- (2.6,0) node[right] {\scriptsize positive Richtung};
+  \draw[->,thick,red] (1.3,-0.6) -- (-1.8,-0.6) node[midway,above] {\scriptsize $v$};
+  \draw[->,thick,green!55!black] (-1.8,-1.3) -- (0.8,-1.3) node[midway,above] {\scriptsize $a$};
+\end{tikzpicture}\\[-0.2em]
+{\scriptsize unterschiedliches Vorzeichen $\Rightarrow$ langsamer (verzögert)}
+\end{minipage}
+\end{center}
+\end{theoriebox}
+
+\begin{beispielbox}[Beispiel: Auto fährt nach links und wird langsamer]
+Ein Auto bewegt sich nach links (das entspricht der \emph{negativen}
+Richtung in unserem Koordinatensystem) und wird dabei immer langsamer.
+Bei $t_1=\SI{0}{\second}$ beträgt seine Geschwindigkeit
+$v_1=-\SI{12}{\meter\per\second}$, bei $t_2=\SI{4}{\second}$ nur noch
+$v_2=-\SI{4}{\meter\per\second}$.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.7]
+  \draw[gray!20] (0,-13) grid[xstep=1,ystep=1] (5,1);
+  \draw[->] (-0.3,0) -- (5.5,0) node[right] {\scriptsize $t$ in s};
+  \draw[->] (0,-13.5) -- (0,1.5) node[above] {\scriptsize $v$ in $\si{\meter\per\second}$};
+  \foreach \x in {4} \draw (\x,0.2) -- (\x,-0.2) node[below] {\scriptsize \x};
+  \foreach \y in {-12,-8,-4,0} \draw (0.15,\y) -- (-0.15,\y) node[left] {\scriptsize \y};
+  \draw[thick,titleblue] (0,-12) -- (4,-4);
+  \filldraw[black] (0,-12) circle (1.6pt) node[below right] {\scriptsize $t_1$};
+  \filldraw[black] (4,-4) circle (1.6pt) node[above left] {\scriptsize $t_2$};
+\end{tikzpicture}
+\end{center}
+
+\[
+  a = \frac{v_2 - v_1}{t_2 - t_1} = \frac{-\SI{4}{\meter\per\second} - (-\SI{12}{\meter\per\second})}{\SI{4}{\second}} = \frac{\SI{8}{\meter\per\second}}{\SI{4}{\second}} = +\SI{2}{\meter\per\second\squared}.
+\]
+
+Obwohl das Auto sich die ganze Zeit in die negative Richtung bewegt (und
+dabei langsamer wird, also verzögert), ist seine Beschleunigung
+\emph{positiv}. Der Grund: $v$ ist negativ und $a$ positiv, die beiden
+Vorzeichen sind also unterschiedlich, und genau das bedeutet, dass das
+Auto langsamer wird.
+\end{beispielbox}
+
+\begin{questions}
+\begin{taskbox}[Übung: Bewegung aus Geschwindigkeits- und Beschleunigungsvektor bestimmen]
+Die folgenden Bilder zeigen jeweils ein Auto zum Zeitpunkt $t=0$. Die
+blaue Achse markiert die positive Richtung des gewählten
+Koordinatensystems, der rote Pfeil zeigt die Geschwindigkeit $v(0)$, und
+der grüne Pfeil zeigt die Beschleunigung $a$, die während der ganzen
+betrachteten Zeit konstant bleibt. Beschreibe für jedes Bild in Worten,
+was mit dem Auto passiert, und skizziere anschliessend das $s$-$t$- und
+das $v$-$t$-Diagramm für $t\geq0$. Weil die Achsen in den Bildern nicht
+beziffert sind, genügt eine ungefähre Skizze: Vorzeichen, Steigung und
+Krümmung müssen stimmen, exakte Werte sind nicht nötig.
+
+\question[6]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{Bilder/car_1.png}
+\end{center}
+
+\begin{parts}
+  \part[2] Beschreibe in Worten, was mit dem Auto passiert.
+  \Antwortraum{2}
+  \begin{solution}
+  Die Achse zeigt nach rechts, die positive Richtung ist also rechts.
+  Sowohl $v$ als auch $a$ zeigen nach rechts, also gilt $v>0$ und $a>0$.
+  Weil $v$ und $a$ dasselbe Vorzeichen haben, wird das Auto schneller,
+  während es sich in die positive Richtung bewegt.
+  \end{solution}
+
+  \part[2] Skizziere das $s$-$t$-Diagramm.
+  \begin{center}
+  \begin{tikzpicture}[scale=0.6]
+    \draw[->] (-0.3,0) -- (5.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-3.5) -- (0,3.5) node[above] {\scriptsize $s$};
+  \end{tikzpicture}
+  \end{center}
+  \begin{solution}
+  \begin{center}
+  \begin{tikzpicture}[scale=0.6]
+    \draw[->] (-0.3,0) -- (5.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-3.5) -- (0,3.5) node[above] {\scriptsize $s$};
+    \draw[thick,titleblue,domain=0:4,samples=30,smooth] plot (\x,{0.5*\x+0.1*\x*\x});
+  \end{tikzpicture}
+  \end{center}
+  Steigung bei $t=0$ positiv (weil $v>0$), und die Kurve wird immer
+  steiler (weil $a>0$).
+  \end{solution}
+
+  \part[2] Skizziere das $v$-$t$-Diagramm.
+  \begin{center}
+  \begin{tikzpicture}[scale=0.6]
+    \draw[->] (-0.3,0) -- (5.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-3.5) -- (0,3.5) node[above] {\scriptsize $v$};
+  \end{tikzpicture}
+  \end{center}
+  \begin{solution}
+  \begin{center}
+  \begin{tikzpicture}[scale=0.6]
+    \draw[->] (-0.3,0) -- (5.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-3.5) -- (0,3.5) node[above] {\scriptsize $v$};
+    \draw[thick,titleblue] (0,0.8) -- (4,2.8);
+  \end{tikzpicture}
+  \end{center}
+  Gerade mit positivem Achsenabschnitt (weil $v(0)>0$) und positiver
+  Steigung (weil $a>0$).
+  \end{solution}
+\end{parts}
+
+\needspace{10\baselineskip}
+\question[6]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{Bilder/car_2.png}
+\end{center}
+
+\begin{parts}
+  \part[2] Beschreibe in Worten, was mit dem Auto passiert.
+  \Antwortraum{2}
+  \begin{solution}
+  Die Achse zeigt nach rechts, die positive Richtung ist also rechts.
+  $v$ zeigt nach links, also gilt $v<0$. $a$ zeigt nach rechts, also gilt
+  $a>0$. Weil $v$ und $a$ unterschiedliche Vorzeichen haben, wird das
+  Auto langsamer, es verzögert, während es sich weiterhin in die
+  negative Richtung bewegt.
+  \end{solution}
+
+  \part[2] Skizziere das $s$-$t$-Diagramm.
+  \begin{center}
+  \begin{tikzpicture}[scale=0.6]
+    \draw[->] (-0.3,0) -- (5.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-3.5) -- (0,3.5) node[above] {\scriptsize $s$};
+  \end{tikzpicture}
+  \end{center}
+  \begin{solution}
+  \begin{center}
+  \begin{tikzpicture}[scale=0.6]
+    \draw[->] (-0.3,0) -- (5.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-3.5) -- (0,3.5) node[above] {\scriptsize $s$};
+    \draw[thick,titleblue,domain=0:4,samples=30,smooth] plot (\x,{-0.7*\x+0.06*\x*\x});
+  \end{tikzpicture}
+  \end{center}
+  Steigung bei $t=0$ negativ (weil $v<0$), die Kurve flacht aber
+  zunehmend ab (weil $a>0$ der negativen Geschwindigkeit entgegenwirkt).
+  \end{solution}
+
+  \part[2] Skizziere das $v$-$t$-Diagramm.
+  \begin{center}
+  \begin{tikzpicture}[scale=0.6]
+    \draw[->] (-0.3,0) -- (5.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-3.5) -- (0,3.5) node[above] {\scriptsize $v$};
+  \end{tikzpicture}
+  \end{center}
+  \begin{solution}
+  \begin{center}
+  \begin{tikzpicture}[scale=0.6]
+    \draw[->] (-0.3,0) -- (5.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-3.5) -- (0,3.5) node[above] {\scriptsize $v$};
+    \draw[thick,titleblue] (0,-2.4) -- (4,-0.3);
+  \end{tikzpicture}
+  \end{center}
+  Gerade mit negativem Achsenabschnitt (weil $v(0)<0$) und positiver
+  Steigung (weil $a>0$), sie nähert sich der $t$-Achse an, ohne sie im
+  gezeichneten Bereich zu erreichen.
+  \end{solution}
+\end{parts}
+
+\needspace{10\baselineskip}
+\question[6]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{Bilder/car_3.png}
+\end{center}
+
+\begin{parts}
+  \part[2] Beschreibe in Worten, was mit dem Auto passiert.
+  \Antwortraum{2}
+  \begin{solution}
+  Achtung, die Achse zeigt hier nach links, die positive Richtung ist
+  also links. $v$ zeigt nach rechts, also gilt $v<0$. $a$ zeigt ebenfalls
+  nach rechts, also gilt auch $a<0$. Weil $v$ und $a$ dasselbe Vorzeichen
+  haben, wird das Auto schneller, sichtbar bewegt es sich dabei nach
+  rechts.
+  \end{solution}
+
+  \part[2] Skizziere das $s$-$t$-Diagramm.
+  \begin{center}
+  \begin{tikzpicture}[scale=0.6]
+    \draw[->] (-0.3,0) -- (5.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-3.5) -- (0,3.5) node[above] {\scriptsize $s$};
+  \end{tikzpicture}
+  \end{center}
+  \begin{solution}
+  \begin{center}
+  \begin{tikzpicture}[scale=0.6]
+    \draw[->] (-0.3,0) -- (5.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-3.5) -- (0,3.5) node[above] {\scriptsize $s$};
+    \draw[thick,titleblue,domain=0:4,samples=30,smooth] plot (\x,{-0.5*\x-0.1*\x*\x});
+  \end{tikzpicture}
+  \end{center}
+  Steigung bei $t=0$ negativ (weil $v<0$), und die Kurve wird immer
+  steiler nach unten (weil $a<0$). Dieselbe Grundform wie bei Bild 1,
+  nur an der $t$-Achse gespiegelt, weil hier $v$ und $a$ beide negativ
+  statt beide positiv sind.
+  \end{solution}
+
+  \part[2] Skizziere das $v$-$t$-Diagramm.
+  \begin{center}
+  \begin{tikzpicture}[scale=0.6]
+    \draw[->] (-0.3,0) -- (5.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-3.5) -- (0,3.5) node[above] {\scriptsize $v$};
+  \end{tikzpicture}
+  \end{center}
+  \begin{solution}
+  \begin{center}
+  \begin{tikzpicture}[scale=0.6]
+    \draw[->] (-0.3,0) -- (5.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-3.5) -- (0,3.5) node[above] {\scriptsize $v$};
+    \draw[thick,titleblue] (0,-0.8) -- (4,-2.8);
+  \end{tikzpicture}
+  \end{center}
+  Gerade mit negativem Achsenabschnitt (weil $v(0)<0$) und negativer
+  Steigung (weil $a<0$), sie entfernt sich zunehmend von der $t$-Achse.
+  \end{solution}
+\end{parts}
+
+\needspace{10\baselineskip}
+\question[6]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{Bilder/car_4.png}
+\end{center}
+
+\begin{parts}
+  \part[2] Beschreibe in Worten, was mit dem Auto passiert.
+  \Antwortraum{2}
+  \begin{solution}
+  Die Achse zeigt hier wieder nach rechts, die positive Richtung ist
+  also rechts. $v$ und $a$ zeigen beide nach links, also gilt $v<0$ und
+  $a<0$. Weil $v$ und $a$ dasselbe Vorzeichen haben, wird das Auto
+  schneller, sichtbar bewegt es sich dabei nach links.
+  \end{solution}
+
+  \part[2] Skizziere das $s$-$t$-Diagramm.
+  \begin{center}
+  \begin{tikzpicture}[scale=0.6]
+    \draw[->] (-0.3,0) -- (5.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-3.5) -- (0,3.5) node[above] {\scriptsize $s$};
+  \end{tikzpicture}
+  \end{center}
+  \begin{solution}
+  \begin{center}
+  \begin{tikzpicture}[scale=0.6]
+    \draw[->] (-0.3,0) -- (5.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-3.5) -- (0,3.5) node[above] {\scriptsize $s$};
+    \draw[thick,titleblue,domain=0:4,samples=30,smooth] plot (\x,{-0.4*\x-0.1*\x*\x});
+  \end{tikzpicture}
+  \end{center}
+  Steigung bei $t=0$ negativ (weil $v<0$), und die Kurve wird immer
+  steiler nach unten (weil $a<0$), dieselbe Grundform wie bei Bild 3.
+  \end{solution}
+
+  \part[2] Skizziere das $v$-$t$-Diagramm.
+  \begin{center}
+  \begin{tikzpicture}[scale=0.6]
+    \draw[->] (-0.3,0) -- (5.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-3.5) -- (0,3.5) node[above] {\scriptsize $v$};
+  \end{tikzpicture}
+  \end{center}
+  \begin{solution}
+  \begin{center}
+  \begin{tikzpicture}[scale=0.6]
+    \draw[->] (-0.3,0) -- (5.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-3.5) -- (0,3.5) node[above] {\scriptsize $v$};
+    \draw[thick,titleblue] (0,-0.6) -- (4,-3);
+  \end{tikzpicture}
+  \end{center}
+  Gerade mit negativem Achsenabschnitt (weil $v(0)<0$) und negativer
+  Steigung (weil $a<0$).
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\begin{questions}
+\begin{taskbox}[Übung: Schnelle Fahrzeuge]
+Dieselbe Aufgabenstellung wie oben, jetzt für zwei Fahrzeuge, die
+bereits mit hoher Geschwindigkeit unterwegs sind (grosser $v$-Pfeil).
+
+\question[6]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{Bilder/car_fast_1.png}
+\end{center}
+
+\begin{parts}
+  \part[2] Beschreibe in Worten, was mit dem Auto passiert.
+  \Antwortraum{2}
+  \begin{solution}
+  Die Achse zeigt nach rechts, die positive Richtung ist also rechts.
+  $v$ und $a$ zeigen beide nach rechts, also gilt $v>0$ und $a>0$. Das
+  Auto ist bereits sehr schnell in positiver Richtung unterwegs und wird
+  wegen des gleichen Vorzeichens noch schneller.
+  \end{solution}
+
+  \part[2] Skizziere das $s$-$t$-Diagramm.
+  \begin{center}
+  \begin{tikzpicture}[scale=0.6]
+    \draw[->] (-0.3,0) -- (5.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-1) -- (0,5) node[above] {\scriptsize $s$};
+  \end{tikzpicture}
+  \end{center}
+  \begin{solution}
+  \begin{center}
+  \begin{tikzpicture}[scale=0.6]
+    \draw[->] (-0.3,0) -- (5.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-1) -- (0,5) node[above] {\scriptsize $s$};
+    \draw[thick,titleblue,domain=0:4,samples=30,smooth] plot (\x,{0.9*\x+0.09*\x*\x});
+  \end{tikzpicture}
+  \end{center}
+  Steigung bei $t=0$ bereits stark positiv (weil $v(0)$ gross ist), und
+  sie nimmt weiter zu (weil $a>0$), aber weniger dramatisch als bei
+  Bild 1, weil $a$ hier vergleichsweise klein gegenüber $v$ ist.
+  \end{solution}
+
+  \part[2] Skizziere das $v$-$t$-Diagramm.
+  \begin{center}
+  \begin{tikzpicture}[scale=0.6]
+    \draw[->] (-0.3,0) -- (5.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-1) -- (0,5) node[above] {\scriptsize $v$};
+  \end{tikzpicture}
+  \end{center}
+  \begin{solution}
+  \begin{center}
+  \begin{tikzpicture}[scale=0.6]
+    \draw[->] (-0.3,0) -- (5.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-1) -- (0,5) node[above] {\scriptsize $v$};
+    \draw[thick,titleblue] (0,3) -- (4,4.3);
+  \end{tikzpicture}
+  \end{center}
+  Gerade mit grossem positivem Achsenabschnitt (weil $v(0)$ gross ist)
+  und leicht positiver Steigung (weil $a>0$, aber betragsmässig klein).
+  \end{solution}
+\end{parts}
+
+\needspace{10\baselineskip}
+\question[6]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{Bilder/car_fast_2.png}
+\end{center}
+
+\begin{parts}
+  \part[2] Beschreibe in Worten, was mit dem Auto passiert.
+  \Antwortraum{2}
+  \begin{solution}
+  Die Achse zeigt nach rechts, die positive Richtung ist also rechts.
+  $v$ zeigt nach rechts, also gilt $v>0$. $a$ zeigt nach links, also gilt
+  $a<0$. Das Auto ist sehr schnell in positiver Richtung unterwegs, wird
+  aber wegen des entgegengesetzten Vorzeichens stark abgebremst, es
+  verzögert kräftig.
+  \end{solution}
+
+  \part[2] Skizziere das $s$-$t$-Diagramm.
+  \begin{center}
+  \begin{tikzpicture}[scale=0.6]
+    \draw[->] (-0.3,0) -- (5.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-1) -- (0,5) node[above] {\scriptsize $s$};
+  \end{tikzpicture}
+  \end{center}
+  \begin{solution}
+  \begin{center}
+  \begin{tikzpicture}[scale=0.6]
+    \draw[->] (-0.3,0) -- (5.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-1) -- (0,5) node[above] {\scriptsize $s$};
+    \draw[thick,titleblue,domain=0:4,samples=30,smooth] plot (\x,{0.9*\x-0.09*\x*\x});
+  \end{tikzpicture}
+  \end{center}
+  Steigung bei $t=0$ stark positiv (weil $v(0)$ gross ist), die Kurve
+  flacht aber deutlich ab (weil $a<0$ betragsmässig gross ist und der
+  Geschwindigkeit stark entgegenwirkt).
+  \end{solution}
+
+  \part[2] Skizziere das $v$-$t$-Diagramm.
+  \begin{center}
+  \begin{tikzpicture}[scale=0.6]
+    \draw[->] (-0.3,0) -- (5.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-1) -- (0,5) node[above] {\scriptsize $v$};
+  \end{tikzpicture}
+  \end{center}
+  \begin{solution}
+  \begin{center}
+  \begin{tikzpicture}[scale=0.6]
+    \draw[->] (-0.3,0) -- (5.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-1) -- (0,5) node[above] {\scriptsize $v$};
+    \draw[thick,titleblue] (0,4) -- (4,0.3);
+  \end{tikzpicture}
+  \end{center}
+  Gerade mit grossem positivem Achsenabschnitt (weil $v(0)$ gross ist)
+  und deutlich negativer Steigung (weil $a<0$ betragsmässig gross ist),
+  sie nähert sich der $t$-Achse an, ohne sie im gezeichneten Bereich zu
+  erreichen.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\begin{questions}
+\begin{taskbox}[Zusatzaufgabe: Ein Auto im Stadtverkehr]
+\question[13] Das folgende Diagramm zeigt schematisch, wie sich die
+Geschwindigkeit eines Autos beim Losfahren, Weiterfahren und Anhalten
+verändert:
+
+\begin{center}
+\includegraphics[width=0.7\linewidth]{Bilder/Auto_beschleunigung.jpg}\\
+\footnotesize Schematische Darstellung ohne Zeitachse: Beschleunigen,
+konstante Geschwindigkeit, Abbremsen.
+\end{center}
+
+Nimm für die folgenden Teilaufgaben konkrete Zeiten an: Das Auto
+beschleunigt während $\SI{10}{\second}$ gleichmässig von
+$\SI{0}{\kilo\meter\per\hour}$ auf $\SI{120}{\kilo\meter\per\hour}$
+($\SI{120}{\kilo\meter\per\hour} : 3.6 \approx \SI{33.3}{\meter\per\second}$).
+Danach fährt es $\SI{15}{\second}$ lang mit konstanter Geschwindigkeit
+weiter. Anschliessend bremst es innerhalb von $\SI{6}{\second}$
+gleichmässig bis zum Stillstand ab.
+
+\begin{parts}
+  \part[3] Das $v$-$t$-Diagramm oben zeigt bereits die Form der Bewegung.
+  Skizziere qualitativ, ohne Zahlen, wie das zugehörige $a$-$t$-Diagramm
+  für dieselbe Fahrt aussehen müsste. Orientiere dich an den Phasen
+  $a>0$, $a=0$ und $a<0$ aus dem Bild oben.
+
+  \begin{center}
+  \begin{tikzpicture}[scale=0.6]
+    \draw[->] (-0.3,0) -- (7.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-2.5) -- (0,3) node[above] {\scriptsize $a$};
+  \end{tikzpicture}
+  \end{center}
+  \begin{solution}
+  \begin{center}
+  \begin{tikzpicture}[scale=0.6]
+    \draw[->] (-0.3,0) -- (7.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-2.5) -- (0,3) node[above] {\scriptsize $a$};
+    \draw[thick,titleblue] (0,1.5) -- (2,1.5);
+    \draw[dashed,gray] (2,1.5) -- (2,0);
+    \draw[thick,titleblue] (2,0) -- (5,0);
+    \draw[dashed,gray] (5,0) -- (5,-2);
+    \draw[thick,titleblue] (5,-2) -- (7,-2);
+  \end{tikzpicture}
+  \end{center}
+  In der ersten Phase ist $a$ konstant positiv (Beschleunigen), in der
+  zweiten Phase ist $a=0$ (konstante Geschwindigkeit), und in der
+  dritten Phase ist $a$ konstant negativ (Abbremsen), betragsmässig
+  grösser als in der ersten Phase, weil das Auto in kürzerer Zeit stärker
+  bremst als es beschleunigt hat.
+  \end{solution}
+
+  \part[3] Skizziere qualitativ, ohne Zahlen, wie das zugehörige
+  $s$-$t$-Diagramm für dieselbe Fahrt aussehen müsste.
+
+  \begin{center}
+  \begin{tikzpicture}[scale=0.6]
+    \draw[->] (-0.3,0) -- (7.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-0.3) -- (0,10.5) node[above] {\scriptsize $s$};
+  \end{tikzpicture}
+  \end{center}
+  \begin{solution}
+  \begin{center}
+  \begin{tikzpicture}[scale=0.6]
+    \draw[->] (-0.3,0) -- (7.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-0.3) -- (0,10.5) node[above] {\scriptsize $s$};
+    \draw[thick,titleblue,domain=0:2,samples=30,smooth] plot (\x,{0.5*\x*\x});
+    \draw[thick,titleblue] (2,2) -- (5,8);
+    \draw[thick,titleblue,domain=5:7,samples=30,smooth] plot (\x,{8+2*(\x-5)-0.5*(\x-5)*(\x-5)});
+  \end{tikzpicture}
+  \end{center}
+  Im ersten Abschnitt (Beschleunigen) wird die Kurve immer steiler, im
+  zweiten Abschnitt (konstante Geschwindigkeit) ist sie eine Gerade, und
+  im dritten Abschnitt (Abbremsen) flacht sie wieder ab, bis sie
+  waagrecht wird.
+  \end{solution}
+
+  % Verhindert, dass die Aufgabenstellung von Teilaufgabe (c) allein am
+  % Seitenende steht, während ihr Antwortraum erst auf der Folgeseite
+  % erscheint (analog zum \needspace an anderen Stellen im Dokument).
+  \needspace{5\baselineskip}
+  \part[2] Berechne die Beschleunigung während der ersten
+  $\SI{10}{\second}$ (Losfahren).
+  \Antwortraum{2}
+  \begin{solution}
+  $a_1 = \dfrac{\Delta v}{\Delta t} = \dfrac{\SI{33.3}{\meter\per\second}}{\SI{10}{\second}} \approx \SI{3.3}{\meter\per\second\squared}$.
+  \end{solution}
+
+  \part[2] Berechne die Beschleunigung während der letzten
+  $\SI{6}{\second}$ (Abbremsen).
+  \Antwortraum{2}
+  \begin{solution}
+  $a_3 = \dfrac{\Delta v}{\Delta t} = \dfrac{\SI{0}{\meter\per\second} - \SI{33.3}{\meter\per\second}}{\SI{6}{\second}} \approx -\SI{5.6}{\meter\per\second\squared}$.
+  \end{solution}
+
+  \part[3] Bestimme mithilfe von Flächenberechnungen (Rechteck und zwei
+  Dreiecke, analog zum $v$-$t$-Diagramm oben) die gesamte während der
+  Fahrt zurückgelegte Strecke.
+  \Antwortraum{3}
+  \begin{solution}
+  Dreieck (Beschleunigen): $\tfrac12\cdot\SI{10}{\second}\cdot\SI{33.3}{\meter\per\second}
+  \approx \SI{167}{\meter}$.\\
+  Rechteck (konstant): $\SI{15}{\second}\cdot\SI{33.3}{\meter\per\second}
+  \approx \SI{500}{\meter}$.\\
+  Dreieck (Abbremsen): $\tfrac12\cdot\SI{6}{\second}\cdot\SI{33.3}{\meter\per\second}
+  \approx \SI{100}{\meter}$.\\
+  Gesamt: $\approx \SI{167}{\meter} + \SI{500}{\meter} + \SI{100}{\meter}
+  = \SI{767}{\meter}$.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\end{document}

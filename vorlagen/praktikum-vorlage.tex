@@ -23,6 +23,9 @@
 \usepackage{geometry}
 \usepackage{amsmath}
 \usepackage{siunitx}
+% Hausstil: zusammengesetzte Einheiten immer als echter Bruch (\frac), nicht
+% als Inline-Schrägstrich oder \tfrac -- gilt global für jedes \si/\SI.
+\sisetup{per-mode=fraction,fraction-command=\frac}
 \usepackage{tikz}
 \usepackage{physics}
 \usepackage{circuitikz}
@@ -36,9 +39,12 @@
 \noprintanswers
 % \printanswers
 
-% --- Punkteformat (falls Auswertungsfragen bewertet werden) -----------------
-\pointname{~P.}
-\pointsinmargin
+% --- Punkte bleiben intern, werden aber nicht gedruckt ----------------------
+% Praktika sind nicht benotet. \question[n] bekommt trotzdem eine Punktzahl
+% n -- rein als interner Anhaltspunkt für \Antwortraum{n}. \pointformat{}
+% (Aufruf, nicht \renewcommand!) unterdrückt die gedruckte Punktanzeige
+% vollständig, ohne die interne Punktezählung (\numpoints) zu beeinflussen.
+\pointformat{}
 
 % --- Lösungsbox auf Deutsch --------------------------------------------------
 \renewcommand{\solutiontitle}{\noindent\textbf{Musterlösung:}\enspace}

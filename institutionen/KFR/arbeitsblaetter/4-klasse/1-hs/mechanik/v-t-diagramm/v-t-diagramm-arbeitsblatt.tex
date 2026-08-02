@@ -1,0 +1,805 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Arbeitsblatt: v-t-Diagramm (nicht bewertet, Übungsmaterial für den Unterricht)
+% Kantonsschule KFR – Physik, 4. Klasse, 1. HS, Mechanik
+%
+% Kopiert aus vorlagen/arbeitsblatt-vorlage.tex und um dieselben
+% Farb-/Boxdefinitionen ergänzt wie s-t-diagramm-arbeitsblatt.tex (selbes
+% Thema-Cluster, direkt anschliessende Lektion) -- Templates sind
+% selbstständig/nicht DRY, siehe CLAUDE.md.
+%
+% Stand: Lernziele + Theorie fertig (Reihenfolge = Dokumentreihenfolge, siehe
+% Kommentar vor der Lernziele-infobox unten). Einstieg/Aufgaben/Beispiele
+% folgen in einem späteren Schritt.
+% =============================================================================
+\documentclass[addpoints,11pt,a4paper]{exam}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.2cm,headheight=14pt]{geometry}
+\usepackage{amsmath}
+\usepackage{siunitx}
+% Hausstil: zusammengesetzte Einheiten immer als echter Bruch (\frac), nicht
+% als Inline-Schrägstrich oder \tfrac -- gilt global für jedes \si/\SI.
+\sisetup{per-mode=fraction,fraction-command=\frac}
+\usepackage{array,booktabs,tabularx,multirow}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{circuitikz}
+\usepackage[most]{tcolorbox}
+\usepackage{lastpage}
+\usepackage{needspace}
+
+\usetikzlibrary{arrows.meta,calc,angles,quotes}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+
+% -----------------------------
+% Farben (Corporate-Farbschema Physik KFR)
+% -----------------------------
+\definecolor{titleblue}{HTML}{183A6B}
+\definecolor{accentblue}{HTML}{2E6F9E}
+\definecolor{lightblue}{HTML}{EAF4FB}
+\definecolor{verylightblue}{HTML}{F7FBFE}
+\definecolor{lightgray}{HTML}{F4F6F8}
+\definecolor{darkgray}{HTML}{4A4A4A}
+% Für Diagramme mit zwei verschiedenen Funktionen/Linien: titleblue (dunkles
+% Blau) + accentorange (Orange) sind weit genug auseinander (auch in
+% Graustufen/für Farbenblinde unterscheidbar), im Gegensatz zu
+% titleblue+accentblue, die beide Blautöne sind.
+\definecolor{accentorange}{HTML}{D9720C}
+% Für Diagramme mit DREI Linien: dritte Farbe nötig, die sich sowohl von
+% titleblue als auch von accentorange klar unterscheidet -- auch in
+% Graustufen/für Farbenblinde. Violett liegt weit genug von Blau und Orange
+% entfernt, um als dritte Linie eindeutig unterscheidbar zu bleiben.
+\definecolor{accentpurple}{HTML}{7B2D8E}
+% Theorie-Block: eigene Farbe (grün), damit er sich auf einen Blick von den
+% blauen Lernziele-/Aufgaben-Boxen abhebt.
+\definecolor{theorygreen}{HTML}{2E7D4F}
+\definecolor{lighttheorygreen}{HTML}{EAF7EF}
+% Gruppenarbeit-Box: eigene Farbe (Petrol/Teal), damit Partner-/Gruppenarbeit
+% sich auf einen Blick von normalen Einzelaufgaben (blau, taskbox) und vom
+% Theorie-Block (grün, theoriebox) abhebt. Siehe Regel weiter unten bei
+% \newtcolorbox{groupbox}.
+\definecolor{groupteal}{HTML}{1B7F72}
+\definecolor{lightgroupteal}{HTML}{E8F5F3}
+
+% -----------------------------
+% Spaltentypen
+% -----------------------------
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% -----------------------------
+% Boxen
+% -----------------------------
+\newtcolorbox{titlebox}{
+  enhanced,
+  colback=titleblue,
+  colframe=titleblue,
+  boxrule=0pt,
+  arc=3mm,
+  left=3mm,right=3mm,top=3mm,bottom=3mm
+}
+
+% exam.cls rückt die questions-Liste um die Breite von "10." (plus \labelsep)
+% ein (Platz für die Nummerierung "1.", "2." ...); wir messen dieselbe Distanz
+% hier unabhängig nach.
+\newlength{\aufgabenindent}
+\settowidth{\aufgabenindent}{10.\hskip\labelsep}
+
+% left/right-Padding bewusst grosszügiger als bei answerbox: exam.cls hängt
+% die Nummerierung von \question bündig an den inneren Rand des
+% Textbereichs -- bei zu knappem Padding sitzt diese Nummer direkt auf dem
+% Rahmen der Box statt sichtbar innerhalb davon.
+% infobox steht ausserhalb von questions (z.B. beim Lernziele-Block auf
+% Dokumentebene) und braucht deshalb KEINE Korrektur -- \linewidth entspricht
+% dort bereits \textwidth.
+\newtcolorbox{infobox}{
+  enhanced,
+  breakable,
+  colback=lightblue,
+  colframe=accentblue,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+% theoriebox: wie infobox, aber grün und mit farbigem Titelbalken (analog zu
+% taskbox), damit der Theorie-Block auf einen Blick von Lernziele (blau,
+% ohne Titelbalken) und Aufgaben (blau, mit Titelbalken) unterscheidbar ist.
+% Steht wie infobox ausserhalb von questions -- KEINE Einrückungskorrektur
+% nötig (siehe Kommentar bei infobox oben).
+% Regel: hervorgehobene/definierte Begriffe INNERHALB einer theoriebox
+% immer mit \textbf{\emph{...}} setzen (fett UND kursiv), nicht mit blossem
+% \emph{...} -- damit Fachbegriffe beim Durchlesen der Theorie sofort
+% auffallen. Ausserhalb von theoriebox (beispielbox, Aufgabentext, ...)
+% bleibt \emph{...} allein korrekt.
+\newtcolorbox{theoriebox}[1][Theorie]{
+  enhanced,
+  breakable,
+  colback=lighttheorygreen,
+  colframe=theorygreen,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+% taskbox steht direkt in der questions-Liste (vor dem ersten \question),
+% also innerhalb von deren Einrückung. Empirisch (per Pixelvergleich mit der
+% Kopfzeilen-Tabelle) verschiebt "enlarge left by" hier die GESAMTE Box
+% (nicht nur ihren linken Rand) -- ein positiver Wert schiebt sie nach
+% RECHTS, nicht nach links, entgegen der naheliegenden Lesart des
+% Schlüsselnamens. Ein negativer Wert (-\aufgabenindent) schiebt die Box
+% exakt um die Listen-Einrückung nach links; width=\textwidth stellt danach
+% wieder die volle Breite her, sodass beide Kanten mit der Tabelle
+% übereinstimmen (verifiziert per Pixelmessung, Abweichung <=1px @300dpi).
+% Falls taskbox künftig auch ausserhalb von questions verwendet wird, muss
+% diese Korrektur analog zu infobox entfernt werden.
+\newtcolorbox{taskbox}[1][]{
+  enhanced,
+  breakable,
+  colback=verylightblue,
+  colframe=accentblue,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  enlarge left by=-\aufgabenindent,
+  width=\textwidth,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+% beispielbox: wie taskbox (blau), aber ausserhalb von questions -- deshalb
+% wie infobox/theoriebox KEINE Einrückungskorrektur nötig (siehe Kommentar
+% bei infobox oben). Für Beispiele in der Theorie: farblich blau wie
+% Aufgaben, damit "Beispiel" sich auf einen Blick von der grünen Theorie
+% abhebt (Hausstil: grün = Theorie, blau = Beispiele/Aufgaben).
+\newtcolorbox{beispielbox}[1][Beispiel]{
+  enhanced,
+  breakable,
+  colback=verylightblue,
+  colframe=accentblue,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+% groupbox: Regel -- JEDE Aufgabe, bei der Schülerinnen/Schüler zu zweit
+% oder in einer Gruppe zusammenarbeiten (Partnerarbeit, Gruppenarbeit,
+% Diskussion zu zweit, ...), bekommt diese Box statt der blauen taskbox.
+% Farbe (Petrol/Teal) ist bewusst weder blau (taskbox/infobox) noch grün
+% (theoriebox), damit "hier braucht es eine Partnerin/einen Partner" auf
+% einen Blick erkennbar ist. Strukturell identisch zu taskbox (gleiche
+% Einrückungskorrektur, da auch groupbox innerhalb von questions steht).
+\newtcolorbox{groupbox}[1][Gruppenarbeit]{
+  enhanced,
+  breakable,
+  colback=lightgroupteal,
+  colframe=groupteal,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  enlarge left by=-\aufgabenindent,
+  width=\textwidth,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+\newtcolorbox{answerbox}{
+  breakable,
+  colback=white,
+  colframe=gray!55,
+  boxrule=0.5pt,
+  arc=1.5mm,
+  left=2mm,right=2mm,top=2mm,bottom=2mm
+}
+
+% --- Lösungen ein-/ausblenden -----------------------------------------------
+% Schülerexemplar (Standard): \noprintanswers
+% Lehrer-/Lösungsexemplar:    \printanswers
+\noprintanswers
+% \printanswers
+
+% --- Punkte bleiben intern, werden aber nicht gedruckt ----------------------
+% Arbeitsblätter sind nicht benotet. \question[n]/\part[n] bekommen trotzdem
+% eine Punktzahl n -- rein als interner Anhaltspunkt, der 1:1 an
+% \Antwortraum{n} weitergereicht wird, um die Antwortraum-Grösse zu
+% bestimmen. \pointformat{} (Aufruf, nicht \renewcommand!) unterdrückt die
+% von der exam-Klasse sonst automatisch gedruckte Punktanzeige ("(n P.)")
+% vollständig, ohne die interne Punktezählung (\numpoints) zu beeinflussen.
+\pointformat{}
+
+% --- Lösungsbox auf Deutsch, farblich abgesetzt -----------------------------
+\renewcommand{\solutiontitle}{\noindent\color{titleblue}\textbf{Lösung:}\enspace}
+
+% --- Kopf-/Fusszeile: Thema/Titel oben, Seitenzahl unten --------------------
+\pagestyle{headandfoot}
+\cfoot{\textcolor{darkgray}{Seite \thepage\ von \pageref{LastPage}}}
+
+% --- Kopfzeile: Klasse / Datum / Thema / Titel ------------------------------
+% Einheitliches Layout für Arbeitsblatt, Prüfung und Praktikum. Ohne Tabelle:
+% Klasse/Datum/Thema/Lehrperson stehen als einfache Textzeile unter dem
+% Titel-Banner.
+\newcommand{\Kopfzeile}[4]{%
+  \begin{titlebox}
+    {\color{white}\sffamily\bfseries\Large #4}
+  \end{titlebox}
+  \vspace{0.5em}
+  \noindent\textbf{Klasse:}~#1 \hfill \textbf{Datum:}~#2 \hfill \textbf{Thema:}~#3
+    \hfill \textbf{Lehrperson:}~Loris Keller
+  \vspace{0.8em}
+  \lhead{\textcolor{darkgray}{#3}}
+  \rhead{\textcolor{darkgray}{#4}}
+}
+
+% --- Antwortraum: ca. 2.5 cm Platz pro Punkt, als umrandetes Feld -----------
+\newlength{\antwortraumlen}
+\newcommand{\Antwortraum}[1]{%
+  \pgfmathsetlength{\antwortraumlen}{#1*2.5cm}%
+  \begin{answerbox}
+    \rule{0pt}{\antwortraumlen}%
+  \end{answerbox}%
+}
+
+% Werte für Kopfzeile zentral setzen
+\newcommand{\Klasse}{4a}
+\newcommand{\Datum}{28.08.2026}
+\newcommand{\Thema}{Geschwindigkeit, v-t-Diagramm}
+\newcommand{\ArbeitsblattTitel}{Arbeitsblatt: v-t-Diagramm}
+
+\begin{document}
+
+\Kopfzeile{\Klasse}{\Datum}{\Thema}{\ArbeitsblattTitel}
+
+% --- Lernziele: aus lernziele.md (Backward-Design, Stufe 1) übernommen, aber
+% NEU NUMMERIERT nach demselben Prinzip wie im s-t-Diagramm-Arbeitsblatt --
+% LZ1..LZ7 hier entsprechen der Reihenfolge, in der die zugehörigen
+% Theorieboxen/Übungen im Dokument erscheinen, NICHT der Nummerierung aus dem
+% Backward-Design-Dokument. lernziele.md wurde entsprechend mitnummeriert.
+% Reihenfolge: LZ1 (Geschwindigkeit vs. Schnelligkeit, Vorzeichen -- jetzt
+% ALS ERSTES behandelt, in der Theoriebox "Geschwindigkeit: Richtung und
+% Betrag" samt Tramlinien-Beispiel, noch vor der Einführung des
+% v-t-Diagramms selbst) -> LZ2 (konstante Geschwindigkeit/Ruhe erkennen) ->
+% LZ3 (verschiedene Höhen = verschiedene, je konstante Geschwindigkeiten) ->
+% LZ4 (Fläche als Weg berechnen) -> LZ5 (Fläche = Weg begründen,
+% Einheitenanalyse) -> LZ6 (s-t <-> v-t übersetzen) -> LZ7 (Diagramm in
+% eigenen Worten beschreiben -- keine eigene Theoriebox, wird über eine
+% noch zu schreibende Übung/Partnerarbeit abgedeckt, Position hier
+% vorläufig ans Ende gesetzt und bei Bedarf anzupassen, sobald die Aufgaben
+% feststehen).
+\begin{infobox}
+\textbf{Lernziele}\\
+Am Ende dieser Einheit kann ich \dots
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.25em]
+  \item Geschwindigkeit (Richtung/Vorzeichen + Betrag) von Schnelligkeit (Betrag) unterscheiden und beide Begriffe korrekt verwenden. (LZ1)
+  \item anhand eines v-t-Diagramms erkennen, ob ein Objekt konstante Geschwindigkeit hat oder ruht. (LZ2)
+  \item mehrere horizontale v-t-Linien unterschiedlicher Höhe korrekt als unterschiedliche, aber je konstante Geschwindigkeiten deuten (nicht als unterschiedliche Beschleunigung). (LZ3)
+  \item aus einem v-t-Diagramm mit konstantem $v$ die in einem Zeitintervall zurückgelegte Strecke als Fläche berechnen. (LZ4)
+  \item begründen, weshalb die Fläche unter der $v$-$t$-Kurve dem zurückgelegten Weg entspricht (Einheitenanalyse $v\cdot t = s$). (LZ5)
+  \item zu einem $s$-$t$-Diagramm (gleichförmige Bewegung) das zugehörige $v$-$t$-Diagramm skizzieren und umgekehrt. (LZ6)
+  \item ein v-t-Diagramm ohne weitere Angaben in eigenen Worten so beschreiben, dass eine fachfremde Person die Bewegung versteht. (LZ7)
+\end{itemize}
+\end{infobox}
+
+% =============================================================================
+% Theorie: fachliche Grundlage für die Aufgaben, in eigene Boxen unterteilt
+% (je Unterthema eine theoriebox), Reihenfolge = Lernziele-Reihenfolge oben.
+% =============================================================================
+\begin{theoriebox}[Geschwindigkeit: Richtung und Betrag]
+Die \textbf{\emph{Geschwindigkeit}} $v$ (Einheit: $\si{\meter\per\second}$)
+eines Objekts hat immer zwei Eigenschaften: eine \textbf{\emph{Richtung}}
+und einen \textbf{\emph{Wert}}.
+
+Die Richtung wird durch das \textbf{\emph{Vorzeichen}} von $v$
+ausgedrückt, relativ zu einem gewählten Koordinatensystem: Bewegt sich
+ein Objekt in die positive Richtung, ist $v$ positiv; bewegt es sich in
+die negative Richtung, ist $v$ negativ.
+
+Betrachtet man nur den \textbf{\emph{Betrag}} $\lvert v\rvert$ der
+Geschwindigkeit (also ihren Wert \emph{ohne} Vorzeichen), spricht man
+von der \textbf{\emph{Schnelligkeit}}. Zwei Objekte können also
+unterschiedliche Geschwindigkeiten, aber dieselbe Schnelligkeit haben,
+zum Beispiel, wenn sie gleich schnell, aber in entgegengesetzte
+Richtungen unterwegs sind.
+\end{theoriebox}
+
+\begin{beispielbox}[Beispiel: Zwei Tramlinien auf der Bahnhofstrasse]
+Auf der Zürcher Bahnhofstrasse fahren zwei Trams mit derselben
+Schnelligkeit von $\SI{18}{\kilo\meter\per\hour}$: das eine Richtung
+Hauptbahnhof, das andere Richtung Bürkliplatz. Legt man die positive
+Richtung Richtung Hauptbahnhof fest, gilt:
+\[
+  v_{\text{Hauptbahnhof-Tram}} = +\SI{18}{\kilo\meter\per\hour},
+  \qquad
+  v_{\text{Bürkliplatz-Tram}} = -\SI{18}{\kilo\meter\per\hour}.
+\]
+Beide Trams haben dieselbe \emph{Schnelligkeit}
+($\SI{18}{\kilo\meter\per\hour}$), aber unterschiedliche (nämlich
+entgegengesetzte) \emph{Geschwindigkeiten}.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+  \draw[->] (-0.3,0) -- (5.7,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-2.3) -- (0,2.6) node[above] {\scriptsize $v$ in $\si{\kilo\meter\per\hour}$};
+  \draw[thick,titleblue] (0,1.6) -- (4.3,1.6) node[right] {\scriptsize $+18$: Richtung Hauptbahnhof};
+  \draw[thick,accentorange] (0,-1.6) -- (4.3,-1.6) node[right] {\scriptsize $-18$: Richtung Bürkliplatz};
+\end{tikzpicture}
+\end{center}
+\end{beispielbox}
+
+\begin{questions}
+\begin{taskbox}[Übung: Geschwindigkeit und Schnelligkeit im s-t-Diagramm]
+\question[6] Ein Läufer trainiert auf einer geraden Strecke. Das folgende
+$s$-$t$-Diagramm zeigt seine Bewegung.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.5]
+  \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (9,13);
+  \draw[->] (-0.3,0) -- (9.7,0) node[right] {\scriptsize $t$ in s};
+  \draw[->] (0,-0.3) -- (0,13.7) node[above] {\scriptsize $s$ in m};
+  \foreach \x/\lbl in {0/0,4/40,5/50,9/90} \draw (\x,0.15) -- (\x,-0.15) node[below] {\scriptsize \lbl};
+  \foreach \y/\lbl in {0/0,4/40,8/80,12/120} \draw (0.15,\y) -- (-0.15,\y) node[left] {\scriptsize \lbl};
+  \draw[thick,titleblue] (0,0) -- (4,12) -- (5,12) -- (9,4);
+  \filldraw[black] (0,0) circle (1.6pt);
+  \filldraw[black] (4,12) circle (1.6pt);
+  \filldraw[black] (5,12) circle (1.6pt);
+  \filldraw[black] (9,4) circle (1.6pt);
+\end{tikzpicture}
+\end{center}
+
+\begin{parts}
+  \part[2] Bestimme die Geschwindigkeit $v$ und die Schnelligkeit
+  $\lvert v\rvert$ im ersten Abschnitt ($t=0$ bis $t=\SI{40}{\second}$).
+  \Antwortraum{2}
+  \begin{solution}
+  $v = \dfrac{\SI{120}{\meter}-\SI{0}{\meter}}{\SI{40}{\second}-\SI{0}{\second}} = \SI{3}{\meter\per\second}$.
+  Da $v$ positiv ist: $\lvert v\rvert = \SI{3}{\meter\per\second}$.
+  \end{solution}
+
+  \part[2] Bestimme die Geschwindigkeit $v$ und die Schnelligkeit
+  $\lvert v\rvert$ im zweiten Abschnitt ($t=\SI{40}{\second}$ bis
+  $t=\SI{50}{\second}$).
+  \Antwortraum{2}
+  \begin{solution}
+  Der Ort ändert sich nicht ($s$ bleibt bei $\SI{120}{\meter}$, der Läufer
+  steht still): $v = \SI{0}{\meter\per\second}$, also auch
+  $\lvert v\rvert = \SI{0}{\meter\per\second}$.
+  \end{solution}
+
+  \part[2] Bestimme die Geschwindigkeit $v$ und die Schnelligkeit
+  $\lvert v\rvert$ im dritten Abschnitt ($t=\SI{50}{\second}$ bis
+  $t=\SI{90}{\second}$).
+  \Antwortraum{2}
+  \begin{solution}
+  $v = \dfrac{\SI{40}{\meter}-\SI{120}{\meter}}{\SI{90}{\second}-\SI{50}{\second}} = \dfrac{-\SI{80}{\meter}}{\SI{40}{\second}} = -\SI{2}{\meter\per\second}$.
+  Der Läufer bewegt sich hier rückwärts (negative Richtung); seine
+  Schnelligkeit ist $\lvert v\rvert = \SI{2}{\meter\per\second}$.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\begin{theoriebox}[Das v-t-Diagramm: Geschwindigkeit als Funktion der Zeit]
+Aus dem $s$-$t$-Diagramm kennst du bereits, wie man den \textbf{\emph{Ort}}
+eines Objekts über die Zeit darstellt. Ein $v$-$t$-Diagramm zeigt
+stattdessen direkt die \textbf{\emph{Geschwindigkeit}}: Man trägt die
+Geschwindigkeit $v$ auf der senkrechten Achse gegen die Zeit $t$ auf der
+waagrechten Achse auf.
+
+Jeder Punkt $(t,\,v(t))$ des Graphen beantwortet die Frage:
+\textbf{\emph{Wie schnell (und in welche Richtung) bewegte sich das
+Objekt zum Zeitpunkt $t$?}} Das $v$-$t$-Diagramm zeigt also nicht, \emph{wo}
+sich ein Objekt befindet (das zeigt das $s$-$t$-Diagramm), sondern
+\emph{wie schnell} es sich gerade bewegt.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+  \draw[->] (-0.3,0) -- (5.7,0) node[right] {\scriptsize $t$ in s};
+  \draw[->] (0,-0.3) -- (0,4) node[above] {\scriptsize $v$ in $\si{\meter\per\second}$};
+  \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (5,3);
+  \draw[thick,titleblue] (0,2) -- (5,2);
+  \filldraw[black] (3,2) circle (1.6pt) node[above] {\scriptsize $(t,\,v(t))=(\SI{3}{\second},\,\SI{2}{\meter\per\second})$};
+\end{tikzpicture}
+\end{center}
+\end{theoriebox}
+
+\begin{theoriebox}[Konstante Geschwindigkeit im v-t-Diagramm]
+Bewegt sich ein Objekt mit konstanter Geschwindigkeit (eine
+\textbf{\emph{gleichförmige Bewegung}}, wie bereits beim $s$-$t$-Diagramm
+kennengelernt), ist sein $v$-$t$-Diagramm eine \textbf{\emph{waagrechte
+Gerade}}: Die Geschwindigkeit ändert sich mit der Zeit nicht.
+
+Liegt diese waagrechte Linie genau auf der $t$-Achse ($v=0$), befindet
+sich das Objekt in \textbf{\emph{Ruhe}}.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+  \draw[->] (-0.3,0) -- (5.7,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-0.3) -- (0,4) node[above] {\scriptsize $v$};
+  \draw[thick,titleblue] (0,2.5) -- (4.3,2.5) node[right] {\scriptsize konstante Geschwindigkeit};
+  \draw[thick,accentorange] (0,0) -- (4.3,0);
+  \node[accentorange] at (2.2,0.35) {\scriptsize Ruhe ($v=0$)};
+\end{tikzpicture}
+\end{center}
+
+Zeichnet man mehrere waagrechte Linien auf unterschiedlicher Höhe in
+dasselbe Diagramm, bewegen sich die entsprechenden Objekte mit
+unterschiedlichen (aber je für sich konstanten) Geschwindigkeiten. Die
+\textbf{\emph{Höhe}} einer Linie zeigt die Geschwindigkeit. Eine Linie
+kann dabei auch \emph{unterhalb} der $t$-Achse liegen. Das zeigt (wie
+in der vorherigen Theoriebox besprochen) eine Bewegung in die negative
+Richtung.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+  \draw[->] (-0.3,0) -- (5.7,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-0.3) -- (0,4) node[above] {\scriptsize $v$};
+  \draw[thick,titleblue] (0,3) -- (4.3,3) node[right] {\scriptsize schnell};
+  \draw[thick,accentorange] (0,1.7) -- (4.3,1.7) node[right] {\scriptsize langsamer};
+  \draw[thick,accentpurple] (0,0) -- (4.3,0);
+  \node[accentpurple] at (2.2,0.35) {\scriptsize Ruhe};
+\end{tikzpicture}
+\end{center}
+
+\textbf{Hinweis:} Alle drei Linien oben sind waagrecht, also ist ihre
+Steigung überall null: \emph{keines} der drei Objekte beschleunigt,
+unabhängig davon, wie hoch oder tief die jeweilige Linie liegt. Eine
+höhere Linie bedeutet \emph{nur} eine grössere (aber weiterhin konstante)
+Geschwindigkeit, \textbf{nicht} eine stärkere Beschleunigung. Das ist
+eine der häufigsten Verwechslungen bei $v$-$t$-Diagrammen.
+\end{theoriebox}
+
+\begin{questions}
+\begin{taskbox}[Übung: Geschwindigkeit, Schnelligkeit und v-t-Diagramm bei einer Wanderung]
+\question[8] Eine Wanderin steigt auf einem geraden Waldweg einen Hügel
+hoch (Strecke: $\SI{2}{\kilo\meter}$) und kehrt anschliessend auf
+demselben Weg zurück. Positive Richtung: bergwärts.
+
+Der Aufstieg dauert $\SI{40}{\minute}$. Danach macht sie eine Pause auf
+dem Gipfel von $\SI{20}{\minute}$. Der Abstieg (dieselbe Strecke von
+$\SI{2}{\kilo\meter}$) dauert nur $\SI{24}{\minute}$.
+
+\begin{parts}
+  \part[2] Berechne die Geschwindigkeit $v$ und die Schnelligkeit
+  $\lvert v\rvert$ für den Aufstieg.
+  \Antwortraum{2}
+  \begin{solution}
+  $v = \dfrac{\SI{2}{\kilo\meter}}{\SI{40}{\minute}} = \SI{0.05}{\kilo\meter\per\minute} = \SI{3}{\kilo\meter\per\hour}$
+  (positiv, da bergwärts). $\lvert v\rvert = \SI{3}{\kilo\meter\per\hour}$.
+  \end{solution}
+
+  \part[1] Wie lautet die Geschwindigkeit $v$ während der Pause auf dem
+  Gipfel?
+  \Antwortraum{1}
+  \begin{solution}
+  $v = \SI{0}{\kilo\meter\per\hour}$: Die Wanderin bewegt sich nicht.
+  \end{solution}
+
+  \part[2] Berechne die Geschwindigkeit $v$ und die Schnelligkeit
+  $\lvert v\rvert$ für den Abstieg.
+  \Antwortraum{2}
+  \begin{solution}
+  $v = \dfrac{-\SI{2}{\kilo\meter}}{\SI{24}{\minute}} = -\SI{0.0833}{\kilo\meter\per\minute} = -\SI{5}{\kilo\meter\per\hour}$
+  (negativ, da talwärts). $\lvert v\rvert = \SI{5}{\kilo\meter\per\hour}$.
+  Der Abstieg ist also schneller als der Aufstieg.
+  \end{solution}
+
+  \part[3] Zeichne das $v$-$t$-Diagramm für die gesamte Wanderung (alle
+  drei Phasen). Verwende $t$ in Minuten und $v$ in
+  $\si{\kilo\meter\per\hour}$.
+
+  \begin{center}
+  \begin{tikzpicture}[scale=0.55]
+    \draw[gray!20] (0,-6) grid[xstep=1,ystep=1] (21,4);
+    \draw[->] (-0.5,0) -- (21.7,0) node[right] {\scriptsize $t$ in min};
+    \draw[->] (0,-6.5) -- (0,4.5) node[above] {\scriptsize $v$ in $\si{\kilo\meter\per\hour}$};
+    \foreach \x/\lbl in {10/40,15/60,21/84} \draw (\x,0.15) -- (\x,-0.15) node[below] {\scriptsize \lbl};
+    \foreach \y in {-6,-5,-4,-3,-2,-1,1,2,3,4} \draw (0.2,\y) -- (-0.2,\y) node[left] {\scriptsize \y};
+  \end{tikzpicture}
+  \end{center}
+  \begin{solution}
+  \begin{center}
+  \begin{tikzpicture}[scale=0.55]
+    \draw[gray!20] (0,-6) grid[xstep=1,ystep=1] (21,4);
+    \draw[->] (-0.5,0) -- (21.7,0) node[right] {\scriptsize $t$ in min};
+    \draw[->] (0,-6.5) -- (0,4.5) node[above] {\scriptsize $v$ in $\si{\kilo\meter\per\hour}$};
+    \foreach \x/\lbl in {10/40,15/60,21/84} \draw (\x,0.15) -- (\x,-0.15) node[below] {\scriptsize \lbl};
+    \foreach \y in {-6,-5,-4,-3,-2,-1,1,2,3,4} \draw (0.2,\y) -- (-0.2,\y) node[left] {\scriptsize \y};
+    \draw[thick,titleblue] (0,3) -- (10,3);
+    \draw[dashed,gray] (10,3) -- (10,0);
+    \draw[thick,titleblue] (10,0) -- (15,0);
+    \draw[dashed,gray] (15,0) -- (15,-5);
+    \draw[thick,titleblue] (15,-5) -- (21,-5);
+  \end{tikzpicture}
+  \end{center}
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\begin{theoriebox}[Fläche unter der Kurve: Der zurückgelegte Weg]
+Bewegt sich ein Objekt während der Zeit $\Delta t = t_2 - t_1$ mit
+konstanter Geschwindigkeit $v$, kennst du aus dem $s$-$t$-Diagramm bereits
+die Beziehung $s = v \cdot t$. Im $v$-$t$-Diagramm hat das eine schöne
+geometrische Bedeutung: Die zurückgelegte Strecke $s$ entspricht genau der
+\textbf{\emph{Fläche}} zwischen der $v$-$t$-Linie und der $t$-Achse.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+  \draw[->] (-0.3,0) -- (6.2,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-0.3) -- (0,3.2) node[above] {\scriptsize $v$};
+  \filldraw[lightblue] (1.5,0) rectangle (4.5,2);
+  \draw[thick,titleblue] (0,2) -- (5.7,2);
+  \draw[dashed,gray] (1.5,0) -- (1.5,2);
+  \draw[dashed,gray] (4.5,0) -- (4.5,2);
+  \draw (1.5,0.15) -- (1.5,-0.15) node[below] {\scriptsize $t_1$};
+  \draw (4.5,0.15) -- (4.5,-0.15) node[below] {\scriptsize $t_2$};
+  \node at (3,1) {\scriptsize Fläche $= v \cdot \Delta t = s$};
+  \node[left] at (0,2) {\scriptsize $v$};
+\end{tikzpicture}
+\end{center}
+
+Diese Fläche ist ein Rechteck mit Höhe $v$ und Breite $\Delta t$:
+\[
+  s = \text{Fläche} = v \cdot \Delta t = v \cdot (t_2 - t_1).
+\]
+
+\textbf{Warum ist das so?} Eine kurze Einheitenanalyse zeigt es: Die
+Einheit von $v$ ist $\si{\meter\per\second}$, die Einheit von $t$ ist
+$\si{\second}$. Multipliziert man beide,
+\[
+  \si{\meter\per\second} \cdot \si{\second} = \si{\meter},
+\]
+erhält man genau die Einheit einer Strecke. Das ist kein Zufall: Die
+Fläche unter einer $v$-$t$-Kurve hat \emph{immer} die Einheit einer
+Strecke, unabhängig davon, wie die Kurve aussieht. Bei einer
+gleichförmigen Bewegung (waagrechte Linie) ist diese Fläche einfach ein
+Rechteck und damit besonders leicht zu berechnen.
+\end{theoriebox}
+
+\begin{questions}
+\begin{taskbox}[Übung: Gleiche Fläche, unterschiedliche Geschwindigkeiten]
+\question[7] Eine Velofahrerin fährt mit konstant $\SI{4}{\meter\per\second}$
+während $\SI{10}{\second}$. Ein Jogger läuft (in dieselbe Richtung, auf
+demselben Weg) mit konstant $\SI{2}{\meter\per\second}$ während
+$\SI{20}{\second}$.
+
+\begin{parts}
+  \part[2] Berechne die zurückgelegte Strecke der Velofahrerin und des
+  Joggers mithilfe der Fläche im jeweiligen $v$-$t$-Diagramm.
+  \Antwortraum{2}
+  \begin{solution}
+  Velofahrerin: $s = \SI{4}{\meter\per\second}\cdot\SI{10}{\second} = \SI{40}{\meter}$.\\
+  Jogger: $s = \SI{2}{\meter\per\second}\cdot\SI{20}{\second} = \SI{40}{\meter}$.
+  \end{solution}
+
+  \part[3] Zeichne die beiden $v$-$t$-Diagramme und markiere jeweils die
+  Fläche, die der zurückgelegten Strecke entspricht.
+
+  \begin{center}
+  \textbf{\scriptsize Velofahrerin}\\[0.2em]
+  \begin{tikzpicture}[scale=1.1]
+    \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (10,5);
+    \draw[->] (-0.3,0) -- (10.5,0) node[right] {\scriptsize $t$ in s};
+    \draw[->] (0,-0.3) -- (0,5.5) node[above] {\scriptsize $v$ in $\si{\meter\per\second}$};
+  \end{tikzpicture}
+  \end{center}
+
+  \begin{center}
+  \textbf{\scriptsize Jogger}\\[0.2em]
+  \begin{tikzpicture}[scale=0.58]
+    \draw[gray!20] (0,0) grid[xstep=2,ystep=1] (20,3);
+    \draw[->] (-0.3,0) -- (20.5,0) node[right] {\scriptsize $t$ in s};
+    \draw[->] (0,-0.3) -- (0,3.5) node[above] {\scriptsize $v$ in $\si{\meter\per\second}$};
+  \end{tikzpicture}
+  \end{center}
+  \begin{solution}
+  \begin{center}
+  \textbf{\scriptsize Velofahrerin}\\[0.2em]
+  \begin{tikzpicture}[scale=1.1]
+    \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (10,5);
+    \draw[->] (-0.3,0) -- (10.5,0) node[right] {\scriptsize $t$ in s};
+    \draw[->] (0,-0.3) -- (0,5.5) node[above] {\scriptsize $v$ in $\si{\meter\per\second}$};
+    \filldraw[lightblue] (0,0) rectangle (10,4);
+    \draw[thick,titleblue] (0,4) -- (10,4);
+    \node at (5,2) {\scriptsize Fläche $=4\cdot10=\SI{40}{\meter}$};
+  \end{tikzpicture}
+  \end{center}
+
+  \begin{center}
+  \textbf{\scriptsize Jogger}\\[0.2em]
+  \begin{tikzpicture}[scale=0.58]
+    \draw[gray!20] (0,0) grid[xstep=2,ystep=1] (20,3);
+    \draw[->] (-0.3,0) -- (20.5,0) node[right] {\scriptsize $t$ in s};
+    \draw[->] (0,-0.3) -- (0,3.5) node[above] {\scriptsize $v$ in $\si{\meter\per\second}$};
+    \filldraw[lightblue] (0,0) rectangle (20,2);
+    \draw[thick,titleblue] (0,2) -- (20,2);
+    \node at (10,1) {\scriptsize Fläche $=2\cdot20=\SI{40}{\meter}$};
+  \end{tikzpicture}
+  \end{center}
+  \end{solution}
+
+  \part[2] Was fällt auf? Erkläre, weshalb dieses Ergebnis Sinn macht,
+  obwohl die beiden unterschiedlich schnell und unterschiedlich lange
+  unterwegs waren.
+  \Antwortraum{2}
+  \begin{solution}
+  Beide legen dieselbe Strecke zurück ($\SI{40}{\meter}$), obwohl die
+  Velofahrerin doppelt so schnell, aber nur halb so lange unterwegs ist
+  wie der Jogger. Das macht Sinn, weil die Fläche $v\cdot t$ das
+  entscheidende Produkt ist: Eine Verdoppelung von $v$ bei gleichzeitiger
+  Halbierung von $t$ ergibt wieder dieselbe Fläche.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\begin{theoriebox}[Vom s-t- zum v-t-Diagramm]
+Ein und dieselbe gleichförmige Bewegung lässt sich sowohl im
+$s$-$t$-Diagramm als auch im $v$-$t$-Diagramm darstellen: Die beiden
+Diagramme zeigen einfach unterschiedliche Informationen über \emph{dieselbe}
+Bewegung. Der Zusammenhang: Die \textbf{\emph{Steigung}} der Geraden im
+$s$-$t$-Diagramm entspricht genau der \textbf{\emph{Höhe}} der Geraden im
+$v$-$t$-Diagramm.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+  % s-t-Diagramm links
+  \begin{scope}
+    \draw[->] (-0.3,0) -- (4.2,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-0.3) -- (0,3.7) node[above] {\scriptsize $s$};
+    \draw[thick,titleblue] (0,0) -- (4,3.2) node[above left] {\scriptsize schneller};
+    \draw[thick,accentorange] (0,0) -- (4,1.2) node[above right] {\scriptsize langsamer};
+    \node[below] at (2,-0.9) {\scriptsize $s$-$t$-Diagramm};
+  \end{scope}
+  % v-t-Diagramm rechts
+  \begin{scope}[xshift=6.5cm]
+    \draw[->] (-0.3,0) -- (4.2,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-0.3) -- (0,3.7) node[above] {\scriptsize $v$};
+    \draw[thick,titleblue] (0,2.6) -- (4,2.6) node[right] {\scriptsize schneller};
+    \draw[thick,accentorange] (0,1.0) -- (4,1.0) node[right] {\scriptsize langsamer};
+    \node[below] at (2,-0.9) {\scriptsize $v$-$t$-Diagramm};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+
+Die steilere Gerade im $s$-$t$-Diagramm (\textbf{\emph{schneller}}) gehört
+zur höher liegenden waagrechten Linie im $v$-$t$-Diagramm; die weniger
+steile Gerade (\textbf{\emph{langsamer}}) gehört zur tiefer liegenden
+Linie. Eine \textbf{\emph{Ruhephase}} (waagrechte Linie bei $s=\text{konst.}$
+im $s$-$t$-Diagramm) entspricht im $v$-$t$-Diagramm einer Linie genau auf
+der $t$-Achse ($v=0$).
+\end{theoriebox}
+
+\begin{questions}
+\begin{taskbox}[Übung: Vom s-t- zum v-t-Diagramm und zurück]
+\question[9] Das folgende $s$-$t$-Diagramm zeigt die Bewegung eines
+Objekts.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \draw[gray!20] (0,-5) grid[xstep=1,ystep=1] (11,9);
+  \draw[->] (-0.3,0) -- (11.5,0) node[right] {\scriptsize $t$ in s};
+  \draw[->] (0,-5.5) -- (0,9.5) node[above] {\scriptsize $s$ in m};
+  \foreach \x in {2,4,6,8,10,11} \draw (\x,0.15) -- (\x,-0.15) node[below] {\scriptsize \x};
+  \foreach \y in {-4,-2,0,2,4,6,8} \draw (0.15,\y) -- (-0.15,\y) node[left] {\scriptsize \y};
+  \draw[thick,titleblue] (0,0) -- (4,8) -- (7,8) -- (11,-4);
+  \filldraw[black] (0,0) circle (1.6pt);
+  \filldraw[black] (4,8) circle (1.6pt);
+  \filldraw[black] (7,8) circle (1.6pt);
+  \filldraw[black] (11,-4) circle (1.6pt);
+\end{tikzpicture}
+\end{center}
+
+\begin{parts}
+  \part[3] Zeichne das zugehörige $v$-$t$-Diagramm.
+
+  \begin{center}
+  \begin{tikzpicture}[scale=1.0]
+    \draw[gray!20] (0,-4) grid[xstep=1,ystep=1] (11,3);
+    \draw[->] (-0.3,0) -- (11.5,0) node[right] {\scriptsize $t$ in s};
+    \draw[->] (0,-4.5) -- (0,3.5) node[above] {\scriptsize $v$ in $\si{\meter\per\second}$};
+    \foreach \x in {2,4,6,8,10,11} \draw (\x,0.15) -- (\x,-0.15) node[below] {\scriptsize \x};
+    \foreach \y in {-4,-3,-2,-1,0,1,2,3} \draw (0.15,\y) -- (-0.15,\y) node[left] {\scriptsize \y};
+  \end{tikzpicture}
+  \end{center}
+  \begin{solution}
+  \begin{center}
+  \begin{tikzpicture}[scale=1.0]
+    \draw[gray!20] (0,-4) grid[xstep=1,ystep=1] (11,3);
+    \draw[->] (-0.3,0) -- (11.5,0) node[right] {\scriptsize $t$ in s};
+    \draw[->] (0,-4.5) -- (0,3.5) node[above] {\scriptsize $v$ in $\si{\meter\per\second}$};
+    \foreach \x in {2,4,6,8,10,11} \draw (\x,0.15) -- (\x,-0.15) node[below] {\scriptsize \x};
+    \foreach \y in {-4,-3,-2,-1,0,1,2,3} \draw (0.15,\y) -- (-0.15,\y) node[left] {\scriptsize \y};
+    \draw[thick,titleblue] (0,2) -- (4,2);
+    \draw[dashed,gray] (4,2) -- (4,0);
+    \draw[thick,titleblue] (4,0) -- (7,0);
+    \draw[dashed,gray] (7,0) -- (7,-3);
+    \draw[thick,titleblue] (7,-3) -- (11,-3);
+  \end{tikzpicture}
+  \end{center}
+  \end{solution}
+
+  \part[3] Berechne mithilfe der Flächen in deinem $v$-$t$-Diagramm die
+  Ortsänderung zwischen $t=0$ und $t=\SI{11}{\second}$, und vergleiche
+  dein Ergebnis mit dem $s$-$t$-Diagramm oben.
+  \Antwortraum{3}
+  \begin{solution}
+  Fläche 1 ($t=0$ bis $\SI{4}{\second}$, oberhalb der Achse):
+  $2\cdot4 = +\SI{8}{\meter}$.\\
+  Fläche 2 ($t=4$ bis $\SI{7}{\second}$): $0\cdot3 = \SI{0}{\meter}$.\\
+  Fläche 3 ($t=7$ bis $\SI{11}{\second}$, \emph{unterhalb} der Achse,
+  zählt negativ): $-3\cdot4 = -\SI{12}{\meter}$.\\
+  Ortsänderung gesamt: $8+0-12 = -\SI{4}{\meter}$.
+
+  Vergleich mit dem $s$-$t$-Diagramm:
+  $s(\SI{11}{\second})-s(\SI{0}{\second}) = -\SI{4}{\meter}-\SI{0}{\meter} = -\SI{4}{\meter}$.
+  Stimmt überein!
+
+  \textbf{Hinweis:} Flächen unterhalb der $t$-Achse zählen negativ, weil
+  sie eine Bewegung in die negative Richtung darstellen. Die Summe
+  aller (vorzeichenbehafteten) Flächen ergibt die \emph{Ortsänderung},
+  nicht den zurückgelegten \emph{Weg} (dieser wäre
+  $8+0+12=\SI{20}{\meter}$, die Summe der \emph{Beträge}).
+  \end{solution}
+
+  \part[3] Gegeben ist nun das folgende $v$-$t$-Diagramm. Zeichne das
+  zugehörige $s$-$t$-Diagramm (Startpunkt: $s=0$ bei $t=0$).
+
+  \begin{center}
+  \begin{tikzpicture}[scale=0.75]
+    \draw[gray!20] (0,-2) grid[xstep=1,ystep=1] (15,4);
+    \draw[->] (-0.3,0) -- (15.5,0) node[right] {\scriptsize $t$ in s};
+    \draw[->] (0,-2.5) -- (0,4.5) node[above] {\scriptsize $v$ in $\si{\meter\per\second}$};
+    \foreach \x in {5,10,15} \draw (\x,0.15) -- (\x,-0.15) node[below] {\scriptsize \x};
+    \foreach \y in {-2,-1,0,1,2,3,4} \draw (0.15,\y) -- (-0.15,\y) node[left] {\scriptsize \y};
+    \draw[thick,titleblue] (0,3) -- (5,3);
+    \draw[dashed,gray] (5,3) -- (5,-1);
+    \draw[thick,titleblue] (5,-1) -- (10,-1);
+    \draw[dashed,gray] (10,-1) -- (10,2);
+    \draw[thick,titleblue] (10,2) -- (15,2);
+  \end{tikzpicture}
+  \end{center}
+
+  \begin{center}
+  \begin{tikzpicture}[scale=0.75]
+    \draw[gray!20] (0,0) grid[xstep=1,ystep=5] (15,23);
+    \draw[->] (-0.3,0) -- (15.5,0) node[right] {\scriptsize $t$ in s};
+    \draw[->] (0,-0.5) -- (0,23.5) node[above] {\scriptsize $s$ in m};
+    \foreach \x in {0,5,10,15} \draw (\x,0.15) -- (\x,-0.15) node[below] {\scriptsize \x};
+    \foreach \y in {0,5,10,15,20} \draw (0.15,\y) -- (-0.15,\y) node[left] {\scriptsize \y};
+  \end{tikzpicture}
+  \end{center}
+  \begin{solution}
+  \begin{center}
+  \begin{tikzpicture}[scale=0.75]
+    \draw[gray!20] (0,0) grid[xstep=1,ystep=5] (15,23);
+    \draw[->] (-0.3,0) -- (15.5,0) node[right] {\scriptsize $t$ in s};
+    \draw[->] (0,-0.5) -- (0,23.5) node[above] {\scriptsize $s$ in m};
+    \foreach \x in {0,5,10,15} \draw (\x,0.15) -- (\x,-0.15) node[below] {\scriptsize \x};
+    \foreach \y in {0,5,10,15,20} \draw (0.15,\y) -- (-0.15,\y) node[left] {\scriptsize \y};
+    \draw[thick,titleblue] (0,0) -- (5,15) -- (10,10) -- (15,20);
+    \filldraw[black] (0,0) circle (1.6pt);
+    \filldraw[black] (5,15) circle (1.6pt);
+    \filldraw[black] (10,10) circle (1.6pt);
+    \filldraw[black] (15,20) circle (1.6pt);
+  \end{tikzpicture}
+  \end{center}
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\end{document}
