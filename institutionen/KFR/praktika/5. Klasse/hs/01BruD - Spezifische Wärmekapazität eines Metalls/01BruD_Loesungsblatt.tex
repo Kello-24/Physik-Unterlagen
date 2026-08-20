@@ -1,0 +1,279 @@
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Sprache & Encoding ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+% ---------- Layout ----------
+\usepackage[a4paper,margin=2.3cm]{geometry}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{amsmath,amssymb}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+
+% ---------- Farben ----------
+\definecolor{kfrblue}{HTML}{1F5C99}
+\definecolor{tipbg}{HTML}{EAF3EA}
+\definecolor{tipgreen}{HTML}{2E7D32}
+
+% ---------- Überschriften ----------
+\titleformat{\section}{\large\bfseries\color{kfrblue}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{kfrblue}}{\thesubsection}{0.6em}{}
+
+% ---------- Kopf-/Fusszeile ----------
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyhead[L]{\small Physik 5.\,Klasse, Praktikum 01 (Lehrperson)}
+\fancyhead[R]{\small Lösungsblatt}
+\fancyfoot[C]{\small\thepage}
+
+% ---------- Boxen ----------
+\newtcolorbox{aufgabebox}[1][]{%
+  colback=gray!6, colframe=kfrblue, coltitle=white, colbacktitle=kfrblue,
+  boxrule=0.8pt, arc=2pt,
+  left=6pt, right=6pt, top=4pt, bottom=4pt, breakable,
+  title={\textbf{Aufgabe}#1},
+  fonttitle=\small, fontupper=\small
+}
+\newtcolorbox{loesungbox}[1][]{%
+  colback=tipbg, colframe=tipgreen, coltitle=white, colbacktitle=tipgreen,
+  boxrule=0.8pt, arc=2pt,
+  left=6pt, right=6pt, top=4pt, bottom=4pt, breakable,
+  title={\textbf{Lösung}#1},
+  fonttitle=\small, fontupper=\small
+}
+
+\newcommand{\Temp}{T}
+\newcommand{\celsius}{\ensuremath{^{\circ}\mathrm{C}}}
+\newcommand{\SI}[2]{#1\,#2}
+
+% ---------- automatisch generierte Werte (aus dem Musterloesung-Notebook, Abschnitt 7) ----------
+\input{loesung_werte.tex}
+
+% ---------- eine vollstaendige Gruppen-Auswertung, parametrisiert nach Metallname ----------
+% Die Werte pro Gruppe stehen in loesung_werte.tex als \<Name><Metall>, z.B. \cMwertNickel.
+% \csname baut daraus den passenden Befehlsnamen zusammen (kein Leerzeichen vor #1!).
+\newcommand{\GruppenAuswertung}[1]{%
+\subsection{Gruppe: #1}
+\renewcommand{\arraystretch}{1.3}
+\begin{center}
+\begin{tabularx}{\linewidth}{@{}X l l@{}}
+  \toprule
+  \textbf{Grösse} & \textbf{Messung} & \textbf{Messgenauigkeit} \\
+  \midrule
+  Masse der Metallprobe & $m_M = \csname mM#1\endcsname\ \mathrm{g}$ & $\pm\, \csname dmM#1\endcsname\ \mathrm{g}$ \\
+  Masse des Kalorimeters (Kupfer) & $m_K = \csname mK#1\endcsname\ \mathrm{g}$ & $\pm\, \csname dmK#1\endcsname\ \mathrm{g}$ \\
+  Masse des Wassers & $m_W = \csname mW#1\endcsname\ \mathrm{g}$ & $\pm\, \csname dmW#1\endcsname\ \mathrm{g}$ \\
+  Anfangstemperatur der Metallprobe & $\Temp_{M0} = \csname thetaMNull#1\endcsname\ ^\circ\mathrm{C}$ & $\pm\, \csname dthetaMNull#1\endcsname\ \mathrm{K}$ \\
+  Anfangstemperatur Kalorimeter/Wasser & $\Temp_{K0} = \Temp_{W0} = \csname thetaNull#1\endcsname\ ^\circ\mathrm{C}$ & $\pm\, \csname dthetaNull#1\endcsname\ \mathrm{K}$ \\
+  Mischungstemperatur & $\Temp_{K1} = \Temp_{W1} = \Temp_{M1} = \csname thetaEins#1\endcsname\ ^\circ\mathrm{C}$ & $\pm\, \csname dthetaEins#1\endcsname\ \mathrm{K}$ \\
+  Spez.\ Wärmekapazität von Wasser & $c_W = \csname cW#1\endcsname\ \mathrm{J\,kg^{-1}\,K^{-1}}$ & exakt \\
+  Spez.\ Wärmekapazität von Kupfer & $c_K = \csname cK#1\endcsname\ \mathrm{J\,kg^{-1}\,K^{-1}}$ & exakt \\
+  Volumen der Metallprobe & $V_M = \csname VM#1\endcsname\ \mathrm{cm^3}$ & $\pm\, \csname dVM#1\endcsname\ \mathrm{cm^3}$ \\
+  \bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{aufgabebox}
+Leite eine Gleichung her, mit der sich die spezifische Wärmekapazität $c_M$ der Metallprobe berechnen lässt, und berechne damit $c_M$.
+\end{aufgabebox}
+\begin{loesungbox}
+Energieerhaltung beim Mischen: die von der Metallprobe abgegebene Wärme entspricht der vom Wasser und vom Kalorimetergefäss gemeinsam aufgenommenen Wärme,
+\[
+  m_M\, c_M\, (\Temp_{M0}-\Temp_1) = m_W\, c_W\, (\Temp_1-\Temp_0) + m_K\, c_K\, (\Temp_1-\Temp_0).
+\]
+Division durch $m_M(\Temp_{M0}-\Temp_1)$ liefert
+\[
+  c_M = \frac{(m_W c_W + m_K c_K)(\Temp_1-\Temp_0)}{m_M(\Temp_{M0}-\Temp_1)}.
+\]
+Einsetzen der Messwerte, Schritt für Schritt:
+\begin{align*}
+  m_W c_W &= \csname mWkg#1\endcsname\ \mathrm{kg} \cdot \csname cW#1\endcsname\ \mathrm{J\,kg^{-1}\,K^{-1}} = \csname mWcW#1\endcsname\ \mathrm{J/K} \\
+  m_K c_K &= \csname mKkg#1\endcsname\ \mathrm{kg} \cdot \csname cK#1\endcsname\ \mathrm{J\,kg^{-1}\,K^{-1}} = \csname mKcK#1\endcsname\ \mathrm{J/K} \\
+  N := m_W c_W + m_K c_K &= \csname mWcW#1\endcsname + \csname mKcK#1\endcsname = \csname Nwert#1\endcsname\ \mathrm{J/K} \\
+  \Temp_1-\Temp_0 &= \csname thetaEins#1\endcsname - \csname thetaNull#1\endcsname = \csname Teins#1\endcsname\ \mathrm{K} \\
+  \Temp_{M0}-\Temp_1 &= \csname thetaMNull#1\endcsname - \csname thetaEins#1\endcsname = \csname Tzwei#1\endcsname\ \mathrm{K} \\
+  N\cdot(\Temp_1-\Temp_0) &= \csname Nwert#1\endcsname \cdot \csname Teins#1\endcsname = \csname NTeins#1\endcsname\ \mathrm{J} \\
+  m_M\cdot(\Temp_{M0}-\Temp_1) &= \csname mMkg#1\endcsname \cdot \csname Tzwei#1\endcsname = \csname mMTzwei#1\endcsname\ \mathrm{kg\,K} \\
+  c_M &= \frac{\csname NTeins#1\endcsname\ \mathrm{J}}{\csname mMTzwei#1\endcsname\ \mathrm{kg\,K}} = \csname cMwert#1\endcsname\ \mathrm{J\,kg^{-1}\,K^{-1}}
+\end{align*}
+\end{loesungbox}
+
+\begin{aufgabebox}
+Bestimme das Volumen $V_M$ der Metallprobe und berechne die Dichte.
+\end{aufgabebox}
+\begin{loesungbox}
+Erwartete Methode (Überlaufmethode): alle Pellets der Metallprobe zusammen werden vollständig in ein randvoll gefülltes Überlaufgefäss getaucht. Das dabei verdrängte Wasser wird aufgefangen und im Messzylinder gemessen. Weil die eingetauchten Pellets genauso viel Wasser verdrängen, wie sie selbst an Gesamtvolumen einnehmen (Prinzip von Archimedes), entspricht das abgelesene Wasservolumen direkt dem gesuchten $V_M$. Das funktioniert auch für viele kleine, unregelmässig geformte Pellets, die sich nicht mit Geodreieck oder Schieblehre berechnen lassen, solange alle Pellets vollständig untertauchen und keine Luftblasen zwischen ihnen hängen bleiben.
+
+Der Messzylinder zeigt das Volumen in Milliliter (ml) an. Für die Dichteformel wird daraus die SI-Basiseinheit m$^3$: mit $1\ \mathrm{ml} = 1\ \mathrm{cm^3}$ und $1\ \mathrm{cm^3} = (10^{-2}\,\mathrm{m})^3 = 10^{-6}\ \mathrm{m^3}$ folgt
+\[
+  V_M = \csname VM#1\endcsname\ \mathrm{ml} = \csname VM#1\endcsname\ \mathrm{cm^3} = \csname VM#1\endcsname \times 10^{-6}\ \mathrm{m^3} = \csname VMSI#1\endcsname\ \mathrm{m^3}.
+\]
+Damit lässt sich die Dichte entweder in der SI-Einheit $\mathrm{kg/m^3}$ (mit $m_M$ in kg und $V_M$ in m$^3$) oder gleichwertig direkt in $\mathrm{g/cm^3}$ (mit $m_M$ in g und $V_M$ in cm$^3$, ohne Umrechnung) berechnen: beide Wege liefern denselben physikalischen Wert.
+\[
+  \rho_M = \frac{m_M}{V_M} = \frac{\csname mMkg#1\endcsname\ \mathrm{kg}}{\csname VMSI#1\endcsname\ \mathrm{m^3}} = \csname rhoMSI#1\endcsname\ \mathrm{kg/m^3} \;=\; \frac{\csname mM#1\endcsname\ \mathrm{g}}{\csname VM#1\endcsname\ \mathrm{cm^3}} = \csname rhoM#1\endcsname\ \mathrm{g/cm^3}.
+\]
+\end{loesungbox}
+
+\begin{aufgabebox}
+Vergleiche deine spezifische Wärmekapazität und Dichte mit Literaturwerten. Um welches Metall handelt es sich?
+\end{aufgabebox}
+\begin{loesungbox}
+Vergleich mit der Literaturtabelle (Abschnitt~2.2 der Anleitung): $c_M=\csname cMwert#1\endcsname\ \mathrm{J\,kg^{-1}\,K^{-1}}$ liegt am nächsten bei \textbf{\csname vermutetesMetall#1\endcsname} ($c_{\text{Lit}}=\csname cLit#1\endcsname\ \mathrm{J\,kg^{-1}\,K^{-1}}$). Die gemessene Dichte $\rho_M=\csname rhoM#1\endcsname\ \mathrm{g/cm^3}$ bestätigt dies: Literaturwert für \csname vermutetesMetallDichte#1\endcsname\ ist $\rho_{\text{Lit}}=\csname rhoLit#1\endcsname\ \mathrm{g/cm^3}$. Beide Messgrössen deuten also übereinstimmend auf \textbf{\csname vermutetesMetall#1\endcsname} hin.
+\end{loesungbox}
+
+\begin{aufgabebox}
+Schaut euch die Skala eurer Thermometer genau an, bevor ihr die Messgenauigkeit im Messprotokoll festlegt. Überlegt euch: Welche Genauigkeit ist für eure Temperaturmessungen realistisch, und wie wirkt sich diese Ablesegenauigkeit auf die berechnete spezifische Wärmekapazität aus?
+\end{aufgabebox}
+\begin{loesungbox}
+Beide Stationen verwenden Thermometer bis \SI{100}{\celsius} bzw.\ \SI{110}{\celsius}, die tatsächliche Messgenauigkeit hängt aber nicht vom Skalenende ab, sondern von der Feinheit der Skalenteilung (vgl.\ Theorieskript, Abschnitt~4.3): schaut euch an, wie viele Grad zwischen zwei Strichen liegen, und ob ihr dazwischen gut interpolieren könnt. Für dieses Beispiel wurde $\Delta\Temp_{M0}=\csname dthetaMNull#1\endcsname\ \mathrm{K}$ und $\Delta\Temp_0=\Delta\Temp_1=\csname dthetaEins#1\endcsname\ \mathrm{K}$ angenommen, das sind aber Platzhalterwerte: tragt eure eigene, an eurem Thermometer abgelesene Genauigkeit ein.
+
+Genau diese Werte gehen in Frage~4 und~5 als $\Delta T_{auf}$, $\Delta T_{ab}$ usw.\ ein: je ungenauer die Ablesung, desto grösser am Ende auch $\Delta c_M$ bzw.\ $\Delta \rho_M$. Eine feinere Thermometerskala (kleineres $\Delta\Temp$) würde den relativen Fehler direkt proportional verkleinern, siehe die $T_{auf}$- und $T_{ab}$-Terme in Frage~4.
+\end{loesungbox}
+
+\begin{aufgabebox}
+Führe eine Fehlerrechnung durch, indem du die Messgenauigkeit deiner Messungen in der finalen Gleichung anschaust. Wie genau kann die berechnete Grösse sein? Ist sie im Vergleich mit dem Literaturwert und unter Berücksichtigung des Fehlers genügend genau?
+\end{aufgabebox}
+\begin{loesungbox}
+Wir verwenden die einfachen Regeln der Fehlerfortpflanzung (ohne Ableitungen): bei Addition/Subtraktion addieren sich die absoluten Fehler, $\Delta z=\Delta a+\Delta b$; bei Multiplikation/Division addieren sich die relativen Fehler, $\dfrac{\Delta z}{z}=\dfrac{\Delta a}{a}+\dfrac{\Delta b}{b}$; für eine Konstante $k$ ohne eigenen Messfehler (hier $c_W$, $c_K$) gilt $\Delta(k\cdot a)=k\cdot\Delta a$.
+
+Mit den Zwischengrössen $N=m_Wc_W+m_Kc_K$, $T_{auf}=\Temp_1-\Temp_0$, $T_{ab}=\Temp_{M0}-\Temp_1$ und $c_M=\dfrac{N\cdot T_{auf}}{m_M\cdot T_{ab}}$:
+\begin{align*}
+  \Delta N &= c_W\,\Delta m_W + c_K\,\Delta m_K = \csname dNwert#1\endcsname\ \mathrm{J/K}\ \Longrightarrow\ \tfrac{\Delta N}{N} = \csname relN#1\endcsname\,\% \\
+  \Delta T_{auf} &= \Delta\Temp_1+\Delta\Temp_0 = \csname dTeins#1\endcsname\ \mathrm{K}\ \Longrightarrow\ \tfrac{\Delta T_{auf}}{T_{auf}} = \csname relTeins#1\endcsname\,\% \\
+  \tfrac{\Delta m_M}{m_M} &= \csname relmM#1\endcsname\,\% \\
+  \Delta T_{ab} &= \Delta\Temp_{M0}+\Delta\Temp_1 = \csname dTzwei#1\endcsname\ \mathrm{K}\ \Longrightarrow\ \tfrac{\Delta T_{ab}}{T_{ab}} = \csname relTzwei#1\endcsname\,\%
+\end{align*}
+$c_M$ ist ein Produkt/Quotient aus vier Faktoren ($N$, $T_{auf}$, $m_M$, $T_{ab}$), also addieren sich die vier relativen Fehler:
+\[
+  \frac{\Delta c_M}{c_M} = \csname relN#1\endcsname\,\% + \csname relTeins#1\endcsname\,\% + \csname relmM#1\endcsname\,\% + \csname relTzwei#1\endcsname\,\% = \csname relcM#1\endcsname\,\%
+\]
+\[
+  \Delta c_M = c_M \cdot \csname relcM#1\endcsname\,\% = \csname dcMwert#1\endcsname\ \mathrm{J\,kg^{-1}\,K^{-1}}
+  \qquad\Longrightarrow\qquad
+  c_M = (\csname cMwert#1\endcsname \pm \csname dcMwert#1\endcsname)\ \mathrm{J\,kg^{-1}\,K^{-1}}
+\]
+Der Literaturwert von \csname vermutetesMetall#1\endcsname\ ($\csname cLit#1\endcsname\ \mathrm{J\,kg^{-1}\,K^{-1}}$) liegt innerhalb dieses Fehlerbereichs, die Messung ist also genügend genau, um das Metall eindeutig zu identifizieren.
+\end{loesungbox}
+
+\begin{aufgabebox}
+Führe dieselbe Fehlerrechnung auch für deine Dichte $\rho_M=m_M/V_M$ durch. Wie genau ist dein Wert, und bestätigt er dein Ergebnis aus Frage~3 auch unter Berücksichtigung des Fehlers?
+\end{aufgabebox}
+\begin{loesungbox}
+$\rho_M=m_M/V_M$ ist ein Quotient aus zwei Faktoren, also dieselbe Multiplikations-/Divisionsregel wie oben:
+\[
+  \frac{\Delta \rho_M}{\rho_M} = \frac{\Delta m_M}{m_M} + \frac{\Delta V_M}{V_M} = \csname relmMDichte#1\endcsname\,\% + \csname relVM#1\endcsname\,\% = \csname relrho#1\endcsname\,\%
+\]
+\[
+  \Delta \rho_M = \rho_M \cdot \csname relrho#1\endcsname\,\% = \csname drhoM#1\endcsname\ \mathrm{g/cm^3}
+  \qquad\Longrightarrow\qquad
+  \rho_M = (\csname rhoM#1\endcsname \pm \csname drhoM#1\endcsname)\ \mathrm{g/cm^3}
+\]
+Der Literaturwert von \csname vermutetesMetallDichte#1\endcsname\ ($\csname rhoLit#1\endcsname\ \mathrm{g/cm^3}$) liegt innerhalb dieses Fehlerbereichs. Die Dichtemessung bestätigt damit unabhängig von der Wärmekapazität dasselbe Metall.
+\end{loesungbox}
+
+\begin{aufgabebox}
+Diskutiere deine Erkenntnisse sowie mögliche Fehlerquellen (siehe auch Abschnitt "Fehlerquellen" der Anleitung).
+\end{aufgabebox}
+\begin{loesungbox}
+Der grösste einzelne Beitrag zum relativen Fehler auf $c_M$ kommt in dieser Gruppe von $T_{auf}=\Temp_1-\Temp_0$ ($\csname relTeins#1\endcsname\,\%$, siehe Frage~4), nicht von den Massen. Grund: $T_{auf}$ ist eine kleine Differenz zweier ähnlich grosser Temperaturen, deshalb wirkt sich die Ablesegenauigkeit der Thermometer hier besonders stark aus (dasselbe Muster wie bei $T_{ab}$, nur ausgeprägter, weil $T_{auf}$ betragsmässig kleiner ist als $T_{ab}$).
+
+Aus der Fehlerquellen-Liste der Anleitung passen für diesen Versuch besonders: \emph{Wärmeverlust beim Transfer} (macht $T_{auf}$ tendenziell zu klein, $c_M$ also zu tief) und eine \emph{spät abgelesene Mischtemperatur} (derselbe Effekt, da das Kalorimeter nie perfekt isoliert ist). Beide Effekte wirken in dieselbe Richtung: das gemessene $c_M$ ist eher systematisch zu tief als zu hoch, was zur Diskussion passt, ob die Messung eher unter- oder überschätzt.
+\end{loesungbox}
+
+\section*{Mein Ergebnis: Gruppe #1}
+\[
+  c_M = (\csname cMwert#1\endcsname \pm \csname dcMwert#1\endcsname)\ \mathrm{J\,kg^{-1}\,K^{-1}} \qquad \text{Vermutetes Metall: } \textbf{\csname vermutetesMetall#1\endcsname}
+\]
+Die Dichtemessung ($\csname rhoM#1\endcsname \pm \csname drhoM#1\endcsname\ \mathrm{g/cm^3}$, Literaturwert \csname vermutetesMetallDichte#1\endcsname: $\csname rhoLit#1\endcsname\ \mathrm{g/cm^3}$) bestätigt diese Vermutung.
+
+\clearpage
+}
+
+\begin{document}
+\thispagestyle{empty}
+
+\begin{center}
+  {\color{kfrblue}\Large\bfseries Praktikum 01: Spezifische W\"armekapazit\"at eines Metalls}\\[2pt]
+  {\normalsize Lösungsblatt (Lehrperson) \textbar\ Kantonsschule Freudenberg, Physik 5.\ Klasse}
+\end{center}
+
+\vspace{8pt}
+\hrule
+\vspace{10pt}
+
+\noindent
+Dieses Lösungsblatt wird automatisch aus den Messwerten im Notebook \path{01BruD_Spezifische_Waermekapazitaet_Metall_Musterloesung.ipynb} erzeugt (Datei \path{loesung_werte.tex}, per \texttt{\textbackslash input} eingebunden). Werden die Messwerte im Notebook geändert und neu berechnet, zeigt dieses Dokument nach dem nächsten Kompilieren automatisch die neuen Zahlen; der Aufbau der Rechnung bleibt gleich. Die Auswertung (Abschnitt~9 der Anleitung) ist unten für alle vier Gruppen (Aluminium, Nickel, Kupfer, Messing) einzeln durchgerechnet.
+
+\vspace{6pt}
+% ======================================================
+\section{Theoriefrage: Wasser und Klima}
+\begin{aufgabebox}
+Wasser hat mit $\mathrm{4190\ J\,kg^{-1}\,K^{-1}}$ eine der höchsten spezifischen Wärmekapazitäten aller bekannten Stoffe. Weshalb ist genau diese Eigenschaft von Wasser wichtig für unser Klima? Was wäre anders, hätte Wasser eine ähnlich kleine spezifische Wärmekapazität wie ein Metall?
+\end{aufgabebox}
+\begin{loesungbox}
+Ozeane bedecken einen grossen Teil der Erdoberfläche und können wegen der hohen spezifischen Wärmekapazität von Wasser sehr viel Wärme aufnehmen oder abgeben, ohne dass sich ihre Temperatur stark ändert. Sie wirken dadurch als riesiger Wärmespeicher, der Temperaturschwankungen zwischen Tag und Nacht sowie zwischen den Jahreszeiten abschwächt: Küstenregionen haben deshalb ein milderes, ausgeglicheneres Klima als Regionen weit im Landesinneren, die weniger von diesem Ausgleich profitieren.
+
+Hätte Wasser eine ähnlich kleine spezifische Wärmekapazität wie ein Metall, würden sich Ozeane und Seen sehr schnell und stark erwärmen bzw. abkühlen. Das Klima wäre insgesamt viel extremer: grössere Temperaturschwankungen, heftigere Wetterumschwünge, weniger Pufferwirkung gegen Klimaveränderungen. Auch im Körper von Menschen und Tieren (der grossteils aus Wasser besteht) trägt dieselbe Eigenschaft dazu bei, die Körpertemperatur trotz wechselnder Umgebungsbedingungen relativ stabil zu halten.
+\end{loesungbox}
+
+% ======================================================
+\section{Durchführung: Lösungen zu den Reflexionsfragen}
+
+\begin{aufgabebox}
+Wieso reicht es nicht, die Temperatur der Probe (bzw.\ $\Temp_{KT}$) irgendwann während des Aufheizens einmal zu messen und die Probe dann einfach zügig ins Kalorimeter zu geben, statt zu warten, bis sich $\Temp_{WB}$ und $\Temp_{KT}$ nicht mehr merklich annähern? Was könnte an einer solchen frühen Einzelmessung problematisch sein?
+\end{aufgabebox}
+\begin{loesungbox}
+Eine frühe Messung trifft die Probe mitten im Aufheizvorgang, nicht in einem stabilen Zustand: Solange sich $\Temp_{WB}$ und $\Temp_{KT}$ noch merklich annähern, wird die Probe gerade noch wärmer, jeder beliebige Messzeitpunkt liefert also einen anderen und letztlich willkürlichen Wert.
+
+Ausserdem liegt die Probe als lose Schüttung aus Pellets vor, nicht als ein einzelner Block: die Pellets berühren sich nur an einzelnen Punkten, dazwischen liegt Luft, die Wärme viel schlechter leitet als Metall (siehe Theorieskript, Abschnitt~3.5). Wärme braucht deshalb spürbar Zeit, um sich von der Topfwand durch die ganze Schüttung auszubreiten. Während des Aufheizens ist die Probe deshalb womöglich noch nicht überall gleich warm (innen kühler als aussen). Erst wenn sich die Anzeigen nicht mehr ändern, ist davon auszugehen, dass die Wärme auch das Innere der Schüttung erreicht hat und die Probe näherungsweise durchgängig auf dieser Temperatur ist.
+
+Zügiger Transport danach schützt nur davor, dass ein bereits korrekter Ausgangswert beim Umfüllen wieder verfälscht wird. Er kann aber eine von Anfang an zu früh und damit falsch gemessene Ausgangstemperatur nicht reparieren: Messgenauigkeit des Startwerts und Sorgfalt beim Transfer sind zwei unabhängige Fehlerquellen.
+\end{loesungbox}
+
+\begin{aufgabebox}
+Auch nach ausreichender Wartezeit bleibt zwischen $\Temp_{WB}$ und $\Temp_{KT}$ meist eine kleine Restdifferenz bestehen. Lest eure eigene Restdifferenz an euren beiden Thermometern ab (sie hängt u.\,a.\ davon ab, wie fein die Pellets verteilt sind) und überlegt euch: Welchen Einfluss hat diese Restdifferenz auf euer Resultat für $c_M$? Wo taucht sie in eurer Fehlerrechnung auf, und wie schätzt ihr daraus die Messgenauigkeit von $\Temp_{M0}$ ab?
+\end{aufgabebox}
+\begin{loesungbox}
+Diese Restdifferenz ist bewusst nicht vorgegeben: jede Gruppe liest ihre eigenen $\Temp_{WB}$ und $\Temp_{KT}$ ab und bestimmt daraus ihre eigene Restdifferenz (vgl.\ Theorieskript, Abschnitt~4.3, "Wie bestimmt man die Messgenauigkeit?"). Weil $\Temp_{M0}=\frac{\Temp_{WB}+\Temp_{KT}}{2}$ als Mittelwert definiert ist, bedeutet eine Restdifferenz, dass die tatsächliche Probentemperatur nicht sicher bekannt ist, sie liegt irgendwo zwischen $\Temp_{WB}$ und $\Temp_{KT}$. Das ist eine zusätzliche Unsicherheit auf $\Temp_{M0}$, die über die reine Ablesegenauigkeit des Thermometers hinausgeht: ein sinnvoller Ansatz ist, die halbe Restdifferenz zur reinen Ablesegenauigkeit hinzuzuzählen.
+
+In der Fehlerrechnung taucht $\Temp_{M0}$ nur in der Zwischengrösse $T_{ab}=\Temp_{M0}-\Temp_1$ auf (Subtraktionsregel: $\Delta T_{ab}=\Delta\Temp_{M0}+\Delta\Temp_1$). Die Restdifferenz vergrössert also effektiv $\Delta\Temp_{M0}$ und damit $\Delta T_{ab}$, was sich über die Multiplikations-/Divisionsregel direkt auf $\Delta c_M$ auswirkt (vgl.\ Abschnitt "Auswertung: Lösungen pro Gruppe" unten, Frage~4).
+\end{loesungbox}
+
+\begin{aufgabebox}
+Warum wird die Metallprobe indirekt in einem Kupfertopf erwärmt (statt in direktem Kontakt mit dem Wasser des Wasserbads)? Notiere mindestens zwei Gründe.
+\end{aufgabebox}
+\begin{loesungbox}
+Drei mögliche Gründe (mindestens zwei werden verlangt):
+\begin{enumerate}
+  \item \textbf{Sauberkeit und korrekte Massen:} Bei direkter Erwärmung im Wasserbad würde die Probe nass und mit dem falschen, grossen Wasserbad-Wasser vermischt. Das erschwert eine saubere, trockene Entnahme und würde $m_M$ bzw.\ später $m_W$ verfälschen (vgl.\ Fehlerquelle "Mitgeschlepptes Wasser" in der Anleitung). Im trockenen Kupfertopf bleibt die Probe sauber und lässt sich exakt wägen.
+  \item \textbf{Unabhängige, kontrollierte Messung pro Gruppe:} Jede Gruppe kann die Temperatur ihrer eigenen Probe ($\Temp_{KT}$) separat verfolgen, obwohl alle Proben gemeinsam im selben Wasserbad stecken, statt dass alle Gruppen nur eine einzige gemeinsame Wasserbad-Temperatur ablesen könnten.
+  \item \textbf{Gleichmässige, kontrollierte Erwärmung:} Der Kupfertopf leitet Wärme gut und gleichmässig an die Probe weiter, ohne dass die vielen kleinen Pellets im siedenden Wasser aufschäumen, herumschwimmen oder verstreut werden und Metallreste ins gemeinsame Wasserbad gelangen. Lose Pellets liessen sich aus dem offenen Wasserbad praktisch nicht mehr vollständig und sauber zurückgewinnen.
+\end{enumerate}
+\end{loesungbox}
+
+\begin{aufgabebox}
+Für das Kalorimeter wird destilliertes statt gewöhnliches Leitungswasser verwendet. Wieso ist das für diesen Versuch wichtig?
+\end{aufgabebox}
+\begin{loesungbox}
+Leitungswasser enthält gelöste Mineralien und Salze (Wasserhärte), deren Menge von Ort zu Ort und sogar von Tag zu Tag schwankt. Das beeinflusst die spezifische Wärmekapazität des Wassers geringfügig, unkontrolliert und unbekannt. In der Rechnung wird aber $c_W=4190\ \mathrm{J\,kg^{-1}\,K^{-1}}$ als \emph{exakter} Literaturwert für reines Wasser verwendet (siehe Messprotokoll, keine $\pm$-Spalte für $c_W$). Destilliertes Wasser ist praktisch mineralfrei, sein $c_W$ liegt deshalb sehr nahe am tabellierten Wert, Leitungswasser könnte eine kleine, nicht erfasste systematische Abweichung einführen. Zusätzlich verhindert destilliertes Wasser Kalkablagerungen im Kalorimeter, die dessen Masse $m_K$ über die Zeit verändern würden.
+\end{loesungbox}
+
+% ======================================================
+\section{Auswertung: Lösungen pro Gruppe}
+
+\GruppenAuswertung{Aluminium}
+\GruppenAuswertung{Nickel}
+\GruppenAuswertung{Kupfer}
+\GruppenAuswertung{Messing}
+
+\end{document}

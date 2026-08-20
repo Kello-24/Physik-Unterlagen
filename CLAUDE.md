@@ -120,10 +120,39 @@ Every worksheet/exam/Praktikum starts with the same header block (see
 date, topic, title — in that order and in that visual position across
 templates so students recognize the layout instantly.
 
+### Einleitung (Arbeitsblätter)
+
+Every Arbeitsblatt starts with an **Einleitung**: a real-world motivation
+block (blue `beispielbox`, titled `Einleitung: ...`) placed directly after
+the Lernziele `infobox` and before anything else — before even a
+topic-specific "Einstieg" hook, if the worksheet has one. It answers "why
+does this topic matter, where is it actually used" with one or two
+concrete, relatable examples, not a generic bullet list of unrelated
+facts. This is a standing default for every new Arbeitsblatt, not
+something that has to be re-requested per document.
+
+- **Draw the content from the topic's `lernziele.md`** (Abgrenzung,
+  Essentielle Fragen, and especially Beispielkontexte) before inventing a
+  hook from scratch — a Backward-Design document is usually already
+  thinking about why the topic matters, and reusing that framing keeps
+  the Einleitung aligned with what the didaktik-alignment-reviewer expects.
+  If no `lernziele.md` exists for the topic, fall back to general
+  physics-education judgment, but hold the same bar: concrete and
+  topic-specific, not filler.
+- **Images are added later, not blocked on.** Write the Einleitung's text
+  first, even with no image in hand yet — reference what a supporting
+  photo would show if one is relevant, but don't invent a placeholder
+  graphic or a URL. Once the user supplies a real image file (dropped
+  into that topic's `Bilder/`), fold it in with a centered
+  `\includegraphics` right under the box title, the way the
+  Bewegungsgleichungen Einleitung was rewritten around
+  `Bilder/Falcon_9_Landung.jpg` after the fact.
+
 ### Theorie-Block (Arbeitsblätter)
 
 Every Arbeitsblatt follows a fixed order: **Kopfzeile → Lernziele (blue
-`infobox`) → Theorie (green `theoriebox`) → Aufgaben (blue `taskbox`)**. The
+`infobox`) → Einleitung (blue `beispielbox`) → Theorie (green
+`theoriebox`) → Aufgaben (blue `taskbox`)**. The
 Theorie block is real physics content — definitions, formulas, worked
 derivations, Merksätze — not filler; it's the material the exercises that
 follow actually depend on. Write it *before* drafting the exercises, and
@@ -178,6 +207,56 @@ only the colour and default title (`Gruppenarbeit`) differ; pass a custom
 title the same way as `taskbox`, e.g.
 `\begin{groupbox}[Partnerarbeit: ...]`.
 
+### Methodenvielfalt (Arbeitsblätter)
+
+`Methodensammlung_Physikunterricht.pdf` at the repo root catalogs teaching
+methods from Fachdidaktik Physik I/II coursework (ETHZ/UZH). Consult it
+when planning a new Arbeitsblatt's Aufgaben section — not only when asked
+to — the same way `lernziele.md`'s Beispielkontexte are consulted for
+content. It distinguishes small, few-minute "Sandwich" Einschübe (Teil A:
+A1 Advance Organizer, B1 Vergewisserungsphase, B2 Partnerinterview, B3
+Lerntempoduett, C1 Sortieraufgabe, C3 Think-Pair-Share) from larger,
+dossier-driven methods spanning a substantial part of a lesson or several
+lessons (Teil B: D1 Lernaufgabe, D3 Partner-/Gruppenpuzzle, D4
+Werkstattunterricht, M1 Concept-Map, M2 Clickers/Peer Instruction, M3
+Whiteboarding, M4 Predict-Observe-Explain, M5 Hands-On-Experimente, M6
+Smartphone-Physik, M7 Video-Analyse, M8 Physlets, M9 Produktives Üben).
+
+Several house conventions already implement specific methods from this
+list without naming them — recognize the overlap instead of reinventing:
+- Every `groupbox` exercise (see above) is the vehicle for any
+  partner/group method (B2, B3, D3, M3, M5) — when drafting a partner
+  task, pick the concrete method that fits the content instead of
+  defaulting to an unstructured "besprecht zu zweit".
+- A Predict-Observe-Explain activity (M4) is the established pattern for
+  a Hook-Fortsetzung right after the Einleitung — reach for this whenever
+  a topic has a strong, testable misconception to surface, structured as
+  labelled Predict/Observe/Explain `\part`s inside a `groupbox` (see the
+  Münzenexperiment in
+  `institutionen/KFR/arbeitsblaetter/4-klasse/1-hs/mechanik/freier-fall/`).
+- A Clicker-ConcepTest-style multiple-choice question with plausible
+  distractors (M2) is the established pattern for probing a
+  Lernschwierigkeit directly (see the Umkehrpunkt exercise in the same
+  file) — pull the distractors from `lernziele.md`'s
+  Lernschwierigkeiten list, not invented strawmen.
+
+Beyond these two, actively consider the smaller Teil-A methods as cheap
+variety within an otherwise plain sequence of individual `taskbox`
+exercises: a short Sortieraufgabe (C1) to activate prior knowledge before
+a new `theoriebox`, a Think-Pair-Share (C3) or Vergewisserungsphase (B1)
+prompt instead of another solo exercise, a Lerntempoduett (B3) for a
+practice set with uneven difficulty. Don't force a method where a plain
+exercise already serves the Lernziel well — this is a palette to draw
+from when varying the Aufgaben mix, not a checklist every worksheet must
+tick off, and most Teil-B methods (Werkstattunterricht, Videoanalyse,
+Physlets, ...) need equipment/setup beyond a single printed worksheet, so
+apply them only where the topic and lesson format genuinely call for it.
+When a method changes how an exercise should read (e.g. asking for an
+individual prediction before showing a result), write that structure
+into the exercise text explicitly, the same way the POE Münzenexperiment
+spells out Predict/Observe/Explain as labelled parts rather than leaving
+it as unstructured prose.
+
 ### Exercises and points
 
 - Use the `exam` class's native `\question[n]` / `\part[n]` for numbering —
@@ -190,6 +269,23 @@ title the same way as `taskbox`, e.g.
   templates multiplies this out). Err generous rather than cramped — Swiss
   students write calculations out in full (Ansatz, Einsetzen, Resultat), not
   just a final number.
+
+### Step-by-step derivations and solutions
+
+Every worked derivation in a `theoriebox` and every worked calculation
+inside a `solution` environment must show **every algebraic step**, not
+just the starting equation and the final result. Don't compress several
+moves (substituting, expanding a square, combining fractions, factoring,
+isolating a variable) into a single `\Longrightarrow` jump — put each
+individual step on its own line, with a short phrase naming the move
+where it isn't obvious (e.g. "nach $(t-t_0)$ auflösen", "gemeinsamer
+Nenner", "$(v-v_0)$ ausklammern"). Assume students at this level cannot
+mentally fill in a skipped step and will get stuck rather than follow
+along — if you'd need an extra line of scratch paper to get from one
+displayed equation to the next by hand, that line belongs in the
+document. This applies equally to a from-scratch derivation of a formula
+and to a specific numeric worked example; both need the full chain, not
+just start and end.
 
 ### Solutions toggle
 

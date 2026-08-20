@@ -293,6 +293,37 @@ Am Ende dieser Einheit kann ich \dots
 \end{itemize}
 \end{infobox}
 
+% --- Einstieg: Hook vor der formalen Theorie, Bilder aus Bilder/ -----------
+\begin{beispielbox}[Einstieg: Schnelligkeit oder Geschwindigkeit?]
+\begin{center}
+\begin{minipage}{0.47\linewidth}\centering
+\includegraphics[width=\linewidth]{Bilder/Schnelligkeit.jpg}\\
+\footnotesize Tachometer eines Autos.
+\end{minipage}\hfill
+\begin{minipage}{0.47\linewidth}\centering
+\includegraphics[width=\linewidth]{Bilder/Geschwindigkeit.jpg}\\
+\footnotesize Passstrasse mit mehreren Kehren, aus der Vogelperspektive.
+\end{minipage}
+\end{center}
+
+Die linke Abbildung zeigt den Tacho eines Autos: Die Nadel zeigt eine
+einzelne Zahl, hier knapp $\SI{60}{\kilo\meter\per\hour}$. Der Tacho
+verrät dir nur, wie schnell das Auto unterwegs ist, aber nicht, in
+welche Richtung.
+
+Die rechte Abbildung zeigt eine Passstrasse mit mehreren engen Kehren.
+Ein Auto, das diese Strecke mit konstant $\SI{60}{\kilo\meter\per\hour}$
+befährt, zeigt auf dem Tacho die ganze Zeit denselben Wert. Trotzdem
+ändert sich seine Fahrtrichtung in jeder Kurve, mal nach links, mal nach
+rechts, manchmal sogar fast in die Gegenrichtung der vorherigen Kurve.
+
+Genau diesen Unterschied hältst du in der Physik mit zwei verschiedenen
+Begriffen fest: Der Tacho zeigt die \textbf{\emph{Schnelligkeit}}, den
+blossen Betrag ohne Richtung. Die \textbf{\emph{Geschwindigkeit}}
+berücksichtigt zusätzlich die Richtung und ändert sich deshalb in jeder
+Kurve, auch wenn die Schnelligkeit die ganze Zeit konstant bleibt.
+\end{beispielbox}
+
 % =============================================================================
 % Theorie: fachliche Grundlage für die Aufgaben, in eigene Boxen unterteilt
 % (je Unterthema eine theoriebox), Reihenfolge = Lernziele-Reihenfolge oben.
@@ -313,6 +344,23 @@ von der \textbf{\emph{Schnelligkeit}}. Zwei Objekte können also
 unterschiedliche Geschwindigkeiten, aber dieselbe Schnelligkeit haben,
 zum Beispiel, wenn sie gleich schnell, aber in entgegengesetzte
 Richtungen unterwegs sind.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8,>=Latex]
+  \draw[->] (-3.5,0) -- (3.5,0) node[right] {\scriptsize $v$ in $\si{\meter\per\second}$};
+  \foreach \x in {-3,-2,-1,0,1,2,3} \draw (\x,0.08) -- (\x,-0.08) node[below] {\scriptsize \x};
+  \draw[->,thick,red] (0,0.6) -- (3,0.6) node[midway,above] {\scriptsize $v_1$};
+  \draw[->,thick,red] (0,-0.6) -- (-3,-0.6) node[midway,below] {\scriptsize $v_2$};
+  \draw[<->,titleblue] (0,1.4) -- (3,1.4) node[midway,above] {\scriptsize Schnelligkeit $\lvert v_1\rvert=3$};
+  \draw[<->,accentorange] (-3,-1.4) -- (0,-1.4) node[midway,below] {\scriptsize Schnelligkeit $\lvert v_2\rvert=3$};
+\end{tikzpicture}
+\end{center}
+Auf der Zahlengeraden entspricht die \textbf{\emph{Geschwindigkeit}}
+also einem Pfeil ab dem Nullpunkt (mit Richtung und Länge), während die
+\textbf{\emph{Schnelligkeit}} nur die Länge dieses Pfeils ist, ohne
+Rücksicht darauf, in welche Richtung er zeigt. $v_1$ und $v_2$ oben
+zeigen in entgegengesetzte Richtungen und haben deshalb unterschiedliche
+Vorzeichen, aber dieselbe Schnelligkeit.
 \end{theoriebox}
 
 \begin{beispielbox}[Beispiel: Zwei Tramlinien auf der Bahnhofstrasse]
@@ -338,6 +386,169 @@ entgegengesetzte) \emph{Geschwindigkeiten}.
 \end{tikzpicture}
 \end{center}
 \end{beispielbox}
+
+% Vertieft LZ1 (Richtung/Vorzeichen + Betrag): dieselbe Idee wie die
+% Zahlengerade oben, jetzt aber als Pfeil in einer echten Bild-/Kartenszene
+% -- braucht deshalb zusätzlich Koordinatenachse UND Massstab, um eindeutig
+% zu sein. Bild Bilder/Geschwindigkeit_Vektoren.png zeigt dieselbe Szene in
+% Vogelperspektive (grün) und Seitenansicht (blau), je mit eigener
+% Koordinatenachse und eigenem Massstab.
+\begin{theoriebox}[Geschwindigkeit als Vektor: Pfeile mit Massstab]
+Die \textbf{\emph{Geschwindigkeit}} $v$ lässt sich nicht nur als
+vorzeichenbehaftete Zahl auf einer Zahlengeraden angeben (siehe oben),
+sondern auch direkt in einem Bild oder einer Karte als
+\textbf{\emph{Vektor}} zeichnen: ein Pfeil, dessen \textbf{\emph{Richtung}}
+die Bewegungsrichtung des Objekts zeigt und dessen \textbf{\emph{Länge}}
+proportional zum Betrag $\lvert v\rvert$ (Einheit: $\si{\meter\per\second}$)
+ist. Ein solcher Pfeil heisst \textbf{\emph{Geschwindigkeitsvektor}}.
+
+Damit ein Geschwindigkeitsvektor eindeutig ist, braucht jede Zeichnung
+zwei Festlegungen:
+
+\begin{enumerate}[leftmargin=1.2cm,itemsep=0.25em]
+  \item Eine \textbf{\emph{Koordinatenachse}}: ein Pfeil, der festlegt,
+  welche Richtung als \emph{positiv} gilt, direkt ins Bild eingezeichnet
+  (dieselbe Idee wie bei der Zahlengeraden weiter oben, nur nicht mehr
+  abstrakt, sondern an der realen Szene ausgerichtet).
+  \item Einen \textbf{\emph{Massstab}}: eine kurze Referenzstrecke, die
+  festlegt, wie viele $\si{\meter\per\second}$ einer bestimmten Pfeillänge
+  entsprechen. Die Länge jedes Geschwindigkeitsvektors ergibt sich dann
+  aus $\lvert v\rvert$ geteilt durch diesen Massstab.
+  \item Einen \textbf{\emph{Startpunkt}}: Der Pfeil wird ab dem
+  \textbf{\emph{Schwerpunkt}} des Objekts eingezeichnet, nicht ab
+  irgendeinem Randpunkt. Der Schwerpunkt ist (vereinfacht) der Punkt, in
+  dem man sich die gesamte Masse des Objekts vereinigt vorstellen kann,
+  meist ungefähr die geometrische Mitte. Er muss dabei nicht exakt
+  bestimmt werden: Für das Einzeichnen des Geschwindigkeitsvektors genügt
+  eine Schätzung des ungefähren Mittelpunkts des Objekts.
+\end{enumerate}
+
+Erst mit Koordinatenachse und Massstab ist klar, wie lang ein Pfeil für
+einen gegebenen Wert von $v$ sein muss und in welche Richtung ein
+positiver bzw.\ negativer Wert zeigt; eingezeichnet wird er dabei ab dem
+(geschätzten) Schwerpunkt des Objekts.
+
+\begin{center}
+\includegraphics[width=0.85\linewidth]{Bilder/Geschwindigkeit_Vektoren.png}
+\end{center}
+
+Das Bild zeigt dieselbe Verkehrssituation zweimal: oben aus der
+\textbf{\emph{Vogelperspektive}}, unten in der \textbf{\emph{Seitenansicht}}.
+In beiden Ansichten fährt das rote Auto mit
+$v \approx \SI{22}{\meter\per\second}$ ($\approx\SI{80}{\kilo\meter\per\hour}$)
+in positive Richtung (dieselbe Richtung wie die eingezeichnete
+Koordinatenachse), das violette Auto mit
+$v \approx -\SI{16}{\meter\per\second}$ ($\approx\SI{60}{\kilo\meter\per\hour}$)
+in die entgegengesetzte, also negative Richtung.
+
+\textbf{Wichtig:} Die beiden Ansichten verwenden \emph{unterschiedliche}
+Massstäbe: der Referenzpfeil steht oben für $\SI{4}{\meter\per\second}$,
+unten für $\SI{7}{\meter\per\second}$. Deshalb sind die Pfeile für
+dieselben beiden Autos oben und unten unterschiedlich lang, obwohl sie
+dieselbe Bewegung darstellen. Ein Geschwindigkeitsvektor ohne angegebene
+Koordinatenachse und ohne angegebenen Massstab ist nicht eindeutig
+interpretierbar.
+\end{theoriebox}
+
+% Übung direkt zur vorangehenden Theoriebox: Geschwindigkeitsvektoren
+% massstabsgetreu einzeichnen (Teil b), dann darauf aufbauend eine
+% Anwendung mit Relativgeschwindigkeit (Teile c/d, Überholmanöver auf der
+% Autobahn), bewusst als Vertiefung/Transfer über die Theoriebox hinaus,
+% keine eigene Lernzielnummer. Werte bewusst so gewählt, dass $v_1$ genau
+% der Autobahnhöchstgeschwindigkeit entspricht (120 km/h) und die in
+% Teil d) errechnete nötige Überholgeschwindigkeit diese leicht
+% überschreitet: Das zeigt, dass ein Überholmanöver bei Tempo 120 gegen
+% einen Lastwagen (Tempo 80, die für Lastwagen geltende
+% Autobahnhöchstgeschwindigkeit) im gegebenen Zeitfenster gar nicht
+% regelkonform möglich ist. Bilder/Autos_Geschwindigkeit.png (leer, für
+% Teil b) und Bilder/Autos_Geschwindigkeit_Loesung.png (mit
+% eingezeichneten Vektoren, 120 km/h Auto hinten, 80 km/h Lastwagen
+% vorne, Referenzpfeil 40 km/h) sind aufeinander abgestimmt.
+\begin{questions}
+\begin{taskbox}[Übung: Geschwindigkeitsvektoren beim Überholmanöver auf der Autobahn]
+\question[13] Auf der Autobahn (Höchstgeschwindigkeit
+$\SI{120}{\kilo\meter\per\hour}$) nähert sich ein Auto (im Bild links,
+hinten) einem Lastwagen (im Bild rechts, vorne). Zum Zeitpunkt
+$t=\SI{0}{\second}$ beträgt der Abstand zwischen den beiden Fahrzeugen
+$d_0=\SI{70}{\meter}$ (siehe Bild).
+
+Das Auto fährt mit $v_1=\SI{33.33}{\meter\per\second}$. Der Lastwagen vor
+ihm ist um $\SI{40}{\kilo\meter\per\hour}$ langsamer unterwegs: Für
+Lastwagen gilt auf der Autobahn eine eigene Höchstgeschwindigkeit von
+$\SI{80}{\kilo\meter\per\hour}$.
+
+\begin{parts}
+  \part[3] Rechne $v_1$ in $\si{\kilo\meter\per\hour}$ um, und bestimme
+  damit die Geschwindigkeit $v_2$ des Lastwagens, sowohl in
+  $\si{\kilo\meter\per\hour}$ als auch in $\si{\meter\per\second}$.
+  \Antwortraum{3}
+  \begin{solution}
+  Mit $\SI{1}{\meter\per\second} = \SI{3.6}{\kilo\meter\per\hour}$:
+  $v_1 = \SI{33.33}{\meter\per\second} \approx \SI{120.0}{\kilo\meter\per\hour}$.\\
+  $v_2 = \SI{120.0}{\kilo\meter\per\hour} - \SI{40}{\kilo\meter\per\hour}
+  = \SI{80.0}{\kilo\meter\per\hour} \approx \SI{22.22}{\meter\per\second}$.
+  \end{solution}
+
+  \part[3] Zeichne die Geschwindigkeitsvektoren beider Fahrzeuge
+  massstabsgetreu direkt ins Bild ein (Referenzpfeil:
+  $\SI{40}{\kilo\meter\per\hour}$).
+
+  \begin{center}
+  \includegraphics[width=0.9\linewidth]{Bilder/Autos_Geschwindigkeit.png}
+  \end{center}
+  \begin{solution}
+  \begin{center}
+  \includegraphics[width=0.9\linewidth]{Bilder/Autos_Geschwindigkeit_Loesung.png}
+  \end{center}
+  \end{solution}
+
+  \part[3] Das Auto will erst dann den Blinker setzen und mit dem
+  Überholmanöver beginnen, wenn der Abstand zum Lastwagen auf
+  $\SI{40}{\meter}$ Sicherheitsabstand geschrumpft ist. Nach welcher Zeit
+  $t$ ist das der Fall?
+  \Antwortraum{3}
+  \begin{solution}
+  Relativgeschwindigkeit: $v_1-v_2 \approx \SI{33.33}{\meter\per\second}
+  - \SI{22.22}{\meter\per\second} = \SI{11.11}{\meter\per\second}$. Der
+  Abstand muss dazu um $d_0-\SI{40}{\meter}=\SI{30}{\meter}$ abnehmen:
+  \[
+    t = \frac{\SI{30}{\meter}}{\SI{11.11}{\meter\per\second}}
+    \approx \SI{2.70}{\second}.
+  \]
+  \end{solution}
+
+  \part[4] Für das eigentliche Überholmanöver (auf der Überholspur)
+  bleiben dem Auto nur $\SI{6}{\second}$, weil sich von hinten bereits
+  ein schnelleres Fahrzeug nähert und die Spur zügig wieder freigegeben
+  werden muss. Danach soll das Auto $\SI{30}{\meter}$ Vorsprung vor dem
+  Lastwagen haben. Wie schnell muss das überholende Auto während des
+  Manövers mindestens fahren, wenn der Lastwagen dabei unverändert mit
+  $v_2$ weiterfährt? Gib das Ergebnis in $\si{\meter\per\second}$
+  \emph{und} in $\si{\kilo\meter\per\hour}$ an.
+  \Antwortraum{4}
+  \begin{solution}
+  Zu Beginn des Manövers liegt das Auto noch $\SI{40}{\meter}$ zurück, am
+  Ende soll es $\SI{30}{\meter}$ Vorsprung haben: Relativ zum Lastwagen
+  muss es also $\SI{40}{\meter}+\SI{30}{\meter}=\SI{70}{\meter}$
+  aufholen, und zwar in $\SI{6}{\second}$:
+  \[
+    \Delta v = \frac{\SI{70}{\meter}}{\SI{6}{\second}}
+    \approx \SI{11.67}{\meter\per\second}.
+  \]
+  Die nötige Geschwindigkeit des überholenden Autos:
+  \[
+    v_{\text{überhol}} = v_2 + \Delta v \approx \SI{22.22}{\meter\per\second}
+    + \SI{11.67}{\meter\per\second} = \SI{33.89}{\meter\per\second}
+    \approx \SI{122.0}{\kilo\meter\per\hour}.
+  \]
+  \textbf{Hinweis:} Das liegt über der zulässigen
+  Autobahnhöchstgeschwindigkeit von $\SI{120}{\kilo\meter\per\hour}$.
+  Dieses Überholmanöver ist im gegebenen Zeitfenster also gar nicht
+  regelkonform durchführbar, das Auto müsste dafür zu schnell fahren.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
 
 \begin{questions}
 \begin{taskbox}[Übung: Geschwindigkeit und Schnelligkeit im s-t-Diagramm]
@@ -586,31 +797,34 @@ $\SI{20}{\second}$.
   \end{solution}
 
   \part[3] Zeichne die beiden $v$-$t$-Diagramme und markiere jeweils die
-  Fläche, die der zurückgelegten Strecke entspricht.
+  Fläche, die der zurückgelegten Strecke entspricht. Die beiden leeren
+  Diagramme unten verwenden bewusst dieselbe Achsenskala und dasselbe
+  Gitter, damit du die beiden Flächen direkt miteinander vergleichen
+  kannst.
 
   \begin{center}
   \textbf{\scriptsize Velofahrerin}\\[0.2em]
-  \begin{tikzpicture}[scale=1.1]
-    \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (10,5);
-    \draw[->] (-0.3,0) -- (10.5,0) node[right] {\scriptsize $t$ in s};
+  \begin{tikzpicture}[scale=0.5]
+    \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (20,5);
+    \draw[->] (-0.3,0) -- (20.5,0) node[right] {\scriptsize $t$ in s};
     \draw[->] (0,-0.3) -- (0,5.5) node[above] {\scriptsize $v$ in $\si{\meter\per\second}$};
   \end{tikzpicture}
   \end{center}
 
   \begin{center}
   \textbf{\scriptsize Jogger}\\[0.2em]
-  \begin{tikzpicture}[scale=0.58]
-    \draw[gray!20] (0,0) grid[xstep=2,ystep=1] (20,3);
+  \begin{tikzpicture}[scale=0.5]
+    \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (20,5);
     \draw[->] (-0.3,0) -- (20.5,0) node[right] {\scriptsize $t$ in s};
-    \draw[->] (0,-0.3) -- (0,3.5) node[above] {\scriptsize $v$ in $\si{\meter\per\second}$};
+    \draw[->] (0,-0.3) -- (0,5.5) node[above] {\scriptsize $v$ in $\si{\meter\per\second}$};
   \end{tikzpicture}
   \end{center}
   \begin{solution}
   \begin{center}
   \textbf{\scriptsize Velofahrerin}\\[0.2em]
-  \begin{tikzpicture}[scale=1.1]
-    \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (10,5);
-    \draw[->] (-0.3,0) -- (10.5,0) node[right] {\scriptsize $t$ in s};
+  \begin{tikzpicture}[scale=0.5]
+    \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (20,5);
+    \draw[->] (-0.3,0) -- (20.5,0) node[right] {\scriptsize $t$ in s};
     \draw[->] (0,-0.3) -- (0,5.5) node[above] {\scriptsize $v$ in $\si{\meter\per\second}$};
     \filldraw[lightblue] (0,0) rectangle (10,4);
     \draw[thick,titleblue] (0,4) -- (10,4);
@@ -620,10 +834,10 @@ $\SI{20}{\second}$.
 
   \begin{center}
   \textbf{\scriptsize Jogger}\\[0.2em]
-  \begin{tikzpicture}[scale=0.58]
-    \draw[gray!20] (0,0) grid[xstep=2,ystep=1] (20,3);
+  \begin{tikzpicture}[scale=0.5]
+    \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (20,5);
     \draw[->] (-0.3,0) -- (20.5,0) node[right] {\scriptsize $t$ in s};
-    \draw[->] (0,-0.3) -- (0,3.5) node[above] {\scriptsize $v$ in $\si{\meter\per\second}$};
+    \draw[->] (0,-0.3) -- (0,5.5) node[above] {\scriptsize $v$ in $\si{\meter\per\second}$};
     \filldraw[lightblue] (0,0) rectangle (20,2);
     \draw[thick,titleblue] (0,2) -- (20,2);
     \node at (10,1) {\scriptsize Fläche $=2\cdot20=\SI{40}{\meter}$};
@@ -662,6 +876,7 @@ $v$-$t$-Diagramm.
     \draw[->] (0,-0.3) -- (0,3.7) node[above] {\scriptsize $s$};
     \draw[thick,titleblue] (0,0) -- (4,3.2) node[above left] {\scriptsize schneller};
     \draw[thick,accentorange] (0,0) -- (4,1.2) node[above right] {\scriptsize langsamer};
+    \draw[thick,accentpurple] (0,0.6) -- (4,0.6) node[right] {\scriptsize Ruhephase};
     \node[below] at (2,-0.9) {\scriptsize $s$-$t$-Diagramm};
   \end{scope}
   % v-t-Diagramm rechts
@@ -670,6 +885,8 @@ $v$-$t$-Diagramm.
     \draw[->] (0,-0.3) -- (0,3.7) node[above] {\scriptsize $v$};
     \draw[thick,titleblue] (0,2.6) -- (4,2.6) node[right] {\scriptsize schneller};
     \draw[thick,accentorange] (0,1.0) -- (4,1.0) node[right] {\scriptsize langsamer};
+    \draw[thick,accentpurple] (0,0) -- (4,0);
+    \node[accentpurple] at (2,0.35) {\scriptsize Ruhephase ($v=0$)};
     \node[below] at (2,-0.9) {\scriptsize $v$-$t$-Diagramm};
   \end{scope}
 \end{tikzpicture}
@@ -679,8 +896,9 @@ Die steilere Gerade im $s$-$t$-Diagramm (\textbf{\emph{schneller}}) gehört
 zur höher liegenden waagrechten Linie im $v$-$t$-Diagramm; die weniger
 steile Gerade (\textbf{\emph{langsamer}}) gehört zur tiefer liegenden
 Linie. Eine \textbf{\emph{Ruhephase}} (waagrechte Linie bei $s=\text{konst.}$
-im $s$-$t$-Diagramm) entspricht im $v$-$t$-Diagramm einer Linie genau auf
-der $t$-Achse ($v=0$).
+im $s$-$t$-Diagramm, oben in einer dritten Farbe eingezeichnet) entspricht
+im $v$-$t$-Diagramm einer Linie genau auf der $t$-Achse ($v=0$), ebenfalls
+in derselben dritten Farbe hervorgehoben.
 \end{theoriebox}
 
 \begin{questions}
@@ -690,16 +908,16 @@ Objekts.
 
 \begin{center}
 \begin{tikzpicture}[scale=1.0]
-  \draw[gray!20] (0,-5) grid[xstep=1,ystep=1] (11,9);
+  \draw[gray!20] (0,-9) grid[xstep=1,ystep=1] (11,5);
   \draw[->] (-0.3,0) -- (11.5,0) node[right] {\scriptsize $t$ in s};
-  \draw[->] (0,-5.5) -- (0,9.5) node[above] {\scriptsize $s$ in m};
+  \draw[->] (0,-9.5) -- (0,5.5) node[above] {\scriptsize $s$ in m};
   \foreach \x in {2,4,6,8,10,11} \draw (\x,0.15) -- (\x,-0.15) node[below] {\scriptsize \x};
-  \foreach \y in {-4,-2,0,2,4,6,8} \draw (0.15,\y) -- (-0.15,\y) node[left] {\scriptsize \y};
-  \draw[thick,titleblue] (0,0) -- (4,8) -- (7,8) -- (11,-4);
+  \foreach \y in {-8,-6,-4,-2,0,2,4} \draw (0.15,\y) -- (-0.15,\y) node[left] {\scriptsize \y};
+  \draw[thick,titleblue] (0,0) -- (4,-8) -- (7,-8) -- (11,4);
   \filldraw[black] (0,0) circle (1.6pt);
-  \filldraw[black] (4,8) circle (1.6pt);
-  \filldraw[black] (7,8) circle (1.6pt);
-  \filldraw[black] (11,-4) circle (1.6pt);
+  \filldraw[black] (4,-8) circle (1.6pt);
+  \filldraw[black] (7,-8) circle (1.6pt);
+  \filldraw[black] (11,4) circle (1.6pt);
 \end{tikzpicture}
 \end{center}
 
@@ -723,11 +941,11 @@ Objekts.
     \draw[->] (0,-4.5) -- (0,3.5) node[above] {\scriptsize $v$ in $\si{\meter\per\second}$};
     \foreach \x in {2,4,6,8,10,11} \draw (\x,0.15) -- (\x,-0.15) node[below] {\scriptsize \x};
     \foreach \y in {-4,-3,-2,-1,0,1,2,3} \draw (0.15,\y) -- (-0.15,\y) node[left] {\scriptsize \y};
-    \draw[thick,titleblue] (0,2) -- (4,2);
-    \draw[dashed,gray] (4,2) -- (4,0);
+    \draw[thick,titleblue] (0,-2) -- (4,-2);
+    \draw[dashed,gray] (4,-2) -- (4,0);
     \draw[thick,titleblue] (4,0) -- (7,0);
-    \draw[dashed,gray] (7,0) -- (7,-3);
-    \draw[thick,titleblue] (7,-3) -- (11,-3);
+    \draw[dashed,gray] (7,0) -- (7,3);
+    \draw[thick,titleblue] (7,3) -- (11,3);
   \end{tikzpicture}
   \end{center}
   \end{solution}
@@ -737,15 +955,15 @@ Objekts.
   dein Ergebnis mit dem $s$-$t$-Diagramm oben.
   \Antwortraum{3}
   \begin{solution}
-  Fläche 1 ($t=0$ bis $\SI{4}{\second}$, oberhalb der Achse):
-  $2\cdot4 = +\SI{8}{\meter}$.\\
+  Fläche 1 ($t=0$ bis $\SI{4}{\second}$, \emph{unterhalb} der Achse,
+  zählt negativ): $-2\cdot4 = -\SI{8}{\meter}$.\\
   Fläche 2 ($t=4$ bis $\SI{7}{\second}$): $0\cdot3 = \SI{0}{\meter}$.\\
-  Fläche 3 ($t=7$ bis $\SI{11}{\second}$, \emph{unterhalb} der Achse,
-  zählt negativ): $-3\cdot4 = -\SI{12}{\meter}$.\\
-  Ortsänderung gesamt: $8+0-12 = -\SI{4}{\meter}$.
+  Fläche 3 ($t=7$ bis $\SI{11}{\second}$, oberhalb der Achse):
+  $3\cdot4 = +\SI{12}{\meter}$.\\
+  Ortsänderung gesamt: $-8+0+12 = +\SI{4}{\meter}$.
 
   Vergleich mit dem $s$-$t$-Diagramm:
-  $s(\SI{11}{\second})-s(\SI{0}{\second}) = -\SI{4}{\meter}-\SI{0}{\meter} = -\SI{4}{\meter}$.
+  $s(\SI{11}{\second})-s(\SI{0}{\second}) = \SI{4}{\meter}-\SI{0}{\meter} = \SI{4}{\meter}$.
   Stimmt überein!
 
   \textbf{Hinweis:} Flächen unterhalb der $t$-Achse zählen negativ, weil

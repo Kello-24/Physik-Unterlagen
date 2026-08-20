@@ -1,0 +1,1137 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Arbeitsblatt: Kräfte (Teil 2) (nicht bewertet, Übungsmaterial für den Unterricht)
+% Kantonsschule KFR -- Physik, 4. Klasse, 2. FS, Mechanik
+%
+% Kopiert aus vorlagen/arbeitsblatt-vorlage.tex und um dieselben
+% Farb-/Boxdefinitionen ergänzt wie kraefte-teil-1-arbeitsblatt.tex /
+% newtons-gesetze-arbeitsblatt.tex. Templates sind selbstständig/nicht DRY,
+% siehe CLAUDE.md.
+%
+% Scope (siehe lernziele.md, Abschnitt "Abgrenzung"): die vier "benannten"
+% Kraftarten, die in Kräfte (Teil 1) bewusst ausgeklammert wurden:
+% Gewichtskraft (F_G = m*g), Federkraft (Hookesches Gesetz), Normalkraft
+% (als Reaktionskraft, Anschluss an das 3. Newtonsche Axiom aus
+% newtons-gesetze-arbeitsblatt.tex), Reibungskraft (Haft-/Gleit-/
+% Rollreibung, F_R = mu*F_N, inkl. Grenzwinkel mu = tan(alpha)). NICHT Teil
+% dieser Einheit: Hydrostatik, Erhaltungssätze, Drehmoment/Statik.
+%
+% LZ-Nummerierung (LZ1..LZ9) folgt der Dokumentreihenfolge, NICHT der
+% Reihenfolge der "Operationalisierten Lernziele" in lernziele.md (dort
+% thematisch sortiert). Zuordnung alt -> neu: LZ1->LZ1, LZ2->LZ2, LZ9->LZ3,
+% LZ4->LZ4, LZ5->LZ5, LZ3->LZ6, LZ6->LZ7, LZ7->LZ8, LZ8->LZ9. lernziele.md
+% wurde entsprechend synchronisiert (Backward-Design-Docx ggf. separat
+% nachführen).
+%
+% Stand: Lernziele, Einleitung, Theorie und Aufgaben fertig.
+% =============================================================================
+\documentclass[addpoints,11pt,a4paper]{exam}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.2cm,headheight=14pt]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{siunitx}
+% Hausstil: zusammengesetzte Einheiten immer als echter Bruch (\frac), nicht
+% als Schrägstrich inline oder \tfrac. Gilt global für jedes \si/\SI.
+\sisetup{per-mode=fraction,fraction-command=\frac}
+\usepackage{array,booktabs,tabularx,multirow}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{circuitikz}
+\usepackage[most]{tcolorbox}
+\usepackage{lastpage}
+
+\usetikzlibrary{arrows.meta,calc,angles,quotes}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+
+% -----------------------------
+% Farben (Hausfarbschema Physik KFR)
+% -----------------------------
+\definecolor{titleblue}{HTML}{183A6B}
+\definecolor{accentblue}{HTML}{2E6F9E}
+\definecolor{lightblue}{HTML}{EAF4FB}
+\definecolor{verylightblue}{HTML}{F7FBFE}
+\definecolor{lightgray}{HTML}{F4F6F8}
+\definecolor{darkgray}{HTML}{4A4A4A}
+% Für Diagramme mit zwei verschiedenen Kräften/Linien: titleblue (dunkles
+% Blau) + accentorange (Orange) sind weit genug auseinander (auch in
+% Graustufen/für Farbenblinde unterscheidbar).
+\definecolor{accentorange}{HTML}{D9720C}
+% Für Diagramme mit DREI Kräften/Linien: dritte Farbe, die sich sowohl von
+% titleblue als auch von accentorange klar unterscheidet.
+\definecolor{accentpurple}{HTML}{7B2D8E}
+% Theorieblock: eigene Farbe (grün), damit er sich auf einen Blick von den
+% blauen Lernziele-/Aufgaben-Boxen abhebt.
+\definecolor{theorygreen}{HTML}{2E7D4F}
+\definecolor{lighttheorygreen}{HTML}{EAF7EF}
+% Gruppenarbeitbox: eigene Farbe (Petrol/Teal), damit Partner-/Gruppenarbeit
+% sich auf einen Blick von normalen Einzelaufgaben (blau, taskbox) und vom
+% Theorieblock (grün, theoriebox) abhebt.
+\definecolor{groupteal}{HTML}{1B7F72}
+\definecolor{lightgroupteal}{HTML}{E8F5F3}
+
+% -----------------------------
+% Spaltentypen
+% -----------------------------
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% -----------------------------
+% Boxen
+% -----------------------------
+\newtcolorbox{titlebox}{
+  enhanced,
+  colback=titleblue,
+  colframe=titleblue,
+  boxrule=0pt,
+  arc=3mm,
+  left=3mm,right=3mm,top=3mm,bottom=3mm
+}
+
+% exam.cls rückt die questions-Liste um die Breite von "10." (plus \labelsep)
+% ein (Platz für die Nummerierung "1.", "2." ...); wir messen dieselbe
+% Distanz hier unabhängig nach.
+\newlength{\aufgabenindent}
+\settowidth{\aufgabenindent}{10.\hskip\labelsep}
+
+\newtcolorbox{infobox}{
+  enhanced,
+  breakable,
+  colback=lightblue,
+  colframe=accentblue,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+% theoriebox: wie infobox, aber grün und mit farbigem Titelbalken. Regel:
+% hervorgehobene/definierte Begriffe INNERHALB einer theoriebox immer mit
+% \textbf{\emph{...}} setzen (fett UND kursiv).
+\newtcolorbox{theoriebox}[1][Theorie]{
+  enhanced,
+  breakable,
+  colback=lighttheorygreen,
+  colframe=theorygreen,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+% taskbox steht direkt in der questions-Liste (vor dem ersten \question),
+% also innerhalb von deren Einrückung.
+\newtcolorbox{taskbox}[1][]{
+  enhanced,
+  breakable,
+  colback=verylightblue,
+  colframe=accentblue,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  enlarge left by=-\aufgabenindent,
+  width=\textwidth,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+% beispielbox: wie taskbox (blau), aber ausserhalb von questions, deshalb
+% KEINE Einrückungskorrektur nötig.
+\newtcolorbox{beispielbox}[1][Beispiel]{
+  enhanced,
+  breakable,
+  colback=verylightblue,
+  colframe=accentblue,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+% Regel für groupbox: JEDE Aufgabe, bei der Schülerinnen/Schüler zu zweit
+% oder in einer Gruppe zusammenarbeiten, bekommt diese Box statt der blauen
+% taskbox. Strukturell identisch zu taskbox.
+\newtcolorbox{groupbox}[1][Gruppenarbeit]{
+  enhanced,
+  breakable,
+  colback=lightgroupteal,
+  colframe=groupteal,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  enlarge left by=-\aufgabenindent,
+  width=\textwidth,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+% hinweisbox: eigene Farbe (Orange), für wichtige Klarstellungen/Warnungen
+% vor häufigen Verwechslungen. Steht wie infobox/theoriebox/beispielbox
+% ausserhalb von questions, KEINE Einrückungskorrektur nötig.
+\definecolor{lightorange}{HTML}{FCEEE0}
+\newtcolorbox{hinweisbox}[1][Hinweis]{
+  enhanced,
+  breakable,
+  colback=lightorange,
+  colframe=accentorange,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+\newtcolorbox{answerbox}{
+  breakable,
+  colback=white,
+  colframe=gray!55,
+  boxrule=0.5pt,
+  arc=1.5mm,
+  left=2mm,right=2mm,top=2mm,bottom=2mm
+}
+
+% --- Lösungen ein-/ausblenden -----------------------------------------------
+% Schülerexemplar (Standard): \noprintanswers
+% Lehrer-/Lösungsexemplar:    \printanswers
+\noprintanswers
+% \printanswers
+
+% --- Punkte bleiben intern, werden aber nicht gedruckt ----------------------
+\pointformat{}
+
+% --- Lösungsbox auf Deutsch, farblich abgesetzt -----------------------------
+\renewcommand{\solutiontitle}{\noindent\color{titleblue}\textbf{Lösung:}\enspace}
+
+% --- Kopf-/Fusszeile: Thema/Titel oben, Seitenzahl unten --------------------
+\pagestyle{headandfoot}
+\cfoot{\textcolor{darkgray}{Seite \thepage\ von \pageref{LastPage}}}
+
+% --- Kopfzeile: Klasse / Datum / Thema / Titel ------------------------------
+\newcommand{\Kopfzeile}[4]{%
+  \begin{titlebox}
+    {\color{white}\sffamily\bfseries\Large #4}
+  \end{titlebox}
+  \vspace{0.5em}
+  \noindent\textbf{Klasse:}~#1 \hfill \textbf{Datum:}~#2 \hfill \textbf{Thema:}~#3
+    \hfill \textbf{Lehrperson:}~Loris Keller
+  \vspace{0.8em}
+  \lhead{\textcolor{darkgray}{#3}}
+  \rhead{\textcolor{darkgray}{#4}}
+}
+
+% --- Antwortraum: ca. 2.5 cm Platz pro Punkt, als umrandetes Feld -----------
+\newlength{\antwortraumlen}
+\newcommand{\Antwortraum}[1]{%
+  \pgfmathsetlength{\antwortraumlen}{#1*2.5cm}%
+  \begin{answerbox}
+    \rule{0pt}{\antwortraumlen}%
+  \end{answerbox}%
+}
+
+% Werte für Kopfzeile zentral setzen
+\newcommand{\Klasse}{4a}
+\newcommand{\Datum}{TT.MM.JJJJ}
+\newcommand{\Thema}{Kräfte (Teil 2)}
+\newcommand{\ArbeitsblattTitel}{Arbeitsblatt: Kräfte (Teil 2)}
+
+\begin{document}
+
+\Kopfzeile{\Klasse}{\Datum}{\Thema}{\ArbeitsblattTitel}
+
+% --- Lernziele: aus lernziele.md (Backward-Design, Stufe 1) übernommen,
+% aber in Dokumentreihenfolge umnummeriert (siehe Kommentar am Dateianfang).
+% ---------------------------------------------------------------------------
+\begin{infobox}
+\textbf{Lernziele}\\
+Am Ende dieser Einheit kann ich \dots
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.25em]
+  \item die Gewichtskraft $F_G = m\cdot g$ formulieren und Masse und
+  Gewichtskraft begrifflich unterscheiden (ortsunabhängig vs.
+  ortsabhängig). (LZ1)
+  \item die Gewichtskraft eines Körpers an verschiedenen Orten (Erde, Mond)
+  berechnen und die Schwerelosigkeit auf der ISS als Zustand des freien
+  Falls erklären. (LZ2)
+  \item erklären, dass eine Personenwaage keine Masse misst, sondern eine
+  Kraft, und diese unter Annahme von $g=\SI{9.81}{\meter\per\second\squared}$
+  in eine Masse umrechnet; begründen, wie eine solche Waage für einen
+  korrekten Messwert auf dem Mond neu kalibriert werden müsste. (LZ3)
+  \item das Hookesche Gesetz $F_H = -k\cdot x$ formulieren und die
+  Federkonstante aus einem Kraft-Weg-Diagramm bestimmen. (LZ4)
+  \item an einem selbst durchgeführten Federexperiment den linearen
+  Zusammenhang zwischen Kraft und Auslenkung überprüfen und grafisch
+  auswerten. (LZ5)
+  \item die Normalkraft als Reaktionskraft aus dem Kräftegleichgewicht
+  senkrecht zur Unterlage bestimmen, auch auf einer geneigten Ebene. (LZ6)
+  \item zwischen Haft-, Gleit- und Rollreibung unterscheiden und die
+  Reibungskraft mit $F_R = \mu\cdot F_N$ berechnen. (LZ7)
+  \item erklären, dass Reibung eine gerichtete, berechenbare Kraft ist und
+  nicht ein pauschaler, ungerichteter \glqq Widerstand\grqq{}. (LZ8)
+  \item am Grenzwinkel der schiefen Ebene die Beziehung
+  $\mu = \tan(\alpha)$ aus dem Kräftegleichgewicht herleiten und mit einem
+  phyphox-Experiment (Neigungsmessung) den Haftreibungs- und den
+  Gleitreibungskoeffizienten einer Oberfläche experimentell bestimmen.
+  (LZ9)
+\end{itemize}
+\end{infobox}
+
+% --- Einleitung: ISS-Hook, direkt aus lernziele.md übernommen. Bewusst noch
+% keine Rechnung im Fliesstext selbst, die folgt strukturiert in der
+% Predict-Observe-Explain-Groupbox direkt danach. ---------------------------
+\begin{beispielbox}[Einleitung: Schwerelosigkeit auf der ISS]
+Die Internationale Raumstation ISS umkreist die Erde in rund
+\SI{400}{\kilo\meter} Höhe mit einer Geschwindigkeit von etwa
+\SI{28000}{\kilo\meter\per\hour}. Eine einzige Erdumrundung dauert dabei
+nur rund \SI{90}{\minute}, die Besatzung erlebt also etwa 16
+Sonnenauf- und -untergänge pro Tag.
+
+In Videos von der ISS sieht man die Astronautinnen und Astronauten frei
+im Innenraum schweben, zusammen mit Wassertropfen und losen Gegenständen.
+Die naheliegende Erklärung lautet oft: \glqq Im Weltall gibt es keine
+Schwerkraft.\grqq{} Mit \SI{400}{\kilo\meter} Höhe befindet sich die ISS
+aber noch sehr nahe an der Erde, verglichen mit dem Erdradius von rund
+\SI{6371}{\kilo\meter}. Ist die Erdanziehungskraft dort wirklich schon
+verschwunden?
+\end{beispielbox}
+
+\begin{groupbox}[Predict-Observe-Explain: Wirkt auf der ISS noch Schwerkraft?]
+\begin{parts}
+  \part[2] \textbf{Predict:} Notiert zuerst, ohne zu rechnen, eure eigene
+  Vermutung: Wirkt auf Höhe der ISS noch (nahezu) die volle
+  Erdanziehungskraft, ist sie deutlich schwächer, oder ist sie praktisch
+  null? Begründet kurz.
+  \Antwortraum{2}
+
+  \part[3] \textbf{Berechnen:} Die Gravitationskraft nimmt mit dem
+  Abstand $r$ vom Erdmittelpunkt gemäss dem quadratischen Abstandsgesetz
+  ab:
+  \[
+    g(r) = g_0\cdot\left(\frac{R_E}{r}\right)^2,
+  \]
+  wobei $g_0=\SI{9.81}{\meter\per\second\squared}$ der Ortsfaktor an der
+  Erdoberfläche und $R_E=\SI{6371}{\kilo\meter}$ der Erdradius ist.
+  Berechnet damit gemeinsam $g$ auf Höhe der ISS
+  ($r = R_E + \SI{400}{\kilo\meter}$) und gebt das Ergebnis auch als
+  Prozentsatz von $g_0$ an.
+  \Antwortraum{3}
+  \begin{solution}
+  \[
+    r = R_E + \SI{400}{\kilo\meter} = \SI{6371}{\kilo\meter}+\SI{400}{\kilo\meter} = \SI{6771}{\kilo\meter}.
+  \]
+  \[
+    g(r) = \SI{9.81}{\meter\per\second\squared}\cdot\left(\frac{\SI{6371}{\kilo\meter}}{\SI{6771}{\kilo\meter}}\right)^2
+    \approx \SI{9.81}{\meter\per\second\squared}\cdot(0.9409)^2
+  \]
+  \[
+    \approx \SI{9.81}{\meter\per\second\squared}\cdot0.8853 \approx \SI{8.68}{\meter\per\second\squared}.
+  \]
+  Als Prozentsatz von $g_0$: $\dfrac{\SI{8.68}{\meter\per\second\squared}}{\SI{9.81}{\meter\per\second\squared}} \approx 0.885 \; \widehat{=}\; \SI{88.5}{\percent}$.
+  \end{solution}
+
+  \part[3] \textbf{Explain:} Auf der ISS wirkt also immer noch rund
+  \SI{88.5}{\percent} der Erdanziehungskraft von der Erdoberfläche, die
+  Astronautin schwebt also nicht, weil \glqq keine Schwerkraft
+  herrscht\grqq{}. Erkläre stattdessen, warum sie trotzdem schwebt. Denke
+  dabei an den waagrechten Wurf: Was passiert mit einem geworfenen
+  Gegenstand, wenn seine Wurfweite so gross wird, dass die gekrümmte
+  Erdoberfläche unter ihm \glqq wegfällt\grqq{}, bevor er landet?
+  \Antwortraum{3}
+  \begin{solution}
+  Die ISS bewegt sich so schnell seitwärts, dass sie während des
+  Fallens ständig \glqq an der gekrümmten Erdoberfläche vorbeifällt\grqq{},
+  genau wie beim waagrechten Wurf, nur mit so hoher Geschwindigkeit, dass
+  die Bahnkurve nie am Boden ankommt, sondern sich zu einem Kreis um die
+  Erde schliesst. Die ISS befindet sich also im permanenten freien Fall.
+  Da sich Astronautin und Raumstation gemeinsam mit derselben Beschleunigung
+  im freien Fall befinden, übt die Station keine Normalkraft mehr auf die
+  Astronautin aus, es entsteht das Gefühl der Schwerelosigkeit, obwohl die
+  Gravitationskraft selbst kaum reduziert ist.
+  \end{solution}
+\end{parts}
+\end{groupbox}
+
+\begin{hinweisbox}[Praktisch: Mini-Experiment mit dem Federkraftmesser]
+Bevor die Gewichtskraft formal eingeführt wird, ein kurzer
+Demonstrationsversuch: Ein bekanntes Gewichtsstück wird an einen
+Federkraftmesser gehängt (Messprinzip siehe Kräfte Teil 1). Der
+abgelesene Kraftwert in Newton ist genau die Gewichtskraft dieses
+Gewichtsstücks, die direkte Überleitung zur folgenden Theoriebox.
+\end{hinweisbox}
+
+\begin{theoriebox}[Die Gewichtskraft $F_G = m\cdot g$]
+Jeder Körper mit Masse $m$ wird von der Erde angezogen. Diese Anziehung
+ist die \textbf{\emph{Gewichtskraft}} $F_G$:
+\[
+  \boxed{F_G = m\cdot g}, \qquad \text{Einheit von } F_G\colon\ \si{\newton}.
+\]
+Dabei ist $g$ der \textbf{\emph{Ortsfaktor}} (auch Fallbeschleunigung
+genannt), auf der Erdoberfläche $g_0\approx\SI{9.81}{\meter\per\second\squared}$.
+Die Gewichtskraft zeigt stets senkrecht nach unten, das heisst in
+Richtung des Erdmittelpunkts.
+
+\textbf{\emph{Masse}} $m$ (Einheit $\si{\kilo\gram}$) und
+\textbf{\emph{Gewichtskraft}} $F_G$ (Einheit $\si{\newton}$) sind nicht
+dasselbe:
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.25em]
+  \item Die \textbf{\emph{Masse}} ist ortsunabhängig: Ein Körper mit
+  $\SI{60}{\kilo\gram}$ hat auf der Erde, auf dem Mond und im leeren
+  Weltraum immer dieselbe Masse.
+  \item Die \textbf{\emph{Gewichtskraft}} ist ortsabhängig: Sie hängt über
+  $g$ vom Himmelskörper (oder, wie bei der ISS, von der Höhe über der
+  Erdoberfläche) ab, an dem sich der Körper gerade befindet.
+\end{itemize}
+\end{theoriebox}
+
+\begin{hinweisbox}[Hinweis: \glqq wiegen\grqq{} ist nicht gleich Masse]
+Im Alltag sagt man oft \glqq er wiegt \SI{60}{\kilo\gram}\grqq{}, dabei
+wird eigentlich die Masse gemeint, nicht die Gewichtskraft. Physikalisch
+korrekt wiegt (also: hat als Gewichtskraft) eine Person mit
+$m=\SI{60}{\kilo\gram}$ auf der Erde $F_G\approx\SI{588.6}{\newton}$, auf
+dem Mond aber nur $F_G\approx\SI{97.2}{\newton}$, obwohl ihre Masse an
+beiden Orten unverändert $\SI{60}{\kilo\gram}$ bleibt. Ein Astronaut wiegt
+auf dem Mond also weniger, hat aber nicht weniger Masse.
+\end{hinweisbox}
+
+\begin{theoriebox}[Die Gewichtskraft an anderen Orten]
+Der Ortsfaktor $g$ ist nicht überall gleich gross, sondern hängt von der
+Masse und dem Radius des jeweiligen Himmelskörpers ab:
+
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Ort} & \textbf{Ortsfaktor $g$} & \textbf{$F_G$ für $m=\SI{60}{\kilo\gram}$} \\
+\midrule
+Erdoberfläche & $\SI{9.81}{\meter\per\second\squared}$ & $\SI{588.6}{\newton}$ \\
+Höhe der ISS ($\approx\SI{400}{\kilo\meter}$) & $\approx\SI{8.68}{\meter\per\second\squared}$ & $\approx\SI{520.8}{\newton}$ \\
+Mond & $\SI{1.62}{\meter\per\second\squared}$ & $\SI{97.2}{\newton}$ \\
+Mars & $\SI{3.71}{\meter\per\second\squared}$ & $\SI{222.6}{\newton}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Auf der ISS ist $g$ zwar gegenüber der Erdoberfläche reduziert (siehe
+Predict-Observe-Explain oben), aber bei Weitem nicht so stark wie auf dem
+Mond. Der Grund für die Schwerelosigkeit auf der ISS ist deshalb nicht ein
+kleines $g$, sondern der permanente freie Fall.
+\end{theoriebox}
+
+\begin{questions}
+\begin{taskbox}[Übung: Gewichtskraft berechnen]
+\question[4] Eine Person hat eine Masse von $m=\SI{72}{\kilo\gram}$.
+
+\begin{parts}
+  \part[2] Berechne ihre Gewichtskraft auf der Erde.
+  \Antwortraum{2}
+  \begin{solution}
+  \[
+    F_G = m\cdot g_0 = \SI{72}{\kilo\gram}\cdot\SI{9.81}{\meter\per\second\squared} \approx \SI{706.3}{\newton}.
+  \]
+  \end{solution}
+
+  \part[2] Berechne ihre Gewichtskraft auf dem Mond.
+  \Antwortraum{2}
+  \begin{solution}
+  \[
+    F_G = m\cdot g_{\text{Mond}} = \SI{72}{\kilo\gram}\cdot\SI{1.62}{\meter\per\second\squared} \approx \SI{116.6}{\newton}.
+  \]
+  \end{solution}
+\end{parts}
+
+\question[3] \glqq Ein Astronaut wiegt auf dem Mars weniger als auf der
+Erde. Hat er dort nur weniger Masse, hat er nur eine kleinere
+Gewichtskraft, oder beides?\grqq{}
+
+\begin{parts}
+  \part[3] Beantworte die Frage in ein bis zwei Sätzen und begründe sie
+  mit den Begriffen Masse und Gewichtskraft. Nutze zur Begründung die
+  Werte für $g$ aus der Tabelle in der vorherigen Theoriebox.
+  \Antwortraum{3}
+  \begin{solution}
+  Nur die Gewichtskraft ist kleiner, nicht die Masse. Die Masse des
+  Astronauten bleibt auf dem Mars exakt gleich (sie ist ortsunabhängig),
+  aber der Mars hat mit $g_{\text{Mars}}=\SI{3.71}{\meter\per\second\squared}$
+  einen kleineren Ortsfaktor als die Erde
+  ($g_0=\SI{9.81}{\meter\per\second\squared}$), deshalb ist
+  $F_G=m\cdot g$ dort kleiner, genau wie beim Mond-Beispiel aus dem
+  Hinweis oben, nur mit einem anderen Zahlenwert.
+  \end{solution}
+\end{parts}
+
+\question[4] Dieselbe Person aus der ersten Teilaufgabe ($m=\SI{72}{\kilo\gram}$)
+befindet sich nun an Bord der ISS.
+
+\begin{parts}
+  \part[2] Berechne ihre Gewichtskraft dort, mit
+  $g_{\text{ISS}}\approx\SI{8.68}{\meter\per\second\squared}$ aus der
+  Predict-Observe-Explain-Aufgabe.
+  \Antwortraum{2}
+  \begin{solution}
+  \[
+    F_G = m\cdot g_{\text{ISS}} = \SI{72}{\kilo\gram}\cdot\SI{8.68}{\meter\per\second\squared} \approx \SI{624.96}{\newton}.
+  \]
+  \end{solution}
+
+  \part[2] Bedeutet das Ergebnis aus a), dass auf die Person an Bord der
+  ISS praktisch keine Kraft mehr wirkt? Begründe kurz.
+  \Antwortraum{2}
+  \begin{solution}
+  Nein: Die Gewichtskraft ist mit rund $\SI{625}{\newton}$ fast so gross
+  wie auf der Erde ($\SI{706.3}{\newton}$). Die Person schwebt trotzdem,
+  weil sie sich zusammen mit der Station im freien Fall befindet, nicht
+  weil keine Kraft wirkt.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+% --- Hausaufgabe (Rechercheauftrag), wie in lernziele.md vorgeschlagen
+% ("Hausaufgabe nach L1"), deshalb hier direkt nach der Gewichtskraft
+% platziert, vor der Federkraft. LZ3 (alt LZ9). ------------------------------
+\begin{questions}
+\begin{taskbox}[Hausaufgabe: Wie funktioniert eine Personenwaage?]
+\question[8] Eine haushaltsübliche Personenwaage zeigt dir eine Zahl in
+Kilogramm an, wenn du daraufstehst. Recherchiere (Internet oder
+KI-Chatbot, mit kritischer Prüfung der Quelle) und beantworte:
+
+\begin{parts}
+  \part[3] Wie misst eine moderne Personenwaage überhaupt: über eine
+  mechanische Feder oder über einen elektronischen
+  Dehnungsmessstreifensensor? Beschreibe das Messprinzip kurz.
+  \Antwortraum{3}
+  \begin{solution}
+  Moderne Haushaltswaagen verwenden meist Dehnungsmessstreifensensoren
+  (auch Wägezellen genannt): Das Gewicht verformt ein Metallelement
+  minimal, diese Verformung ändert den elektrischen Widerstand des
+  aufgeklebten Dehnungsmessstreifens, und aus dieser Widerstandsänderung
+  berechnet die Elektronik einen Kraftwert. Ältere/mechanische Waagen
+  nutzen stattdessen eine Feder, ähnlich dem Federkraftmesser.
+  \end{solution}
+
+  \part[2] Was misst der Sensor der Waage physikalisch tatsächlich, und
+  wie rechnet die Waage daraus die angezeigte Masse in Kilogramm aus?
+  \Antwortraum{2}
+  \begin{solution}
+  Der Sensor misst eine Kraft (die Gewichtskraft $F_G$), nicht direkt
+  eine Masse. Die Elektronik rechnet intern mit $m = F_G / g$ um, wobei
+  $g=\SI{9.81}{\meter\per\second\squared}$ (der Erdoberflächenwert) fest
+  einprogrammiert ist, und zeigt das Ergebnis als Masse in Kilogramm an.
+  \end{solution}
+
+  \part[3] Wie müsste eine solche Waage verändert (neu kalibriert)
+  werden, damit sie auf dem Mond weiterhin die korrekte Masse anzeigt?
+  \Antwortraum{3}
+  \begin{solution}
+  Der fest einprogrammierte Wert $g=\SI{9.81}{\meter\per\second\squared}$
+  müsste durch $g_{\text{Mond}}=\SI{1.62}{\meter\per\second\squared}$
+  ersetzt werden, damit die Waage weiterhin korrekt $m=F_G/g$ berechnet.
+  Ohne diese Anpassung würde die unveränderte Waage auf dem Mond eine viel
+  zu kleine Masse anzeigen, da dieselbe Masse dort nur eine viel kleinere
+  Gewichtskraft erzeugt, aus der die Waage (mit dem falschen, zu grossen
+  $g_0$) fälschlich auf eine kleinere Masse schliessen würde.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\begin{theoriebox}[Die Federkraft: das Hookesche Gesetz]
+Wie in Kräfte (Teil 1) beobachtet, dehnt sich eine Feder umso weiter, je
+stärker eine Kraft an ihr zieht, und diese Dehnung ist proportional zur
+Kraft. Dieser Zusammenhang heisst \textbf{\emph{Hookesches Gesetz}}:
+\[
+  \boxed{F_H = -k\cdot x}, \qquad \text{Einheit der \textbf{\emph{Federkonstante}} } k\colon\ \si{\newton\per\meter}.
+\]
+Dabei ist $x$ die Auslenkung (Dehnung oder Stauchung, Einheit
+$\si{\meter}$) aus der \textbf{\emph{Ruhelage}} der Feder, und $k$ die
+\textbf{\emph{Federkonstante}}, ein Mass dafür, wie \glqq steif\grqq{}
+eine Feder ist (grosses $k$: harte Feder, kleines $k$: weiche Feder). Das
+Minuszeichen bedeutet: $F_H$ ist eine \textbf{\emph{rückstellende
+Kraft}}, sie zeigt immer zurück in Richtung der Ruhelage, egal ob die
+Feder gedehnt oder gestaucht ist. Genau deshalb federt eine ausgelenkte
+Feder immer wieder zur selben Ruhelage zurück: Je weiter sie ausgelenkt
+wird, desto stärker zieht (oder drückt) sie zurück.
+
+Trägt man den Betrag der Kraft $F$ über der Auslenkung $x$ auf, ergibt
+sich eine Gerade durch den Ursprung, deren Steigung genau $k$ ist:
+
+\begin{center}
+\begin{tikzpicture}[scale=1.4]
+  \draw[->,thick] (0,0) -- (5.5,0) node[right] {\scriptsize $x$};
+  \draw[->,thick] (0,0) -- (0,4.5) node[above] {\scriptsize $F$};
+  \draw[thick,titleblue] (0,0) -- (5,4);
+  \draw[dashed,gray] (3,0) -- (3,2.4) -- (0,2.4);
+  \node[below] at (3,0) {\scriptsize $x_1$};
+  \node[left] at (0,2.4) {\scriptsize $F_1$};
+\end{tikzpicture}\\[0.2em]
+{\scriptsize Kraft-Weg-Diagramm einer Feder: Die Steigung der Geraden ist
+die Federkonstante $k=\dfrac{F_1}{x_1}$.}
+\end{center}
+\end{theoriebox}
+
+\begin{beispielbox}[Beispiel: Federkonstante aus zwei Messwerten]
+Eine Feder dehnt sich unter einer Kraft von $F=\SI{8}{\newton}$ um
+$x=\SI{4}{\centi\meter}$.
+
+\textbf{Federkonstante:}
+\[
+  k = \frac{F}{x} = \frac{\SI{8}{\newton}}{\SI{0.04}{\meter}} = \SI{200}{\newton\per\meter}.
+\]
+\textbf{Vorhersage für eine neue Kraft} $F_2=\SI{15}{\newton}$:
+\[
+  x_2 = \frac{F_2}{k} = \frac{\SI{15}{\newton}}{\SI{200}{\newton\per\meter}} = \SI{0.075}{\meter} = \SI{7.5}{\centi\meter}.
+\]
+\end{beispielbox}
+
+\begin{questions}
+\begin{taskbox}[Übung: mit der Federkonstante rechnen]
+\question[6] Eine andere Feder dehnt sich unter einer Kraft von
+$F=\SI{9}{\newton}$ um $x=\SI{3}{\centi\meter}$.
+
+\begin{parts}
+  \part[3] Berechne die Federkonstante $k$ dieser Feder, und gib die
+  Einheit korrekt an.
+  \Antwortraum{3}
+  \begin{solution}
+  \[
+    k = \frac{F}{x} = \frac{\SI{9}{\newton}}{\SI{0.03}{\meter}} = \SI{300}{\newton\per\meter}.
+  \]
+  \end{solution}
+
+  \part[3] Berechne, um wie viel sich dieselbe Feder unter einer Kraft
+  von $F=\SI{21}{\newton}$ dehnt.
+  \Antwortraum{3}
+  \begin{solution}
+  \[
+    x = \frac{F}{k} = \frac{\SI{21}{\newton}}{\SI{300}{\newton\per\meter}} = \SI{0.07}{\meter} = \SI{7}{\centi\meter}.
+  \]
+  \end{solution}
+\end{parts}
+
+\question[3] Für eine dritte Feder wurde das folgende Kraft-Weg-Diagramm
+gemessen.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+  \draw[gray!35,thin] (0,0) grid (6,6);
+  \draw[->,thick] (0,0) -- (6.4,0) node[right] {\scriptsize $x$ in cm};
+  \draw[->,thick] (0,0) -- (0,6.4) node[above] {\scriptsize $F$ in N};
+  \foreach \x/\lbl in {1/1,2/2,3/3,4/4,5/5,6/6}
+    \node[below] at (\x,0) {\scriptsize \lbl};
+  \foreach \y/\lbl in {1/2,2/4,3/6,4/8,5/10,6/12}
+    \node[left] at (0,\y) {\scriptsize \lbl};
+  \draw[thick,titleblue] (0,0) -- (5,5);
+  \draw[dashed,gray] (5,0) -- (5,5) -- (0,5);
+\end{tikzpicture}
+\end{center}
+
+\begin{parts}
+  \part[3] Lies ein Wertepaar $(x,F)$ auf der Geraden ab und bestimme
+  damit die Federkonstante $k$ dieser Feder.
+  \Antwortraum{3}
+  \begin{solution}
+  Abgelesen z.\,B. bei $x=\SI{5}{\centi\meter}=\SI{0.05}{\meter}$,
+  $F=\SI{10}{\newton}$:
+  \[
+    k = \frac{F}{x} = \frac{\SI{10}{\newton}}{\SI{0.05}{\meter}} = \SI{200}{\newton\per\meter}.
+  \]
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+% --- Hands-On-Experiment (M5), wie in lernziele.md vorgeschlagen (L2),
+% ergänzend PhET-Simulation "Hooke's Law". LZ5. ------------------------------
+\begin{groupbox}[Federexperiment: die Federkonstante bestimmen]
+Bearbeitet die folgende Aufgabe zu zweit oder in einer Kleingruppe mit
+einer echten Feder und einem Satz Gewichtsstücke bekannter Kraft (z.\,B.
+$\SI{1}{\newton}$, $\SI{2}{\newton}$, $\SI{3}{\newton}$, $\SI{4}{\newton}$).
+Ergänzend könnt ihr eure Ergebnisse mit der PhET-Simulation
+\glqq Hooke's Law\grqq{} vergleichen.
+
+\begin{parts}
+  \part[3] \textbf{Messen:} Hängt der Reihe nach die Gewichtsstücke an
+  eure Feder und messt jeweils die Auslenkung $x$ mit einem Lineal.
+  Tragt eure Messwerte in die Tabelle ein.
+  \begin{center}
+  \begin{tabular}{@{}lp{2.8cm}p{2.8cm}@{}}
+  \toprule
+  \textbf{Messung} & \textbf{Kraft $F$} & \textbf{Auslenkung $x$} \\
+  \midrule
+  1 & & \\[0.6cm]
+  2 & & \\[0.6cm]
+  3 & & \\[0.6cm]
+  4 & & \\[0.6cm]
+  \bottomrule
+  \end{tabular}
+  \end{center}
+
+  \part[3] \textbf{Auswerten:} Zeichnet euer Kraft-Weg-Diagramm ($F$ über
+  $x$) auf dem folgenden Gitter.
+  \begin{center}
+  \begin{tikzpicture}[scale=1.3]
+    \draw[step=1cm,gray!35,thin] (0,0) grid (7,7);
+    \draw[->,thick] (0,0) -- (7.4,0) node[right] {\scriptsize $x$};
+    \draw[->,thick] (0,0) -- (0,7.4) node[above] {\scriptsize $F$};
+  \end{tikzpicture}
+  \end{center}
+
+  \part[4] \textbf{Federkonstante:} Bestimmt aus der Steigung eurer
+  Geraden ($k=\Delta F/\Delta x$) die Federkonstante eurer Feder, und
+  vergleicht euer Ergebnis mit der PhET-Simulation \glqq Hooke's
+  Law\grqq{}: Bestätigt die Simulation den linearen Zusammenhang aus
+  eurer eigenen Messung?
+  \Antwortraum{4}
+  \begin{solution}
+  Individuelle Messwerte, von der Lehrperson auf einen linearen
+  Zusammenhang zu kontrollieren. Beispielhafte Auswertung für eine Feder
+  mit $k=\SI{20}{\newton\per\meter}$: $F=\SI{1}{\newton}\to x=\SI{5}{\centi\meter}$,
+  $F=\SI{2}{\newton}\to x=\SI{10}{\centi\meter}$,
+  $F=\SI{3}{\newton}\to x=\SI{15}{\centi\meter}$,
+  $F=\SI{4}{\newton}\to x=\SI{20}{\centi\meter}$, alle Punkte liegen auf
+  einer Geraden durch den Ursprung mit Steigung
+  $k=\dfrac{\SI{4}{\newton}}{\SI{0.2}{\meter}}=\SI{20}{\newton\per\meter}$.
+  Die PhET-Simulation sollte denselben linearen Zusammenhang zeigen (die
+  angezeigte Feder gehorcht demselben Hookeschen Gesetz).
+  \end{solution}
+\end{parts}
+\end{groupbox}
+
+% --- Clicker-ConcepTest (M2) zur Aktiv-Passiv-Lernschwierigkeit, als
+% informelle Erkundung vor der Normalkraft-Theorie, wie in lernziele.md
+% vorgeschlagen (informell mit PhET "Friction" als Einstieg gedacht, hier
+% direkt als Konzepttest zur Normalkraft/Aktiv-Passiv-Schema). --------------
+\begin{questions}
+\begin{taskbox}[Clicker-ConcepTest: Übt der Tisch eine Kraft aus?]
+\question[4] Ein Buch liegt ruhig auf einem Tisch. Die Gewichtskraft des
+Buchs zieht es nach unten, trotzdem bewegt es sich nicht.
+
+\begin{parts}
+  \part[2] Kreuze an: Übt der Tisch dabei aktiv eine Kraft auf das Buch
+  aus, oder \glqq leistet\grqq{} er nur passiv Widerstand, ohne selbst
+  eine Kraft auszuüben? Begründe kurz.
+  \begin{itemize}[leftmargin=1.2cm,itemsep=0.15em]
+    \item[$\square$] A: Der Tisch übt aktiv eine Kraft nach oben aus, die
+    die Gewichtskraft des Buchs genau ausgleicht.
+    \item[$\square$] B: Der Tisch übt keine eigene Kraft aus, er
+    \glqq blockiert\grqq{} das Buch nur passiv.
+  \end{itemize}
+  \Antwortraum{2}
+  \begin{solution}
+  Richtig ist \textbf{A}. Ein starrer Körper wie ein Tisch verformt sich
+  unter der Last minimal (auch wenn das Auge es nicht sieht) und übt
+  dadurch tatsächlich eine aktive, gerichtete Gegenkraft aus, die
+  \textbf{\emph{Normalkraft}} $F_N$. Ohne diese aktive Gegenkraft würde
+  das Buch dem 2. Newtonschen Gesetz folgend beschleunigt nach unten
+  fallen.
+  \end{solution}
+
+  \part[2] Was würde passieren, wenn der Tisch (z.\,B. weil er zu
+  schwach gebaut ist) diese Kraft nicht vollständig aufbringen könnte?
+  \Antwortraum{2}
+  \begin{solution}
+  Dann wäre die Gewichtskraft grösser als die Normalkraft des Tisches, es
+  läge kein Kräftegleichgewicht mehr vor, und das Buch (bzw. der Tisch
+  selbst) würde sich nach unten in Bewegung setzen, im Extremfall bricht
+  der Tisch durch.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\begin{theoriebox}[Die Normalkraft]
+Nach dem 3. Newtonschen Gesetz (Wechselwirkungsgesetz, siehe Newtons
+Gesetze) übt jede Unterlage, auf der ein Körper aufliegt, eine
+Reaktionskraft senkrecht zu ihrer eigenen Oberfläche aus: die
+\textbf{\emph{Normalkraft}} $F_N$ (\glqq normal\grqq{} bedeutet hier
+\glqq senkrecht\grqq{}).
+
+Wichtig: $F_N$ ist \textbf{nicht} automatisch gleich der Gewichtskraft.
+Ihr tatsächlicher Betrag ergibt sich immer aus dem
+\textbf{\emph{Kräftegleichgewicht senkrecht zur Unterlage}}, das heisst,
+man muss alle Kräfte in dieser Richtung betrachten:
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.25em]
+  \item Auf einer \textbf{\emph{waagrechten}} Unterlage ohne weitere
+  vertikale Kräfte gilt $F_N = F_G$.
+  \item Wirkt zusätzlich eine weitere vertikale Kraft (z.\,B. jemand
+  drückt von oben), muss diese im Gleichgewicht mitgezählt werden.
+  \item Auf einer \textbf{\emph{geneigten Ebene}} (siehe Kräfte Teil 1)
+  ist $F_N$ gleich der Normalkomponente der Gewichtskraft:
+  \[
+    \boxed{F_N = F_G\cdot\cos(\alpha)}.
+  \]
+  In Kräfte (Teil 1) wurde diese Komponente bewusst
+  \glqq Normalkomponente\grqq{} genannt, weil das 3. Newtonsche Gesetz
+  noch nicht bekannt war. Jetzt wisst ihr: Diese Komponente ist genau die
+  Reaktionskraft der Ebene, also die Normalkraft $F_N$ selbst.
+\end{itemize}
+\end{theoriebox}
+
+\begin{beispielbox}[Beispiel: Normalkraft mit zusätzlicher Kraft]
+Eine Kiste mit Gewichtskraft $F_G=\SI{500}{\newton}$ steht auf einem
+waagrechten Boden. Eine Person drückt zusätzlich mit $F_P=\SI{150}{\newton}$
+senkrecht von oben auf die Kiste.
+
+\textbf{Kräftegleichgewicht senkrecht (die Kiste bewegt sich nicht):}
+\[
+  F_N - F_G - F_P = \SI{0}{\newton}.
+\]
+\textbf{Nach $F_N$ auflösen:}
+\[
+  \boxed{F_N = F_G + F_P} = \SI{500}{\newton}+\SI{150}{\newton} = \SI{650}{\newton}.
+\]
+Die Normalkraft ist hier also grösser als die Gewichtskraft allein.
+\end{beispielbox}
+
+\begin{questions}
+\begin{taskbox}[Übung: Normalkraft bestimmen]
+\question[8] Zwei Situationen mit unterschiedlichen Normalkräften.
+
+\begin{parts}
+  \part[3] Eine Kiste mit $F_G=\SI{500}{\newton}$ steht auf waagrechtem
+  Boden. Eine Person drückt zusätzlich mit $F_P=\SI{150}{\newton}$ von
+  oben darauf (wie im Beispiel oben, aber jetzt selbst rechnen).
+  Bestimme $F_N$ über das Kräftegleichgewicht.
+  \Antwortraum{3}
+  \begin{solution}
+  \[
+    F_N = F_G + F_P = \SI{500}{\newton}+\SI{150}{\newton} = \SI{650}{\newton}.
+  \]
+  \end{solution}
+
+  \part[3] Der Snowboarder aus Kräfte (Teil 1), $F_G=\SI{650}{\newton}$,
+  steht auf einer Piste mit Neigungswinkel $\alpha=\ang{20}$. Bestimme
+  seine Normalkraft $F_N$ (dort noch \glqq Normalkomponente\grqq{}
+  genannt).
+  \Antwortraum{3}
+  \begin{solution}
+  \[
+    F_N = F_G\cdot\cos(\alpha) = \SI{650}{\newton}\cdot\cos(\ang{20}) \approx \SI{650}{\newton}\cdot0.940 \approx \SI{610.8}{\newton}.
+  \]
+  \end{solution}
+
+  \part[2] Ist die Normalkraft also immer gleich der Gewichtskraft?
+  Begründe mit Verweis auf die Teilaufgaben a) und b).
+  \Antwortraum{2}
+  \begin{solution}
+  Nein. In a) ist $F_N=\SI{650}{\newton}$ grösser als $F_G=\SI{500}{\newton}$
+  (zusätzliche Druckkraft), in b) ist $F_N\approx\SI{610.8}{\newton}$
+  kleiner als $F_G=\SI{650}{\newton}$ (geneigte Ebene). $F_N$ ergibt sich
+  immer erst aus dem Kräftegleichgewicht senkrecht zur Unterlage, nicht
+  automatisch aus $F_G$ allein.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\begin{hinweisbox}[Praktisch: Erste Erkundung mit PhET \glqq Friction\grqq{}]
+Bevor die Reibung formal eingeführt wird, ein kurzer informeller
+Einstieg: In der PhET-Simulation \glqq Friction\grqq{} lässt sich ein
+Block über verschiedene Oberflächen schieben, während die Simulation die
+Temperatur an der Kontaktfläche und die Bewegung sichtbar macht.
+Experimentiert kurz selbst damit: Bei welcher Oberfläche braucht es mehr
+Kraft, den Block überhaupt erst in Bewegung zu setzen?
+\end{hinweisbox}
+
+\begin{theoriebox}[Reibung: Haft-, Gleit- und Rollreibung]
+Reibung entsteht, wenn sich zwei Oberflächen berühren und sich relativ
+zueinander bewegen wollen oder bewegen. Man unterscheidet drei Arten:
+
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.3em]
+  \item \textbf{\emph{Haftreibung}}: verhindert, dass ein ruhender Körper
+  überhaupt erst anfängt zu rutschen (z.\,B. ein Bücherstapel, den man
+  erst mit genügend Kraft in Bewegung setzen muss).
+  \item \textbf{\emph{Gleitreibung}}: wirkt, sobald sich der Körper
+  bereits über die Oberfläche bewegt (gleitet/rutscht).
+  \item \textbf{\emph{Rollreibung}}: wirkt bei rollenden Körpern (Rad,
+  Kugel) und ist deutlich kleiner als Gleitreibung, deshalb rollen Räder
+  so viel leichter, als dass Dinge rutschen.
+\end{itemize}
+
+In allen drei Fällen berechnet sich die Reibungskraft aus der Normalkraft
+$F_N$ (nicht aus der Gewichtskraft direkt, siehe vorherige Theoriebox):
+\[
+  \boxed{F_R = \mu\cdot F_N},
+\]
+wobei $\mu$ der (einheitenlose) \textbf{\emph{Reibungskoeffizient}} ist,
+mit eigenem Wert für Haft- ($\mu_H$), Gleit- ($\mu_G$) und Rollreibung
+($\mu_R$). Für dieselbe Materialpaarung gilt praktisch immer
+$\mu_H > \mu_G > \mu_R$, deshalb ist es schwerer, einen Gegenstand erst
+in Bewegung zu setzen, als ihn danach in Bewegung zu halten.
+
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Materialpaarung} & \textbf{$\mu_H$} & \textbf{$\mu_G$} \\
+\midrule
+Holz auf Holz & $0.5$ & $0.3$ \\
+Gummi auf trockenem Asphalt & $0.8$ & $0.7$ \\
+Stahl auf Stahl & $0.15$ & $0.12$ \\
+Schlittschuh auf Eis & $0.03$ & $0.01$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Zum Vergleich: Ein rollendes Autorad auf Asphalt hat eine Rollreibung von
+nur $\mu_R\approx 0.01$ bis $0.02$, deutlich kleiner als die Gleitreibung
+von Gummi auf Asphalt. Das ist einer der Gründe, weshalb Fahrzeuge Räder
+statt Kufen verwenden.
+\end{theoriebox}
+
+\begin{hinweisbox}[Hinweis: Reibung ist eine gerichtete Kraft, kein pauschaler \glqq Widerstand\grqq{}]
+Im Alltag wird Reibung oft als vager, ungerichteter \glqq Widerstand\grqq{}
+verstanden, so als würde sie einfach \glqq bremsen\grqq{}, egal in welche
+Richtung. Physikalisch ist die Reibungskraft $F_R$ aber eine ganz normale
+Kraft mit Betrag \emph{und} Richtung: Sie wirkt immer genau entgegen der
+Richtung, in die sich der Körper relativ zur Unterlage bewegt (oder zu
+bewegen versucht), und ihr Betrag lässt sich mit $F_R=\mu\cdot F_N$ exakt
+berechnen, nicht nur qualitativ abschätzen.
+\end{hinweisbox}
+
+\begin{questions}
+\begin{taskbox}[Übung: Reibungskraft berechnen]
+\question[9] Eine Kiste mit Masse $m=\SI{50}{\kilo\gram}$ steht auf
+einem waagrechten Holzboden ($\mu_H=0.5$, $\mu_G=0.3$, siehe Tabelle
+oben).
+
+\begin{parts}
+  \part[3] Berechne zuerst die Normalkraft, danach die maximale
+  Haftreibungskraft, die überwunden werden muss, damit die Kiste
+  überhaupt zu rutschen beginnt.
+  \Antwortraum{3}
+  \begin{solution}
+  \[
+    F_N = F_G = m\cdot g = \SI{50}{\kilo\gram}\cdot\SI{9.81}{\meter\per\second\squared} \approx \SI{490.5}{\newton}.
+  \]
+  \[
+    F_{R,H,\max} = \mu_H\cdot F_N = 0.5\cdot\SI{490.5}{\newton} \approx \SI{245.3}{\newton}.
+  \]
+  \end{solution}
+
+  \part[3] Berechne die Gleitreibungskraft, sobald die Kiste bereits
+  rutscht.
+  \Antwortraum{3}
+  \begin{solution}
+  \[
+    F_{R,G} = \mu_G\cdot F_N = 0.3\cdot\SI{490.5}{\newton} \approx \SI{147.15}{\newton}.
+  \]
+  \end{solution}
+
+  \part[3] Vergleiche die beiden Ergebnisse: Warum ist es schwerer, die
+  Kiste in Bewegung zu \textbf{setzen}, als sie danach in Bewegung zu
+  \textbf{halten}?
+  \Antwortraum{3}
+  \begin{solution}
+  Die maximale Haftreibungskraft ($\approx\SI{245.3}{\newton}$) ist
+  grösser als die Gleitreibungskraft ($\approx\SI{147.15}{\newton}$),
+  weil $\mu_H>\mu_G$ gilt. Man muss also zuerst die grössere
+  Haftreibungskraft überwinden, um die Kiste überhaupt in Bewegung zu
+  setzen; ist sie erst einmal in Bewegung, reicht die kleinere
+  Gleitreibungskraft, um sie in Bewegung zu halten.
+  \end{solution}
+\end{parts}
+
+\question[3] Ordne jeder Situation die passende Reibungsart zu:
+\textbf{(A)} Haftreibung, \textbf{(B)} Gleitreibung, \textbf{(C)} Rollreibung.
+
+\begin{parts}
+  \part[1] Ein Fahrradreifen rollt über die Strasse.
+  \Antwortraum{1}
+  \begin{solution}
+  \textbf{C} (Rollreibung, deutlich kleiner als Gleitreibung, deshalb
+  rollen Räder so viel leichter, als dass Dinge rutschen).
+  \end{solution}
+
+  \part[1] Ein Schlitten gleitet bereits über den Schnee.
+  \Antwortraum{1}
+  \begin{solution}
+  \textbf{B} (Gleitreibung, der Schlitten bewegt sich bereits über die
+  Unterlage).
+  \end{solution}
+
+  \part[1] Ein Schrank steht ruhig auf dem Boden und soll gerade erst
+  verschoben werden.
+  \Antwortraum{1}
+  \begin{solution}
+  \textbf{A} (Haftreibung, sie verhindert, dass der Schrank überhaupt
+  erst zu rutschen beginnt).
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\begin{theoriebox}[Der Grenzwinkel der schiefen Ebene: $\mu_H = \tan(\alpha)$]
+Legt man einen Körper auf eine schiefe Ebene und vergrössert langsam den
+Neigungswinkel $\alpha$, bleibt er zunächst liegen (Haftreibung hält ihn
+fest), bis er ab einem bestimmten \textbf{\emph{Grenzwinkel}} zu rutschen
+beginnt. Genau in diesem Moment ist die maximale Haftreibungskraft gerade
+so gross wie die Hangabtriebskraft:
+\[
+  F_{R,H,\max} = F_H.
+\]
+\textbf{Schritt 1:} Beide Kräfte einsetzen ($F_{R,H,\max}=\mu_H\cdot F_N$
+und $F_H=F_G\cdot\sin(\alpha)$, siehe Kräfte Teil 1):
+\[
+  \mu_H\cdot F_N = F_G\cdot\sin(\alpha).
+\]
+\textbf{Schritt 2:} Normalkraft auf der schiefen Ebene einsetzen
+($F_N=F_G\cdot\cos(\alpha)$, siehe Theoriebox zur Normalkraft):
+\[
+  \mu_H\cdot F_G\cdot\cos(\alpha) = F_G\cdot\sin(\alpha).
+\]
+\textbf{Schritt 3:} $F_G$ kürzen (auf beiden Seiten durch $F_G$ teilen):
+\[
+  \mu_H\cdot\cos(\alpha) = \sin(\alpha).
+\]
+\textbf{Schritt 4:} Durch $\cos(\alpha)$ teilen:
+\[
+  \boxed{\mu_H = \frac{\sin(\alpha)}{\cos(\alpha)} = \tan(\alpha)}.
+\]
+Am Grenzwinkel lässt sich der Haftreibungskoeffizient also allein aus dem
+gemessenen Winkel bestimmen, ganz ohne Masse oder Gewichtskraft zu
+kennen.
+\end{theoriebox}
+
+\begin{beispielbox}[Beispiel: Grenzwinkel messen]
+Eine Holzkiste auf einer Holzunterlage beginnt bei einem Neigungswinkel
+von $\alpha=\ang{27}$ zu rutschen.
+
+\[
+  \mu_H = \tan(\ang{27}) \approx 0.51.
+\]
+Das passt gut zum Tabellenwert für Holz auf Holz ($\mu_H\approx0.5$) aus
+der Theoriebox zur Reibung.
+\end{beispielbox}
+
+\begin{questions}
+\begin{taskbox}[Übung: Grenzwinkel auswerten]
+\question[4] Eine Turnschuhsohle auf der Bodenmatte in der Turnhalle
+beginnt erst bei einem Neigungswinkel von $\alpha=\ang{15}$ zu rutschen.
+
+\begin{parts}
+  \part[4] Berechne den Haftreibungskoeffizienten $\mu_H$ dieser
+  Materialpaarung.
+  \Antwortraum{4}
+  \begin{solution}
+  \[
+    \mu_H = \tan(\ang{15}) \approx 0.27.
+  \]
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+% --- phyphox-Gruppenarbeit (M5/M6), wie in lernziele.md vorgeschlagen (L5).
+% LZ9. -----------------------------------------------------------------------
+\begin{groupbox}[phyphox-Experiment: Grenzwinkel und Reibungskoeffizienten messen]
+Bearbeitet die folgende Aufgabe zu zweit oder in einer Kleingruppe.
+Material: ein Buch oder Laptop als schiefe Ebene, ein Smartphone mit der
+App phyphox (Sensor \glqq Inclination\grqq{} / Neigung), ein Testobjekt
+(z.\,B. ein Radiergummi oder das Smartphone selbst, einmal mit und einmal
+ohne Hülle).
+
+\begin{parts}
+  \part[2] \textbf{Aufbau:} Legt das Testobjekt auf die zunächst flache
+  Unterlage (Buch/Laptop) und startet phyphox mit dem Sensor
+  \glqq Inclination\grqq{} auf der Unterlage.
+  \Antwortraum{2}
+
+  \part[3] \textbf{Grenzwinkel messen:} Hebt die Unterlage sehr langsam
+  an, bis das Testobjekt gerade zu rutschen beginnt, und lest in diesem
+  Moment den Winkel $\alpha_H$ ab. Wiederholt dies für zwei verschiedene
+  Bedingungen (z.\,B. mit und ohne Handyhülle) und berechnet jeweils
+  $\mu_H=\tan(\alpha_H)$.
+  \begin{center}
+  \begin{tabular}{@{}lp{2.5cm}p{2.5cm}@{}}
+  \toprule
+  \textbf{Bedingung} & \textbf{$\alpha_H$} & \textbf{$\mu_H=\tan(\alpha_H)$} \\
+  \midrule
+  1 & & \\[0.6cm]
+  2 & & \\[0.6cm]
+  \bottomrule
+  \end{tabular}
+  \end{center}
+  \Antwortraum{1}
+
+  \part[3] \textbf{Gleitreibung messen:} Verkleinert nach Rutschbeginn
+  den Winkel langsam wieder, bis sich das Testobjekt gerade noch mit
+  konstanter Geschwindigkeit (nicht beschleunigt) weiterbewegt, lest
+  diesen Winkel $\alpha_G$ ab und berechnet $\mu_G=\tan(\alpha_G)$ für
+  beide Bedingungen.
+  \begin{center}
+  \begin{tabular}{@{}lp{2.5cm}p{2.5cm}@{}}
+  \toprule
+  \textbf{Bedingung} & \textbf{$\alpha_G$} & \textbf{$\mu_G=\tan(\alpha_G)$} \\
+  \midrule
+  1 & & \\[0.6cm]
+  2 & & \\[0.6cm]
+  \bottomrule
+  \end{tabular}
+  \end{center}
+  \Antwortraum{1}
+
+  \part[2] \textbf{Vergleich:} Vergleicht eure gemessenen Werte mit einem
+  Literaturwert für eine ähnliche Materialpaarung (Internet- oder
+  KI-Recherche, mit Quellenangabe). Stimmen eure Messungen ungefähr
+  überein? Nennt eine mögliche Fehlerquelle bei diesem Experiment.
+  \Antwortraum{2}
+  \begin{solution}
+  Individuelle Messwerte, von der Lehrperson auf $\mu_H>\mu_G$ und
+  plausible Grössenordnung (z.\,B. Gummi/Kunststoff auf Buchdeckel eher
+  im Bereich $\mu\approx0.3$ bis $0.6$) zu kontrollieren. Mögliche
+  Fehlerquellen: ungleichmässiges Anheben, Ablesegenauigkeit des
+  Neigungssensors, unterschiedlich raue Stellen der Unterlage.
+  \end{solution}
+\end{parts}
+\end{groupbox}
+
+% --- Abschluss: Clicker-Review über alle vier Kraftarten, wie in
+% lernziele.md vorgeschlagen (Abschluss von L5). -----------------------------
+\begin{questions}
+\begin{taskbox}[Clicker-Review: alle vier Kraftarten]
+\question[8] Ordne jede Aussage der passenden Kraftart zu: \textbf{(A)}
+Gewichtskraft, \textbf{(B)} Federkraft, \textbf{(C)} Normalkraft,
+\textbf{(D)} Reibungskraft.
+
+\begin{parts}
+  \part[2] \glqq Diese Kraft ist ortsabhängig: Auf dem Mond ist sie viel
+  kleiner als auf der Erde, obwohl sich die Masse nicht ändert.\grqq{}
+  \Antwortraum{2}
+  \begin{solution}
+  \textbf{A} (Gewichtskraft, $F_G=m\cdot g$).
+  \end{solution}
+
+  \part[2] \glqq Diese Kraft ist proportional zur Auslenkung aus der
+  Ruhelage und wirkt immer rückstellend.\grqq{}
+  \Antwortraum{2}
+  \begin{solution}
+  \textbf{B} (Federkraft, $F_H=-k\cdot x$, Hookesches Gesetz).
+  \end{solution}
+
+  \part[2] \glqq Diese Kraft ist eine Reaktionskraft der Unterlage und
+  steht immer senkrecht zu deren Oberfläche.\grqq{}
+  \Antwortraum{2}
+  \begin{solution}
+  \textbf{C} (Normalkraft, $F_N$, aus dem Kräftegleichgewicht senkrecht
+  zur Unterlage).
+  \end{solution}
+
+  \part[2] \glqq Diese Kraft wirkt entgegen der Bewegungsrichtung (oder
+  Bewegungstendenz) und ist proportional zur Normalkraft.\grqq{}
+  \Antwortraum{2}
+  \begin{solution}
+  \textbf{D} (Reibungskraft, $F_R=\mu\cdot F_N$).
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\end{document}

@@ -1,0 +1,1706 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Arbeitsblatt: Bewegungsgleichungen (nicht bewertet, Übungsmaterial für den
+% Unterricht)
+% Kantonsschule KFR – Physik, 4. Klasse, 1. HS, Mechanik
+%
+% Kopiert aus vorlagen/arbeitsblatt-vorlage.tex und um dieselben
+% Farb-/Boxdefinitionen ergänzt wie beschleunigung-arbeitsblatt.tex /
+% v-t-diagramm-arbeitsblatt.tex (gleicher Themencluster, direkt
+% anschliessende Lektion). Templates sind selbstständig/nicht DRY, siehe
+% CLAUDE.md.
+%
+% Notation: lernziele.md (Quelle: Backward-Design-Dokument) verwendet
+% durchgehend $x$ statt $s$ für den Ort, abweichend von s-t-diagramm/
+% v-t-diagramm/beschleunigung. Das ist beabsichtigt (Standardnotation der
+% Bewegungsgleichungen "x(t)=x0+v0t+..." in Formelsammlungen) und wird gleich
+% zu Beginn der ersten Theoriebox kurz an $s$ rückgebunden, damit der
+% Notationswechsel nicht verwirrt.
+%
+% Stand: Lernziele, Einstieg, Theorie und Aufgaben fertig (Reihenfolge =
+% Dokumentreihenfolge, siehe Kommentar vor der Lernziele-infobox unten;
+% nicht identisch mit der LZ-Reihenfolge in lernziele.md, dort wurde
+% umnummeriert, siehe Kommentar dort).
+% =============================================================================
+\documentclass[addpoints,11pt,a4paper]{exam}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.2cm,headheight=14pt]{geometry}
+\usepackage{amsmath}
+\usepackage{siunitx}
+% Hausstil: zusammengesetzte Einheiten immer als echter Bruch (\frac), nicht
+% als Schrägstrich inline oder \tfrac. Gilt global für jedes \si/\SI.
+\sisetup{per-mode=fraction,fraction-command=\frac}
+\usepackage{array,booktabs,tabularx,multirow}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{circuitikz}
+\usepackage[most]{tcolorbox}
+\usepackage{lastpage}
+\usepackage{needspace}
+
+\usetikzlibrary{arrows.meta,calc,angles,quotes}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+
+% -----------------------------
+% Farben (Hausfarbschema Physik KFR)
+% -----------------------------
+\definecolor{titleblue}{HTML}{183A6B}
+\definecolor{accentblue}{HTML}{2E6F9E}
+\definecolor{lightblue}{HTML}{EAF4FB}
+\definecolor{verylightblue}{HTML}{F7FBFE}
+\definecolor{lightgray}{HTML}{F4F6F8}
+\definecolor{darkgray}{HTML}{4A4A4A}
+% Für Diagramme mit zwei verschiedenen Funktionen/Linien: titleblue (dunkles
+% Blau) + accentorange (Orange) sind weit genug auseinander (auch in
+% Graustufen/für Farbenblinde unterscheidbar), im Gegensatz zu
+% titleblue+accentblue, die beide Blautöne sind.
+\definecolor{accentorange}{HTML}{D9720C}
+% Für Diagramme mit DREI Linien: dritte Farbe nötig, die sich sowohl von
+% titleblue als auch von accentorange klar unterscheidet, auch in
+% Graustufen/für Farbenblinde. Violett liegt weit genug von Blau und Orange
+% entfernt, um als dritte Linie eindeutig unterscheidbar zu bleiben.
+\definecolor{accentpurple}{HTML}{7B2D8E}
+% Für die Anhalteweg-Diagramme: Reaktionsweg immer titleblue (Blau),
+% Hindernis immer accentorange (Orange, bereits definiert). Für den
+% Bremsweg (Rot) braucht es eine eigene, klar von Blau/Orange
+% unterscheidbare dritte Farbe -- accentpurple ist hier ungeeignet
+% (steht schon für "dritte Linie" in anderen Diagrammen), deshalb ein
+% eigenes gedecktes Rot.
+\definecolor{brakered}{HTML}{C0392B}
+% Theorieblock: eigene Farbe (grün), damit er sich auf einen Blick von den
+% blauen Lernziele-/Aufgaben-Boxen abhebt.
+\definecolor{theorygreen}{HTML}{2E7D4F}
+\definecolor{lighttheorygreen}{HTML}{EAF7EF}
+% Gruppenarbeitbox: eigene Farbe (Petrol/Teal), damit Partner-/Gruppenarbeit
+% sich auf einen Blick von normalen Einzelaufgaben (blau, taskbox) und vom
+% Theorieblock (grün, theoriebox) abhebt. Siehe Regel weiter unten bei
+% \newtcolorbox{groupbox}.
+\definecolor{groupteal}{HTML}{1B7F72}
+\definecolor{lightgroupteal}{HTML}{E8F5F3}
+
+% -----------------------------
+% Spaltentypen
+% -----------------------------
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% -----------------------------
+% Boxen
+% -----------------------------
+\newtcolorbox{titlebox}{
+  enhanced,
+  colback=titleblue,
+  colframe=titleblue,
+  boxrule=0pt,
+  arc=3mm,
+  left=3mm,right=3mm,top=3mm,bottom=3mm
+}
+
+% exam.cls rückt die questions-Liste um die Breite von "10." (plus \labelsep)
+% ein (Platz für die Nummerierung "1.", "2." ...); wir messen dieselbe Distanz
+% hier unabhängig nach.
+\newlength{\aufgabenindent}
+\settowidth{\aufgabenindent}{10.\hskip\labelsep}
+
+% left/right-Padding bewusst grosszügiger als bei answerbox: exam.cls hängt
+% die Nummerierung von \question bündig an den inneren Rand des
+% Textbereichs. Bei zu knappem Padding sitzt diese Nummer direkt auf dem
+% Rahmen der Box statt sichtbar innerhalb davon.
+% infobox steht ausserhalb von questions (z.B. beim Lernzielblock auf
+% Dokumentebene) und braucht deshalb KEINE Korrektur: \linewidth entspricht
+% dort bereits \textwidth.
+\newtcolorbox{infobox}{
+  enhanced,
+  breakable,
+  colback=lightblue,
+  colframe=accentblue,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+% theoriebox: wie infobox, aber grün und mit farbigem Titelbalken (analog zu
+% taskbox), damit der Theorieblock auf einen Blick von Lernziele (blau,
+% ohne Titelbalken) und Aufgaben (blau, mit Titelbalken) unterscheidbar ist.
+% Steht wie infobox ausserhalb von questions: KEINE Einrückungskorrektur
+% nötig (siehe Kommentar bei infobox oben).
+% Regel: hervorgehobene/definierte Begriffe INNERHALB einer theoriebox
+% immer mit \textbf{\emph{...}} setzen (fett UND kursiv), nicht mit blossem
+% \emph{...}, damit Fachbegriffe beim Durchlesen der Theorie sofort
+% auffallen. Ausserhalb von theoriebox (beispielbox, Aufgabentext, ...)
+% bleibt \emph{...} allein korrekt.
+\newtcolorbox{theoriebox}[1][Theorie]{
+  enhanced,
+  breakable,
+  colback=lighttheorygreen,
+  colframe=theorygreen,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+% taskbox steht direkt in der questions-Liste (vor dem ersten \question),
+% also innerhalb von deren Einrückung. Empirisch (per Pixelvergleich mit der
+% Kopfzeilentabelle) verschiebt "enlarge left by" hier die GESAMTE Box
+% (nicht nur ihren linken Rand). Ein positiver Wert schiebt sie nach RECHTS,
+% nicht nach links, entgegen der naheliegenden Lesart des Schlüsselnamens.
+% Ein negativer Wert (-\aufgabenindent) schiebt die Box exakt um die
+% Listeneinrückung nach links; width=\textwidth stellt danach wieder die
+% volle Breite her, sodass beide Kanten mit der Tabelle übereinstimmen
+% (verifiziert per Pixelmessung, Abweichung <=1px @300dpi).
+% Falls taskbox künftig auch ausserhalb von questions verwendet wird, muss
+% diese Korrektur analog zu infobox entfernt werden.
+\newtcolorbox{taskbox}[1][]{
+  enhanced,
+  breakable,
+  colback=verylightblue,
+  colframe=accentblue,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  enlarge left by=-\aufgabenindent,
+  width=\textwidth,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+% beispielbox: wie taskbox (blau), aber ausserhalb von questions: deshalb
+% wie infobox/theoriebox KEINE Einrückungskorrektur nötig (siehe Kommentar
+% bei infobox oben). Für Beispiele in der Theorie: farblich blau wie
+% Aufgaben, damit "Beispiel" sich auf einen Blick von der grünen Theorie
+% abhebt (Hausstil: grün = Theorie, blau = Beispiele/Aufgaben).
+\newtcolorbox{beispielbox}[1][Beispiel]{
+  enhanced,
+  breakable,
+  colback=verylightblue,
+  colframe=accentblue,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+% Regel für groupbox: JEDE Aufgabe, bei der Schülerinnen/Schüler zu zweit
+% oder in einer Gruppe zusammenarbeiten (Partnerarbeit, Gruppenarbeit,
+% Diskussion zu zweit, ...), bekommt diese Box statt der blauen taskbox.
+% Farbe (Petrol/Teal) ist bewusst weder blau (taskbox/infobox) noch grün
+% (theoriebox), damit "hier braucht es eine Partnerin/einen Partner" auf
+% einen Blick erkennbar ist. Strukturell identisch zu taskbox (gleiche
+% Einrückungskorrektur, da auch groupbox innerhalb von questions steht).
+\newtcolorbox{groupbox}[1][Gruppenarbeit]{
+  enhanced,
+  breakable,
+  colback=lightgroupteal,
+  colframe=groupteal,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  enlarge left by=-\aufgabenindent,
+  width=\textwidth,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+% hinweisbox: eigene Farbe (Orange, wiederverwendet accentorange statt einer
+% neuen Farbe), für wichtige Klarstellungen, die über eine normale
+% Bemerkung im Fliesstext (wie "\textbf{Wichtig:}" innerhalb einer
+% theoriebox) hinausgehen, etwa eine explizite Warnung vor einer häufigen
+% Verwechslung.
+% Steht wie infobox/theoriebox/beispielbox ausserhalb von questions, KEINE
+% Einrückungskorrektur nötig (siehe Kommentar bei infobox oben).
+\definecolor{lightorange}{HTML}{FCEEE0}
+\newtcolorbox{hinweisbox}[1][Hinweis]{
+  enhanced,
+  breakable,
+  colback=lightorange,
+  colframe=accentorange,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+% formelbox: eigene Farbe (Violett, wiederverwendet accentpurple), um die
+% drei zentralen Bewegungsgleichungen dieser Einheit visuell klar von
+% normaler Theorie abzuheben, damit sie beim Nachschlagen sofort ins Auge
+% springen. Steht wie infobox/theoriebox/beispielbox ausserhalb von
+% questions, KEINE Einrückungskorrektur nötig (siehe Kommentar bei infobox
+% oben).
+\definecolor{lightpurple}{HTML}{F3EAF7}
+\newtcolorbox{formelbox}[1][Bewegungsgleichung]{
+  enhanced,
+  breakable,
+  colback=lightpurple,
+  colframe=accentpurple,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.9pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+\newtcolorbox{answerbox}{
+  breakable,
+  colback=white,
+  colframe=gray!55,
+  boxrule=0.5pt,
+  arc=1.5mm,
+  left=2mm,right=2mm,top=2mm,bottom=2mm
+}
+
+% --- Lösungen ein-/ausblenden -----------------------------------------------
+% Schülerexemplar (Standard): \noprintanswers
+% Lehrer-/Lösungsexemplar:    \printanswers
+\noprintanswers
+% \printanswers
+
+% --- Punkte bleiben intern, werden aber nicht gedruckt ----------------------
+% Arbeitsblätter sind nicht benotet. \question[n]/\part[n] bekommen trotzdem
+% eine Punktzahl n, rein als interner Anhaltspunkt, der 1:1 an
+% \Antwortraum{n} weitergereicht wird, um die Antwortraumgrösse zu
+% bestimmen. \pointformat{} (Aufruf, nicht \renewcommand!) unterdrückt die
+% von der exam-Klasse sonst automatisch gedruckte Punktanzeige ("(n P.)")
+% vollständig, ohne die interne Punktezählung (\numpoints) zu beeinflussen.
+\pointformat{}
+
+% --- Lösungsbox auf Deutsch, farblich abgesetzt -----------------------------
+\renewcommand{\solutiontitle}{\noindent\color{titleblue}\textbf{Lösung:}\enspace}
+
+% --- Kopf-/Fusszeile: Thema/Titel oben, Seitenzahl unten --------------------
+\pagestyle{headandfoot}
+\cfoot{\textcolor{darkgray}{Seite \thepage\ von \pageref{LastPage}}}
+
+% --- Kopfzeile: Klasse / Datum / Thema / Titel ------------------------------
+% Einheitliches Layout für Arbeitsblatt, Prüfung und Praktikum. Ohne Tabelle:
+% Klasse/Datum/Thema/Lehrperson stehen als einfache Textzeile unter dem
+% Titel-Banner.
+\newcommand{\Kopfzeile}[4]{%
+  \begin{titlebox}
+    {\color{white}\sffamily\bfseries\Large #4}
+  \end{titlebox}
+  \vspace{0.5em}
+  \noindent\textbf{Klasse:}~#1 \hfill \textbf{Datum:}~#2 \hfill \textbf{Thema:}~#3
+    \hfill \textbf{Lehrperson:}~Loris Keller
+  \vspace{0.8em}
+  \lhead{\textcolor{darkgray}{#3}}
+  \rhead{\textcolor{darkgray}{#4}}
+}
+
+% --- Antwortraum: ca. 2.5 cm Platz pro Punkt, als umrandetes Feld -----------
+\newlength{\antwortraumlen}
+\newcommand{\Antwortraum}[1]{%
+  \pgfmathsetlength{\antwortraumlen}{#1*2.5cm}%
+  \begin{answerbox}
+    \rule{0pt}{\antwortraumlen}%
+  \end{answerbox}%
+}
+
+% Werte für Kopfzeile zentral setzen
+\newcommand{\Klasse}{4a}
+\newcommand{\Datum}{11.09.2026}
+\newcommand{\Thema}{Bewegungsgleichungen}
+\newcommand{\ArbeitsblattTitel}{Arbeitsblatt: Bewegungsgleichungen}
+
+\begin{document}
+
+\Kopfzeile{\Klasse}{\Datum}{\Thema}{\ArbeitsblattTitel}
+
+% --- Lernziele: aus lernziele.md (Backward-Design, Stufe 1) übernommen, aber
+% NEU NUMMERIERT nach demselben Prinzip wie in den vorangehenden
+% Arbeitsblättern dieses Themenclusters: LZ1..LZ7 hier entsprechen der
+% Reihenfolge, in der die zugehörigen Theorieboxen/Übungen im Dokument
+% erscheinen, NICHT der Nummerierung aus lernziele.md. Zuordnung
+% (Dokument-LZ = Quelle-LZ): 1=1, 2=5, 3=7, 4=2, 5=3, 6=4, 7=6.
+% Reihenfolge: LZ1 (Ortsgleichung aus der bekannten Flächenzerlegung in
+% Rechteck und Dreieck herleiten) -> LZ2 (x-t-Parabel erklären, solange die
+% Herleitung noch frisch ist) -> LZ3 (x-t- und v-t-Diagramm gegenseitig
+% skizzieren) -> LZ4 (Formelwahl unter allen drei Bewegungsgleichungen,
+% nachdem die dritte Gleichung eingeführt wurde) -> LZ5 (Vorzeichen korrekt
+% einsetzen, direkt am E-Trottinettbeispiel) -> LZ6 (nach der gesuchten
+% Grösse auflösen, inkl. quadratischer Gleichung, gleiches
+% E-Trottinettbeispiel erweitert) -> LZ7 (Treffpunktprobleme mit
+% Beschleunigung, als anspruchsvollste Anwendung ans Ende gesetzt).
+\begin{infobox}
+\textbf{Lernziele}\\
+Am Ende dieser Einheit kann ich \dots
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.25em]
+  \item die Ortsgleichung $x(t)=x_0+v_0(t-t_0)+\tfrac{1}{2}a(t-t_0)^2$ als Verallgemeinerung der bekannten Flächenzerlegung in Rechteck und Dreieck herleiten. (LZ1)
+  \item erklären, weshalb die $x$-$t$-Kurve einer gleichmässig beschleunigten Bewegung eine Parabel ist, obwohl die Bewegung selbst geradlinig verläuft. (LZ2)
+  \item zu einer gegebenen $x(t)$- oder $v(t)$-Gleichung das jeweils andere Diagramm qualitativ skizzieren. (LZ3)
+  \item zu einer gegebenen Bewegungssituation die passende der drei Bewegungsgleichungen auswählen. (LZ4)
+  \item $x_0$, $v_0$ und $a$ mit dem korrekten Vorzeichen relativ zu einem selbst gewählten Koordinatensystem einsetzen, auch bei einer verzögerten Bewegung. (LZ5)
+  \item aus gegebenen Grössen die gesuchte Grösse (Ort, Geschwindigkeit oder Zeit) berechnen, inklusive Auflösen einer quadratischen Gleichung nach $t$ und Verwerfen der unphysikalischen Lösung. (LZ6)
+  \item das bekannte Überholmanöverszenario auf eine Situation mit einer beschleunigten Bewegung erweitern: für zwei Objekte je eine Bewegungsgleichung im selben Koordinatensystem aufstellen und Zeitpunkt sowie Ort eines Treffens berechnen. (LZ7)
+\end{itemize}
+\end{infobox}
+
+% --- Einleitung: Wozu diese Einheit im echten Leben gebraucht wird, noch
+% vor dem fachlichen Einstieg (auf Wunsch als eigener Motivationsblock am
+% Anfang des Arbeitsblatts). Bild Bilder/Falcon_9_Landung.jpg zeigt die
+% erste Stufe einer Falcon-9-Rakete kurz vor der Landung (Landebeine
+% ausgefahren, Triebwerk brennt). -----------------------------------------
+\begin{beispielbox}[Einleitung: Wie eine Rakete sicher landet]
+\begin{center}
+\includegraphics[width=0.68\linewidth]{Bilder/Falcon_9_Landung.jpg}
+\end{center}
+{\scriptsize Die erste Stufe einer Falcon-9-Rakete (SpaceX) kurz vor der
+Landung.}
+
+Nach dem Start trennt sich die erste Stufe einer Falcon-9-Rakete vom Rest
+der Rakete und fällt zurück Richtung Erde, zunächst mit hoher (und weiter
+zunehmender) Geschwindigkeit. Damit sie nicht einfach mit dem Boden
+kollidiert, wird kurz vor der Landung das Triebwerk noch einmal gezündet:
+Es bremst die Stufe ab, sodass ihre Geschwindigkeit im Idealfall genau in
+dem Moment $v=0$ erreicht, in dem sie den Boden berührt. Auf dem Bild
+siehst du genau diesen Moment: Landebeine ausgefahren, Triebwerk noch
+brennend, kurz vor dem Aufsetzen.
+
+Das Problem dabei: Die Bremsphase kann nicht beliebig lange dauern (der
+Treibstoff ist begrenzt) und darf auch nicht zu spät beginnen, sonst
+reicht die verbleibende Höhe nicht mehr aus, um rechtzeitig auf $v=0$
+abzubremsen. Die Ingenieurinnen und Ingenieure müssen deshalb im Voraus
+genau berechnen: Bei welcher Höhe und mit welcher Bremsbeschleunigung
+muss das Triebwerk zünden, damit Geschwindigkeit \emph{und} Ort
+gleichzeitig bei null ankommen? Genau das ist eine Anwendung der
+Bewegungsgleichungen, die du in dieser Einheit herleitest, insbesondere
+der Gleichung $v^2=v_0^2+2a\Delta x$: Sie liefert exakt, welche
+Bremsbeschleunigung $a$ nötig ist, um eine gegebene Geschwindigkeit $v_0$
+auf der verbleibenden Strecke $\Delta x$ bis zum Boden auf $v=0$
+abzubremsen.
+
+Ein falsch berechneter Zündzeitpunkt hat drastische Folgen: Zündet das
+Triebwerk zu spät oder zu schwach, ist die Stufe beim Aufsetzen noch zu
+schnell und wird beim Aufprall zerstört. Zündet es zu früh oder zu
+stark, geht wertvoller Treibstoff verloren, der für eine erneute Landung
+gefehlt hätte. Bewegungsgleichungen sind hier also nicht nur Theorie: Sie
+entscheiden mit darüber, ob eine mehrere Millionen Franken teure Rakete
+wiederverwendet werden kann oder nicht.
+\end{beispielbox}
+
+% --- Einstieg: Direkter Rückgriff auf die Einfädelspuraufgabe aus
+% beschleunigung-arbeitsblatt.tex (dort per Flächenzerlegung in Rechteck
+% und Dreieck gelöst), im Sinn von "das kennst du schon, jetzt als Formel",
+% wie in den Beispielkontexten von lernziele.md für LZ1 vorgeschlagen. -----
+\begin{beispielbox}[Einstieg: Muss man das immer zeichnen?]
+Erinnerst du dich an die Einfädelspuraufgabe aus dem
+Beschleunigungsarbeitsblatt? Ein Auto fuhr mit
+$v_0=\SI{15}{\meter\per\second}$ auf die Autobahn und beschleunigte
+$\SI{6}{\second}$ lang konstant mit $a=\SI{1.5}{\meter\per\second\squared}$.
+Um die zurückgelegte Strecke zu finden, hast du das $v$-$t$-Diagramm
+gezeichnet und die Fläche darunter in ein Rechteck und ein Dreieck
+zerlegt: $\SI{90}{\meter}+\SI{27}{\meter}=\SI{117}{\meter}$.
+
+Das funktioniert zuverlässig, ist aber jedes Mal derselbe Aufwand: Diagramm
+zeichnen, Fläche in zwei Teile zerlegen, beide Teilflächen einzeln
+berechnen. Gibt es nicht einfach eine \textbf{Formel}, die das in einem
+Schritt erledigt? Genau die leiten wir jetzt her, und zwar so, dass du
+danach genau siehst, woher jeder einzelne Term dieser Formel kommt.
+\end{beispielbox}
+
+% =============================================================================
+% Theorie: fachliche Grundlage für die Aufgaben, in eigene Boxen unterteilt
+% (je Unterthema eine theoriebox), Reihenfolge = Lernzielreihenfolge oben.
+% =============================================================================
+\begin{theoriebox}[Die Ortsgleichung: von der Fläche zur Formel]
+Ab jetzt schreiben wir den Ort eines Objekts als $x$ statt $s$ (Einheit
+weiterhin $\si{\meter}$): Das ist reine Schreibweise, keine neue Grösse.
+$x$ ist die in Formelsammlungen übliche Bezeichnung für die
+Bewegungsgleichungen, die wir in dieser Einheit herleiten.
+
+Für eine gleichmässig beschleunigte Bewegung kennst du bereits die
+\textbf{\emph{Geschwindigkeitsgleichung}}
+\[
+  v(t) = v_0 + a\,(t-t_0), \qquad
+  \text{Einheit von } v,v_0\colon\ \si{\meter\per\second}, \quad
+  \text{Einheit von } a\colon\ \si{\meter\per\second\squared}.
+\]
+wobei $x_0$ der Ort und $v_0$ die Geschwindigkeit zum Startzeitpunkt $t_0$
+sind. Meistens wählt man $t_0=0$, dann vereinfacht sich das zu
+$v(t)=v_0+at$.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+  \draw[->] (-0.3,0) -- (6.5,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-0.3) -- (0,4) node[above] {\scriptsize $v$};
+  \draw[thick,titleblue] (0.6,1.2) -- (5.5,3.4);
+  \draw[dashed,gray] (0.6,0) -- (0.6,1.2);
+  \draw[dashed,gray] (5.5,0) -- (5.5,3.4);
+  \draw[dashed,gray] (0.6,1.2) -- (5.5,1.2);
+  \filldraw[lightblue] (0.6,0) rectangle (5.5,1.2);
+  \filldraw[verylightblue] (0.6,1.2) -- (5.5,1.2) -- (5.5,3.4) -- cycle;
+  \draw (0.6,0.15) -- (0.6,-0.15) node[below] {\scriptsize $t_0$};
+  \draw (5.5,0.15) -- (5.5,-0.15) node[below] {\scriptsize $t$};
+  \node[left] at (0,1.2) {\scriptsize $v_0$};
+  \node[left] at (-0.05,3.4) {\scriptsize $v(t)$};
+  \node at (3,0.6) {\scriptsize Rechteck: $v_0(t-t_0)$};
+  \node at (4.55,2.1) {\scriptsize Dreieck: $\frac{1}{2}a(t-t_0)^2$};
+\end{tikzpicture}
+\end{center}
+
+Genau wie bei der Einfädelspuraufgabe entspricht die zurückgelegte
+Strecke $\Delta x$ der Fläche unter dieser Geraden zwischen $t_0$ und $t$.
+Diese Fläche zerfällt in dieselben zwei Teile wie damals, jetzt aber
+allgemein statt mit konkreten Zahlen:
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.25em]
+  \item \textbf{\emph{Rechteck}} (Höhe $v_0$, Breite $t-t_0$): Fläche $=v_0(t-t_0)$.
+  \item \textbf{\emph{Dreieck}} (Höhe $v(t)-v_0=a(t-t_0)$, Breite $t-t_0$): Fläche $=\frac{1}{2}a(t-t_0)^2$.
+\end{itemize}
+
+Addiert man beide Teilflächen und dazu den bereits vorhandenen Startort
+$x_0$, erhält man die \textbf{\emph{Ortsgleichung}}:
+\[
+  \boxed{x(t) = x_0 + v_0(t-t_0) + \frac{1}{2}a(t-t_0)^2}
+\]
+Mit $t_0=0$ vereinfacht: $x(t)=x_0+v_0t+\frac{1}{2}at^2$.
+
+\textbf{Probe an der Einfädelspuraufgabe:} $x_0=0$, $v_0=\SI{15}{\meter\per\second}$,
+$a=\SI{1.5}{\meter\per\second\squared}$, $t=\SI{6}{\second}$:
+\[
+  x(6) = 0 + 15\cdot6 + \frac{1}{2}\cdot1.5\cdot6^2 = \SI{90}{\meter}+\SI{27}{\meter} = \SI{117}{\meter}.
+\]
+Exakt dasselbe Ergebnis wie über die Flächenzerlegung, nur ohne Diagramm.
+\end{theoriebox}
+
+\begin{questions}
+\begin{taskbox}[Übung: Ortsgleichung selbst herleiten]
+\question[5] Ein Zug fährt mit $v_0=\SI{20}{\meter\per\second}$ und
+bremst danach $\SI{8}{\second}$ lang konstant mit
+$a=-\SI{1.5}{\meter\per\second\squared}$ (positive Richtung:
+Fahrtrichtung).
+
+\begin{parts}
+  \part[2] Zeichne dazu selbst ein $v$-$t$-Diagramm wie in der
+  Theoriebox oben, mit eingezeichneter Rechteck- und
+  Dreieck-Teilfläche.
+
+  \begin{center}
+  \begin{tikzpicture}[scale=0.85]
+    \draw[->] (-0.3,0) -- (6.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-0.3) -- (0,4) node[above] {\scriptsize $v$};
+  \end{tikzpicture}
+  \end{center}
+  \begin{solution}
+  \begin{center}
+  \begin{tikzpicture}[scale=0.85]
+    \draw[->] (-0.3,0) -- (6.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-0.3) -- (0,4) node[above] {\scriptsize $v$};
+    \draw[dashed,gray] (0.4,0) -- (0.4,3.4);
+    \draw[dashed,gray] (5.2,0) -- (5.2,1.36);
+    \draw[dashed,gray] (0.4,1.36) -- (5.2,1.36);
+    \filldraw[lightblue] (0.4,0) rectangle (5.2,1.36);
+    \filldraw[verylightblue] (0.4,1.36) -- (5.2,1.36) -- (5.2,3.4) -- cycle;
+    \draw[thick,titleblue] (0.4,3.4) -- (5.2,1.36);
+    \node[left] at (0,3.4) {\scriptsize $v_0$};
+    \node[left] at (-0.05,1.36) {\scriptsize $v(t)$};
+    \node at (2.8,0.7) {\scriptsize Rechteck};
+    \node at (4.5,2.6) {\scriptsize Dreieck};
+  \end{tikzpicture}
+  \end{center}
+  Da $a<0$ ist, liegt das Dreieck jetzt \emph{unterhalb} der
+  $v_0$-Linie statt darüber: Die Geschwindigkeit nimmt ab, nicht zu.
+  \end{solution}
+
+  \part[3] Berechne $\Delta x$ über die beiden Teilflächen (Rechteck +
+  Dreieck), nicht direkt über die fertige Formel.
+  \Antwortraum{3}
+  \begin{solution}
+  Rechteck: $v_0\cdot t = \SI{20}{\meter\per\second}\cdot\SI{8}{\second} = \SI{160}{\meter}$.\\
+  Dreieck: $\frac{1}{2}a\,t^2 = \frac{1}{2}\cdot(-\SI{1.5}{\meter\per\second\squared})\cdot(\SI{8}{\second})^2 = -\SI{48}{\meter}$
+  (negativ, weil $a<0$: Das Dreieck wird abgezogen, nicht addiert).\\
+  $\Delta x = \SI{160}{\meter} - \SI{48}{\meter} = \SI{112}{\meter}$.
+
+  Probe mit der fertigen Formel: $x(8) = 20\cdot8 - \frac{1}{2}\cdot1.5\cdot8^2
+  = \SI{160}{\meter}-\SI{48}{\meter}=\SI{112}{\meter}$. Stimmt überein.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\begin{theoriebox}[Was ist eine Parabel? Die quadratische Funktion]
+Bevor wir weiterrechnen, ein kurzer Blick auf die Mathematik hinter der
+Ortsgleichung. Eine Funktion der Form
+\[
+  f(t) = A\,t^2 + B\,t + C
+\]
+heisst \textbf{\emph{quadratische Funktion}} (weil $t$ im Quadrat
+vorkommt), und ihr Graph heisst \textbf{\emph{Parabel}}. Die drei
+Koeffizienten haben jeweils eine feste Bedeutung:
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.25em]
+  \item $C$: der Funktionswert bei $t=0$ (wo die Parabel die
+  senkrechte Achse schneidet).
+  \item $B$: die \textbf{\emph{Anfangssteigung}} bei $t=0$.
+  \item $A$: bestimmt die \textbf{\emph{Krümmung}} der Parabel: Sie
+  öffnet sich nach oben, wenn $A>0$ ist, und nach unten, wenn $A<0$ ist.
+\end{itemize}
+
+Vergleiche das jetzt mit der Ortsgleichung (mit $t_0=0$):
+\[
+  x(t) = \underbrace{x_0}_{C} + \underbrace{v_0}_{B}\,t + \underbrace{\tfrac{1}{2}a}_{A}\,t^2.
+\]
+Die Ortsgleichung ist also genau von dieser Form, mit $C=x_0$, $B=v_0$
+und $A=\frac{1}{2}a$:
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.25em]
+  \item $x_0$ (der Startort) entspricht $C$: dem Wert von $x(t)$ bei $t=0$.
+  \item $v_0$ (die Startgeschwindigkeit) entspricht $B$: der
+  Anfangssteigung der Parabel.
+  \item $\frac{1}{2}a$ entspricht $A$: Die Beschleunigung $a$ bestimmt
+  also, wie stark sich die Parabel krümmt und in welche Richtung sie sich
+  öffnet (nach oben bei $a>0$, nach unten bei $a<0$).
+\end{itemize}
+Sobald $a\neq0$ ist, taucht $t$ im Quadrat auf, und $x(t)$ ist deshalb
+zwangsläufig eine Parabel. Nur wenn $a=0$ ist (gleichförmige Bewegung),
+bleibt der quadratische Term weg, und $x(t)$ wird zu einer Geraden.
+
+Als konkretes Zahlenbeispiel: $f(t) = 0.15\,t^2 + 0.6\,t + 0.5$, also
+$A=0.15$, $B=0.6$, $C=0.5$. Die \textbf{\emph{Ableitung}}
+$f'(t)=2At+B$ liefert die Steigung an jeder Stelle; bei $t=0$ ist das
+$f'(0)=B=0.6$: genau die Steigung der eingezeichneten Tangente unten, die
+deshalb wirklich an die Kurve anschmiegt statt nur ungefähr zu passen.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+  \draw[->] (-0.3,0) -- (4,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-0.3) -- (0,4.6) node[above] {\scriptsize $x$};
+  \draw[thick,titleblue,domain=0:3.4,samples=60,smooth] plot (\x,{0.15*\x*\x+0.6*\x+0.5});
+  \draw[dashed,gray] (0,0.5) -- (0.5,0.5);
+  \node[left] at (0,0.5) {\scriptsize $C=x_0=0.5$};
+  \draw[thick,accentorange] (0,0.5) -- (1,1.1);
+  \node[right] at (1,1.1) {\scriptsize Tangente bei $t=0$: Steigung $=B=v_0=0.6$};
+  \filldraw[titleblue] (0,0.5) circle (1.4pt);
+\end{tikzpicture}\\[0.2em]
+{\scriptsize Graph von $f(t)=0.15\,t^2+0.6\,t+0.5$ mit Tangente bei $t=0$.
+Weiter rechts krümmt sich die Parabel sichtbar von der Tangente weg
+(Krümmung $=A=\frac{1}{2}a$).}
+\end{center}
+\end{theoriebox}
+
+\begin{theoriebox}[Die Bewegungsgleichungen im Vergleich]
+Ob das $x$-$t$-Diagramm eine Gerade oder eine Parabel ist, hängt also
+davon ab, ob $a=0$ oder $a\neq0$ ist. Die beiden wichtigsten Grundtypen
+im Vergleich, mit der jeweils passenden Bewegungsgleichung:
+
+\textbf{\emph{Gleichförmige Bewegung}} ($v=\text{konst.}$, also $a=0$):
+
+\begin{center}
+\begin{minipage}{0.47\linewidth}\centering
+\begin{tikzpicture}[scale=0.65]
+  \draw[->] (-0.3,0) -- (5,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-0.3) -- (0,4.3) node[above] {\scriptsize $x$};
+  \draw[thick,titleblue] (0,0.6) -- (4.5,4.1);
+\end{tikzpicture}\\[-0.2em]
+{\scriptsize $x$-$t$: Gerade (Steigung $=v$)}
+\end{minipage}\hfill
+\begin{minipage}{0.47\linewidth}\centering
+\begin{tikzpicture}[scale=0.65]
+  \draw[->] (-0.3,0) -- (5,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-0.3) -- (0,4.3) node[above] {\scriptsize $v$};
+  \draw[thick,titleblue] (0,2.4) -- (4.5,2.4);
+\end{tikzpicture}\\[-0.2em]
+{\scriptsize $v$-$t$: waagrecht}
+\end{minipage}
+\end{center}
+
+\begin{formelbox}[Zur Erinnerung: gleichförmige Bewegung]
+\[
+  \boxed{x(t) = x_0 + v\,(t-t_0)}
+\]
+\textbf{Beispiel:} Ein Zug fährt mit konstant $v=\SI{100}{\kilo\meter\per\hour}$.
+Nach $t=\SI{2}{\hour}$ ab $x_0=0$ hat er
+$x(2) = 0 + 100\cdot2 = \SI{200}{\kilo\meter}$ zurückgelegt.
+\end{formelbox}
+
+\textbf{\emph{Gleichmässig beschleunigte Bewegung}} ($a=\text{konst.}\neq0$):
+
+\begin{center}
+\begin{minipage}{0.47\linewidth}\centering
+\begin{tikzpicture}[scale=0.65]
+  \draw[->] (-0.3,0) -- (5,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-0.3) -- (0,4.3) node[above] {\scriptsize $x$};
+  \draw[thick,accentorange,domain=0:4.5,samples=60,smooth] plot (\x,{0.18*\x*\x});
+\end{tikzpicture}\\[-0.2em]
+{\scriptsize $x$-$t$: Parabel (immer steiler)}
+\end{minipage}\hfill
+\begin{minipage}{0.47\linewidth}\centering
+\begin{tikzpicture}[scale=0.65]
+  \draw[->] (-0.3,0) -- (5,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-0.3) -- (0,4.3) node[above] {\scriptsize $v$};
+  \draw[thick,accentorange] (0,0) -- (4.5,3.6);
+\end{tikzpicture}\\[-0.2em]
+{\scriptsize $v$-$t$: Gerade (Steigung $=a$)}
+\end{minipage}
+\end{center}
+
+\begin{formelbox}[Bewegungsgleichung 1: Geschwindigkeit]
+\[
+  \boxed{v(t) = v_0 + a\,(t-t_0)}
+\]
+\textbf{Beispiel:} Ein Auto startet bei einer Ampel ($v_0=\SI{0}{\meter\per\second}$)
+und beschleunigt mit $a=\SI{2}{\meter\per\second\squared}$. Nach
+$t=\SI{3}{\second}$: $v(3) = 0 + 2\cdot3 = \SI{6}{\meter\per\second}$.
+\end{formelbox}
+
+\begin{formelbox}[Bewegungsgleichung 2: Ort]
+\[
+  \boxed{x(t) = x_0 + v_0\,(t-t_0) + \frac{1}{2}a\,(t-t_0)^2}
+\]
+\textbf{Beispiel:} Dasselbe Auto, $x_0=\SI{0}{\meter}$: Nach
+$t=\SI{3}{\second}$ ist es
+$x(3) = 0 + 0\cdot3 + \frac{1}{2}\cdot2\cdot3^2 = \SI{9}{\meter}$ weit
+gekommen.
+\end{formelbox}
+\end{theoriebox}
+
+\begin{theoriebox}[Vom x-t- zum v-t-Diagramm (und zurück)]
+Wie du beim Beschleunigungsarbeitsblatt gesehen hast, gehört zu einer
+gleichmässig beschleunigten Bewegung eine $x$-$t$-Parabel und ein
+\textbf{\emph{lineares}} $v$-$t$-Diagramm. Der Zusammenhang: $v(t)$
+entspricht der \textbf{\emph{Steigung}} der Parabel an jeder Stelle. Drei
+Übersetzungsregeln reichen, um qualitativ (ohne Rechnung) zwischen beiden
+Diagrammen hin- und herzuwechseln:
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.25em]
+  \item Die \textbf{\emph{Anfangssteigung}} der Parabel bei $t_0$ entspricht der \textbf{\emph{Starthöhe}} $v_0$ der Geraden.
+  \item Der \textbf{\emph{Scheitelpunkt}} der Parabel (waagrechte Tangente) entspricht der \textbf{\emph{Nullstelle}} der Geraden ($v=0$).
+  \item Öffnet sich die Parabel nach \textbf{\emph{oben}} ($a>0$), ist die Gerade \textbf{\emph{steigend}}; öffnet sie sich nach \textbf{\emph{unten}} ($a<0$), ist die Gerade \textbf{\emph{fallend}}.
+\end{itemize}
+
+\begin{center}
+\begin{minipage}{0.47\linewidth}\centering
+\begin{tikzpicture}[scale=0.75]
+  \draw[->] (-0.3,0) -- (5,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-0.3) -- (0,3.6) node[above] {\scriptsize $x$};
+  \draw[thick,titleblue,domain=0:4.3,samples=60,smooth] plot (\x,{0.28*(\x-2.2)*(\x-2.2)+0.3});
+  \draw[dashed,gray] (2.2,0) -- (2.2,0.3);
+  \draw (2.2,0.15) -- (2.2,-0.15) node[below] {\scriptsize $t^\ast$};
+\end{tikzpicture}\\[-0.2em]
+{\scriptsize $x(t)$: Parabel, Scheitel bei $t^\ast$}
+\end{minipage}\hfill
+\begin{minipage}{0.47\linewidth}\centering
+\begin{tikzpicture}[scale=0.75]
+  \draw[->] (-0.3,0) -- (5,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-1.6) -- (0,1.8) node[above] {\scriptsize $v$};
+  \draw[thick,titleblue] (0,-1.2) -- (4.4,1.6);
+  \draw[dashed,gray] (2.2,0) -- (2.2,-1.6);
+  \draw (2.2,0.15) -- (2.2,-0.15) node[below] {\scriptsize $t^\ast$};
+\end{tikzpicture}\\[-0.2em]
+{\scriptsize $v(t)$: Gerade, Nullstelle bei $t^\ast$}
+\end{minipage}
+\end{center}
+\end{theoriebox}
+
+\begin{questions}
+\begin{taskbox}[Übung: Zwischen x(t) und v(t) übersetzen]
+\question[6]
+\begin{parts}
+  \part[3] Gegeben ist $x(t) = 2+4t+t^2$ (in $\si{\meter}$, $t$ in $\si{\second}$).
+  Lies $v_0$ und $a$ direkt aus dieser Gleichung ab (Vergleich mit
+  $x(t)=x_0+v_0t+\frac{1}{2}at^2$) und skizziere $v(t)$ qualitativ (ohne
+  Achsenbeschriftung mit Zahlen, nur Startpunkt, Steigung und Vorzeichen
+  müssen stimmen).
+
+  \begin{center}
+  \begin{tikzpicture}[scale=0.85]
+    \draw[->] (-0.3,0) -- (4.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-0.3) -- (0,3.3) node[above] {\scriptsize $v$};
+  \end{tikzpicture}
+  \end{center}
+  \begin{solution}
+  Vergleich: $v_0=4$, $\frac{1}{2}a=1\Rightarrow a=2$. Also
+  $v(t)=4+2t$: eine steigende Gerade, die bei $v_0=4$ startet.
+  \begin{center}
+  \begin{tikzpicture}[scale=0.85]
+    \draw[->] (-0.3,0) -- (4.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-0.3) -- (0,3.3) node[above] {\scriptsize $v$};
+    \draw[thick,titleblue] (0,1) -- (4,3);
+    \node[left] at (0,1) {\scriptsize $v_0$};
+  \end{tikzpicture}
+  \end{center}
+  \end{solution}
+
+  \part[3] Gegeben ist $v(t) = 8-2t$ (in $\si{\meter\per\second}$, $t$ in
+  $\si{\second}$). Skizziere $x(t)$ qualitativ: Achte auf die Anfangssteigung,
+  die Öffnungsrichtung und die Lage des Scheitelpunkts.
+
+  \begin{center}
+  \begin{tikzpicture}[scale=0.85]
+    \draw[->] (-0.3,0) -- (4.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-0.3) -- (0,3.3) node[above] {\scriptsize $x$};
+  \end{tikzpicture}
+  \end{center}
+  \begin{solution}
+  $v_0=8>0$ (Parabel startet mit steiler positiver Steigung), $a=-2<0$
+  (Parabel öffnet sich nach unten). Nullstelle von $v(t)$ bei $t=4$, also
+  liegt dort der Scheitelpunkt (Maximum) der Parabel.
+  \begin{center}
+  \begin{tikzpicture}[scale=0.85]
+    \draw[->] (-0.3,0) -- (4.5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-0.3) -- (0,3.3) node[above] {\scriptsize $x$};
+    \draw[thick,titleblue,domain=0:4.3,samples=60,smooth] plot (\x,{-0.19*(\x-4)*(\x-4)+3.2});
+    \draw[dashed,gray] (4,0) -- (4,3.2);
+    \draw (4,0.15) -- (4,-0.15) node[below] {\scriptsize $t=4$};
+  \end{tikzpicture}
+  \end{center}
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\begin{theoriebox}[Die dritte Bewegungsgleichung: ohne die Zeit]
+Manchmal ist die Zeit $t$ weder gegeben noch gesucht, zum Beispiel wenn
+du nur wissen willst, wie schnell ein Objekt nach einer bestimmten
+Strecke ist. Dafür gibt es eine dritte Gleichung, die $t$ gar nicht
+enthält. Wir leiten sie in kleinen Schritten her.
+
+\textbf{Schritt 1:} Die Geschwindigkeitsgleichung $v(t)=v_0+a(t-t_0)$
+nach $(t-t_0)$ auflösen:
+\[
+  v - v_0 = a(t-t_0)
+  \quad\Longrightarrow\quad
+  t-t_0 = \frac{v-v_0}{a}.
+\]
+
+\textbf{Schritt 2:} Das in die Ortsgleichung
+$\Delta x = v_0(t-t_0)+\frac{1}{2}a(t-t_0)^2$ einsetzen:
+\[
+  \Delta x = v_0\cdot\frac{v-v_0}{a} + \frac{1}{2}a\left(\frac{v-v_0}{a}\right)^2.
+\]
+
+\textbf{Schritt 3:} Den Bruch im zweiten Term quadrieren
+($\left(\frac{v-v_0}{a}\right)^2 = \frac{(v-v_0)^2}{a^2}$) und kürzen
+($\frac{1}{2}a\cdot\frac{1}{a^2}=\frac{1}{2a}$):
+\[
+  \Delta x = \frac{v_0(v-v_0)}{a} + \frac{(v-v_0)^2}{2a}.
+\]
+
+\textbf{Schritt 4:} Beide Brüche auf den gemeinsamen Nenner $2a$ bringen
+(dazu den ersten Bruch mit $2$ erweitern):
+\[
+  \Delta x = \frac{2v_0(v-v_0)}{2a} + \frac{(v-v_0)^2}{2a}
+  = \frac{2v_0(v-v_0) + (v-v_0)^2}{2a}.
+\]
+
+\textbf{Schritt 5:} Im Zähler $(v-v_0)$ ausklammern:
+\[
+  2v_0(v-v_0) + (v-v_0)^2 = (v-v_0)\,\big[2v_0 + (v-v_0)\big] = (v-v_0)(v+v_0).
+\]
+
+\textbf{Schritt 6:} Das ist die binomische Formel rückwärts angewendet
+($(v-v_0)(v+v_0)=v^2-v_0^2$), also:
+\[
+  \Delta x = \frac{v^2-v_0^2}{2a}.
+\]
+
+\textbf{Schritt 7:} Mit $2a$ multiplizieren und nach $v^2$ umstellen:
+\[
+  2a\,\Delta x = v^2-v_0^2
+  \quad\Longrightarrow\quad
+  v^2 = v_0^2 + 2a\,\Delta x.
+\]
+
+Das ist die \textbf{\emph{zeitfreie Bewegungsgleichung}}:
+
+\begin{formelbox}[Bewegungsgleichung 3: ohne die Zeit]
+\[
+  \boxed{v^2 = v_0^2 + 2a\,\Delta x}, \qquad \Delta x = x-x_0.
+\]
+\textbf{Beispiel:} Ein Flugzeug startet mit $v_0=\SI{0}{\meter\per\second}$
+und beschleunigt konstant mit $a=\SI{3}{\meter\per\second\squared}$.
+Welche Geschwindigkeit hat es nach $\Delta x=\SI{600}{\meter}$
+Startbahn? $v^2 = 0 + 2\cdot3\cdot600 = 3600\,\si{\meter\squared\per\second\squared}
+\Rightarrow v=\SI{60}{\meter\per\second}$.
+\end{formelbox}
+\end{theoriebox}
+
+\begin{theoriebox}[Anwendung: Der Anhalteweg]
+Eine der wichtigsten Alltagsanwendungen von Bewegungsgleichung 3: Wie
+weit fährt ein Auto ab dem Moment, in dem ein Hindernis sichtbar wird,
+bis es nach einer Vollbremsung steht? Dieser \textbf{\emph{Anhalteweg}}
+$s_A$ setzt sich aus zwei Teilen zusammen:
+
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.25em]
+  \item \textbf{\emph{Reaktionsweg}} $s_R$: die Strecke, die das Auto
+  während der \textbf{\emph{Reaktionszeit}} $t_R$ zurücklegt, bevor die
+  Fahrerin oder der Fahrer überhaupt zu bremsen beginnt. In dieser Zeit
+  bleibt $v$ noch konstant bei $v_0$. Für eine nüchterne, aufmerksame
+  Fahrerin oder einen nüchternen, aufmerksamen Fahrer wird meist
+  $t_R\approx\SI{1}{\second}$ angenommen (in diesem Arbeitsblatt immer
+  so, ausser wenn ausdrücklich etwas anderes angegeben ist).
+  \item \textbf{\emph{Bremsweg}} $s_B$: die Strecke, die das Auto
+  während der eigentlichen Bremsung zurücklegt, bis $v=0$ ist.
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[xscale=1.15,yscale=0.32]
+  \draw[->] (-0.3,0) -- (5.7,0) node[right] {\scriptsize $t$ in s};
+  \draw[->] (0,-1) -- (0,23) node[above] {\scriptsize $v$ in $\si{\meter\per\second}$};
+  \filldraw[titleblue!20] (0,0) rectangle (1,20);
+  \filldraw[brakered!20] (1,0) -- (1,20) -- (5,0) -- cycle;
+  \draw[thick,titleblue] (0,20) -- (1,20);
+  \draw[thick,brakered] (1,20) -- (5,0);
+  \draw[dashed,gray] (1,0) -- (1,20);
+  \node at (0.5,9) {\scriptsize $s_R$};
+  \node at (2.5,6) {\scriptsize $s_B$};
+  \draw (1,0.5) -- (1,-0.5) node[below] {\scriptsize $t_R$};
+  \node[left] at (0,20) {\scriptsize $v_0$};
+\end{tikzpicture}
+\end{center}
+
+Wie schon beim $v$-$t$-Diagramm bekannt: Beide Teilwege entsprechen
+Flächen unter der Kurve.
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.25em]
+  \item $s_R$ ist ein \textbf{\emph{Rechteck}} (konstante Geschwindigkeit
+  während $t_R$): $s_R = v_0\cdot t_R$.
+  \item $s_B$ ist ein \textbf{\emph{Dreieck}}. Die Bremsverzögerung
+  schreiben wir als \textbf{\emph{positive}} Zahl $a_B$ (den Betrag der
+  eigentlich negativen Beschleunigung $a=-a_B$ beim Bremsen). Aus
+  Bewegungsgleichung 3, mit Endgeschwindigkeit $v=0$:
+  \[
+    0 = v_0^2 + 2\cdot(-a_B)\cdot s_B
+  \]
+  Schritt 1: das Minuszeichen ausmultiplizieren:
+  \[
+    0 = v_0^2 - 2a_B\,s_B.
+  \]
+  Schritt 2: $2a_B\,s_B$ auf beiden Seiten addieren:
+  \[
+    2a_B\,s_B = v_0^2.
+  \]
+  Schritt 3: auf beiden Seiten durch $2a_B$ teilen:
+  \[
+    s_B = \frac{v_0^2}{2a_B}.
+  \]
+\end{itemize}
+
+Addiert ergibt das den \textbf{\emph{Anhalteweg}}:
+\[
+  \boxed{s_A = s_R + s_B = v_0\,t_R + \frac{v_0^2}{2a_B}}
+\]
+
+\textbf{Beispiel:} $v_0=\SI{20}{\meter\per\second}$
+($\approx\SI{72}{\kilo\meter\per\hour}$), $t_R=\SI{1}{\second}$,
+$a_B=\SI{5}{\meter\per\second\squared}$ (nasse Strasse):
+\[
+  s_R = 20\cdot1=\SI{20}{\meter}, \qquad
+  s_B = \frac{20^2}{2\cdot5} = \frac{400}{10}=\SI{40}{\meter},
+\]
+\[
+  s_A = \SI{20}{\meter}+\SI{40}{\meter} = \SI{60}{\meter}.
+\]
+\end{theoriebox}
+
+\begin{theoriebox}[Wird die Bremse rechtzeitig fertig? Das s-v-Diagramm]
+Die Formel $s_A(v_0)=v_0\,t_R+\dfrac{v_0^2}{2a_B}$ zeigt: Der
+Reaktionsweg wächst \textbf{\emph{linear}} mit $v_0$, der Bremsweg aber
+\textbf{\emph{quadratisch}}. Um das sichtbar zu machen, tragen wir jetzt
+genau wie in der Formel die Anfangsgeschwindigkeit $v_0$ waagrecht auf
+(die unabhängige Grösse) und den zurückgelegten \textbf{\emph{Ort}} $s$
+senkrecht (die abhängige Grösse, also $s$ als Funktion von $v_0$; mit
+$t_R=\SI{1}{\second}$, $a_B=\SI{5}{\meter\per\second\squared}$, wie im
+Beispiel oben):
+
+\begin{center}
+\begin{tikzpicture}[xscale=0.28,yscale=0.075]
+  \draw[->] (-1,0) -- (33,0) node[right] {\scriptsize $v_0$ in $\si{\meter\per\second}$};
+  \draw[->] (0,-4) -- (0,128) node[above] {\scriptsize $s$ in m};
+  \fill[titleblue!18] (0,0) -- (30,0) -- (30,30) -- cycle;
+  \fill[brakered!25,domain=0:30,samples=60]
+    plot (\x,{\x+\x*\x/10}) -- (30,30) -- cycle;
+  \draw[dotted,titleblue,thick] (0,0) -- (30,30);
+  \draw[thick,brakered,domain=0:30,samples=60]
+    plot (\x,{\x+\x*\x/10});
+  \draw[thick,accentorange] (-1,60) -- (33,60);
+  \node[accentorange,above] at (8,60) {\scriptsize Hindernis bei $s=\SI{60}{\meter}$};
+  \draw[dashed,gray] (20,0) -- (20,60);
+  \draw[dashed,gray] (0,60) -- (20,60);
+  \filldraw[black] (20,60) circle (6pt);
+  \node[titleblue] at (13,11) {\scriptsize $s_R=v_0\,t_R$};
+  \node[brakered] at (24,80) {\scriptsize $s_B=\dfrac{v_0^2}{2a_B}$};
+  \foreach \vv in {10,20,30} \draw (\vv,2) -- (\vv,-2) node[below] {\scriptsize \vv};
+  \foreach \sv in {20,40,60,80,100,120} \draw (0.6,\sv) -- (-0.6,\sv) node[left] {\scriptsize \sv};
+\end{tikzpicture}
+\end{center}
+
+Blau: der reine Reaktionsweg $s_R(v_0)=v_0\,t_R$, eine Gerade (die
+gepunktete Linie). Rot: der zusätzliche Bremsweg, der zum Reaktionsweg
+dazukommt, bis der volle Anhalteweg $s_A(v_0)$ erreicht ist (die obere
+Kurve, die sich zunehmend nach oben krümmt, weil der Bremsweg
+quadratisch wächst).
+
+Angenommen, bei $s=\SI{60}{\meter}$ steht ein Hindernis (die orange
+Linie). Für jede Anfangsgeschwindigkeit $v_0$, deren Kurve noch
+unterhalb der orangen Linie bleibt, reicht der Anhalteweg aus: Das Auto
+steht rechtzeitig. Beim markierten Punkt, $v_0=\SI{20}{\meter\per\second}$,
+berührt die Kurve die orange Linie gerade noch: Das ist die
+\textbf{\emph{höchste Geschwindigkeit}}, bei der das Auto genau noch
+rechtzeitig steht (bestätigt das Beispiel der vorigen Theoriebox). Für
+jedes $v_0>\SI{20}{\meter\per\second}$ liegt die Kurve oberhalb der
+orangen Linie: Der Anhalteweg reicht nicht mehr aus, das Auto
+kollidiert mit dem Hindernis, bevor es zum Stehen kommt.
+\end{theoriebox}
+
+\begin{questions}
+\begin{taskbox}[Übung: Reaktionszeit unter Alkoholeinfluss]
+\question[9] Alkohol verlängert die Reaktionszeit deutlich. Als
+Beispielwert nehmen wir für eine leicht durch Alkohol beeinträchtigte
+Fahrerin oder einen leicht beeinträchtigten Fahrer
+$t_R=\SI{2}{\second}$, also doppelt so lang wie bei einer nüchternen
+Person ($t_R=\SI{1}{\second}$). Untergrund und Hindernis bleiben
+gleich: nasse Strasse ($a_B=\SI{5}{\meter\per\second\squared}$),
+Hindernis bei $s=\SI{60}{\meter}$.
+
+\begin{parts}
+  \part[4] Berechne $s_R$, $s_B$ und $s_A$ für $v_0=\SI{20}{\meter\per\second}$
+  mit $t_R=\SI{2}{\second}$.
+  \Antwortraum{4}
+  \begin{solution}
+  $s_R = 20\cdot2=\SI{40}{\meter}$.\\
+  $s_B = \dfrac{20^2}{2\cdot5}=\SI{40}{\meter}$ (unverändert, $a_B$ ist
+  gleich geblieben).\\
+  $s_A = \SI{40}{\meter}+\SI{40}{\meter}=\SI{80}{\meter}$.
+  \end{solution}
+
+  \part[2] Bei $v_0=\SI{20}{\meter\per\second}$ stand die nüchterne
+  Fahrerin aus der Theoriebox gerade noch rechtzeitig (Beispiel oben).
+  Reicht das auch für die beeinträchtigte Person? Begründe mit deinem
+  Ergebnis aus a).
+  \Antwortraum{2}
+  \begin{solution}
+  Nein: $s_A=\SI{80}{\meter}$ ist grösser als die
+  $\SI{60}{\meter}$ bis zum Hindernis. Bei genau derselben Geschwindigkeit,
+  die für die nüchterne Person gerade noch sicher war, kollidiert die
+  beeinträchtigte Person, weil allein die längere Reaktionszeit
+  $\SI{20}{\meter}$ mehr Anhalteweg braucht.
+  \end{solution}
+
+  \part[3] Zeichne unten das $s$-$v$-Diagramm für die beeinträchtigte
+  Person (mit $t_R=\SI{2}{\second}$), rechts direkt neben dem bereits
+  bekannten Diagramm für die nüchterne Person ($t_R=\SI{1}{\second}$).
+  Markiere auch hier den Punkt, an dem die Kurve die orange
+  Hindernislinie erreicht.
+
+  \begin{center}
+  \begin{minipage}{0.47\linewidth}\centering
+  {\scriptsize \textbf{Nüchtern, $t_R=\SI{1}{\second}$} (zur Erinnerung)}\\[0.3em]
+  \begin{tikzpicture}[xscale=0.13,yscale=0.033]
+    \draw[->] (-1,0) -- (33,0) node[right] {\scriptsize $v_0$};
+    \draw[->] (0,-4) -- (0,158) node[above] {\scriptsize $s$};
+    \draw[dotted,titleblue,thick] (0,0) -- (30,30);
+    \draw[thick,brakered,domain=0:30,samples=60] plot (\x,{\x+\x*\x/10});
+    \draw[thick,accentorange] (-1,60) -- (33,60);
+    \filldraw[black] (20,60) circle (5pt);
+    \foreach \vv in {10,20,30} \draw (\vv,2) -- (\vv,-2) node[below] {\scriptsize \vv};
+    \foreach \sv in {60,120} \draw (0.6,\sv) -- (-0.6,\sv) node[left] {\scriptsize \sv};
+  \end{tikzpicture}
+  \end{minipage}\hfill
+  \begin{minipage}{0.47\linewidth}\centering
+  {\scriptsize \textbf{Beeinträchtigt, $t_R=\SI{2}{\second}$} (deine Zeichnung)}\\[0.3em]
+  \begin{tikzpicture}[xscale=0.13,yscale=0.033]
+    \draw[->] (-1,0) -- (33,0) node[right] {\scriptsize $v_0$};
+    \draw[->] (0,-4) -- (0,158) node[above] {\scriptsize $s$};
+    \draw[thick,accentorange] (-1,60) -- (33,60);
+    \foreach \vv in {10,20,30} \draw (\vv,2) -- (\vv,-2) node[below] {\scriptsize \vv};
+    \foreach \sv in {60,120} \draw (0.6,\sv) -- (-0.6,\sv) node[left] {\scriptsize \sv};
+  \end{tikzpicture}
+  \end{minipage}
+  \end{center}
+  \begin{solution}
+  \begin{center}
+  \begin{tikzpicture}[xscale=0.13,yscale=0.033]
+    \draw[->] (-1,0) -- (33,0) node[right] {\scriptsize $v_0$ in $\si{\meter\per\second}$};
+    \draw[->] (0,-4) -- (0,158) node[above] {\scriptsize $s$ in m};
+    \fill[titleblue!18] (0,0) -- (30,0) -- (30,60) -- cycle;
+    \fill[brakered!25,domain=0:30,samples=60] plot (\x,{2*\x+\x*\x/10}) -- (30,60) -- cycle;
+    \draw[dotted,titleblue,thick] (0,0) -- (30,60);
+    \draw[thick,brakered,domain=0:30,samples=60] plot (\x,{2*\x+\x*\x/10});
+    \draw[thick,accentorange] (-1,60) -- (33,60);
+    \draw[dashed,gray] (16.46,0) -- (16.46,60);
+    \filldraw[black] (16.46,60) circle (5pt);
+    \foreach \vv in {10,20,30} \draw (\vv,2) -- (\vv,-2) node[below] {\scriptsize \vv};
+    \foreach \sv in {60,120} \draw (0.6,\sv) -- (-0.6,\sv) node[left] {\scriptsize \sv};
+  \end{tikzpicture}
+  \end{center}
+  Die Kurve steigt jetzt schon zu Beginn steiler an (grössere
+  Anfangssteigung $=t_R=2$) und erreicht die orange Linie schon bei
+  $v_0\approx\SI{16.5}{\meter\per\second}$, also bei einer deutlich
+  \emph{tieferen} Geschwindigkeit als bei der nüchternen Person
+  ($\SI{20}{\meter\per\second}$). Die \glqq sichere\grqq{}
+  Höchstgeschwindigkeit sinkt also allein durch die längere
+  Reaktionszeit.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\begin{questions}
+\begin{taskbox}[Übung: Bremsweg und Untergrund]
+\question[10] Die Bremsverzögerung $a_B$ hängt stark vom Untergrund ab.
+Typische Werte:
+\begin{center}
+{\small
+\begin{tabular}{lc}
+\toprule
+\textbf{Untergrund} & \textbf{$a_B$ in $\si{\meter\per\second\squared}$} \\
+\midrule
+trockene Strasse & 8 \\
+nasse Strasse & 5 \\
+Neuschnee & 2.5 \\
+Glatteis & 1.5 \\
+\bottomrule
+\end{tabular}
+}
+\end{center}
+
+\begin{parts}
+  \part[4] Trägt man den Bremsweg $s_B(v_0)=\dfrac{v_0^2}{2a_B}$ für
+  jeden dieser vier Werte über $v_0$ auf, ergeben sich vier verschiedene
+  Parabeln. Berechne für jeden Untergrund $s_B$ bei
+  $v_0=\SI{10}{\meter\per\second}$ und bei $v_0=\SI{20}{\meter\per\second}$
+  (das reicht für eine grobe Skizze) und zeichne alle vier Parabeln
+  näherungsweise ins Diagramm.
+
+  \begin{center}
+  \begin{tikzpicture}[xscale=0.5,yscale=0.055]
+    \draw[->] (-0.6,0) -- (21,0) node[right] {\scriptsize $v_0$ in $\si{\meter\per\second}$};
+    \draw[->] (0,-4) -- (0,145) node[above] {\scriptsize $s_B$ in m};
+    \foreach \xv in {5,10,15,20} \draw (\xv,3) -- (\xv,-3) node[below] {\scriptsize \xv};
+    \foreach \yv in {25,50,75,100,125} \draw (0.4,\yv) -- (-0.4,\yv) node[left] {\scriptsize \yv};
+  \end{tikzpicture}
+  \end{center}
+  \begin{solution}
+  $v_0=\SI{10}{\meter\per\second}$: trocken $\SI{6.25}{\meter}$, nass
+  $\SI{10}{\meter}$, Neuschnee $\SI{20}{\meter}$, Glatteis
+  $\SI{33.3}{\meter}$.\\
+  $v_0=\SI{20}{\meter\per\second}$: trocken $\SI{25}{\meter}$, nass
+  $\SI{40}{\meter}$, Neuschnee $\SI{80}{\meter}$, Glatteis
+  $\SI{133.3}{\meter}$.
+  \begin{center}
+  \begin{tikzpicture}[xscale=0.5,yscale=0.055]
+    \draw[->] (-0.6,0) -- (21,0) node[right] {\scriptsize $v_0$ in $\si{\meter\per\second}$};
+    \draw[->] (0,-4) -- (0,145) node[above] {\scriptsize $s_B$ in m};
+    \draw[thick,titleblue] plot[domain=0:20,samples=50] (\x,{\x*\x/16})
+      node[right] {\scriptsize trocken};
+    \draw[thick,brakered] plot[domain=0:20,samples=50] (\x,{\x*\x/10})
+      node[right] {\scriptsize nass};
+    \draw[thick,accentpurple] plot[domain=0:20,samples=50] (\x,{\x*\x/5})
+      node[right] {\scriptsize Neuschnee};
+    \draw[thick,groupteal] plot[domain=0:20,samples=50] (\x,{\x*\x/3})
+      node[right] {\scriptsize Glatteis};
+    \foreach \xv in {5,10,15,20} \draw (\xv,3) -- (\xv,-3) node[below] {\scriptsize \xv};
+    \foreach \yv in {25,50,75,100,125} \draw (0.4,\yv) -- (-0.4,\yv) node[left] {\scriptsize \yv};
+  \end{tikzpicture}
+  \end{center}
+  Bei $v_0=\SI{20}{\meter\per\second}$ liegt der Bremsweg auf Glatteis
+  mehr als fünfmal so hoch wie auf trockener Strasse, obwohl die
+  Geschwindigkeit exakt gleich ist: Nur die Bremsverzögerung $a_B$, also
+  die Steilheit der jeweiligen Parabel, hat sich geändert.
+  \end{solution}
+
+  \part[3] Bei Aquaplaning bildet sich zwischen Reifen und Fahrbahn ein
+  Wasserfilm, sodass die Reifen den Kontakt zur Strasse verlieren.
+  Erkläre mithilfe der Formel für $s_B$, weshalb das besonders
+  gefährlich ist.
+  \Antwortraum{3}
+  \begin{solution}
+  Ohne Reibungskontakt zwischen Reifen und Strasse kann das Auto kaum
+  noch gebremst (und auch kaum noch gelenkt) werden: $a_B$ sinkt dabei
+  stark, im Extremfall fast auf $\SI{0}{\meter\per\second\squared}$.
+  Weil $s_B=\dfrac{v_0^2}{2a_B}$ ist, wächst der Bremsweg, wenn $a_B$
+  gegen null geht, über alle Grenzen: Im schlimmsten Fall bremst das
+  Auto praktisch gar nicht mehr ab.
+  \end{solution}
+
+  \part[3] Erkläre, weshalb Glatteis auch im Vergleich zu Neuschnee
+  besonders gefährlich ist (nutze die Tabelle und die Formel für $s_B$).
+  \Antwortraum{3}
+  \begin{solution}
+  Glatteis hat mit $a_B=\SI{1.5}{\meter\per\second\squared}$ die
+  kleinste Bremsverzögerung aller vier Untergründe, kleiner sogar als
+  Neuschnee ($\SI{2.5}{\meter\per\second\squared}$). Weil $s_B$
+  umgekehrt proportional zu $a_B$ ist, wächst der Bremsweg bei
+  kleinerem $a_B$ überproportional an; gleichzeitig wächst $s_B$ auch
+  bei gleichbleibendem $a_B$ quadratisch mit $v_0$. Beide Effekte
+  verstärken sich gegenseitig, weshalb schon eine mässige
+  Geschwindigkeit auf Glatteis zu einem um ein Vielfaches längeren
+  Bremsweg führen kann als auf trockener Strasse.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\begin{hinweisbox}[Rückwärts rechnen: $v_0$ aus dem Bremsweg]
+Manchmal ist nicht $v_0$ gegeben, sondern der Bremsweg, und $v_0$ ist
+gesucht, zum Beispiel: \glqq Wie schnell war ein Auto höchstens
+unterwegs, wenn seine Bremsspur $\SI{40}{\meter}$ lang ist?\grqq{} Das
+bedeutet, $v_0^2=2a_B\,s_B$ nach $v_0$ aufzulösen. Das ist
+\textbf{\emph{einfacher}} als die Mitternachtsformel: Es gibt hier
+keinen linearen Term (keinen $B$-Term wie bei $At^2+Bt+C$), also reicht
+es, auf beiden Seiten die \textbf{\emph{Wurzel}} zu ziehen:
+\[
+  v_0^2 = 2a_B\,s_B
+  \quad\Longrightarrow\quad
+  v_0 = \sqrt{2a_B\,s_B}.
+\]
+\textbf{Beispiel:} $a_B=\SI{5}{\meter\per\second\squared}$,
+$s_B=\SI{40}{\meter}$:
+\[
+  v_0 = \sqrt{2\cdot5\cdot40} = \sqrt{400} = \SI{20}{\meter\per\second}.
+\]
+Achtung: Das funktioniert nur, wenn im Term wirklich nur $v_0^2$
+vorkommt, kein einzelnes $v_0$ daneben (wie es beim vollen Anhalteweg
+$s_A(v_0)=v_0 t_R+\frac{v_0^2}{2a_B}$ der Fall wäre). Dann bleibt es bei
+der Mitternachtsformel, siehe unten.
+\end{hinweisbox}
+
+\begin{questions}
+\begin{taskbox}[Übung: Anhalteweg berechnen]
+\question[14] Ein Auto fährt mit $v_0=\SI{25}{\meter\per\second}$
+($\approx\SI{90}{\kilo\meter\per\hour}$) auf einer nassen Strasse
+($a_B=\SI{5}{\meter\per\second\squared}$). Die Reaktionszeit der
+Fahrerin beträgt $t_R=\SI{1}{\second}$.
+
+\begin{parts}
+  \part[2] Berechne den Reaktionsweg $s_R$.
+  \Antwortraum{2}
+  \begin{solution}
+  $s_R = v_0\cdot t_R = 25\cdot1=\SI{25}{\meter}$.
+  \end{solution}
+
+  \part[3] Berechne den Bremsweg $s_B$ mit Bewegungsgleichung 3
+  ($s_B=\dfrac{v_0^2}{2a_B}$).
+  \Antwortraum{3}
+  \begin{solution}
+  $s_B = \dfrac{25^2}{2\cdot5} = \dfrac{625}{10} = \SI{62.5}{\meter}$.
+  \end{solution}
+
+  \part[2] Wie gross ist der gesamte Anhalteweg $s_A$?
+  \Antwortraum{2}
+  \begin{solution}
+  $s_A = s_R+s_B = \SI{25}{\meter}+\SI{62.5}{\meter}=\SI{87.5}{\meter}$.
+  \end{solution}
+
+  \part[3] Auf trockener Strasse wäre $a_B=\SI{8}{\meter\per\second\squared}$.
+  Berechne den Anhalteweg für diesen Fall (gleiches $v_0$, gleiches
+  $t_R$) und vergleiche mit Teilaufgabe c).
+  \Antwortraum{3}
+  \begin{solution}
+  $s_B = \dfrac{625}{16}\approx\SI{39.1}{\meter}$.
+  $s_A = \SI{25}{\meter}+\SI{39.1}{\meter}\approx\SI{64.1}{\meter}$.
+  Das ist rund $\SI{23}{\meter}$ kürzer als auf nasser Strasse, obwohl
+  $v_0$ und $t_R$ gleich geblieben sind: Nur der Bremsweg hängt vom
+  Untergrund ab, der Reaktionsweg nicht.
+  \end{solution}
+
+  \part[4] Auf einer anderen Fahrt hinterlässt ein Auto auf trockener
+  Strasse ($a_B=\SI{8}{\meter\per\second\squared}$) eine Bremsspur von
+  $s_B=\SI{72}{\meter}$. Wie schnell war das Auto zu Beginn der Bremsung
+  unterwegs? Nutze die Methode aus dem Kasten oben.
+  \Antwortraum{4}
+  \begin{solution}
+  \[
+    v_0 = \sqrt{2a_B\,s_B} = \sqrt{2\cdot8\cdot72} = \sqrt{1152}
+    \approx \SI{33.9}{\meter\per\second} \approx \SI{122}{\kilo\meter\per\hour}.
+  \]
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\begin{theoriebox}[Faustregeln aus der Fahrschule]
+Neben den exakten Bewegungsgleichungen gibt es aus der Fahrschule
+bekannte Faustregeln, die sich im Kopf rechnen lassen. Zwei davon
+betreffen den \textbf{\emph{Sicherheitsabstand}} zu einem
+\emph{vorausfahrenden} Fahrzeug, also einen anderen Fall als unser
+Hindernis, das stillsteht:
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.25em]
+  \item \textbf{\emph{2-Sekunden-Regel}}: Der Abstand zum
+  vorausfahrenden Fahrzeug soll so gross sein, dass mindestens
+  $\SI{2}{\second}$ vergehen, bis man selbst denselben Punkt erreicht:
+  $s_{2\text{s}} = v_0\cdot\SI{2}{\second}$.
+  \item \textbf{\emph{Halber-Tacho-Regel}}: Sicherheitsabstand in
+  Metern $\approx$ die Hälfte der Tachoanzeige in
+  $\si{\kilo\meter\per\hour}$: $s_{\text{Tacho}}
+  \approx \dfrac{v_0\,[\si{\kilo\meter\per\hour}]}{2}$.
+\end{itemize}
+Eine ältere, ebenfalls im Kopf rechenbare Faustformel betrifft dagegen
+speziell den \textbf{\emph{Bremsweg}} allein, nicht den ganzen
+Anhalteweg:
+\[
+  s_B\,[\text{m}] \approx \left(\frac{v_0\,[\si{\kilo\meter\per\hour}]}{10}\right)^{\!2}.
+\]
+\textbf{Wichtig:} Diese drei Faustregeln sind praktische Abschätzungen
+für den Alltag, kein Ersatz für die exakten Bewegungsgleichungen. Die
+ersten beiden schätzen den Abstand zu einem \emph{fahrenden} Fahrzeug
+ab, nicht den vollen Anhalteweg vor einem \emph{stillstehenden}
+Hindernis. Die dritte deckt nur den Bremsweg ab, nicht den
+Reaktionsweg.
+\end{theoriebox}
+
+\begin{questions}
+\begin{taskbox}[Übung: Faustregeln im Vergleich]
+\question[9] Betrachte wieder das Auto von vorhin:
+$v_0=\SI{25}{\meter\per\second}$ ($\approx\SI{90}{\kilo\meter\per\hour}$),
+nasse Strasse.
+
+\begin{parts}
+  \part[3] Berechne alle drei Faustregel-Werte für dieses Auto:
+  $s_{2\text{s}}$, $s_{\text{Tacho}}$ und $s_B$ nach der Faustformel.
+  \Antwortraum{3}
+  \begin{solution}
+  $s_{2\text{s}} = 25\cdot2=\SI{50}{\meter}$.\\
+  $s_{\text{Tacho}} \approx 90/2=\SI{45}{\meter}$.\\
+  $s_B\text{ (Faustformel)} \approx (90/10)^2=\SI{81}{\meter}$.
+  \end{solution}
+
+  \part[3] Vergleiche $s_B$ nach der Faustformel mit dem exakten
+  Bremsweg aus der vorigen Übung ($s_B=\SI{62.5}{\meter}$ auf nasser
+  Strasse). Was passiert, wenn jemand die Faustformel fälschlicherweise
+  für den \emph{gesamten} Anhalteweg hält statt nur für den Bremsweg?
+  Wie gross wäre der Fehler?
+  \Antwortraum{3}
+  \begin{solution}
+  Die Faustformel ($\SI{81}{\meter}$) liegt sogar über dem exakten
+  Bremsweg auf nasser Strasse ($\SI{62.5}{\meter}$): Als reine
+  Bremsweg-Abschätzung ist sie eher grosszügig. Hält man die
+  $\SI{81}{\meter}$ aber fälschlich für den \emph{gesamten} Anhalteweg,
+  fehlt der Reaktionsweg von $\SI{25}{\meter}$ komplett: Der
+  tatsächliche Anhalteweg ($\SI{87.5}{\meter}$) ist grösser als die
+  $\SI{81}{\meter}$ der Faustformel. Genau diese Verwechslung von
+  Bremsweg und gesamtem Anhalteweg ist ein klassischer und gefährlicher
+  Denkfehler.
+  \end{solution}
+
+  \part[3] Angenommen, das Auto folgt einem anderen Fahrzeug mit
+  $\SI{45}{\meter}$ Abstand (Halber-Tacho-Regel eingehalten). Reicht
+  dieser Abstand aus, um vor einem plötzlich \emph{stillstehenden}
+  Hindernis (zum Beispiel ein liegen gebliebenes Auto) rechtzeitig zu
+  stehen? Begründe mit dem exakten Anhalteweg $s_A=\SI{87.5}{\meter}$.
+  \Antwortraum{3}
+  \begin{solution}
+  Nein: $\SI{45}{\meter}$ sind deutlich weniger als der exakte
+  Anhalteweg von $\SI{87.5}{\meter}$. Die Halber-Tacho-Regel (wie auch
+  die 2-Sekunden-Regel) ist für den Abstand zu einem \emph{fahrenden}
+  Fahrzeug gedacht, das im Ernstfall selbst auch bremst; sie ersetzt
+  nicht den vollen Anhalteweg vor einem stillstehenden Hindernis. Wer
+  diese beiden Situationen verwechselt, unterschätzt den nötigen
+  Abstand erheblich.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\begin{questions}
+\begin{taskbox}[Zusatzaufgabe: Die kritische Geschwindigkeit]
+\question[6] Auf einer nassen Strasse ($a_B=\SI{5}{\meter\per\second\squared}$,
+$t_R=\SI{1}{\second}$) steht bei $s=\SI{60}{\meter}$ ein Hindernis, wie
+im $s$-$v$-Diagramm weiter oben. Diesmal ist $v_0$ die gesuchte Grösse.
+
+\begin{parts}
+  \part[2] Stelle die Gleichung $s_A(v_0)=v_0\,t_R+\dfrac{v_0^2}{2a_B}=\SI{60}{\meter}$
+  mit den gegebenen Zahlenwerten auf und bring sie in die Form
+  $A\,v_0^2+B\,v_0+C=0$.
+  \Antwortraum{2}
+  \begin{solution}
+  \[
+    v_0 + \frac{v_0^2}{10} = 60
+    \quad\Longrightarrow\quad
+    v_0^2 + 10v_0 - 600 = 0.
+  \]
+  Also $A=1$, $B=10$, $C=-600$. (Hier steht sowohl ein $v_0^2$- als auch
+  ein einzelner $v_0$-Term, deshalb reicht die einfache Wurzel aus dem
+  Kasten oben \emph{nicht}: Das ist ein Fall für die Mitternachtsformel.)
+  \end{solution}
+
+  \part[4] Löse mit der Mitternachtsformel nach $v_0$ auf und verwirf die
+  unphysikalische Lösung.
+  \Antwortraum{4}
+  \begin{solution}
+  \[
+    v_0 = \frac{-10\pm\sqrt{10^2-4\cdot1\cdot(-600)}}{2\cdot1}.
+  \]
+  \[
+    v_0 = \frac{-10\pm\sqrt{100+2400}}{2} = \frac{-10\pm\sqrt{2500}}{2}.
+  \]
+  \[
+    v_0 = \frac{-10\pm50}{2}.
+  \]
+  Das ergibt $v_0=\SI{20}{\meter\per\second}$ oder $v_0=-\SI{30}{\meter\per\second}$.
+  Eine negative Anfangsgeschwindigkeit ergibt hier keinen Sinn, also
+  bleibt $v_0=\SI{20}{\meter\per\second}$: genau der Punkt, den das
+  $s$-$v$-Diagramm oben markiert.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\begin{theoriebox}[Wie wähle ich die passende Bewegungsgleichung?]
+Bei jeder Aufgabe hilft dieselbe kleine Checkliste, um die richtige
+Gleichung zu finden:
+
+\begin{enumerate}[leftmargin=1.2cm,itemsep=0.3em]
+  \item \textbf{\emph{Ist die Bewegung überhaupt beschleunigt?}} Steht in
+  der Aufgabe $a=0$ (oder \glqq konstante Geschwindigkeit\grqq{})? Dann
+  reicht die Gleichung für gleichförmige Bewegung
+  ($x(t)=x_0+v(t-t_0)$), fertig.
+  \item Falls $a\neq0$ ist: \textbf{\emph{Was ist gegeben, was ist
+  gesucht?}} Schreibe dir zuerst alle gegebenen Grössen auf
+  ($x_0$, $v_0$, $a$, $t$, $x$ oder $v$) und markiere, welche gesucht
+  ist.
+  \item \textbf{\emph{Welche Gleichung enthält keine unbekannte vierte
+  Grösse?}} Nur diese Gleichung kannst du direkt lösen:
+\end{enumerate}
+
+\begin{center}
+{\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{p{7.6cm}p{2.6cm}p{3.7cm}}
+\toprule
+\textbf{Gleichung} & \textbf{Enthält} & \textbf{Wähle sie, wenn \dots} \\
+\midrule
+$v(t)=v_0+a(t-t_0)$ & $v,v_0,a,t$ & der Ort keine Rolle spielt \\[0.3em]
+$x(t)=x_0+v_0(t-t_0)+\frac{1}{2}a(t-t_0)^2$ & $x,x_0,v_0,a,t$ & sowohl Ort als auch Zeit vorkommen \\[0.3em]
+$v^2=v_0^2+2a\Delta x$ & $v,v_0,a,\Delta x$ & die Zeit weder gegeben noch gesucht ist \\
+\bottomrule
+\end{tabular}
+}
+\end{center}
+
+\textbf{Beispiel:} Ein Auto ($x_0=0$, $v_0=\SI{10}{\meter\per\second}$)
+beschleunigt konstant mit $a=\SI{2}{\meter\per\second\squared}$. Gesucht
+ist seine Geschwindigkeit, nachdem es $\Delta x=\SI{100}{\meter}$
+zurückgelegt hat.
+\begin{enumerate}[leftmargin=1.2cm,itemsep=0.25em]
+  \item $a=\SI{2}{\meter\per\second\squared}\neq0$: Die Bewegung ist
+  beschleunigt, die Gleichung für gleichförmige Bewegung reicht nicht.
+  \item Gegeben: $x_0$, $v_0$, $a$, $\Delta x$. Gesucht: $v$. Die Zeit $t$
+  kommt in der Aufgabe gar nicht vor.
+  \item Nur Bewegungsgleichung 3 enthält $v,v_0,a,\Delta x$ ohne $t$: also
+  $v^2=v_0^2+2a\Delta x = 10^2+2\cdot2\cdot100 = 500 \Rightarrow
+  v=\sqrt{500}\approx\SI{22.4}{\meter\per\second}$.
+\end{enumerate}
+\end{theoriebox}
+
+\begin{beispielbox}[Beispiel: E-Trottinett bremst]
+Ein E-Trottinett ist mit $v_0=\SI{6}{\meter\per\second}$ unterwegs (die
+positive Richtung sei die Fahrtrichtung) und bremst danach konstant mit
+$a=-\SI{2}{\meter\per\second\squared}$, bis es steht.
+
+\textbf{Welche Formel?} Gesucht ist die Bremsstrecke $\Delta x$. Gegeben
+sind $v_0$, $a$ und die Endgeschwindigkeit $v=0$ (beim Stillstand). Die
+Zeit ist weder gegeben noch gesucht, also ist $v^2=v_0^2+2a\Delta x$ die
+richtige Wahl, nicht die Ortsgleichung (die würde zusätzlich die
+unbekannte Bremszeit $t$ enthalten).
+
+Werte einsetzen und $2\cdot(-2)=-4$ zusammenfassen:
+\[
+  0 = \SI{36}{\meter\squared\per\second\squared} - \SI{4}{\meter\per\second\squared}\cdot\Delta x.
+\]
+Auf beiden Seiten $+4\,\si{\meter\per\second\squared}\cdot\Delta x$ addieren:
+\[
+  \SI{4}{\meter\per\second\squared}\cdot\Delta x = \SI{36}{\meter\squared\per\second\squared}.
+\]
+Auf beiden Seiten durch $\SI{4}{\meter\per\second\squared}$ teilen:
+\[
+  \Delta x = \frac{36\,\si{\meter\squared\per\second\squared}}{4\,\si{\meter\per\second\squared}} = \SI{9}{\meter}.
+\]
+
+\textbf{Zum Vorzeichen:} Obwohl das Trottinett die ganze Zeit vorwärts
+(also in die \emph{positive} Richtung) fährt, ist $a$ \emph{negativ}. Das
+ist kein Widerspruch: $a<0$ heisst nicht \glqq bewegt sich rückwärts\grqq{},
+sondern \glqq $a$ zeigt in die negative Richtung\grqq{}. Weil $v>0$ und
+$a<0$ unterschiedliche Vorzeichen haben, wird das Trottinett langsamer
+(siehe Beschleunigungsarbeitsblatt). Der häufige Fehler wäre, $a$ positiv
+einzusetzen, nur weil das Trottinett \glqq ja noch fährt\grqq{}.
+\end{beispielbox}
+
+\begin{questions}
+\begin{taskbox}[Übung: Vorzeichen bestimmen]
+\question[3] Ein zweites E-Trottinett ist mit
+$v_0=\SI{8}{\meter\per\second}$ unterwegs (positive Richtung:
+Fahrtrichtung) und bremst danach ebenfalls konstant ab, bis es steht.
+Welches Vorzeichen hat seine Beschleunigung $a$? Begründe, weshalb
+\textbf{nicht} das Gegenteil gilt, obwohl sich das Trottinett die ganze
+Zeit weiter vorwärtsbewegt.
+\Antwortraum{3}
+\begin{solution}
+$a<0$ (negativ). Auch wenn das Trottinett noch vorwärtsfährt ($v>0$),
+sagt das Vorzeichen von $a$ nichts über die Fahrtrichtung aus, sondern
+nur, in welche Richtung die \emph{Beschleunigung} zeigt. Weil das
+Trottinett langsamer wird, muss $a$ der Bewegungsrichtung entgegenwirken,
+also in die negative Richtung zeigen. Der Fehler \glqq $a$ ist positiv,
+weil es ja noch fährt\grqq{} verwechselt die Fahrtrichtung mit der
+Richtung von $a$ (siehe Beispiel oben).
+\end{solution}
+\end{taskbox}
+\end{questions}
+
+\begin{questions}
+\begin{taskbox}[Übung: Formel wählen]
+\question[3] Ein Velofahrer startet aus dem Stand ($v_0=\SI{0}{\meter\per\second}$)
+und beschleunigt konstant mit $a=\SI{1}{\meter\per\second\squared}$.
+Nach welcher Zeit $t$ erreicht er $v=\SI{5}{\meter\per\second}$? Begründe
+kurz, welche der drei Formeln du gewählt hast und weshalb.
+\Antwortraum{3}
+\begin{solution}
+Gesucht ist $t$, gegeben sind $v_0$, $a$, $v$: Der Ort $x$ kommt gar
+nicht vor. Also passt $v(t)=v_0+a(t-t_0)$ am besten (die Ortsgleichung
+würde ein unnötiges, unbekanntes $x$ hineinbringen):
+\[
+  \SI{5}{\meter\per\second} = \SI{0}{\meter\per\second} + \SI{1}{\meter\per\second\squared}\cdot t
+  \quad\Longrightarrow\quad t = \SI{5}{\second}.
+\]
+\end{solution}
+\end{taskbox}
+\end{questions}
+
+\begin{theoriebox}[Quadratische Gleichungen lösen: die Mitternachtsformel]
+Löst man die Ortsgleichung $x(t)=x_0+v_0(t-t_0)+\frac{1}{2}a(t-t_0)^2$
+nach $t$ auf (statt nach $x$), steht $t$ im Quadrat: Du bekommst eine
+\textbf{\emph{quadratische Gleichung}}. Für eine allgemeine quadratische
+Gleichung in der Form
+\[
+  A\,t^2 + B\,t + C = 0
+\]
+(dieselben Buchstaben $A,B,C$ wie bei der Parabel weiter oben, jetzt aber
+als Gleichung, nicht als Funktion) liefert die
+\textbf{\emph{Mitternachtsformel}} beide Lösungen auf einen Schlag:
+\[
+  \boxed{t = \frac{-B \pm \sqrt{B^2-4AC}}{2A}}
+\]
+Das $\pm$ bedeutet: Du rechnest die Formel \textbf{\emph{zweimal}}, einmal
+mit $+$ und einmal mit $-$ vor der Wurzel, und erhältst dabei bis zu zwei
+verschiedene Lösungen für $t$.
+
+\textbf{Beispiel (rein mathematisch, ohne Physik):} Löse
+$2t^2+4t-6=0$. Hier ist $A=2$, $B=4$, $C=-6$:
+\[
+  t = \frac{-4\pm\sqrt{4^2-4\cdot2\cdot(-6)}}{2\cdot2}
+  = \frac{-4\pm\sqrt{64}}{4} = \frac{-4\pm8}{4}.
+\]
+Das ergibt $t_1=1$ und $t_2=-3$.
+
+\textbf{In der Physik:} Um die Ortsgleichung auf diese Form zu bringen,
+bringst du einfach alles auf eine Seite: Aus
+$x_0+v_0(t-t_0)+\frac{1}{2}a(t-t_0)^2 = x_{\text{gesucht}}$ wird (mit
+$t_0=0$)
+\[
+  \underbrace{\tfrac{1}{2}a}_{A}\,t^2 + \underbrace{v_0}_{B}\,t + \underbrace{(x_0-x_{\text{gesucht}})}_{C} = 0,
+\]
+und du kannst $A$, $B$, $C$ direkt in die Mitternachtsformel einsetzen.
+Du brauchst dieses Verfahren immer dann, wenn eine Aufgabe nach der Zeit
+$t$ fragt, aber die Ortsgleichung (nicht die Geschwindigkeitsgleichung)
+die passende Formel ist, siehe Checkliste weiter oben.
+
+Eine quadratische Gleichung hat mathematisch bis zu \textbf{\emph{zwei}}
+Lösungen (wegen des $\pm$). In der Physik ist aber meistens nur eine
+davon \textbf{\emph{physikalisch sinnvoll}}.
+
+\textbf{Wichtig:} Verwirf nicht automatisch nur negative Zeiten. Prüfe
+bei \emph{jeder} Lösung, ob sie in der Situation überhaupt Sinn ergibt.
+Eine Lösung kann auch aus einem anderen Grund unphysikalisch sein, zum
+Beispiel weil die Bewegung zu diesem Zeitpunkt laut Aufgabenstellung
+längst vorbei ist (siehe Beispiel unten).
+\end{theoriebox}
+
+\begin{questions}
+\begin{taskbox}[Übung: E-Trottinett bremst, zweiter Teil]
+\question[6] Dasselbe E-Trottinett wie oben: $v_0=\SI{6}{\meter\per\second}$,
+$a=-\SI{2}{\meter\per\second\squared}$, positive Richtung = Fahrtrichtung.
+
+\begin{parts}
+  \part[2] Nach welcher Zeit $t_{\text{stopp}}$ steht das Trottinett
+  (also $v=0$)? Prüfe dein Ergebnis anschliessend, indem du die
+  Bremsstrecke aus dem Beispiel oben ($\Delta x=\SI{9}{\meter}$) über
+  $\Delta x = v_0\cdot t_{\text{stopp}} + \frac{1}{2}a\,t_{\text{stopp}}^2$
+  nachrechnest.
+  \Antwortraum{2}
+  \begin{solution}
+  $0 = 6 - 2\cdot t_{\text{stopp}} \Rightarrow t_{\text{stopp}}=\SI{3}{\second}$.
+  Probe: $\Delta x = 6\cdot3 - \frac{1}{2}\cdot2\cdot3^2 = 18-9=\SI{9}{\meter}$,
+  stimmt mit dem Beispiel oben überein.
+  Ab diesem Zeitpunkt gilt die Formel mit konstantem $a$ nicht mehr, das
+  Trottinett bleibt einfach stehen.
+  \end{solution}
+
+  \part[4] Nach welcher Zeit $t$ hat das Trottinett eine Strecke von
+  $\Delta x=\SI{5}{\meter}$ zurückgelegt? Löse mit der Ortsgleichung
+  ($x_0=0$, $t_0=0$) und diskutiere \textbf{beide} Lösungen der
+  quadratischen Gleichung.
+  \Antwortraum{4}
+  \begin{solution}
+  Zuerst alles auf eine Seite bringen (Standardform $At^2+Bt+C=0$):
+  \[
+    5 = 6t - t^2 \quad\Longrightarrow\quad t^2-6t+5=0.
+  \]
+  Koeffizienten ablesen: $A=1$, $B=-6$, $C=5$. In die Mitternachtsformel
+  einsetzen:
+  \[
+    t = \frac{-B\pm\sqrt{B^2-4AC}}{2A} = \frac{6\pm\sqrt{(-6)^2-4\cdot1\cdot5}}{2\cdot1}.
+  \]
+  \[
+    t = \frac{6\pm\sqrt{36-20}}{2} = \frac{6\pm\sqrt{16}}{2}.
+  \]
+  \[
+    t = \frac{6\pm4}{2}.
+  \]
+  Das ergibt $t_1=\frac{6+4}{2}=\SI{5}{\second}$ und
+  $t_2=\frac{6-4}{2}=\SI{1}{\second}$.
+  Mathematisch gibt es also zwei Lösungen: $t=\SI{1}{\second}$ und
+  $t=\SI{5}{\second}$. Aus Teilaufgabe a) weisst du aber, dass das
+  Trottinett bereits bei $t_{\text{stopp}}=\SI{3}{\second}$ steht: Die
+  Formel mit konstantem $a$ gilt also nur für $0\leq t\leq\SI{3}{\second}$.
+  $t=\SI{5}{\second}$ liegt \emph{ausserhalb} dieses gültigen Bereichs
+  (nicht etwa negativ!) und ist deshalb zu verwerfen. Die physikalisch
+  richtige Lösung ist $t=\SI{1}{\second}$.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\begin{questions}
+\begin{groupbox}[Partnerarbeit: Was bedeutet Gleichsetzen?]
+\question[3] Diskutiert zu zweit: Bei den nächsten Aufgaben (Treffpunkte
+zweier Objekte) werdet ihr zwei Bewegungsgleichungen \emph{gleichsetzen}.
+Was bedeutet das anschaulich, geometrisch, im Diagramm gedacht? Und
+weshalb liefert genau das den Zeitpunkt, an dem sich zwei Objekte
+treffen?
+\Antwortraum{3}
+\begin{solution}
+Jede Bewegungsgleichung $x_1(t)$ bzw. $x_2(t)$ ist ein Graph im
+$x$-$t$-Diagramm. Beide Objekte gleichzusetzen ($x_1(t)=x_2(t)$) bedeutet,
+den \textbf{\emph{Schnittpunkt}} dieser beiden Graphen zu suchen: den
+Zeitpunkt $t$, an dem beide Objekte denselben Ort $x$ haben, also am
+selben Ort sind, also sich treffen.
+\end{solution}
+\end{groupbox}
+\end{questions}
+
+\begin{theoriebox}[Treffpunktprobleme: zwei Bewegungsgleichungen gleichzeitig]
+Bisher hast du Treffpunktprobleme mit \textbf{\emph{konstanten}}
+Geschwindigkeiten gelöst (Überholmanöver im v-t-Diagrammarbeitsblatt).
+Jetzt kann eines der beiden Objekte zusätzlich \textbf{\emph{beschleunigen}}.
+Das Vorgehen bleibt dasselbe:
+\begin{enumerate}[leftmargin=1.2cm,itemsep=0.25em]
+  \item Für \textbf{\emph{beide}} Objekte eine eigene Ortsgleichung
+  aufstellen, im \textbf{\emph{selben}} Koordinatensystem und mit
+  demselben Zeitursprung $t=0$ (sonst vergleichst du Äpfel mit Birnen).
+  \item Beide Gleichungen gleichsetzen: $x_1(t)=x_2(t)$.
+  \item Nach $t$ auflösen (ggf.\ quadratisch, siehe oben; unphysikalische
+  Lösung verwerfen).
+  \item Treffpunkt $x$ durch Einsetzen von $t$ in eine der beiden
+  Gleichungen berechnen.
+\end{enumerate}
+\end{theoriebox}
+
+\begin{questions}
+\begin{taskbox}[Übung: Überholmanöver mit Beschleunigung]
+\question[12] Auf der Autobahn fährt ein Lastwagen mit konstant
+$v_{\text{LKW}}=\SI{22.22}{\meter\per\second}$ ($\approx\SI{80}{\kilo\meter\per\hour}$).
+Ein Auto befindet sich zum Zeitpunkt $t=0$ bereits sicher auf der
+Überholspur, $\SI{70}{\meter}$ hinter dem Lastwagen, und fährt zu diesem
+Zeitpunkt \emph{genau gleich schnell} wie der Lastwagen. Mit konstanter
+Geschwindigkeit würde das Auto also nie aufholen. Deshalb beschleunigt
+das Auto ab $t=0$ konstant mit $a=\SI{1}{\meter\per\second\squared}$.
+Positive Richtung: Fahrtrichtung. Nullpunkt des Koordinatensystems: Ort
+des Lastwagens bei $t=0$.
+
+\begin{parts}
+  \part[3] Stelle die Ortsgleichung $x_{\text{LKW}}(t)$ und
+  $x_{\text{Auto}}(t)$ auf.
+  \Antwortraum{3}
+  \begin{solution}
+  $x_{\text{LKW}}(t) = 22.22\,t$.\\
+  $x_{\text{Auto}}(t) = -70 + 22.22\,t + \frac{1}{2}\cdot1\cdot t^2$
+  (Startort $-\SI{70}{\meter}$, da $\SI{70}{\meter}$ hinter dem
+  Lastwagen; Startgeschwindigkeit gleich der des Lastwagens).
+  \end{solution}
+
+  \part[4] Nach welcher Zeit $t$ zieht das Auto (auf der Überholspur,
+  neben dem Lastwagen) mit diesem gleichauf?
+  \Antwortraum{4}
+  \begin{solution}
+  Gleichsetzen:
+  \[
+    -70 + 22.22t + \tfrac{1}{2}t^2 = 22.22t.
+  \]
+  Auf beiden Seiten steht der Term $22.22t$: Ihn auf beiden Seiten
+  abziehen lässt ihn verschwinden:
+  \[
+    -70 + \tfrac{1}{2}t^2 = 0.
+  \]
+  Nun $+70$ auf beiden Seiten:
+  \[
+    \tfrac{1}{2}t^2 = 70
+    \quad\Longrightarrow\quad t^2 = 140.
+  \]
+  Die beiden mathematischen Lösungen sind $t=+\sqrt{140}\approx\SI{11.83}{\second}$
+  und $t=-\sqrt{140}\approx-\SI{11.83}{\second}$. Negative Zeit liegt vor
+  $t=0$, also vor dem Start des Beschleunigungsvorgangs: unphysikalisch,
+  verworfen. Es bleibt $t\approx\SI{11.83}{\second}$.
+
+  (Bemerkung: Weil Auto und Lastwagen bei $t=0$ exakt gleich schnell
+  waren, heben sich die $v_0t$-Terme beim Gleichsetzen komplett weg, es
+  bleibt nur die einfache Gleichung $\frac{1}{2}at^2=\SI{70}{\meter}$.)
+  \end{solution}
+
+  \part[3] Nun eine Änderung: Das Auto fährt die ersten $\SI{2}{\second}$
+  noch mit konstanter Geschwindigkeit (gleich schnell wie der Lastwagen,
+  Abstand bleibt bei $\SI{70}{\meter}$) und beginnt \textbf{erst bei
+  $t=\SI{2}{\second}$} zu beschleunigen. Nach welcher Zeit \textbf{seit
+  $t=0$} zieht das Auto jetzt gleichauf?
+  \Antwortraum{3}
+  \begin{solution}
+  Für die Dauer der Beschleunigungsphase selbst ändert sich nichts an der
+  Rechnung aus b): Der Abstand ist bei $t=\SI{2}{\second}$ immer noch
+  $\SI{70}{\meter}$ (gleiche Geschwindigkeit hält den Abstand konstant),
+  also dauert die Beschleunigungsphase erneut $\sqrt{140}\approx\SI{11.83}{\second}$.
+  Die Falle: Das ist \textbf{nicht} die gesuchte Zeit seit $t=0$! Die
+  $\SI{2}{\second}$ Vorlauf müssen dazugezählt werden:
+  \[
+    t_{\text{gesamt}} = \SI{2}{\second} + \SI{11.83}{\second} \approx \SI{13.83}{\second}.
+  \]
+  Genau dieser Fehler (Zeitversatz beim späteren Start vergessen) ist ein
+  klassischer Stolperstein bei Treffpunktaufgaben.
+  \end{solution}
+
+  \part[2] Skizziere qualitativ das $v$-$t$-Diagramm für die
+  Beschleunigungsphase aus Teilaufgabe b) (beide Fahrzeuge in dasselbe
+  Diagramm).
+
+  \begin{center}
+  \begin{tikzpicture}[scale=0.85]
+    \draw[->] (-0.3,0) -- (5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-0.3) -- (0,3.3) node[above] {\scriptsize $v$};
+  \end{tikzpicture}
+  \end{center}
+  \begin{solution}
+  \begin{center}
+  \begin{tikzpicture}[scale=0.85]
+    \draw[->] (-0.3,0) -- (5,0) node[right] {\scriptsize $t$};
+    \draw[->] (0,-0.3) -- (0,3.3) node[above] {\scriptsize $v$};
+    \draw[thick,titleblue] (0,1.4) -- (4.5,1.4);
+    \draw[thick,accentorange] (0,1.4) -- (4.5,3.1);
+    \node[right] at (4.5,1.4) {\scriptsize Lastwagen (konstant)};
+    \node[right] at (4.5,3.1) {\scriptsize Auto (beschleunigt)};
+  \end{tikzpicture}
+  \end{center}
+  Beide Geraden starten bei derselben Höhe ($v_0$ gleich), die Gerade des
+  Lastwagens bleibt waagrecht, die des Autos steigt (konstantes $a>0$).
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\end{document}

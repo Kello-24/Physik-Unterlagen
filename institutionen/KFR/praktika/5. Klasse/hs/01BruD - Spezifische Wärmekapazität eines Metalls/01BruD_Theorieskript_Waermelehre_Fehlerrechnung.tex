@@ -1,0 +1,371 @@
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Sprache & Encoding ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+% ---------- Layout ----------
+\usepackage[a4paper,margin=2.3cm]{geometry}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{amsmath,amssymb}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+\usepackage{tikz}
+\usepackage{needspace}
+
+% ---------- Farben ----------
+\definecolor{kfrblue}{HTML}{1F5C99}
+\definecolor{warnorange}{HTML}{B45309}
+\definecolor{warnbg}{HTML}{FFF3E0}
+\definecolor{tipbg}{HTML}{EAF3EA}
+\definecolor{tipgreen}{HTML}{2E7D32}
+
+% ---------- Überschriften ----------
+\titleformat{\section}{\large\bfseries\color{kfrblue}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{kfrblue}}{\thesubsection}{0.6em}{}
+
+% ---------- Kopf-/Fusszeile ----------
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyhead[L]{\small Physik 5.\,Klasse, Praktikum 01}
+\fancyhead[R]{\small Theorieskript}
+\fancyfoot[C]{\small\thepage}
+
+% ---------- Boxen ----------
+\newtcolorbox{achtungbox}[1][]{%
+  colback=warnbg, colframe=warnorange, coltitle=white, colbacktitle=warnorange,
+  boxrule=0.8pt, arc=2pt,
+  left=6pt, right=6pt, top=4pt, bottom=4pt, breakable,
+  title={\textbf{Achtung: darauf kommt es an}#1},
+  fonttitle=\small, fontupper=\small
+}
+\newtcolorbox{tippbox}[1][]{%
+  colback=tipbg, colframe=tipgreen, coltitle=white, colbacktitle=tipgreen,
+  boxrule=0.8pt, arc=2pt,
+  left=6pt, right=6pt, top=4pt, bottom=4pt, breakable,
+  title={\textbf{Merke}#1},
+  fonttitle=\small, fontupper=\small
+}
+\newtcolorbox{denkbox}[1][]{%
+  colback=gray!6, colframe=kfrblue, coltitle=white, colbacktitle=kfrblue,
+  boxrule=0.8pt, arc=2pt,
+  left=6pt, right=6pt, top=4pt, bottom=4pt, breakable,
+  title={\textbf{Verständnisfrage}#1},
+  fonttitle=\small, fontupper=\small
+}
+
+\setlist[itemize]{leftmargin=1.4em, itemsep=2pt, topsep=3pt}
+\setlist[enumerate]{leftmargin=1.6em, itemsep=2pt, topsep=3pt}
+
+\newcommand{\Temp}{T}
+
+% ---------- einfache Einheiten-Makros (kein siunitx nötig) ----------
+\newcommand{\celsius}{\ensuremath{^{\circ}\mathrm{C}}}
+\newcommand{\kelvin}{K}
+\newcommand{\kilogram}{kg}
+\newcommand{\SI}[2]{#1\,#2}
+
+% ---------- Platz für kurze Antworten (kariert) ----------
+\newlength{\gridwidth}
+\newcommand{\antwortraum}[1]{%
+  \par\vspace{4pt}\noindent
+  \setlength{\gridwidth}{\linewidth}%
+  \begin{tikzpicture}
+    \draw[step=0.5cm, gray!25, very thin] (0,0) grid (\gridwidth,#1);
+    \draw[black, thin] (0,0) rectangle (\gridwidth,#1);
+  \end{tikzpicture}
+  \vspace{4pt}
+}
+\newcommand{\antwortraumS}{\antwortraum{2.5cm}}
+
+\begin{document}
+\thispagestyle{empty}
+
+% ---------- Titelblock ----------
+\begin{center}
+  {\color{kfrblue}\Large\bfseries Theorieskript: Wärmelehre und Fehlerrechnung}\\[2pt]
+  {\normalsize Begleitmaterial zu Praktikum 01 (Spezifische Wärmekapazität eines Metalls) \textbar\ Kantonsschule Freudenberg, Physik 5.\ Klasse}
+\end{center}
+
+\vspace{10pt}
+\hrule
+\vspace{10pt}
+
+\noindent
+Dieses Skript deckt die physikalischen und rechnerischen Grundlagen ab, die für Praktikum~01 gebraucht werden: das Teilchenmodell von Temperatur und Wärme, die spezifische Wärmekapazität, die Energieerhaltung beim Wärmeaustausch (Kalorimetrie) sowie die Fehlerrechnung ohne Ableitungen. Es kann als Unterrichtsstoff vor dem Praktikum gelesen oder im Unterricht besprochen werden. Die konkrete Gleichung für die Metallprobe im Praktikum (mit Kalorimetergefäss und Wasser) leitest du bewusst selbst in der Auswertung her, dieses Skript zeigt dir dafür das Prinzip an einem anderen Beispiel.
+
+% ======================================================
+\section{Teilchenmodell, Temperatur und Wärme}
+
+\subsection{Das Teilchenmodell}
+Alle Stoffe bestehen aus Teilchen (Atome, Moleküle), die sich ständig bewegen: in Gasen fliegen sie frei umher, in Flüssigkeiten gleiten sie aneinander vorbei, in Festkörpern schwingen sie um feste Positionen. Diese ungeordnete Bewegung heisst \textbf{\emph{thermische Bewegung}}. Je schneller sich die Teilchen im Mittel bewegen, desto mehr Bewegungsenergie steckt im Stoff.
+
+\subsection{Temperatur: eine Zustandsgrösse}
+Die \textbf{\emph{Temperatur}} $\Temp$ ist ein Mass für die mittlere Bewegungsenergie der Teilchen eines Körpers (Einheit: \celsius oder \kelvin). Sie beschreibt einen \emph{Zustand}: wie warm ein Körper gerade ist, unabhängig davon, wie er dazu gekommen ist. Zwei Körper mit derselben Temperatur haben dieselbe mittlere Teilchenbewegung, auch wenn sie aus komplett verschiedenem Material bestehen und unterschiedlich viel Energie in dieser Bewegung gespeichert ist (dazu mehr in Abschnitt~2).
+
+\subsection{Wärme: eine übertragene Energiemenge}
+Bringt man zwei Körper unterschiedlicher Temperatur in Kontakt, so übertragen die schnelleren Teilchen des wärmeren Körpers Bewegungsenergie an die langsameren Teilchen des kälteren Körpers, bis beide im Mittel gleich schnell schwingen. Diese übertragene Energie heisst \textbf{\emph{Wärme}} $Q$ (Einheit: Joule, $\mathrm{J}$). Im Unterschied zur Temperatur beschreibt die Wärme keinen Zustand, sondern einen \emph{Vorgang}: eine Energiemenge, die von einem Körper zu einem anderen fliesst.
+
+\begin{achtungbox}
+\textbf{Temperatur und Wärme sind nicht dasselbe.} Ein grosser Topf und ein kleiner Becher mit demselben Wasser bei $80\,\celsius$ haben dieselbe \emph{Temperatur}. Der grosse Topf enthält aber viel mehr \emph{Wärme} in dem Sinn, dass er beim Abkühlen auf Zimmertemperatur eine viel grössere Energiemenge abgibt, weil viel mehr Wasser (mehr Teilchen) abkühlt. Wer von „viel Wärme“ statt „hoher Temperatur“ spricht, meint physikalisch oft nicht dasselbe.
+\end{achtungbox}
+
+\needspace{6cm}
+\begin{denkbox}
+Ein Schwimmbecken und eine Tasse Tee haben beide $40\,\celsius$. Welches der beiden Systeme kann beim Abkühlen mehr Wärme an die Umgebung abgeben, und woran liegt das?
+\end{denkbox}
+\antwortraumS
+
+% ======================================================
+\section{Spezifische Wärmekapazität}
+
+\subsection{Definition}
+Führt man einem Körper eine Wärmemenge $Q$ zu, so erhöht sich seine Temperatur um $\Delta\Temp$ (vorausgesetzt, es findet dabei kein Phasenübergang statt, z.\,B.\ Schmelzen). Wie stark die Temperatur ansteigt, hängt von zwei Dingen ab: von der Masse $m$ des Körpers und von seiner \textbf{\emph{spezifischen Wärmekapazität}} $c$, einer Materialkonstante. Es gilt
+\[
+  Q = m \cdot c \cdot \Delta\Temp, \qquad [c] = \mathrm{J\,kg^{-1}\,K^{-1}}.
+\]
+Die spezifische Wärmekapazität gibt an, wie viel Energie nötig ist, um \SI{1}{\kilogram} eines Stoffes um \SI{1}{\kelvin} zu erwärmen. Ein Stoff mit grossem $c$ kann viel Wärme speichern, ohne dass seine Temperatur stark steigt, ein Stoff mit kleinem $c$ erwärmt sich (und kühlt sich ab) viel schneller.
+
+\subsection{Grad Celsius und Kelvin bei Temperaturdifferenzen}
+Die Celsius-Skala ist gegenüber der Kelvin-Skala nur um einen festen Betrag verschoben ($0\,\celsius = 273.15\,\kelvin$), die Grösse von „einem Grad“ ist bei beiden Skalen identisch. Eine Temperatur\emph{differenz} $\Delta\Temp$ hat deshalb in beiden Einheiten denselben Zahlenwert: eine Erwärmung um $5\,\celsius$ ist dieselbe Temperaturänderung wie eine Erwärmung um $5\,\kelvin$. Deshalb dürfen in der Formel $Q=mc\Delta\Temp$ zwei abgelesene Celsius-Werte direkt voneinander abgezogen werden, obwohl $[c]=\mathrm{J\,kg^{-1}\,K^{-1}}$ formal die Einheit Kelvin verlangt.
+
+\subsection{Vergleich verschiedener Stoffe}
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{0.75\linewidth}{@{}Xl@{}}
+  \toprule
+  \textbf{Stoff} & \textbf{spez.\ Wärmekapazität $c$ in $\mathrm{J\,kg^{-1}\,K^{-1}}$} \\
+  \midrule
+  Wasser & $4190$ \\
+  Aluminium & $897$ \\
+  Nickel & $444$ \\
+  Kupfer & $385$ \\
+  Messing & $\approx 380$ \\
+  \bottomrule
+\end{tabularx}
+\end{center}
+\emph{Hinweis:} dieselbe Tabelle (dort zusätzlich mit Dichte) steht auch in der Praktikumsanleitung (Abschnitt~2.2) und listet die für dieses Praktikum tatsächlich verwendeten Stoffe. Zur Einordnung, ohne dass diese Stoffe im Praktikum vorkommen: Eis hat $c\approx 2100$, trockene Luft $c\approx 1005$ und Holz $c\approx 1700\ \mathrm{J\,kg^{-1}\,K^{-1}}$, alle deutlich näher bei Wasser als die Metalle.
+
+\subsection{Rechenbeispiel}
+Wie viel Wärme braucht es, um $0.5\ \mathrm{kg}$ Wasser um $20\ \mathrm{K}$ zu erwärmen?
+\[
+  Q = m \cdot c \cdot \Delta\Temp = 0.5\ \mathrm{kg} \cdot 4190\ \mathrm{J\,kg^{-1}\,K^{-1}} \cdot 20\ \mathrm{K} = 41\,900\ \mathrm{J}.
+\]
+
+% ======================================================
+\section{Energieerhaltung beim Wärmeaustausch (Kalorimetrie)}
+
+\subsection{Zwei Körper: Prinzip und Herleitung}
+Bringt man zwei Körper unterschiedlicher Temperatur in Kontakt, tauschen sie so lange Wärme aus, bis sich eine gemeinsame \textbf{\emph{Mischtemperatur}} $\Temp_M$ einstellt. Findet dieser Ausgleich (näherungsweise) ohne Wärmeverluste an die Umgebung statt, gilt der Energieerhaltungssatz in der Form
+\[
+  Q_{\text{abgegeben}} = Q_{\text{aufgenommen}}.
+\]
+Für zwei Körper 1 (wärmer, Anfangstemperatur $\Temp_1$) und 2 (kälter, Anfangstemperatur $\Temp_2$) bedeutet das
+\[
+  m_1\,c_1\,(\Temp_1-\Temp_M) = m_2\,c_2\,(\Temp_M-\Temp_2).
+\]
+Aufgelöst nach der Mischtemperatur (Ausmultiplizieren, Termen mit $\Temp_M$ auf eine Seite bringen, durch $(m_1c_1+m_2c_2)$ teilen):
+\begin{align*}
+  m_1c_1\Temp_1 - m_1c_1\Temp_M &= m_2c_2\Temp_M - m_2c_2\Temp_2 \\
+  m_1c_1\Temp_1 + m_2c_2\Temp_2 &= \Temp_M\,(m_1c_1+m_2c_2) \\
+  \Temp_M &= \frac{m_1c_1\Temp_1 + m_2c_2\Temp_2}{m_1c_1+m_2c_2}.
+\end{align*}
+Die Mischtemperatur ist also ein \textbf{\emph{gewichteter Mittelwert}} der beiden Anfangstemperaturen, gewichtet mit der jeweiligen Wärmekapazität $m\cdot c$: je grösser $m_1c_1$ im Vergleich zu $m_2c_2$, desto näher liegt $\Temp_M$ bei $\Temp_1$.
+
+\subsection{Rechenbeispiel (zwei Körper)}
+$0.3\ \mathrm{kg}$ warmes Wasser ($\Temp_1=60\,\celsius$) wird mit $0.6\ \mathrm{kg}$ kaltem Wasser ($\Temp_2=15\,\celsius$) gemischt. Da beides Wasser ist, kürzt sich $c$ heraus:
+\[
+  \Temp_M = \frac{m_1\Temp_1+m_2\Temp_2}{m_1+m_2} = \frac{0.3\cdot 60 + 0.6\cdot 15}{0.3+0.6} = \frac{18+9}{0.9} = \frac{27}{0.9} = 30\,\celsius.
+\]
+
+\subsection{Mehr als zwei Körper}
+Sind mehr als zwei Körper am Wärmeaustausch beteiligt, gilt der Energieerhaltungssatz genauso, nur mit mehr Termen: jeder Körper, der wärmer als die gemeinsame Mischtemperatur startet, trägt einen Term $Q_{\text{abgegeben}}$ bei, jeder Körper, der kälter startet, einen Term $Q_{\text{aufgenommen}}$, und die Summe aller abgegebenen Wärmen ist gleich der Summe aller aufgenommenen Wärmen.
+
+\begin{achtungbox}
+Steckt eine Flüssigkeit in einem Gefäss (z.\,B.\ Wasser in einem Kalorimeter), so erwärmt oder kühlt sich das \emph{Gefäss selbst mit ab}. Solange das Gefäss eine spürbare Masse und eine nicht vernachlässigbare spezifische Wärmekapazität hat (z.\,B.\ Kupfer, $c\approx 385\ \mathrm{J\,kg^{-1}\,K^{-1}}$), muss es als eigener Term in der Bilanz mitgezählt werden, sonst geht Energie in der Rechnung „verloren“. Ob und wie viele zusätzliche Körper in einer konkreten Bilanz mitgezählt werden müssen, hängt vom Versuchsaufbau ab und ist Teil der Auswertung im Praktikum.
+\end{achtungbox}
+
+\subsection{Rechenbeispiel (drei Körper)}
+Drei Metallblöcke werden in engen thermischen Kontakt gebracht, bis sich eine gemeinsame Temperatur einstellt: Eisen ($m_A=0.200\ \mathrm{kg}$, $c_A=449\ \mathrm{J\,kg^{-1}\,K^{-1}}$, $\Temp_{A0}=80\,\celsius$), Aluminium ($m_B=0.150\ \mathrm{kg}$, $c_B=897\ \mathrm{J\,kg^{-1}\,K^{-1}}$, $\Temp_{B0}=20\,\celsius$) und Kupfer ($m_C=0.100\ \mathrm{kg}$, $c_C=385\ \mathrm{J\,kg^{-1}\,K^{-1}}$, $\Temp_{C0}=20\,\celsius$).
+
+Der Eisenblock ist der einzige, der Wärme abgibt, die beiden anderen nehmen sie auf:
+\[
+  m_Ac_A(\Temp_{A0}-\Temp_M) = m_Bc_B(\Temp_M-\Temp_{B0}) + m_Cc_C(\Temp_M-\Temp_{C0}).
+\]
+Genau wie bei zwei Körpern lässt sich das nach $\Temp_M$ auflösen:
+\[
+  \Temp_M = \frac{m_Ac_A\Temp_{A0} + m_Bc_B\Temp_{B0} + m_Cc_C\Temp_{C0}}{m_Ac_A+m_Bc_B+m_Cc_C}.
+\]
+Zahlenwerte einsetzen, Schritt für Schritt:
+\begin{align*}
+  m_Ac_A &= 0.200\cdot 449 = 89.8\ \mathrm{J/K} \\
+  m_Bc_B &= 0.150\cdot 897 = 134.55\ \mathrm{J/K} \\
+  m_Cc_C &= 0.100\cdot 385 = 38.5\ \mathrm{J/K} \\
+  m_Ac_A+m_Bc_B+m_Cc_C &= 89.8+134.55+38.5 = 262.85\ \mathrm{J/K} \\
+  m_Ac_A\Temp_{A0} &= 89.8\cdot 80 = 7184\ \mathrm{J} \\
+  m_Bc_B\Temp_{B0} &= 134.55\cdot 20 = 2691\ \mathrm{J} \\
+  m_Cc_C\Temp_{C0} &= 38.5\cdot 20 = 770\ \mathrm{J} \\
+  \text{Summe} &= 7184+2691+770 = 10\,645\ \mathrm{J} \\
+  \Temp_M &= \frac{10\,645\ \mathrm{J}}{262.85\ \mathrm{J/K}} \approx 40.5\,\celsius.
+\end{align*}
+Die Mischtemperatur liegt näher bei den beiden kälteren Blöcken, weil deren gemeinsame Wärmekapazität ($134.55+38.5=173.05\ \mathrm{J/K}$) grösser ist als die des heissen Eisenblocks ($89.8\ \mathrm{J/K}$), das passt zur Deutung als gewichteter Mittelwert aus Abschnitt~3.1.
+
+\subsection{Wärmeleitung durch eine Pellet-Schüttung}
+Im Praktikum liegt die Metallprobe nicht als ein einzelner, durchgehender Block vor, sondern als lose Schüttung aus vielen kleinen Pellets. Das hat Folgen für die Wärmeleitung: Innerhalb eines massiven Metallstücks leitet das Metall selbst die Wärme sehr gut und praktisch gleichmässig weiter. In einer Pellet-Schüttung dagegen berühren sich die einzelnen Pellets nur an kleinen Kontaktpunkten, dazwischen befindet sich Luft, ein sehr viel schlechterer Wärmeleiter als Metall. Wärme, die von aussen (z.\,B.\ von der Kupferwand des Topfs) in die Schüttung eindringt, muss sich deshalb Pellet für Pellet über diese schlecht leitenden Kontaktstellen ausbreiten, das dauert spürbar länger als bei einem massiven Block gleicher Masse.
+
+Zwei praktische Folgen:
+\begin{itemize}
+  \item Es braucht mehr Zeit, bis die \emph{ganze} Schüttung dieselbe Temperatur wie das umgebende Wasserbad erreicht hat, nicht nur die äusseren Pellets.
+  \item Solange dieser Ausgleich noch nicht abgeschlossen ist, kann die Schüttung innen kühler sein als aussen. Eine einzelne Temperaturmessung (das Thermometer steckt ja nur an einer Stelle im Topf) zeigt dann nicht unbedingt die tatsächliche Durchschnittstemperatur der ganzen Probe.
+\end{itemize}
+Deshalb ist es wichtig, mit der Entnahme der Probe zu warten, bis sich die Temperaturen von Wasserbad und Kupfertopf nicht mehr merklich annähern (vgl.\ Anleitung, Abschnitt~5.1): erst dann ist davon auszugehen, dass die Wärme auch das Innere der Schüttung erreicht hat und die Probe näherungsweise überall dieselbe Temperatur hat. Das ist derselbe Grund, weshalb eine einzelne, frühe Temperaturmessung nicht ausreicht, egal wie schnell man danach umfüllt.
+
+\needspace{6cm}
+\begin{denkbox}
+Im Praktikum sind ebenfalls drei „Körper“ an der Energiebilanz beteiligt. Welche drei, und welcher davon gibt Wärme ab statt sie aufzunehmen? (Die genaue Gleichung leitest du selbst in der Auswertung her.)
+\end{denkbox}
+\antwortraumS
+
+% ======================================================
+\section{Fehlerrechnung ohne Ableitungen}
+
+\subsection{Warum Fehlerrechnung?}
+Jede Messung hat eine begrenzte Genauigkeit: eine Waage zeigt nur auf ein Gramm genau an, ein Thermometer nur auf eine halbe Gradteilung. Wird aus mehreren gemessenen Grössen eine neue Grösse berechnet (z.\,B.\ eine Dichte oder eine spezifische Wärmekapazität), so trägt das Ergebnis die Ungenauigkeiten aller einzelnen Messungen weiter. Die \textbf{\emph{Fehlerrechnung}} gibt an, wie ungenau das Endergebnis dadurch wird.
+
+\subsection{Fehlerquellen}
+Woher kommt die Ungenauigkeit einer Messung überhaupt? Man unterscheidet grob zwei Arten von Fehlern:
+\begin{itemize}
+  \item \textbf{\emph{Zufällige (statistische) Fehler}}: kleine, unvermeidbare Schwankungen bei jeder einzelnen Messung, z.\,B.\ weil man die Skala jedes Mal ein bisschen anders abliest, oder weil kleine äussere Störungen (Erschütterungen, Luftzug) den Messwert beeinflussen. Zufällige Fehler streuen nach oben und unten; wiederholt man die Messung mehrmals und mittelt, werden sie kleiner.
+  \item \textbf{\emph{Systematische Fehler}}: wirken bei jeder Messung in dieselbe Richtung, z.\,B.\ ein falsch kalibriertes Gerät, ein Parallaxenfehler beim schrägen Ablesen einer Skala, oder ein Wärmeverlust, der bei jedem Durchgang gleichermassen auftritt. Systematische Fehler verschwinden nicht durch Wiederholen und Mitteln, nur ein besserer Messaufbau oder eine Korrekturrechnung hilft dagegen.
+\end{itemize}
+Die Fehlerrechnung weiter unten in diesem Kapitel behandelt, wie sich eine bereits bekannte Messgenauigkeit $\Delta x$ auf ein Rechenergebnis auswirkt. Wie gross $\Delta x$ für eine einzelne Messung realistischerweise ist, muss zuerst separat abgeschätzt werden, siehe nächster Abschnitt.
+
+\subsection{Wie bestimmt man die Messgenauigkeit $\Delta x$ einer einzelnen Messung?}
+Es gibt keine einzelne „richtige“ Formel dafür, aber ein paar bewährte Faustregeln:
+\begin{itemize}
+  \item \textbf{Analoge Skala} (z.\,B.\ Thermometer, Massstab): $\Delta x$ entspricht meist der kleinsten Skalenteilung, oder der Hälfte davon, wenn man gut zwischen zwei Strichen interpolieren kann. Ein Thermometer mit Strichen alle $1\ \mathrm{K}$ liefert also je nach Ablesbarkeit $\Delta T\approx 0.5\ \mathrm{K}$ bis $1\ \mathrm{K}$.
+  \item \textbf{Digitale Anzeige} (z.\,B.\ Waage): $\Delta x$ entspricht mindestens der letzten angezeigten Stelle, z.\,B.\ $\Delta m = 0.1\ \mathrm{g}$ bei einer Anzeige mit einer Nachkommastelle, sofern das Gerät keine grössere bekannte Unsicherheit hat.
+  \item \textbf{Zusätzliche Unsicherheiten einbeziehen:} Parallaxe, Reaktionszeit beim Ablesen eines sich noch ändernden Werts, oder eine Situation, die grundsätzlich schwer zu kontrollieren ist (z.\,B.\ eine ungleichmässig erwärmte Probe), können $\Delta x$ über die reine Skalenteilung hinaus vergrössern. Das ist eine begründete Einschätzung, die du selbst triffst, keine feste Zahl aus einer Tabelle.
+  \item \textbf{Wiederholungsmessung:} Misst du dieselbe Grösse mehrmals, gibt die Streuung der Werte eine realistischere Abschätzung als die Geräte-Skala allein: $\Delta x \approx \dfrac{x_{\max}-x_{\min}}{2}$.
+\end{itemize}
+Genau diese Überlegung steckt hinter den $\pm$-Spalten im Messprotokoll der Praktikumsanleitung: dort trägst du für jede Messgrösse deine eigene, begründete Einschätzung von $\Delta x$ ein, nicht einen vorgegebenen Wert.
+
+\subsection{Absoluter und relativer Fehler}
+Für eine Messgrösse $x$ mit Messwert und Messgenauigkeit schreibt man $x=(x_0\pm\Delta x)$. Dabei ist:
+\begin{itemize}
+  \item $\Delta x$ der \textbf{\emph{absolute Fehler}}: dieselbe Einheit wie $x$ selbst (z.\,B.\ $\Delta m = 1\ \mathrm{g}$).
+  \item $\dfrac{\Delta x}{x_0}$ der \textbf{\emph{relative Fehler}}: einheitenlos, meist in Prozent angegeben (z.\,B.\ $\dfrac{\Delta m}{m_0}=1\,\%$).
+\end{itemize}
+
+\subsection{Regel 1: Addition und Subtraktion}
+Für $z=a+b$ oder $z=a-b$ mit Fehlern $\Delta a$, $\Delta b$: im ungünstigsten Fall sind beide Messwerte um ihren vollen Fehler in dieselbe ungünstige Richtung verschoben, sodass sich die absoluten Fehler addieren:
+\[
+  \Delta z = \Delta a + \Delta b.
+\]
+Das gilt exakt (ohne Näherung), sowohl für die Addition als auch für die Subtraktion, weil sich beim Ausklammern kein gemischter Term ergibt: $z_{\max}=(a+\Delta a)+(b+\Delta b) = a+b+(\Delta a+\Delta b)$.
+
+\textbf{Beispiel:} zwei Streckenabschnitte werden hintereinander gemessen und addiert, $a=12.3\ \mathrm{cm}\pm 0.1\ \mathrm{cm}$, $b=5.4\ \mathrm{cm}\pm 0.2\ \mathrm{cm}$:
+\[
+  s = a+b = 12.3+5.4 = 17.7\ \mathrm{cm}, \qquad \Delta s = \Delta a+\Delta b = 0.1+0.2 = 0.3\ \mathrm{cm}, \qquad s=(17.7\pm 0.3)\ \mathrm{cm}.
+\]
+
+\subsection{Regel 2: Multiplikation}
+Für $z=a\cdot b$ ist im ungünstigsten Fall $z_{\max}=(a+\Delta a)(b+\Delta b)$. Ausmultipliziert:
+\[
+  z_{\max} = ab + a\,\Delta b + b\,\Delta a + \Delta a\,\Delta b.
+\]
+Da $\Delta a$ und $\Delta b$ klein sind gegenüber $a$ und $b$, ist das Produkt $\Delta a\,\Delta b$ zweier kleiner Grössen vernachlässigbar klein gegenüber den übrigen Termen:
+\[
+  z_{\max} \approx ab + a\,\Delta b + b\,\Delta a = z + (a\,\Delta b+b\,\Delta a).
+\]
+Also $\Delta z = a\,\Delta b+b\,\Delta a$. Division durch $z=ab$ liefert die \textbf{\emph{relativen}} Fehler:
+\[
+  \frac{\Delta z}{z} = \frac{a\,\Delta b+b\,\Delta a}{ab} = \frac{\Delta a}{a}+\frac{\Delta b}{b}.
+\]
+
+\textbf{Beispiel:} Fläche eines Rechtecks, $a=5.0\ \mathrm{cm}\pm 0.1\ \mathrm{cm}$, $b=3.0\ \mathrm{cm}\pm 0.1\ \mathrm{cm}$. Zur Kontrolle die exakte Rechnung: $z_{\max}=(5.1)(3.1)=15.81\ \mathrm{cm^2}$, der vernachlässigte Term $\Delta a\,\Delta b=0.01\ \mathrm{cm^2}$ ist tatsächlich winzig gegenüber der Abweichung $0.81\ \mathrm{cm^2}$. Mit der Regel:
+\[
+  \frac{\Delta A}{A} = \frac{\Delta a}{a}+\frac{\Delta b}{b} = \frac{0.1}{5.0}+\frac{0.1}{3.0} = 2.0\,\%+3.3\,\% = 5.3\,\%,
+\]
+\[
+  A = ab = 15.0\ \mathrm{cm^2}, \qquad \Delta A = A\cdot 5.3\,\% = 0.8\ \mathrm{cm^2}, \qquad A=(15.0\pm 0.8)\ \mathrm{cm^2}.
+\]
+
+\subsection{Regel 3: Division}
+Für $z=a/b$ ist im ungünstigsten Fall der Zähler maximal und der Nenner minimal, $z_{\max}=\dfrac{a+\Delta a}{b-\Delta b}$. Auf einen Bruch gebracht:
+\[
+  z_{\max}-z = \frac{a+\Delta a}{b-\Delta b} - \frac{a}{b} = \frac{b(a+\Delta a)-a(b-\Delta b)}{b(b-\Delta b)} = \frac{b\,\Delta a+a\,\Delta b}{b(b-\Delta b)}.
+\]
+Da $\Delta b$ klein ist gegenüber $b$, gilt näherungsweise $b-\Delta b\approx b$, also $b(b-\Delta b)\approx b^2$:
+\[
+  \Delta z \approx \frac{b\,\Delta a+a\,\Delta b}{b^2} = \frac{\Delta a}{b}+\frac{a\,\Delta b}{b^2}.
+\]
+Division durch $z=a/b$ (multiplizieren mit $b/a$) liefert dieselbe Regel wie bei der Multiplikation:
+\[
+  \frac{\Delta z}{z} = \frac{\Delta a}{a}+\frac{\Delta b}{b}.
+\]
+
+\textbf{Beispiel:} Durchschnittsgeschwindigkeit über eine gemessene Strecke, $s=100\ \mathrm{m}\pm 1\ \mathrm{m}$, $t=9.58\ \mathrm{s}\pm 0.05\ \mathrm{s}$:
+\[
+  v = \frac{s}{t} = \frac{100}{9.58} = 10.44\ \mathrm{m/s}, \qquad \frac{\Delta v}{v} = \frac{1}{100}+\frac{0.05}{9.58} = 1.0\,\%+0.5\,\% = 1.5\,\%,
+\]
+\[
+  \Delta v = v\cdot 1.5\,\% = 0.16\ \mathrm{m/s}, \qquad v = (10.44\pm 0.16)\ \mathrm{m/s}.
+\]
+
+\subsection{Spezialfall: Multiplikation mit einer Konstante}
+Ist $k$ ein exakt bekannter Faktor ohne eigenen Messfehler (z.\,B.\ ein Literaturwert wie eine spezifische Wärmekapazität), dann ist $\Delta k=0$, und Regel~2 vereinfacht sich zu
+\[
+  \frac{\Delta(k\cdot a)}{k\cdot a} = \underbrace{\frac{\Delta k}{k}}_{=\,0}+\frac{\Delta a}{a} = \frac{\Delta a}{a} \qquad\Longrightarrow\qquad \Delta(k\cdot a) = k\cdot \Delta a.
+\]
+Das ist keine neue Regel, sondern nur Regel~2 mit einem Faktor, der keinen Fehler beiträgt.
+
+\begin{tippbox}[: Die drei Regeln]
+\begin{itemize}
+  \item \textbf{Addition/Subtraktion} ($z=a\pm b$): absolute Fehler addieren sich, $\Delta z=\Delta a+\Delta b$.
+  \item \textbf{Multiplikation/Division} ($z=a\cdot b$ oder $z=a/b$): relative Fehler addieren sich, $\dfrac{\Delta z}{z}=\dfrac{\Delta a}{a}+\dfrac{\Delta b}{b}$.
+  \item \textbf{Konstante} $k$ ohne Messfehler: $\Delta(k\cdot a) = k\cdot\Delta a$ (Spezialfall der zweiten Regel).
+\end{itemize}
+\end{tippbox}
+
+\subsection{Mehrstufige Rechnungen}
+Viele Formeln in der Physik bestehen aus mehreren Rechenschritten. Am Beispiel $z=\dfrac{(p+q)\cdot r}{s\cdot t}$ zeigt sich das Vorgehen:
+\begin{enumerate}
+  \item \textbf{Zwischengrösse bilden:} $N:=p+q$ (Additionsregel), $\Delta N=\Delta p+\Delta q$.
+  \item Die Gleichung wird damit übersichtlicher: $z=\dfrac{N\cdot r}{s\cdot t}$, ein Produkt/Quotient aus vier Faktoren ($N$, $r$, $s$, $t$).
+  \item \textbf{Multiplikations-/Divisionsregel auf alle vier Faktoren anwenden:}
+  \[
+    \frac{\Delta z}{z} = \frac{\Delta N}{N}+\frac{\Delta r}{r}+\frac{\Delta s}{s}+\frac{\Delta t}{t}.
+  \]
+  \item Daraus den absoluten Fehler berechnen: $\Delta z = z\cdot\left(\dfrac{\Delta N}{N}+\dfrac{\Delta r}{r}+\dfrac{\Delta s}{s}+\dfrac{\Delta t}{t}\right)$.
+\end{enumerate}
+Genau nach diesem Muster (zuerst Zwischengrössen bilden, dann Schritt für Schritt die passende Regel anwenden) gehst du im Praktikum vor, um den Fehler auf $c_M$ aus deiner eigenen hergeleiteten Gleichung zu berechnen.
+
+\needspace{6cm}
+\begin{denkbox}
+Die Dichte einer unregelmässig geformten Probe wird über $\rho = m/V$ berechnet. Welche der drei Regeln brauchst du dafür, und wie lautet die Formel für $\Delta\rho/\rho$?
+\end{denkbox}
+\antwortraumS
+
+% ======================================================
+\section{Zusammenfassung}
+\begin{tippbox}[: alle Formeln auf einen Blick]
+\begin{align*}
+  Q &= m\,c\,\Delta\Temp &&\text{spezifische Wärmekapazität} \\
+  Q_{\text{abgegeben}} &= Q_{\text{aufgenommen}} &&\text{Energieerhaltung beim Wärmeaustausch} \\
+  \Delta z &= \Delta a+\Delta b &&\text{Fehler bei } z=a\pm b \\
+  \frac{\Delta z}{z} &= \frac{\Delta a}{a}+\frac{\Delta b}{b} &&\text{Fehler bei } z=a\cdot b \text{ oder } z=a/b \\
+  \Delta(k\cdot a) &= k\cdot\Delta a &&\text{Fehler bei Multiplikation mit exakter Konstante } k
+\end{align*}
+\end{tippbox}
+
+\end{document}

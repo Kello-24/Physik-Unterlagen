@@ -27,15 +27,20 @@ Kurzer Check nach dem Neustart:
 |---|---|---|
 | `/compile <pfad/zur/datei.tex>` | `.claude/commands/compile.md` | Kompiliert zweimal (nötig für `exam`-Klassen-Punktetotale), fasst nur die relevanten Fehler/Warnungen aus dem Log zusammen. |
 | `/new-worksheet <Thema> <Klasse> <Semester> [--institution ...] [--type arbeitsblatt\|pruefung]` | `.claude/commands/new-worksheet.md` | Kopiert die passende Vorlage aus `vorlagen/` in den richtigen `institutionen/…`-Ordner, füllt Kopfzeile, verlinkt `lernziele.md` falls vorhanden, kompiliert einmal zur Kontrolle. |
-| `latex-layout-reviewer` (Subagent) | `.claude/agents/` | Prüft Layout, Compile-Sauberkeit, Hausstil (Kopfzeile ausgefüllt, `\Antwortraum`-Grösse plausibel, kein `ß`, ngerman/T1/utf8). |
-| `physics-accuracy-reviewer` (Subagent) | `.claude/agents/` | Prüft Einheiten, Vorzeichenkonventionen, Plausibilität der Zahlenwerte, Schwierigkeitsgrad. |
+| `latex-layout-reviewer` (Subagent) | `.claude/agents/` | Prüft Layout, Compile-Sauberkeit, Hausstil (Kopfzeile ausgefüllt, `\Antwortraum`-Grösse plausibel, kein `ß`, ngerman/T1/utf8). Behebt objektive Layout-/Geometriefehler (Overfull/Underfull, überlappende Labels, Diagrammskalierung) direkt selbst. |
+| `physics-accuracy-reviewer` (Subagent) | `.claude/agents/` | Prüft Einheiten, Vorzeichenkonventionen, Plausibilität der Zahlenwerte, Schwierigkeitsgrad. Ergänzt zudem fehlende Zwischenschritte in Herleitungen/Lösungen direkt selbst (Hausstil-Pflicht: jeder Rechenschritt muss sichtbar sein, siehe CLAUDE.md "Step-by-step derivations and solutions") — alles andere bleibt eine Punktliste. |
 | `didaktik-alignment-reviewer` (Subagent) | `.claude/agents/` | Gleicht Aufgaben mit den Lernzielen aus `lernziele.md` ab — deckt Lücken und Scope-Creep auf. |
 | `example-relatability-reviewer` (Subagent) | `.claude/agents/` | Prüft, ob die Aufgabenkontexte für Zürcher Gymi-Schüler:innen plausibel sind, plus Schweizer Rechtschreibung. |
 | Auto-Compile-Hook | `.claude/hooks/compile-on-save.sh` | Kompiliert automatisch jede `.tex`-Datei, die Claude bearbeitet/schreibt — Fehler zeigen sich sofort, ohne dass du `/compile` tippen musst. Log: `/tmp/claude-tex-compile.log`. |
 | Bash-Permission | `.claude/settings.json` | `pdflatex`, `kpsewhich exam.cls` etc. sind repo-weit vorab erlaubt — keine Rückfrage bei jedem Compile-Versuch. |
 
-Diese Subagents sind reine **Reviewer** — sie ändern nichts selbst, sondern
-liefern dir/Claude eine Punktliste zurück, die Claude dann umsetzt.
+Die meisten dieser Subagents sind reine **Reviewer** und ändern nichts
+selbst, sondern liefern dir/Claude eine Punktliste zurück, die Claude dann
+umsetzt. Zwei Ausnahmen mit eng begrenztem Selbstfix-Auftrag:
+`latex-layout-reviewer` (objektive Layout-/Geometriefehler) und
+`physics-accuracy-reviewer` (fehlende Rechenschritte in Herleitungen/
+Lösungen) — beide beheben nur genau diese eine Kategorie direkt und
+melden alles andere weiterhin nur als Punktliste.
 
 ## 2. Was an Lernziel-Material schon da ist
 

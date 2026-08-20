@@ -1,0 +1,132 @@
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Sprache & Encoding ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+
+% ---------- Layout ----------
+\usepackage[a4paper,margin=1.8cm]{geometry}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage[table]{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+
+% ---------- Farben ----------
+\definecolor{kfrblue}{HTML}{1F5C99}
+\definecolor{warnorange}{HTML}{B45309}
+\definecolor{warnbg}{HTML}{FFF3E0}
+
+% ---------- Überschriften ----------
+\titleformat{\section}{\large\bfseries\color{kfrblue}}{\thesection}{0.6em}{}
+
+% ---------- Kopf-/Fusszeile ----------
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyhead[L]{\small Physik 5.\,Klasse, Praktikum 01 (Lehrperson)}
+\fancyhead[R]{\small Zeitplan Doppellektion}
+\fancyfoot[C]{\small\thepage}
+
+% ---------- Achtungbox (Hinweis auf kritischen Zeitpunkt) ----------
+\newtcolorbox{achtungbox}[1][]{%
+  colback=warnbg, colframe=warnorange, coltitle=white, colbacktitle=warnorange,
+  boxrule=0.8pt, arc=2pt,
+  left=6pt, right=6pt, top=4pt, bottom=4pt, breakable,
+  title={\textbf{Achtung: kritischer Zeitpunkt}#1},
+  fonttitle=\small, fontupper=\small
+}
+
+\newcommand{\vtheta}{\vartheta}
+
+\begin{document}
+\thispagestyle{empty}
+
+\begin{center}
+  {\color{kfrblue}\Large\bfseries Praktikum 01: Spezifische W\"armekapazit\"at eines Metalls}\\[2pt]
+  {\normalsize Zeitplan f\"ur die Doppellektion (2$\times$45 Minuten) \textbar\ Kantonsschule Freudenberg, Physik 5.\ Klasse}
+\end{center}
+
+\vspace{8pt}
+\hrule
+\vspace{10pt}
+
+\noindent
+Dieser Zeitplan zeigt minutengenau, was die Lehrperson tut und was die Sch\"ulerinnen und Sch\"uler parallel dazu bearbeiten. massgebend f\"ur die Struktur ist die gemeinsame Erw\"armung aller Metallproben in einem einzigen Wasserbad (Abschnitt~5.1 der Anleitung): W\"ahrend die Lehrperson das Wasserbad beaufsichtigt, k\"onnen die Gruppen die Kalorimeter-Station vorbereiten und die Theoriefragen bearbeiten, statt untätig zu warten.
+
+\begin{achtungbox}
+Das Warten auf das thermische Gleichgewicht zwischen Wasserbad und Kupfert\"opfen dauert erfahrungsgem\"ass \textbf{8--10 Minuten} (Abschnitt~5.1). Diese Zeit ist im Plan unten bewusst mit paralleler Gruppenarbeit gef\"ullt (Kalorimeter vorbereiten, Fragen bearbeiten), damit keine Leerlaufzeit entsteht.
+\end{achtungbox}
+
+\vspace{6pt}
+
+% ======================================================
+\section{1. Lektion: Erw\"armung und Abk\"uhlung (0--45 Min.)}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{@{}p{2.0cm} X X@{}}
+  \toprule
+  \textbf{Zeit} & \textbf{Lehrperson} & \textbf{Sch\"ulerinnen und Sch\"uler} \\
+  \midrule
+  0--5\,min &
+    Begr\"ussung, Ziel und Ablauf des Versuchs kurz erkl\"aren (Abschnitt~1), Sicherheitshinweise ansprechen (Abschnitt~3). &
+    Zuh\"oren, sich auf die 6 Stationen verteilen. \\
+  5--10\,min &
+    Metallproben und Kupfert\"opfe an die Gruppen verteilen. &
+    Kalorimeter-Station aufbauen: Kalorimeter, zwei Bechergl\"aser, Thermometer und Lupe bereitlegen. \\
+  10--15\,min &
+    W\"ageaufsicht f\"uhren, anschliessend alle Kupfert\"opfe einsammeln, zusammen ins Wasserbad stellen und Kochplatte einschalten. &
+    Metallprobe w\"agen und $m_M$ notieren, Probe in den eigenen Kupfertopf f\"ullen, Kupfertopf mit Probe abgeben. \\
+  \rowcolor{warnbg}
+  15--25\,min &
+    Aufsicht am Wasserbad f\"uhren, $\vtheta_{WB}$ laufend anschreiben bzw.\ vorlesen, Fragen der Gruppen beantworten. \newline\textit{(Wartezeit 8--10\,min bis zum Gleichgewicht, siehe Hinweisbox oben.)} &
+    \textbf{Parallel:} Kupferteil des Kalorimeters w\"agen ($m_K$), Wasser einf\"ullen und w\"agen ($m_W$), Anfangstemperatur $\vtheta_{W0}=\vtheta_{K0}$ ablesen, Querschnittszeichnung von Wasserbad, Kupfertopf und Metallprobe anfertigen, Aufgabebox-Fragen zur Restdifferenz und zur indirekten Erw\"armung bearbeiten. \\
+  25--30\,min &
+    Best\"atigen, sobald sich $\vtheta_{WB}$ und $\vtheta_{KT}$ nicht mehr merklich ann\"ahern. &
+    $\vtheta_{KT}$ ablesen, $\vtheta_{M0}=\tfrac{\vtheta_{WB}+\vtheta_{KT}}{2}$ berechnen, Kalorimeter-Querschnittszeichnung fertigstellen. \\
+  30--35\,min &
+    Beim Herausnehmen der heissen Kupfert\"opfe unterst\"utzen (Zange/Topflappen). &
+    Metallprobe z\"ugig und vollst\"andig ins Kalorimeter umf\"ullen, Wasser mit dem R\"uhrwerkzeug in Bewegung halten. \\
+  35--40\,min &
+    Aufsicht f\"uhren, bei Bedarf an den Umkehrpunkt-Tipp erinnern. &
+    Wassertemperatur beobachten, Mischtemperatur $\vtheta_1=\vtheta_{M1}=\vtheta_{K1}=\vtheta_{W1}$ am Umkehrpunkt ablesen und notieren. \\
+  40--45\,min &
+    Kochplatte ausschalten, Aufr\"aumen der Erw\"armungs-Station begleiten. &
+    Station aufr\"aumen, Messprotokoll (Abschnitt~8) vervollst\"andigen. \\
+  \bottomrule
+\end{tabularx}
+
+\vspace{4pt}
+\noindent\textit{Pause/Fachlehrpersonenwechsel gem\"ass Stundenplan, nicht Teil der 90 Minuten.}
+
+% ======================================================
+\section{2. Lektion: Auswertung (45--90 Min.)}
+\begin{tabularx}{\linewidth}{@{}p{2.0cm} X X@{}}
+  \toprule
+  \textbf{Zeit} & \textbf{Lehrperson} & \textbf{Sch\"ulerinnen und Sch\"uler} \\
+  \midrule
+  45--50\,min &
+    Kurzer Einstieg, offene Fragen aus der 1.\ Lektion kl\"aren, Ablauf der Auswertung erkl\"aren. &
+    Fragen stellen, Messprotokoll bereitlegen. \\
+  50--65\,min &
+    Gruppen einzeln unterst\"utzen, bei Bedarf Hinweise zur Herleitung geben, ohne die L\"osung vorzugeben. &
+    Gleichung f\"ur $c_M$ selbst herleiten (Energieerhaltung, Abschnitt~9), $c_M$ berechnen. \\
+  65--75\,min &
+    \"Uberlaufgef\"ass und weiteres Material zur Volumenbestimmung an der Lehrpersonen-Station bereithalten, auf Anfrage aush\"andigen. &
+    Eigene Methode zur Bestimmung von $V_M$ entwickeln (\"Uberlauf-Methode), Dichte berechnen. \\
+  75--85\,min &
+    Aufsicht f\"uhren, R\"uckfragen zur Fehlerrechnung beantworten. &
+    Fehlerrechnung durchf\"uhren, mit den Literaturwerten (Abschnitt~2.2) vergleichen, Metall identifizieren. \\
+  85--90\,min &
+    Kurzabschluss, Unterlagen einsammeln. &
+    Abschnitt „Mein Ergebnis“ ausf\"ullen, Unterlagen abgeben. \\
+  \bottomrule
+\end{tabularx}
+
+\end{document}

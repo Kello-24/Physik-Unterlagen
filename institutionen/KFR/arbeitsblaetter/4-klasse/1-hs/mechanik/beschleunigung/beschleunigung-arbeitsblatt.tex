@@ -688,8 +688,39 @@ um sich in den fliessenden Verkehr einzufädeln.
 \end{taskbox}
 \end{questions}
 
-\begin{theoriebox}[Vorzeichen der Beschleunigung]
-Wie die Geschwindigkeit trägt auch die Beschleunigung ein
+\begin{theoriebox}[Beschleunigung als Vektor]
+Die Beschleunigung $a$ ist als Änderungsrate der Geschwindigkeit $v$
+definiert. Weil $v$ selbst eine gerichtete Grösse ist, ein Vektor mit
+Richtung und Wert, ist auch $a$ ein \textbf{\emph{Vektor}}: Sie hat, genau
+wie $v$, sowohl eine \textbf{\emph{Richtung}} als auch einen
+\textbf{\emph{Wert}} (Einheit: $\si{\meter\per\second\squared}$).
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85,>=Latex]
+  \draw[->,thick,titleblue] (-2.5,0) -- (3,0) node[right] {\scriptsize positive Richtung};
+  \filldraw[black] (-1.5,0) circle (2pt);
+  \draw[->,thick,red] (-1.5,0.6) -- (1.3,0.6) node[midway,above] {\scriptsize $v$};
+  \draw[->,thick,green!55!black] (-1.5,-0.6) -- (-0.2,-0.6) node[midway,below] {\scriptsize $a$};
+\end{tikzpicture}\\[0.2em]
+{\scriptsize Ein Objekt zu einem bestimmten Zeitpunkt: Der rote Pfeil ist
+der Geschwindigkeitsvektor $v$, der grüne Pfeil der
+Beschleunigungsvektor $a$. Beide sind eigenständige Vektoren mit
+eigener Richtung und eigenem Wert (Pfeillänge), die nicht
+übereinstimmen müssen.}
+\end{center}
+
+Siehst du $v$ oder $a$ als Pfeil in einem Bild (etwa in der folgenden
+Übung oder im $v$-$t$-Diagramm), zeigt dieser Pfeil immer nur die
+Situation zu einem \textbf{\emph{einzigen Zeitpunkt}}, wie eine
+Momentaufnahme. Wird der $v$-Pfeil zu einem späteren Zeitpunkt länger
+oder kürzer, oder dreht er sogar die Richtung, dann ist genau das die
+Beschleunigung: $a$ beschreibt \emph{diese Änderung} des $v$-Pfeils.
+Umgekehrt gilt ebenso: $v$ kann sich nur ändern, wenn eine Beschleunigung
+vorliegt. Ohne Beschleunigung ($a=0$) bleibt der $v$-Pfeil, also die
+Geschwindigkeit, für immer exakt gleich; die Beschleunigung ist der
+Grund für jede Änderung von $v$.
+
+Wie die Geschwindigkeit trägt also auch die Beschleunigung ein
 \textbf{\emph{Vorzeichen}}, das ihre Richtung relativ zu einem gewählten
 Koordinatensystem angibt, unabhängig davon, ob das Objekt schneller
 oder langsamer wird.
@@ -726,6 +757,33 @@ oder unterschiedliches Vorzeichen haben:
 \end{minipage}
 \end{center}
 \end{theoriebox}
+
+\begin{beispielbox}[Beispiel: Die Erdbeschleunigung]
+Ein sehr wichtiges Beispiel für einen Beschleunigungsvektor in unserem
+Alltag ist die \textbf{\emph{Erdbeschleunigung}} (auch
+\textbf{\emph{Fallbeschleunigung}} $g$ genannt), die dafür sorgt, dass
+Gegenstände zu Boden fallen.
+
+\begin{center}
+\includegraphics[width=0.7\linewidth]{Bilder/Erdbeschleunigung.png}
+\end{center}
+
+Wie im Bild zu sehen: Die Erdbeschleunigung ist selbst ein Vektor. Ihre
+\emph{Richtung} zeigt immer zum Mittelpunkt der Erde, und ihr \emph{Wert}
+hängt von der Distanz zur Erdoberfläche ab: Je weiter ein Objekt von der
+Erde entfernt ist, desto kleiner ist der Betrag der Erdbeschleunigung
+(zum Beispiel nur noch $\SI{1.09}{\meter\per\second\squared}$ in
+$\approx\SI{18000}{\kilo\meter}$ Höhe, ein Neuntel des Wertes an der
+Oberfläche).
+
+In Oberflächennähe, also für die allermeisten Bewegungen, mit denen wir
+im Alltag zu tun haben, ändert sich dieser Wert dagegen kaum: Er liegt
+praktisch überall nahe bei $g\approx\SI{9.81}{\meter\per\second\squared}$
+und wird deshalb dort als \textbf{\emph{konstant}} angenommen. Genau
+diese konstante Beschleunigung ist der Grund, weshalb die Geschwindigkeit
+eines fallenden Objekts stetig zunimmt: Ohne die Erdbeschleunigung würde
+sich seine Geschwindigkeit beim Fallen gar nicht ändern.
+\end{beispielbox}
 
 \begin{beispielbox}[Beispiel: Auto fährt nach links und wird langsamer]
 Ein Auto bewegt sich nach links (das entspricht der \emph{negativen}
