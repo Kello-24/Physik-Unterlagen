@@ -1,0 +1,266 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Lektionsplanung (Doppellektion, 90 Minuten): s-t-Diagramm
+% Kantonsschule KFR -- Physik
+% Internes Planungsdokument fuer die Lehrperson, nicht schuelerseitig.
+% =============================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=1.6cm,headheight=14pt]{geometry}
+\usepackage{array,booktabs,tabularx,multirow,longtable}
+\usepackage{enumitem}
+\usepackage{siunitx}
+\sisetup{per-mode=fraction,fraction-command=\frac}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage[most]{tcolorbox}
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\setstretch{1.05}
+
+% -----------------------------
+% Farben (analog Corporate-Farbschema Physik KFR)
+% -----------------------------
+\definecolor{titleblue}{HTML}{183A6B}
+\definecolor{accentblue}{HTML}{2E6F9E}
+\definecolor{lightblue}{HTML}{EAF4FB}
+\definecolor{lightgray}{HTML}{F4F6F8}
+\definecolor{darkgray}{HTML}{4A4A4A}
+\definecolor{groupteal}{HTML}{1B7F72}
+\definecolor{lightgroupteal}{HTML}{E8F5F3}
+\definecolor{theorygreen}{HTML}{2E7D4F}
+\definecolor{lighttheorygreen}{HTML}{EAF7EF}
+
+% -----------------------------
+% Titelbanner
+% -----------------------------
+\newtcolorbox{titlebox}{
+  enhanced, colback=titleblue, colframe=titleblue, boxrule=0pt, arc=3mm,
+  left=3mm,right=3mm,top=3mm,bottom=3mm
+}
+\newtcolorbox{infobox}{
+  enhanced, breakable, colback=lightblue, colframe=accentblue, boxrule=0.7pt,
+  arc=2mm, left=6mm,right=6mm,top=3.5mm,bottom=3.5mm
+}
+\newtcolorbox{hinweisbox}[1][Hinweis]{
+  enhanced, breakable, colback=lighttheorygreen, colframe=theorygreen,
+  title={#1}, fonttitle=\bfseries, boxrule=0.7pt, arc=2mm,
+  left=6mm,right=6mm,top=3.5mm,bottom=3.5mm
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textcolor{darkgray}{Lektionsplanung: s-t-Diagramm}}
+\rhead{\textcolor{darkgray}{Physik, 4a}}
+\cfoot{\textcolor{darkgray}{Seite \thepage\ von \pageref{LastPage}}}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% -----------------------------
+% Sozialform-Kuerzel farbig hervorheben
+% -----------------------------
+\newcommand{\EA}{\textcolor{accentblue}{\textbf{EA}}}
+\newcommand{\PA}{\textcolor{groupteal}{\textbf{PA}}}
+\newcommand{\PL}{\textcolor{titleblue}{\textbf{Plenum}}}
+\newcommand{\LV}{\textcolor{darkgray}{\textbf{LV}}}
+
+\setlength{\tabcolsep}{4pt}
+\newcolumntype{Z}{>{\raggedright\arraybackslash}p{1.1cm}}
+\newcolumntype{I}{>{\raggedright\arraybackslash}p{4.4cm}}
+\newcolumntype{L}{>{\raggedright\arraybackslash}p{4.4cm}}
+\newcolumntype{U}{>{\raggedright\arraybackslash}p{4.2cm}}
+\newcolumntype{F}{>{\centering\arraybackslash}p{1.5cm}}
+
+\begin{document}
+
+\begin{titlebox}
+{\color{white}\sffamily\bfseries\Large Lektionsplanung (Doppellektion): s-t-Diagramm}
+\end{titlebox}
+
+\noindent\textbf{Klasse:}~4a \hfill \textbf{Datum:}~21.08.2026 \hfill
+\textbf{Thema:}~s-t-Diagramm \hfill \textbf{Dauer:}~90 Minuten
+\medskip
+
+\noindent\textbf{Lehrperson:}~Loris Keller \hfill
+\textbf{Material:}~Arbeitsblatt ,,s-t-Diagramm`` (Klassensatz), Wandtafel/Whiteboard,
+Beamer oder Dokumentenkamera (fuer Bildfahrplan, SBB-App-Screenshot,
+Kilometerstein- und Blitzerfoto)
+
+\begin{infobox}
+\textbf{Lernzielfokus dieser Doppellektion}\\
+Diese Doppellektion deckt \textbf{LZ1 bis LZ7} des Arbeitsblatts vollstaendig
+ab (Weg vs.\ Ortsänderung, vertikale Linie unmöglich, gleichförmige
+Bewegung, Sekantensteigung als Durchschnittsgeschwindigkeit, Vorzeichen der
+Steigung, Bewegungsbeschreibung $\leftrightarrow$ Diagramm). \textbf{LZ8 und
+LZ9} (Tangente/Momentangeschwindigkeit, Grenzwert $\Delta t \to 0$) sind
+bewusst \textbf{nicht} Teil dieser Doppellektion. Das Arbeitsblatt ist mit
+ca.\ 90 Punkten und 25 Seiten deutlich zu umfangreich fuer 90 Minuten. Sie
+werden in der folgenden Lektion behandelt (siehe Abschnitt ,,Ausblick`` am
+Ende dieses Dokuments). Die Zusatzaufgaben (Aufholjagd, Zwei Züge treffen
+sich) sowie die Übung ,,Bildfahrplan mit drei Zügen`` sind als Vertiefung
+bzw.\ Hausaufgabe vorgesehen, nicht als Unterrichtsstoff dieser Lektion.
+\end{infobox}
+
+\begin{hinweisbox}[Sozialform-Kuerzel]
+\EA{} Einzelarbeit \quad \PA{} Partnerarbeit \quad \PL{} Plenum
+(Klassengespräch) \quad \LV{} Lehrervortrag (Input der Lehrperson)
+\end{hinweisbox}
+
+\section*{1.\ Lektion (45 Minuten)}
+
+\begin{longtable}{Z|I|L|U|F}
+\toprule
+\textbf{Zeit} & \textbf{Phase / Inhalt} & \textbf{Lehrperson} & \textbf{SuS} & \textbf{Sozial\-form}\\
+\midrule
+\endhead
+0--8' &
+Einstieg: Hook ,,Woher weiss die SBB, wann der Zug kommt?`` &
+Zeigt Bildfahrplanfoto, laesst Klasse zunaechst spekulieren (keine
+Aufloesung), zeigt danach SBB-App-Screenshot und stellt Leitfrage der
+Lektion. &
+Aeussern Vermutungen zum Bildfahrplan, hoeren zu, formulieren eigene
+Fragen. &
+\PL{} \\
+8--14' &
+Theorie: Ort $s$, Zeit $t$, Aufbau des $s$-$t$-Diagramms &
+Fuehrt Begriffe Ort/Zeit/Nullpunkt ein, zeichnet Achsen an der Tafel,
+liest gemeinsam einen Punkt $(t,s(t))$ ab. &
+Uebernehmen Definitionen ins Heft/Arbeitsblatt, lesen den Beispielpunkt
+mit. &
+\LV{} \\
+14--17' &
+Beispiel: Auto auf der Autobahn (Kilometerstein) &
+Zeigt Kilometersteinfoto, verknuepft $s=\SI{2.6}{\kilo\meter}$ mit der Anzeige auf
+dem Foto, entwickelt das zugehoerige Diagramm an der Tafel. &
+Ordnen die Fotobeschriftung der Grösse $s$ zu, verfolgen die
+Diagrammkonstruktion. &
+\PL{} \\
+17--22' &
+Theorie: Zurückgelegter Weg vs.\ Ortsänderung &
+Stellt die beiden Bewegungen mit gleicher Ortsänderung, aber
+unterschiedlichem Weg gegenueber; fragt nach, worin der Unterschied liegt. &
+Vergleichen die beiden Diagramme, formulieren den Unterschied in eigenen
+Worten. &
+\LV{} / \PL{} \\
+22--32' &
+Übung: Weg vs.\ Ortsänderung (Velofahrerin) &
+Gibt Arbeitsauftrag, steht fuer Rueckfragen zur Verfuegung; bespricht
+anschliessend die Loesung an der Tafel. &
+Bearbeiten die Aufgabe selbststaendig (7'), vergleichen danach mit der
+Musterloesung (3'). &
+\EA{} \,\textrightarrow\, \PL{} \\
+32--36' &
+Theorie: Die Zeit läuft nur vorwärts &
+Zeigt beide Beispielgraphen (erlaubt/nicht erlaubt), fragt die Klasse,
+welcher physikalisch unmoeglich ist und warum. &
+Beurteilen die beiden Graphen, begruenden ihre Einschaetzung im
+Klassengespräch. &
+\PL{} \\
+36--45' &
+Theorie: Lineare Bewegung: Geschwindigkeit als Steigung &
+Leitet $v=\Delta s/\Delta t$ her, betont den Unterschied zu einer
+einzelnen abgelesenen Koordinate, zeigt zwei verschieden steile Geraden. &
+Verfolgen die Herleitung, uebernehmen die Formel samt Einheit. &
+\LV{} \\
+\bottomrule
+\end{longtable}
+
+\textit{Kurze Pause (5 Minuten) zwischen den beiden Lektionen.}
+
+\section*{2.\ Lektion (45 Minuten)}
+
+\begin{longtable}{Z|I|L|U|F}
+\toprule
+\textbf{Zeit} & \textbf{Phase / Inhalt} & \textbf{Lehrperson} & \textbf{SuS} & \textbf{Sozial\-form}\\
+\midrule
+\endhead
+0--4' &
+Theorie: Einheiten umrechnen m/s $\leftrightarrow$ km/h &
+Leitet den Umrechnungsfaktor $3.6$ an der Tafel her (Autotacho als
+Anwendungsbeispiel). &
+Verfolgen die Herleitung, notieren die Umrechnungsformel. &
+\LV{} \\
+4--12' &
+Übung: Steigung ablesen und Einheiten umrechnen &
+Gibt Arbeitsauftrag; bespricht danach kurz das Ergebnis (insbesondere die
+Umrechnung ohne vorgegebene Formel, Teilaufgabe b). &
+Lesen Koordinaten aus dem Diagramm ab, berechnen $v$ und rechnen
+selbststaendig in km/h um (6'), vergleichen im Plenum (2'). &
+\EA{} \,\textrightarrow\, \PL{} \\
+12--22' &
+Übung: Blitzer mit Induktionsschleifen &
+Gibt Arbeitsauftrag fuer Partnerarbeit, geht herum und unterstuetzt bei
+Rueckfragen; moderiert die Schlussbesprechung inkl.\ Diagrammvergleich
+(eigene Geschwindigkeit vs.\ die Gerade des Tempolimits). &
+Berechnen zu zweit Geschwindigkeit und Blitzerentscheidung, zeichnen
+gemeinsam beide Geraden ins Diagramm. &
+\PA{} \,\textrightarrow\, \PL{} \\
+22--27' &
+Theorie: Betrag einer Zahl + die drei Grundbewegungen &
+Erklaert den Betrag anhand der Zahlengeraden, ordnet Steigungsvorzeichen
+den drei Grundbewegungen Anhalten, vorwaerts und rueckwaerts zu. &
+Uebertragen die Zuordnung Vorzeichen $\leftrightarrow$ Richtung ins
+Arbeitsblatt. &
+\LV{} \\
+27--31' &
+Kurzaufgabe: Vertikale Linie &
+Laesst die Aufgabe zunaechst einzeln loesen, ruft danach eine Erklaerung
+ab und ergaenzt bei Bedarf. &
+Begruenden schriftlich, weshalb der senkrechte Abschnitt physikalisch
+keinen Sinn ergibt. &
+\EA{} \,\textrightarrow\, \PL{} \\
+31--36' &
+Theorie: Bewegungsabschnitte im kombinierten Diagramm + Beispiel
+Raststätte &
+Zeigt das mehrteilige Autobahnbeispiel, hebt hervor, dass gleiche
+Geschwindigkeit an unterschiedlichen Stellen gleiche Steigung bedeutet. &
+Ordnen die einzelnen Abschnitte des Raststättenbeispiels den drei
+Grundbewegungen zu. &
+\PL{} \\
+36--43' &
+Partnerarbeit: Bewegungsgeschichte zeichnen &
+Erklaert den Ablauf (zuerst einzeln denken, dann beschreiben:
+Partner/-in zeichnet nur nach Wortbeschreibung), sammelt am Ende ein bis
+zwei Beispiele mit Missverstaendnissen fuer die Klasse ein. &
+Erfinden allein eine Bewegungsgeschichte und zeichnen Diagramm~1;
+beschreiben sie danach nur muendlich, waehrend die Partnerin/der Partner
+Diagramm~2 zeichnet; vergleichen beide Diagramme. &
+\PA{} \\
+43--45' &
+Abschluss, Sicherung und Hausaufgabe &
+Fasst die Kernaussage der Doppellektion zusammen ($v=\Delta s/\Delta t$
+als Steigung, Vorzeichen = Richtung), gibt Hausaufgabe und Ausblick auf
+naechste Lektion (Momentangeschwindigkeit). &
+Hoeren zu, notieren die Hausaufgabe. &
+\PL{} \\
+\bottomrule
+\end{longtable}
+
+\begin{hinweisbox}[Hausaufgabe]
+Übung ,,Bildfahrplan mit drei Zügen`` (Wiederholung Sekantensteigung,
+Begegnen/Überholen) sowie (falls Zeit reicht) die beiden
+Zusatzaufgaben (,,Aufholjagd beim Radrennen``, ,,Zwei Züge treffen sich``)
+als Vorbereitung und Übungsmaterial. Keine dieser drei Übungen setzt bereits
+Momentangeschwindigkeit (LZ8/LZ9) voraus.
+\end{hinweisbox}
+
+\begin{hinweisbox}[Ausblick auf die Folgelektion]
+Die naechste Lektion (Einzellektion, 45 Minuten) deckt \textbf{LZ8} und
+\textbf{LZ9} ab: Theoriebox ,,Durchschnitts- und Momentangeschwindigkeit``
+(Sekante vs.\ Tangente, Grenzwert $\Delta t \to 0$), anschliessend die
+Übungen ,,Momentan- vs.\ Durchschnittsgeschwindigkeit`` (Aufzug,
+stückweise linear) und ,,Momentan- und Durchschnittsgeschwindigkeit an
+einer Kurve`` (Kugel auf Rampe, echtes Tangentenzeichnen an einer
+gekrümmten Kurve). Beide Lernziele werden im aktuellen Arbeitsblatt nur
+theoretisch behauptet, aber noch nicht durch eine Aufgabe aktiv
+eingefordert (LZ3, gleichförmige Bewegung erklären, ebenso); das sollte
+bei der Ueberarbeitung des Arbeitsblatts ergaenzt werden.
+\end{hinweisbox}
+
+\end{document}

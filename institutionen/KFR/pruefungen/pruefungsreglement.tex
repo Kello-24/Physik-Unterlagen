@@ -1,0 +1,264 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Prüfungsreglement Physik – Kantonsschule KFR
+%
+% Allgemeines, schülerinnen- und schülergerichtetes Informationsblatt: Wie
+% ist eine Physikprüfung aufgebaut, welche Regeln gelten bei der Korrektur
+% und Bewertung, was ist mitzubringen. Nicht themengebunden, gilt für jede
+% Prüfung, sofern eine einzelne Prüfung nicht ausdrücklich etwas anderes
+% festlegt (z. B. eine abweichende Punktzahl G für Note 6).
+% =============================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.2cm,headheight=14pt]{geometry}
+\usepackage{amsmath}
+\usepackage{siunitx}
+% Hausstil: zusammengesetzte Einheiten immer als echter Bruch (\frac), nicht
+% als Inline-Schrägstrich oder \tfrac -- gilt global für jedes \si/\SI.
+\sisetup{per-mode=fraction,fraction-command=\frac}
+\usepackage{array,booktabs,tabularx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+\setstretch{1.08}
+\setlist[itemize]{itemsep=0.4em}
+
+% -----------------------------
+% Farben (Corporate-Farbschema Physik KFR, wie in den übrigen Vorlagen)
+% -----------------------------
+\definecolor{titleblue}{HTML}{183A6B}
+\definecolor{accentblue}{HTML}{2E6F9E}
+\definecolor{lightblue}{HTML}{EAF4FB}
+\definecolor{verylightblue}{HTML}{F7FBFE}
+\definecolor{darkgray}{HTML}{4A4A4A}
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+% -----------------------------
+% Boxen
+% -----------------------------
+\tcbset{before skip=10pt, after skip=10pt}
+\newtcolorbox{titlebox}{
+  enhanced,
+  colback=titleblue,
+  colframe=titleblue,
+  boxrule=0pt,
+  arc=3mm,
+  left=3mm,right=3mm,top=3mm,bottom=3mm
+}
+
+\newtcolorbox{infobox}[1][]{
+  enhanced,
+  breakable,
+  colback=lightblue,
+  colframe=accentblue,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=6mm,right=6mm,top=3.5mm,bottom=3.5mm
+}
+
+\newtcolorbox{beispielbox}[1][Beispiel]{
+  enhanced,
+  breakable,
+  colback=verylightblue,
+  colframe=accentblue,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=6mm,right=6mm,top=3.5mm,bottom=3.5mm
+}
+
+% --- Kopfzeile ---------------------------------------------------------------
+\newcommand{\Kopfzeile}[4]{%
+  \begin{titlebox}
+    {\color{white}\sffamily\bfseries\Large #4}
+  \end{titlebox}
+  \noindent\textbf{Klasse:}~#1 \hfill \textbf{Datum:}~#2 \hfill \textbf{Thema:}~#3
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\textcolor{darkgray}{Prüfungsreglement Physik}}
+\lhead{\textcolor{darkgray}{Kantonsschule KFR}}
+\cfoot{\textcolor{darkgray}{Seite \thepage\ von \pageref{LastPage}}}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\begin{document}
+
+\Kopfzeile{alle Klassen}{\today}{Prüfungen}{Prüfungsreglement: Aufbau und Regeln}
+
+Dieses Blatt erklärt dir, wie eine Physikprüfung bei mir aufgebaut ist und
+nach welchen Regeln sie korrigiert und bewertet wird. Es gilt für jede
+Physikprüfung, sofern auf der Prüfung selbst nichts anderes vermerkt ist.
+
+\begin{infobox}[Aufbau der Prüfung]
+\begin{itemize}
+  \item \textbf{Erste Seite:} Nach der Kopfzeile mit Klasse, Datum, Thema
+    und Titel folgt das Bewertungsraster. Es zeigt dir, wie viele Punkte
+    jede Aufgabe maximal gibt, und dient vor allem der Korrektur als
+    Übersicht.
+  \item \textbf{Formelsammlung:} Zu jeder Prüfung gehört eine
+    Formelsammlung mit allen relevanten Formeln. Sie ist entweder direkt
+    in der Prüfung abgedruckt oder liegt als separates Blatt bei.
+  \item \textbf{Themenabdeckung:} Zu jedem im Unterricht behandelten Thema
+    gibt es mindestens eine Aufgabe.
+  \item \textbf{Aufgabentypen:} Die Prüfung deckt verschiedene Fähigkeiten
+    ab. Es gibt Verständnisaufgaben (Multiple Choice oder Textaufgaben mit
+    Erklärung) und Rechenaufgaben.
+  \item \textbf{Schwierigkeitsaufbau:} Die ersten Aufgaben sind einfach,
+    danach folgen mehrere mittelschwere Aufgaben, und die letzten Aufgaben
+    sind anspruchsvoll.
+  \item \textbf{Platz zum Lösen:} Du löst die Aufgaben direkt auf dem
+    dafür vorgesehenen Platz in der Prüfung.
+  \item \textbf{Letzte Seite:} Hier stehen deine Note aus der Prüfung und,
+    daneben, die mündliche Note für den Unterricht.
+\end{itemize}
+\end{infobox}
+
+\section*{Bewertung: von Punkten zur Note}
+
+Das Bewertungsschema ist linear: Jeder zusätzliche Punkt bringt gleich
+viel Note wie jeder andere. Die Höchstnote musst du nicht zwingend mit der
+vollen Maximalpunktzahl erreichen, die dafür nötige Punktzahl ist auf dem
+Bewertungsraster der jeweiligen Prüfung angegeben.
+
+\section*{Genauigkeit der Resultate}
+
+Das Resultat einer Rechenaufgabe wird mit derselben Genauigkeit
+(Anzahl signifikanter Stellen) angegeben wie die ungenaueste in der
+Aufgabe gegebene Grösse. Weder mehr Nachkommastellen (täuscht eine
+Genauigkeit vor, die die Rechnung gar nicht hergibt) noch weniger
+(verschenkt vorhandene Information) sind korrekt.
+
+\begin{beispielbox}[Beispiel: Genauigkeit]
+Gegeben: $m = \SI{2.5}{\kilo\gram}$ (2 signifikante Stellen),
+$v = \SI{3.10}{\meter\per\second}$ (3 signifikante Stellen).
+
+Gesucht: kinetische Energie $E = \frac{1}{2} m v^2$.
+
+\[
+E = \frac{1}{2} \cdot \SI{2.5}{\kilo\gram} \cdot (\SI{3.10}{\meter\per\second})^2
+  = \SI{12.0125}{\joule}
+\]
+
+Da $m$ mit nur 2 signifikanten Stellen gegeben ist, wird auch das
+Resultat auf 2 signifikante Stellen gerundet: $E \approx \SI{12}{\joule}$.
+Weder $\SI{12.0125}{\joule}$ (zu genau) noch $\SI{10}{\joule}$ (zu
+ungenau gerundet) wären korrekt.
+\end{beispielbox}
+
+\section*{Der Lösungsweg: so entstehen die Punkte einer Rechenaufgabe}
+
+Der grösste Teil der Punkte einer Rechenaufgabe kommt vom Lösungsweg,
+nicht vom blossen Endresultat. Der Lösungsweg muss deshalb immer
+vollständig aufgeschrieben werden, in dieser Reihenfolge:
+
+\begin{enumerate}
+  \item die verwendete Formel (Ansatz),
+  \item die Formel nach der gesuchten Grösse aufgelöst, symbolisch, also
+    noch ohne eingesetzte Zahlenwerte,
+  \item erst danach die gegebenen Werte eingesetzt.
+\end{enumerate}
+
+Die Maximalpunktzahl einer Rechenaufgabe setzt sich damit so zusammen:
+
+\[
+P_{\text{Aufgabe}} = P_{\text{Formel}} + P_{\text{Umstellen}}
+  + P_{\text{Einsetzen}} + P_{\text{Resultat}} + P_{\text{Einheit}}
+\]
+
+Das richtige Resultat (Zahlenwert) gibt den vorletzten Punkt, die
+richtige Einheit den letzten. Fehlt die Einheit beim Resultat, geht
+dieser letzte Punkt verloren, auch wenn der Zahlenwert stimmt.
+
+\begin{beispielbox}[Beispiel: Punkteschema]
+Ein Auto beschleunigt aus dem Stillstand mit
+$a = \SI{4.0}{\meter\per\second\squared}$ auf $v = \SI{20}{\meter\per\second}$.
+Berechnen Sie die dafür benötigte Zeit $t$. [5 P.]
+
+\begin{tabularx}{\textwidth}{@{}X c@{}}
+\toprule
+Schritt & Punkte \\
+\midrule
+Formel (Ansatz): $v = v_0 + a t$ & 1 \\
+Auflösen nach $t$: $t = \dfrac{v - v_0}{a}$ & 1 \\
+Einsetzen: $t = \dfrac{\SI{20}{\meter\per\second} - 0}{\SI{4.0}{\meter\per\second\squared}}$ & 1 \\
+Resultat: $t = 5.0$ & 1 \\
+Einheit: $\si{\second}$ & 1 \\
+\midrule
+Total & 5 \\
+\bottomrule
+\end{tabularx}
+\end{beispielbox}
+
+\section*{Unabhängige Teilaufgaben und Folgefehler}
+
+Teilaufgaben werden nach Möglichkeit so gestellt, dass sie unabhängig
+voneinander lösbar sind. Baut eine Teilaufgabe zwingend auf dem Resultat
+einer vorherigen auf, wird in der Aufgabenstellung ein Ersatzwert
+angegeben, mit dem weitergerechnet werden kann, falls die vorherige
+Teilaufgabe nicht gelöst wurde. Ein Rechenfehler in einer frühen
+Teilaufgabe wird nur einmal als Fehler gewertet: Wird das eigene, falsche
+Zwischenresultat in einer späteren Teilaufgabe mit richtigem Ansatz
+korrekt weiterverwendet, gibt es dafür die volle Punktzahl.
+
+\begin{beispielbox}[Beispiel: Folgefehler]
+Ein Ball wird mit $v_0 = \SI{15}{\meter\per\second}$ senkrecht nach oben
+geworfen ($g = \SI{9.81}{\meter\per\second\squared}$).
+
+\textbf{a) [2 P.]} Berechnen Sie die Zeit $t_1$ bis zum höchsten Punkt
+($v = 0$).
+\[
+t_1 = \frac{v_0}{g} = \frac{\SI{15}{\meter\per\second}}{\SI{9.81}{\meter\per\second\squared}} \approx \SI{1.5}{\second}
+\]
+
+\textbf{b) [3 P.]} Berechnen Sie mit $t_1$ die maximale Höhe $h$ über dem
+Abwurfpunkt. Haben Sie a) nicht gelöst, verwenden Sie
+$t_1 = \SI{2.0}{\second}$.
+\[
+h = v_0 t_1 - \frac{1}{2} g t_1^2
+  = \SI{15}{\meter\per\second} \cdot \SI{1.5}{\second}
+  - \frac{1}{2} \cdot \SI{9.81}{\meter\per\second\squared} \cdot (\SI{1.5}{\second})^2
+  \approx \SI{11}{\meter}
+\]
+
+Hätte eine Schülerin in a) fälschlicherweise $t_1 = \SI{2.0}{\second}$
+berechnet (statt der korrekten $\SI{1.5}{\second}$) und diesen Wert in b)
+mit dem richtigen Ansatz weiterverwendet
+($h \approx \SI{10}{\meter}$), erhielte sie in b) trotzdem die volle
+Punktzahl. Der Fehler wird nur in a) bestraft, nicht ein zweites Mal in b).
+\end{beispielbox}
+
+\section*{Erlaubte Hilfsmittel}
+
+\begin{infobox}[Mitzubringen]
+\begin{itemize}
+  \item ein nicht radierbarer Stift in blauer oder schwarzer Farbe
+    (z.\,B. Kugelschreiber),
+  \item ein von der Schule zugelassener Taschenrechner,
+  \item ein Lineal,
+  \item eine Formelsammlung, sofern diese nicht Teil der Prüfung ist.
+\end{itemize}
+\end{infobox}
+
+\begin{infobox}[Zusätzliche Blätter]
+Reicht der zur Verfügung gestellte Platz nicht aus, können vor der
+Prüfung zusätzliche leere Blätter bei der Lehrperson verlangt werden.
+Jedes zusätzliche Blatt muss mit Name und der zugehörigen Aufgabennummer
+beschriftet werden. Unbeschriftete Zusatzblätter werden nicht bewertet.
+\end{infobox}
+
+\end{document}

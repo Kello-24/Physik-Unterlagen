@@ -1,0 +1,442 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Standortbestimmung (Multiple Choice, unbenotet): s-t-Diagramm
+% Kantonsschule KFR -- Physik
+%
+% Diagnostisches Instrument: wird zweimal ausgefuellt -- einmal VOR und
+% einmal NACH der Doppellektion zum s-t-Diagramm (siehe
+% s-t-diagramm-lektionsplanung.tex). Deckt die Kernbegriffe des
+% Arbeitsblatts ab und testet gezielt die in lernziele.md dokumentierten
+% Lernschwierigkeiten als Distraktoren (nicht erfundene Strohmaenner).
+%
+% Loesungen ein-/ausblenden wie beim Arbeitsblatt: \printanswers (Lehrer-
+% exemplar) bzw. \noprintanswers (Schuelerexemplar, Standard) weiter unten.
+% =============================================================================
+\documentclass[11pt,a4paper]{exam}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.2cm,headheight=14pt]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{siunitx}
+\sisetup{per-mode=fraction,fraction-command=\frac}
+\usepackage{array,booktabs,tabularx,multirow}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage[most]{tcolorbox}
+\usepackage{lastpage}
+\usepackage{needspace}
+
+\usetikzlibrary{arrows.meta,calc,angles,quotes}
+
+\usepackage{setspace}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+\setstretch{1.08}
+\setlist[itemize]{itemsep=0.4em}
+
+% -----------------------------
+% Farben (Corporate-Farbschema Physik KFR, wie im Arbeitsblatt)
+% -----------------------------
+\definecolor{titleblue}{HTML}{183A6B}
+\definecolor{accentblue}{HTML}{2E6F9E}
+\definecolor{lightblue}{HTML}{EAF4FB}
+\definecolor{verylightblue}{HTML}{F7FBFE}
+\definecolor{lightgray}{HTML}{F4F6F8}
+\definecolor{darkgray}{HTML}{4A4A4A}
+\definecolor{accentorange}{HTML}{D9720C}
+\definecolor{accentpurple}{HTML}{7B2D8E}
+
+% -----------------------------
+% Boxen (reduziert auf das fuer die Standortbestimmung Noetige)
+% -----------------------------
+\tcbset{before skip=10pt, after skip=10pt}
+\newtcolorbox{titlebox}{
+  enhanced, colback=titleblue, colframe=titleblue, boxrule=0pt, arc=3mm,
+  left=3mm,right=3mm,top=3mm,bottom=3mm
+}
+\newtcolorbox{infobox}{
+  enhanced, breakable, colback=lightblue, colframe=accentblue, boxrule=0.7pt,
+  arc=2mm, left=6mm,right=6mm,top=3.5mm,bottom=3.5mm
+}
+
+\newlength{\aufgabenindent}
+\settowidth{\aufgabenindent}{10.\hskip\labelsep}
+\newtcolorbox{taskbox}[1][]{
+  enhanced, breakable, colback=verylightblue, colframe=accentblue,
+  title={#1}, fonttitle=\bfseries, boxrule=0.7pt, arc=2mm,
+  enlarge left by=-\aufgabenindent, width=\textwidth,
+  left=6mm,right=6mm,top=3.5mm,bottom=3.5mm
+}
+
+% --- Loesungen ein-/ausblenden -----------------------------------------------
+\noprintanswers
+% \printanswers
+
+% --- Unbenotet: keine Punkte drucken ----------------------------------------
+\pointformat{}
+
+% --- Kopf-/Fusszeile ---------------------------------------------------------
+\pagestyle{headandfoot}
+\cfoot{\textcolor{darkgray}{Seite \thepage\ von \pageref{LastPage}}}
+
+\newcommand{\Kopfzeile}[4]{%
+  \begin{titlebox}
+    {\color{white}\sffamily\bfseries\Large #4}
+  \end{titlebox}
+  \noindent\textbf{Klasse:}~#1 \hfill \textbf{Datum:}~#2 \hfill \textbf{Thema:}~#3
+    \hfill \textbf{Lehrperson:}~Loris Keller
+  \lhead{\textcolor{darkgray}{#3}}
+  \rhead{\textcolor{darkgray}{#4}}
+}
+
+\newcommand{\Klasse}{4a}
+\newcommand{\Datum}{21.08.2026}
+\newcommand{\Thema}{s-t-Diagramm}
+\newcommand{\ArbeitsblattTitel}{Standortbestimmung: s-t-Diagramm}
+
+\begin{document}
+
+\Kopfzeile{\Klasse}{\Datum}{\Thema}{\ArbeitsblattTitel}
+
+\begin{infobox}
+\textbf{Zu diesem Test}\\
+Dieser Test wird \textbf{zweimal} ausgefuellt: einmal \textbf{vor} und einmal
+\textbf{nach} der Doppellektion zum s-t-Diagramm. Er wird \textbf{nicht
+benotet}. Kreuze einfach an, was du im Moment fuer richtig haeltst, auch
+wenn du unsicher bist oder raten musst. Pro Frage ist jeweils genau eine
+Antwort richtig.
+
+\medskip
+\textbf{Name:}~\rule{5cm}{0.4pt} \hfill
+$\square$~vor der Doppellektion \hfill $\square$~nach der Doppellektion
+\end{infobox}
+
+\begin{questions}
+
+\question Das folgende $s$-$t$-Diagramm zeigt die Bewegung eines Zugs.
+\begin{center}
+\begin{tikzpicture}[scale=0.75]
+  \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (6,5);
+  \draw[->] (-0.3,0) -- (6.7,0) node[right] {\scriptsize $t$ in min};
+  \draw[->] (0,-0.3) -- (0,5.5) node[above] {\scriptsize $s$ in km};
+  \foreach \x in {1,2,3,4,5,6} \draw (\x,0.06) -- (\x,-0.06) node[below] {\scriptsize \x};
+  \foreach \y in {1,2,3,4,5} \draw (0.06,\y) -- (-0.06,\y) node[left] {\scriptsize \y};
+  \draw[thick,titleblue] (0,1) -- (6,4);
+  \draw[dashed,gray] (3,0) -- (3,2.5) -- (0,2.5);
+  \filldraw[accentblue] (3,2.5) circle (1.8pt);
+\end{tikzpicture}
+\end{center}
+Wo befindet sich der Zug zum Zeitpunkt $t=\SI{3}{\minute}$?
+\begin{choices}
+  \choice Bei $s=\SI{3}{\kilo\meter}$.
+  \CorrectChoice Bei $s=\SI{2.5}{\kilo\meter}$.
+  \choice Bei $s=\SI{1}{\kilo\meter}$.
+  \choice Bei $s=\SI{4}{\kilo\meter}$.
+\end{choices}
+
+\question Eine Person geht auf einer geraden Strasse. Ihre Bewegung ergibt
+das folgende $s$-$t$-Diagramm.
+\begin{center}
+\begin{tikzpicture}[scale=0.75]
+  \draw[->] (-0.3,0) -- (6.7,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-0.3) -- (0,4.5) node[above] {\scriptsize $s$};
+  \draw[thick,titleblue] (0,0.5) -- (2.5,3.5) -- (4,3.5) -- (6,1);
+\end{tikzpicture}
+\end{center}
+Welche Beschreibung passt zu diesem Diagramm?
+\begin{choices}
+  \choice Die Person geht einen Hügel hinauf, macht oben eine Pause und
+  geht dann auf der anderen Seite wieder hinunter.
+  \CorrectChoice Die Person entfernt sich zuerst von ihrem Startpunkt,
+  bleibt dann kurz stehen und bewegt sich anschliessend wieder in Richtung
+  Startpunkt zurück.
+  \choice Die Person bewegt sich die ganze Zeit mit konstanter
+  Geschwindigkeit vorwärts.
+  \choice Die Person steht die ganze Zeit still.
+\end{choices}
+
+\question Das folgende Diagramm zeigt die Bewegung eines Aufzugs.
+\begin{center}
+\begin{tikzpicture}[scale=0.75]
+  \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (7,4);
+  \draw[->] (-0.3,0) -- (7.7,0) node[right] {\scriptsize $t$ in s};
+  \draw[->] (0,-0.3) -- (0,4.5) node[above] {\scriptsize $s$ in m};
+  \draw[thick,titleblue] (0,0.5) -- (2,3) -- (5,3) -- (7,1.5);
+  \node[titleblue,above] at (3.5,3.05) {\scriptsize waagrechter Abschnitt};
+\end{tikzpicture}
+\end{center}
+Was macht der Aufzug während des \emph{waagrechten} Abschnitts im
+Diagramm?
+\begin{choices}
+  \choice Er bewegt sich besonders schnell.
+  \choice Er bewegt sich mit konstanter, aber kleiner Geschwindigkeit.
+  \CorrectChoice Er steht still (Geschwindigkeit $=\SI{0}{\meter\per\second}$).
+  \choice Er ändert gerade die Richtung.
+\end{choices}
+
+\question Vier Schülerinnen und Schüler zeichnen je ein $s$-$t$-Diagramm.
+Welches davon kann die Bewegung eines realen Objekts \emph{nicht}
+darstellen?
+\begin{center}
+\begin{tabular}{@{}cccc@{}}
+\begin{tikzpicture}[scale=0.5]
+  \draw[->] (-0.2,0) -- (3.2,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-0.2) -- (0,3.2) node[above] {\scriptsize $s$};
+  \draw[thick,titleblue] (0,0.3) -- (3,2.7);
+  \node[below] at (1.5,-0.7) {\scriptsize A};
+\end{tikzpicture}
+&
+\begin{tikzpicture}[scale=0.5]
+  \draw[->] (-0.2,0) -- (3.2,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-0.2) -- (0,3.2) node[above] {\scriptsize $s$};
+  \draw[thick,titleblue] (0,0.5) -- (1.3,2) -- (1.3,0.7) -- (3,2.5);
+  \node[below] at (1.5,-0.7) {\scriptsize B};
+\end{tikzpicture}
+&
+\begin{tikzpicture}[scale=0.5]
+  \draw[->] (-0.2,0) -- (3.2,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-0.2) -- (0,3.2) node[above] {\scriptsize $s$};
+  \draw[thick,titleblue] (0,2.5) -- (1.5,1.5) -- (3,2.5);
+  \node[below] at (1.5,-0.7) {\scriptsize C};
+\end{tikzpicture}
+&
+\begin{tikzpicture}[scale=0.5]
+  \draw[->] (-0.2,0) -- (3.2,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-0.2) -- (0,3.2) node[above] {\scriptsize $s$};
+  \draw[thick,titleblue] (0,1.5) -- (3,1.5);
+  \node[below] at (1.5,-0.7) {\scriptsize D};
+\end{tikzpicture}
+\end{tabular}
+\end{center}
+\begin{choices}
+  \choice Diagramm A
+  \CorrectChoice Diagramm B
+  \choice Diagramm C
+  \choice Diagramm D
+\end{choices}
+
+\question Zwei Fahrzeuge fahren auf derselben Strasse; das Diagramm zeigt
+ihre Bewegung.
+\begin{center}
+\begin{tikzpicture}[scale=0.75]
+  \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (6,5);
+  \draw[->] (-0.3,0) -- (6.7,0) node[right] {\scriptsize $t$ in s};
+  \draw[->] (0,-0.3) -- (0,5.5) node[above] {\scriptsize $s$ in m};
+  \draw[thick,titleblue] (0,3.5) -- (6,4.7) node[right] {\scriptsize A};
+  \draw[thick,accentorange] (0,0.5) -- (6,4.2) node[right] {\scriptsize B};
+  \draw[dashed,gray] (3,0) -- (3,5);
+  \filldraw[titleblue] (3,4.1) circle (1.8pt);
+  \filldraw[accentorange] (3,2.35) circle (1.8pt);
+\end{tikzpicture}
+\end{center}
+Zum Zeitpunkt der gestrichelten Linie: Welches Fahrzeug ist in \emph{diesem
+Moment} schneller unterwegs?
+\begin{choices}
+  \choice Fahrzeug A, weil es sich zu diesem Zeitpunkt weiter oben
+  befindet (grösserer Ort $s$).
+  \CorrectChoice Fahrzeug B, weil seine Linie an dieser Stelle steiler
+  verläuft.
+  \choice Beide sind gleich schnell, weil beide Linien Geraden sind.
+  \choice Das lässt sich aus dem Diagramm nicht bestimmen.
+\end{choices}
+
+\question Ein Ball befindet sich auf einer Rampe. Der Nullpunkt der
+$s$-Achse liegt am unteren Ende der Rampe, positive Werte von $s$ liegen
+rampaufwärts. Das folgende Diagramm zeigt, wie der Ball die Rampe
+hinunterrollt.
+\begin{center}
+\begin{tikzpicture}[scale=0.75]
+  \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (6,4);
+  \draw[->] (-0.3,0) -- (6.7,0) node[right] {\scriptsize $t$ in s};
+  \draw[->] (0,-0.3) -- (0,4.5) node[above] {\scriptsize $s$ in m};
+  \draw[thick,titleblue] (0,3.5) -- (6,0.5);
+\end{tikzpicture}
+\end{center}
+Was bedeutet die \emph{negative} Steigung in diesem Diagramm?
+\begin{choices}
+  \choice Die Zeit läuft in diesem Abschnitt rückwärts.
+  \CorrectChoice Der Ort $s$ des Balls nimmt mit der Zeit ab: Er bewegt
+  sich in die negative Richtung.
+  \choice Der Ball wird langsamer, bis er stehen bleibt.
+  \choice Das Diagramm ist physikalisch nicht möglich.
+\end{choices}
+
+\question Zwei Läuferinnen bewegen sich auf einer geraden Bahn. Das
+Diagramm zeigt ihre Bewegung.
+\begin{center}
+\begin{tikzpicture}[scale=0.75]
+  \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (6,4);
+  \draw[->] (-0.3,0) -- (6.7,0) node[right] {\scriptsize $t$ in s};
+  \draw[->] (0,-0.3) -- (0,4.5) node[above] {\scriptsize $s$ in m};
+  \draw[thick,titleblue] (0,0.5) -- (6,3.5) node[right] {\scriptsize 1};
+  \draw[thick,accentorange] (0,3.5) -- (6,0.5) node[right] {\scriptsize 2};
+\end{tikzpicture}
+\end{center}
+Welche Aussage über die beiden Läuferinnen trifft zu?
+\begin{choices}
+  \choice Läuferin 1 ist schneller als Läuferin 2, weil ihre Linie nach
+  oben zeigt.
+  \CorrectChoice Beide sind gleich schnell unterwegs (gleicher Betrag der
+  Steigung), bewegen sich aber in entgegengesetzte Richtungen.
+  \choice Läuferin 2 bewegt sich gar nicht, weil ihre Linie fällt.
+  \choice Es lässt sich nicht vergleichen, da die Linien unterschiedlich
+  verlaufen.
+\end{choices}
+
+\question Das folgende $s$-$t$-Diagramm zeigt eine lineare Bewegung, die
+nicht bei $s=0$ beginnt.
+\begin{center}
+\begin{tikzpicture}[scale=0.75]
+  \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (6,6);
+  \draw[->] (-0.3,0) -- (6.7,0) node[right] {\scriptsize $t$ in s};
+  \draw[->] (0,-0.3) -- (0,6.5) node[above] {\scriptsize $s$ in m};
+  \foreach \x in {1,2,3,4,5,6} \draw (\x,0.06) -- (\x,-0.06) node[below] {\scriptsize \x};
+  \foreach \y in {1,2,3,4,5,6} \draw (0.06,\y) -- (-0.06,\y) node[left] {\scriptsize \y};
+  \draw[thick,titleblue] (1,2) -- (5,6);
+  \draw[dashed,gray] (1,0) -- (1,2) -- (0,2);
+  \draw[dashed,gray] (5,0) -- (5,6) -- (0,6);
+  \filldraw[black] (1,2) circle (1.6pt) node[below right] {\scriptsize $(t_1,s_1)$};
+  \filldraw[black] (5,6) circle (1.6pt) node[above left] {\scriptsize $(t_2,s_2)$};
+\end{tikzpicture}
+\end{center}
+Wie berechnest du die Geschwindigkeit dieser Bewegung richtig?
+\begin{choices}
+  \choice $v = \dfrac{s_2}{t_2} = \dfrac{\SI{6}{\meter}}{\SI{5}{\second}} = \SI{1.2}{\meter\per\second}$
+  \CorrectChoice $v = \dfrac{s_2-s_1}{t_2-t_1} = \dfrac{\SI{6}{\meter}-\SI{2}{\meter}}{\SI{5}{\second}-\SI{1}{\second}} = \SI{1}{\meter\per\second}$
+  \choice $v = \dfrac{s_1}{t_1} = \dfrac{\SI{2}{\meter}}{\SI{1}{\second}} = \SI{2}{\meter\per\second}$
+  \choice $v = s_2 - s_1 = \SI{4}{\meter}$
+\end{choices}
+
+\question Ein Velofahrer startet bei $s=\SI{0}{\meter}$, fährt
+$\SI{80}{\meter}$ in positive Richtung, kehrt danach um und fährt
+$\SI{30}{\meter}$ in negative Richtung zurück.
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+  \draw[->] (-0.3,0) -- (6,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-0.3) -- (0,4.7) node[above] {\scriptsize $s$ in m};
+  \draw[dashed,gray] (0,4) -- (3,4);
+  \draw[dashed,gray] (0,2.5) -- (5,2.5);
+  \node[left] at (0,4) {\scriptsize 80};
+  \node[left] at (0,2.5) {\scriptsize 50};
+  \node[left] at (0,0) {\scriptsize 0};
+  \draw[thick,titleblue] (0,0) -- (3,4) -- (5,2.5);
+  \filldraw[black] (0,0) circle (1.6pt);
+  \filldraw[black] (3,4) circle (1.6pt);
+  \filldraw[black] (5,2.5) circle (1.6pt);
+\end{tikzpicture}
+\end{center}
+\begin{choices}
+  \choice Der zurückgelegte Weg beträgt $\SI{50}{\meter}$.
+  \CorrectChoice Der zurückgelegte Weg beträgt $\SI{110}{\meter}$.
+  \choice Der zurückgelegte Weg ist gleich der Ortsänderung, also
+  $\SI{50}{\meter}$.
+  \choice Der zurückgelegte Weg lässt sich ohne Diagramm nicht bestimmen.
+\end{choices}
+
+\question Kann man einem Objekt zu einem einzelnen Zeitpunkt (z.\,B.\
+genau bei $t=\SI{3}{\second}$) überhaupt eine Geschwindigkeit zuordnen?
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+  \draw[->] (-0.3,0) -- (5.5,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-0.3) -- (0,4.5) node[above] {\scriptsize $s$};
+  \draw[thick,titleblue,domain=0:5,samples=50,smooth] plot (\x,{0.16*\x*\x});
+  \draw[thick,accentpurple,dashed] (1.5,-0.06) -- (4.8,3.24) node[right] {\scriptsize Tangente};
+  \filldraw[black] (3,1.44) circle (1.8pt) node[below right] {\scriptsize $t=\SI{3}{\second}$};
+\end{tikzpicture}
+\end{center}
+\begin{choices}
+  \choice Nein, für eine Geschwindigkeit braucht man immer zwei
+  verschiedene, klar auseinanderliegende Messzeitpunkte. Zu einem
+  einzelnen Zeitpunkt ist das unmöglich.
+  \CorrectChoice Ja, das ist die Momentangeschwindigkeit. Sie entspricht
+  der Steigung der Tangente an das $s$-$t$-Diagramm an diesem Punkt.
+  \choice Nein, das ergibt nur bei einer gleichförmigen Bewegung Sinn.
+  \choice Ja, aber nur, wenn sich das Objekt in diesem Moment gerade nicht
+  bewegt.
+\end{choices}
+
+\question Welches der folgenden vier Diagramme zeigt eine
+\textbf{\emph{gleichförmige}} Bewegung, bei der sich das Objekt tatsächlich
+bewegt (konstante Geschwindigkeit ungleich null)?
+\begin{center}
+\begin{tabular}{@{}cccc@{}}
+\begin{tikzpicture}[scale=0.5]
+  \draw[->] (-0.2,0) -- (3.2,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-0.2) -- (0,3.2) node[above] {\scriptsize $s$};
+  \draw[thick,titleblue] (0,0.3) -- (3,2.7);
+  \node[below] at (1.5,-0.7) {\scriptsize A};
+\end{tikzpicture}
+&
+\begin{tikzpicture}[scale=0.5]
+  \draw[->] (-0.2,0) -- (3.2,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-0.2) -- (0,3.2) node[above] {\scriptsize $s$};
+  \draw[thick,titleblue,domain=0:3,samples=40,smooth] plot (\x,{0.3*\x*\x});
+  \node[below] at (1.5,-0.7) {\scriptsize B};
+\end{tikzpicture}
+&
+\begin{tikzpicture}[scale=0.5]
+  \draw[->] (-0.2,0) -- (3.2,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-0.2) -- (0,3.2) node[above] {\scriptsize $s$};
+  \draw[thick,titleblue] (0,1.5) -- (3,1.5);
+  \node[below] at (1.5,-0.7) {\scriptsize C};
+\end{tikzpicture}
+&
+\begin{tikzpicture}[scale=0.5]
+  \draw[->] (-0.2,0) -- (3.2,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-0.2) -- (0,3.2) node[above] {\scriptsize $s$};
+  \draw[thick,titleblue] (0,0.3) -- (1.5,2.5) -- (3,1);
+  \node[below] at (1.5,-0.7) {\scriptsize D};
+\end{tikzpicture}
+\end{tabular}
+\end{center}
+\begin{choices}
+  \CorrectChoice Diagramm A
+  \choice Diagramm B
+  \choice Diagramm C
+  \choice Diagramm D
+\end{choices}
+
+\question Eine Katze sitzt zunächst still, rennt dann für kurze Zeit sehr
+schnell nach vorne und bleibt anschliessend wieder abrupt stehen. Welches
+Diagramm passt zu dieser Beschreibung?
+\begin{center}
+\begin{tabular}{@{}ccc@{}}
+\begin{tikzpicture}[scale=0.6]
+  \draw[->] (-0.2,0) -- (4.2,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-0.2) -- (0,3.2) node[above] {\scriptsize $s$};
+  \draw[thick,titleblue] (0,0.4) -- (1,0.4) -- (2.5,2.8) -- (4,2.8);
+  \node[below] at (2,-0.7) {\scriptsize A};
+\end{tikzpicture}
+&
+\begin{tikzpicture}[scale=0.6]
+  \draw[->] (-0.2,0) -- (4.2,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-0.2) -- (0,3.2) node[above] {\scriptsize $s$};
+  \draw[thick,titleblue] (0,0.4) -- (4,2.8);
+  \node[below] at (2,-0.7) {\scriptsize B};
+\end{tikzpicture}
+&
+\begin{tikzpicture}[scale=0.6]
+  \draw[->] (-0.2,0) -- (4.2,0) node[right] {\scriptsize $t$};
+  \draw[->] (0,-0.2) -- (0,3.2) node[above] {\scriptsize $s$};
+  \draw[thick,titleblue] (0,2.8) -- (1,2.8) -- (2.5,0.4) -- (4,0.4);
+  \node[below] at (2,-0.7) {\scriptsize C};
+\end{tikzpicture}
+\end{tabular}
+\end{center}
+\begin{choices}
+  \CorrectChoice Diagramm A
+  \choice Diagramm B
+  \choice Diagramm C
+\end{choices}
+
+\end{questions}
+
+\end{document}
