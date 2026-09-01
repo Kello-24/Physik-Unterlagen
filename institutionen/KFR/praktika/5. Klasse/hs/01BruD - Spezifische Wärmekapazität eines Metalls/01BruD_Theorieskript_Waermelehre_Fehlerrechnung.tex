@@ -116,7 +116,7 @@ Die \textbf{\emph{Temperatur}} $\Temp$ ist ein Mass für die mittlere Bewegungse
 Bringt man zwei Körper unterschiedlicher Temperatur in Kontakt, so übertragen die schnelleren Teilchen des wärmeren Körpers Bewegungsenergie an die langsameren Teilchen des kälteren Körpers, bis beide im Mittel gleich schnell schwingen. Diese übertragene Energie heisst \textbf{\emph{Wärme}} $Q$ (Einheit: Joule, $\mathrm{J}$). Im Unterschied zur Temperatur beschreibt die Wärme keinen Zustand, sondern einen \emph{Vorgang}: eine Energiemenge, die von einem Körper zu einem anderen fliesst.
 
 \begin{achtungbox}
-\textbf{Temperatur und Wärme sind nicht dasselbe.} Ein grosser Topf und ein kleiner Becher mit demselben Wasser bei $80\,\celsius$ haben dieselbe \emph{Temperatur}. Der grosse Topf enthält aber viel mehr \emph{Wärme} in dem Sinn, dass er beim Abkühlen auf Zimmertemperatur eine viel grössere Energiemenge abgibt, weil viel mehr Wasser (mehr Teilchen) abkühlt. Wer von „viel Wärme“ statt „hoher Temperatur“ spricht, meint physikalisch oft nicht dasselbe.
+\textbf{Temperatur und Wärme sind nicht dasselbe.} Ein grosser Topf und ein kleiner Becher mit demselben Wasser bei $80\,\celsius$ haben dieselbe \emph{Temperatur}. Der grosse Topf kann aber beim Abkühlen auf Zimmertemperatur eine viel grössere Wärmemenge abgeben, weil viel mehr Wasser (mehr Teilchen) abkühlt. Ein Körper „enthält“ also keine feste Menge Wärme, er kann nur beim Abkühlen unterschiedlich viel davon abgeben. Wer von „viel Wärme“ statt „hoher Temperatur“ spricht, meint physikalisch oft nicht dasselbe.
 \end{achtungbox}
 
 \needspace{6cm}
@@ -153,7 +153,7 @@ Die Celsius-Skala ist gegenüber der Kelvin-Skala nur um einen festen Betrag ver
   \bottomrule
 \end{tabularx}
 \end{center}
-\emph{Hinweis:} dieselbe Tabelle (dort zusätzlich mit Dichte) steht auch in der Praktikumsanleitung (Abschnitt~2.2) und listet die für dieses Praktikum tatsächlich verwendeten Stoffe. Zur Einordnung, ohne dass diese Stoffe im Praktikum vorkommen: Eis hat $c\approx 2100$, trockene Luft $c\approx 1005$ und Holz $c\approx 1700\ \mathrm{J\,kg^{-1}\,K^{-1}}$, alle deutlich näher bei Wasser als die Metalle.
+\emph{Hinweis:} dieselbe Tabelle (dort zusätzlich mit Dichte) steht auch in der Praktikumsanleitung (Abschnitt~2.2) und listet die für dieses Praktikum tatsächlich verwendeten Stoffe. Zur Einordnung, ohne dass diese Stoffe im Praktikum vorkommen: Eis hat $c\approx 2100$, trockene Luft $c\approx 1005$ und Holz $c\approx 1700\ \mathrm{J\,kg^{-1}\,K^{-1}}$. Diese Werte liegen zwischen den Metallen und Wasser, teils sogar näher bei den Metallen: trockene Luft liegt mit $1005$ fast bei Aluminium ($897$) und weit von Wasser ($4190$) entfernt.
 
 \subsection{Rechenbeispiel}
 Wie viel Wärme braucht es, um $0.5\ \mathrm{kg}$ Wasser um $20\ \mathrm{K}$ zu erwärmen?
@@ -173,11 +173,12 @@ Für zwei Körper 1 (wärmer, Anfangstemperatur $\Temp_1$) und 2 (kälter, Anfan
 \[
   m_1\,c_1\,(\Temp_1-\Temp_M) = m_2\,c_2\,(\Temp_M-\Temp_2).
 \]
-Aufgelöst nach der Mischtemperatur (Ausmultiplizieren, Termen mit $\Temp_M$ auf eine Seite bringen, durch $(m_1c_1+m_2c_2)$ teilen):
+Aufgelöst nach der Mischtemperatur (Ausmultiplizieren, Termen mit $\Temp_M$ auf eine Seite bringen, $\Temp_M$ ausklammern, durch die Klammer teilen):
 \begin{align*}
   m_1c_1\Temp_1 - m_1c_1\Temp_M &= m_2c_2\Temp_M - m_2c_2\Temp_2 \\
-  m_1c_1\Temp_1 + m_2c_2\Temp_2 &= \Temp_M\,(m_1c_1+m_2c_2) \\
-  \Temp_M &= \frac{m_1c_1\Temp_1 + m_2c_2\Temp_2}{m_1c_1+m_2c_2}.
+  m_1c_1\Temp_1 + m_2c_2\Temp_2 &= m_2c_2\Temp_M + m_1c_1\Temp_M && \text{Terme mit } \Temp_M \text{ nach rechts, Rest nach links} \\
+  m_1c_1\Temp_1 + m_2c_2\Temp_2 &= \Temp_M\,(m_1c_1+m_2c_2) && \text{$\Temp_M$ ausklammern} \\
+  \Temp_M &= \frac{m_1c_1\Temp_1 + m_2c_2\Temp_2}{m_1c_1+m_2c_2} && \text{durch } (m_1c_1+m_2c_2) \text{ teilen}.
 \end{align*}
 Die Mischtemperatur ist also ein \textbf{\emph{gewichteter Mittelwert}} der beiden Anfangstemperaturen, gewichtet mit der jeweiligen Wärmekapazität $m\cdot c$: je grösser $m_1c_1$ im Vergleich zu $m_2c_2$, desto näher liegt $\Temp_M$ bei $\Temp_1$.
 
@@ -239,7 +240,7 @@ Im Praktikum sind ebenfalls drei „Körper“ an der Energiebilanz beteiligt. W
 \section{Fehlerrechnung ohne Ableitungen}
 
 \subsection{Warum Fehlerrechnung?}
-Jede Messung hat eine begrenzte Genauigkeit: eine Waage zeigt nur auf ein Gramm genau an, ein Thermometer nur auf eine halbe Gradteilung. Wird aus mehreren gemessenen Grössen eine neue Grösse berechnet (z.\,B.\ eine Dichte oder eine spezifische Wärmekapazität), so trägt das Ergebnis die Ungenauigkeiten aller einzelnen Messungen weiter. Die \textbf{\emph{Fehlerrechnung}} gibt an, wie ungenau das Endergebnis dadurch wird.
+Jede Messung hat eine begrenzte Genauigkeit: eine Waage zeigt nur auf ein Gramm genau an, ein Thermometer nur auf eine Gradteilung (mehr dazu in Abschnitt~4.3). Wird aus mehreren gemessenen Grössen eine neue Grösse berechnet (z.\,B.\ eine Dichte oder eine spezifische Wärmekapazität), so trägt das Ergebnis die Ungenauigkeiten aller einzelnen Messungen weiter. Die \textbf{\emph{Fehlerrechnung}} gibt an, wie ungenau das Endergebnis dadurch wird.
 
 \subsection{Fehlerquellen}
 Woher kommt die Ungenauigkeit einer Messung überhaupt? Man unterscheidet grob zwei Arten von Fehlern:
@@ -252,7 +253,7 @@ Die Fehlerrechnung weiter unten in diesem Kapitel behandelt, wie sich eine berei
 \subsection{Wie bestimmt man die Messgenauigkeit $\Delta x$ einer einzelnen Messung?}
 Es gibt keine einzelne „richtige“ Formel dafür, aber ein paar bewährte Faustregeln:
 \begin{itemize}
-  \item \textbf{Analoge Skala} (z.\,B.\ Thermometer, Massstab): $\Delta x$ entspricht meist der kleinsten Skalenteilung, oder der Hälfte davon, wenn man gut zwischen zwei Strichen interpolieren kann. Ein Thermometer mit Strichen alle $1\ \mathrm{K}$ liefert also je nach Ablesbarkeit $\Delta T\approx 0.5\ \mathrm{K}$ bis $1\ \mathrm{K}$.
+  \item \textbf{Analoge Skala} (z.\,B.\ Thermometer, Massstab): $\Delta x$ entspricht meist der kleinsten Skalenteilung, oder der Hälfte davon, wenn man gut zwischen zwei Strichen interpolieren kann. Bei einem ruhenden Massstab funktioniert dieses Interpolieren meist gut. Ein Thermometer mit Strichen alle $1\ \mathrm{K}$ liefert dagegen $\Delta T\approx 1\ \mathrm{K}$: Es zeigt nur Unterschiede von $1\ \mathrm{K}$ an, ein zuverlässiges Interpolieren zwischen zwei Strichen ist hier nicht möglich.
   \item \textbf{Digitale Anzeige} (z.\,B.\ Waage): $\Delta x$ entspricht mindestens der letzten angezeigten Stelle, z.\,B.\ $\Delta m = 0.1\ \mathrm{g}$ bei einer Anzeige mit einer Nachkommastelle, sofern das Gerät keine grössere bekannte Unsicherheit hat.
   \item \textbf{Zusätzliche Unsicherheiten einbeziehen:} Parallaxe, Reaktionszeit beim Ablesen eines sich noch ändernden Werts, oder eine Situation, die grundsätzlich schwer zu kontrollieren ist (z.\,B.\ eine ungleichmässig erwärmte Probe), können $\Delta x$ über die reine Skalenteilung hinaus vergrössern. Das ist eine begründete Einschätzung, die du selbst triffst, keine feste Zahl aus einer Tabelle.
   \item \textbf{Wiederholungsmessung:} Misst du dieselbe Grösse mehrmals, gibt die Streuung der Werte eine realistischere Abschätzung als die Geräte-Skala allein: $\Delta x \approx \dfrac{x_{\max}-x_{\min}}{2}$.

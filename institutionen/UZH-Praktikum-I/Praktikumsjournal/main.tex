@@ -1,0 +1,277 @@
+\documentclass[12pt,a4paper]{article}
+
+% ------------------------------------------------
+% Basis-Pakete (robust für Overleaf / pdfLaTeX)
+% ------------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{setspace}
+\usepackage{mathptmx}      % Times-Schrift, meist robust
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+
+% ------------------------------------------------
+% Formatierung
+% ------------------------------------------------
+\onehalfspacing
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue,
+    pdftitle={Praktikumsjournal},
+    pdfauthor={Vorname Nachname}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Praktikumsjournal}
+\fancyhead[R]{\leftmark}
+\fancyfoot[C]{\thepage}
+
+% ------------------------------------------------
+% Eigene Angaben
+% ------------------------------------------------
+\newcommand{\Name}{Loris Keller}
+\newcommand{\Fach}{Physik}
+\newcommand{\Adresse}{Rychenbergstrasse 140, 8400 Winterthur}
+\newcommand{\Email}{Loris.keller@uzh.ch}
+\newcommand{\Datum}{\today}
+\newcommand{\Praktikum}{Unterrichtspraktikum I}
+\newcommand{\Schule}{Kantonsschule Im Lee}
+\newcommand{\Lehrperson}{Sara Romer}
+
+\begin{document}
+
+% =================================================
+% TITELSEITE
+% =================================================
+\begin{titlepage}
+    \thispagestyle{empty}
+    
+    % ---------- Logo oben rechts ----------
+    \begin{flushright}
+        % Falls du ein Logo hochlädst, z.B. uzh_logo.png, dann ersetze die nächste Zeile durch:
+        \includegraphics[width=4cm]{UZH_logo.png}
+    \end{flushright}
+
+    \vspace{1.5cm}
+
+    \begin{center}
+        {\Large Universität Zürich\par}
+        \vspace{0.3cm}
+        {\large Institut für Erziehungswissenschaft\par}
+        \vspace{0.3cm}
+        {\large Lehrerinnen- und Lehrerbildung Maturitätsschulen\par}
+
+        \vspace{2.5cm}
+
+        {\Huge\bfseries Praktikumsjournal\par}
+        \vspace{0.6cm}
+        {\Large \Praktikum\par}
+
+        \vspace{2cm}
+    \end{center}
+
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{>{\bfseries}p{4.5cm}p{9cm}}
+        Name: & \Name \\
+        Fach: & \Fach \\
+        Schule: & \Schule \\
+        Praktikumslehrperson: & \Lehrperson \\
+        Adresse: & \Adresse \\
+        E-Mail: & \Email \\
+        Datum: & \Datum \\
+    \end{tabular}
+
+    \vfill
+\end{titlepage}
+
+% =================================================
+% INHALTSVERZEICHNIS
+% =================================================
+\tableofcontents
+\newpage
+
+% =================================================
+% EINLEITUNG
+% =================================================
+\section{Einleitung}
+
+Dieses Praktikumsjournal dokumentiert und reflektiert zentrale Erfahrungen aus dem \Praktikum. 
+Im Zentrum stehen zwei bis drei thematische Schwerpunkte beziehungsweise Fragestellungen, anhand 
+derer eigene Unterrichtserfahrungen, Beobachtungen und Entwicklungsmöglichkeiten analysiert werden.
+
+\subsection{Ausgangslage und Zielsetzung}
+
+Beschreibe hier kurz:
+\begin{itemize}[leftmargin=1.5cm]
+    \item den Kontext des Praktikums,
+    \item die Lerngruppe oder Klasse,
+    \item deine Rolle im Praktikum,
+    \item deine Ziele für das Journal.
+\end{itemize}
+
+\subsection{Gewählte thematische Schwerpunkte}
+
+Formuliere hier zwei bis drei zentrale Fragestellungen.
+
+Beispiel:
+\begin{enumerate}[leftmargin=1.5cm]
+    \item Wie gelang mir die Strukturierung von Unterricht?
+    \item Inwiefern konnte ich Lernprozesse der Schülerinnen und Schüler unterstützen?
+    \item Welche Herausforderungen zeigten sich im Bereich Klassenführung?
+\end{enumerate}
+
+% =================================================
+% REFLEXION
+% =================================================
+\section{Reflexion}
+
+\subsection{Thematischer Schwerpunkt 1: [Titel einfügen]}
+
+\subsubsection*{Fragestellung}
+Formuliere hier die konkrete Fragestellung.
+
+\subsubsection*{Beschreibung der Situation}
+Beschreibe eine konkrete Unterrichtssituation, Beobachtung, Planung oder ein Material, auf das du dich beziehst.
+
+\subsubsection*{Analyse}
+Analysiere die Situation:
+\begin{itemize}[leftmargin=1.5cm]
+    \item Was ist gelungen?
+    \item Wo zeigten sich Schwierigkeiten?
+    \item Welche Ursachen könnten dafür verantwortlich gewesen sein?
+    \item Welche Schlüsse ziehst du daraus?
+\end{itemize}
+
+\subsubsection*{Bezug zu Theorie und Literatur}
+Hier kannst du Bezüge zu allgemeindidaktischen, fachdidaktischen oder pädagogisch-psychologischen Konzepten herstellen.
+
+\subsubsection*{Zwischenfazit}
+Fasse die wichtigsten Erkenntnisse kurz zusammen.
+
+\subsection{Thematischer Schwerpunkt 2: [Titel einfügen]}
+
+\subsubsection*{Fragestellung}
+Formuliere hier die konkrete Fragestellung.
+
+\subsubsection*{Beschreibung der Situation}
+Beschreibe die relevante Unterrichtssituation oder das Material.
+
+\subsubsection*{Analyse}
+Reflektiere die Situation vertieft und begründet.
+
+\subsubsection*{Bezug zu Theorie und Literatur}
+Verknüpfe deine Beobachtungen mit Literatur oder theoretischen Modellen.
+
+\subsubsection*{Zwischenfazit}
+Fasse die wichtigsten Erkenntnisse zusammen.
+
+\subsection{Thematischer Schwerpunkt 3: [optional]}
+
+Diesen Abschnitt kannst du verwenden, falls du drei Fragestellungen bearbeitest.
+
+\subsubsection*{Fragestellung}
+Formuliere hier die Fragestellung.
+
+\subsubsection*{Beschreibung der Situation}
+Beschreibe die relevante Praxissituation.
+
+\subsubsection*{Analyse}
+Reflektiere die Situation.
+
+\subsubsection*{Bezug zu Theorie und Literatur}
+Ordne deine Beobachtungen theoretisch ein.
+
+\subsubsection*{Zwischenfazit}
+Formuliere die wichtigsten Erkenntnisse.
+
+% =================================================
+% STANDORTBESTIMMUNG
+% =================================================
+\section{Standortbestimmung mit Entwicklungszielen}
+
+\subsection{Bereits vorhandene Kompetenzen}
+
+Reflektiere hier, welche Kompetenzen bereits sichtbar geworden sind.
+
+Beispiele:
+\begin{itemize}[leftmargin=1.5cm]
+    \item fachliche Sicherheit,
+    \item verständliche Erklärungen,
+    \item klare Strukturierung,
+    \item lernförderliche Interaktion,
+    \item Klassenführung,
+    \item reflektierter Umgang mit Rückmeldungen.
+\end{itemize}
+
+\subsection{Entwicklungsziele für das nächste Praktikum}
+
+Formuliere zwei bis vier konkrete Entwicklungsziele.
+
+\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{p{0.28\textwidth}p{0.30\textwidth}p{0.34\textwidth}}
+\toprule
+\textbf{Entwicklungsziel} & \textbf{Begründung} & \textbf{Konkrete Umsetzung} \\
+\midrule
+Ziel 1 & Warum ist dieses Ziel wichtig? & Welche konkreten Schritte planst du? \\
+Ziel 2 & Warum ist dieses Ziel wichtig? & Welche konkreten Schritte planst du? \\
+Ziel 3 & Optional & Optional \\
+Ziel 4 & Optional & Optional \\
+\bottomrule
+\end{longtable}
+
+\subsection{Persönliche Schlussreflexion}
+
+Formuliere ein kurzes Gesamtfazit:
+\begin{itemize}[leftmargin=1.5cm]
+    \item Was nimmst du aus dem Praktikum mit?
+    \item Welche Entwicklung ist bereits sichtbar?
+    \item Worauf willst du im nächsten Praktikum besonders achten?
+\end{itemize}
+
+% =================================================
+% ANHANG
+% =================================================
+\newpage
+\section{Anhang}
+
+Hier können ausgewählte Materialien aus dem Praktikum dokumentiert werden, zum Beispiel:
+\begin{itemize}[leftmargin=1.5cm]
+    \item Unterrichtsplanungen,
+    \item Arbeitsblätter,
+    \item Beobachtungsnotizen,
+    \item Schülerarbeiten,
+    \item Tafelbilder oder Präsentationsfolien.
+\end{itemize}
+
+\subsection{Übersicht der Anhangsdokumente}
+
+\begin{enumerate}[leftmargin=1.5cm]
+    \item Anhang A: Unterrichtsplanung vom [Datum]
+    \item Anhang B: Arbeitsblatt zum Thema [Thema]
+    \item Anhang C: Beobachtungsprotokoll
+    \item Anhang D: Beispiel einer Schülerarbeit
+\end{enumerate}
+
+% =================================================
+% LITERATURVERZEICHNIS
+% =================================================
+\newpage
+\section*{Literaturverzeichnis}
+\addcontentsline{toc}{section}{Literaturverzeichnis}
+
+% Literatur hier von Hand eintragen, z.B.:
+Autor, A. A. (Jahr). \textit{Titel}. Verlag.
+
+\end{document}

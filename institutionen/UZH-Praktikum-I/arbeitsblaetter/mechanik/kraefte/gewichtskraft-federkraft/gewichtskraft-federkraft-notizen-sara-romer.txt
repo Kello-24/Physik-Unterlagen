@@ -1,0 +1,25 @@
+Besprechungsnotizen Sara Romer Urban -- Gewichtskraft/Federkraft (Klasse 2e)
+(verbatim wie von Loris übermittelt, 2026-08-23)
+
+Wiederholung des gelernten im Plenum, Kraft formel und gelerntes aus der werkstatt
+kraft relation F=ma zuerst üben, anknüpfen an das arbeistblatt von letzer stunde
+wichtig: relation zwischen kinematik (a) und dynamik (F) herstellen
+bewegugsgelcihung vernetzen mit kraft: zb fussball welcher eine gewisse geschwindigkeit hat, welche kraftv ommt vom fuss
+g kennen sie:
+unterschied trägheit und gewichstkraft (mond beispiel mit stein und golfball)
+
+* was passiert wenn ein astronaut einen stein auf der erde oder auf dem mond kickt? trägheit ist die gleiche. Wie weit kommt der stein auf em mond im vergleich zur erde?
+
+zuerst gewichtskraft
+dann federkraft (gelicgewicht gewichtskraft und federkraft)
+feder vorspannung beachten
+Wichtig zu beachten: veränderung der federlänge und nicht die federlänge selber
+selber die sus mit dem federkraftmesser messen lassen
+Stationen (Experimente Werkstatt) mit einem Massstab, welcheer auf dem tisch augestellt wird und zwei verschiebbare köpfe hat, welche den unterschied in federelangation messen können. oberer kopf soll beim nullpunkt gesetzte werden (feder ungespannt). ein schweren metallbein, welches die feder anhängen lässt und mehrer massen, welche n dei feder befestigt werdne können. Wir vergelciehn zwei federn:
+
+* eine stärkere feder
+* eine federwaage
+
+es soll eine excel datei vorbereitet werden, wo die sus nur noch die messresulate einfügen müssen und die daigramme gezeichnet werden. starke und schwache federkraft im diagramm zeigen und steigung interpretieren lassen.
+umwandlung von Ncm in Nm umrechnen einführen und üben lassen.
+Ein aufgabenblatt als seperates dokuemtn erstellen und mit ein paar aufgaben füllen zum besprochenen.

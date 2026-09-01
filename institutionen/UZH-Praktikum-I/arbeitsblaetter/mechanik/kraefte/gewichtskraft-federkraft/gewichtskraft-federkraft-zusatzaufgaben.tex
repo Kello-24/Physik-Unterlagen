@@ -1,0 +1,369 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Zusatzaufgaben: Gewichtskraft & Federkraft
+% UZH Praktikum I -- Sara Romer Urban, Kantonsschule im Lee, HS2026
+% Klasse: 2e (26.08.2026)
+%
+% Reine Uebungsaufgaben fuer die Vor-/Nachbereitung (nicht fuer den
+% Lektioneneinsatz selbst) -- siehe arbeitsblatt2-gewichtskraft-federkraft-
+% teil1.tex (Theorie + Plenum) und aufgabenblatt1-gewichtskraft-federkraft-
+% teil1.tex (Stationsexperiment, Partnerarbeit) fuer den Lektioneneinsatz.
+% Aufgabe 1 (Gewichtskraft berechnen) und Aufgabe 2 (Einheiten der
+% Federkonstante) waren urspruenglich im Arbeitsblatt, wurden von dort
+% hierher verschoben. Aufgaben 3-5 sind neu, adaptiert aus den
+% LEIFIphysik-Referenzquellen in diesem Ordner (Astronautenwissen,
+% Gravitation auf unbekannten Planeten, Feder auf dem Mond) -- per
+% lernziele.md als "Ergaenzend als Uebungsaufgaben" vorgesehen.
+% Aufgabe 5 nutzt bereits F=D*Delta x (Hookesches Gesetz): unproblematisch,
+% da Zusatzaufgaben erst nach der Lernaufgabe im Aufgabenblatt bearbeitet
+% werden, wenn die SuS die Formel schon selbst hergeleitet haben.
+% =============================================================================
+\documentclass[addpoints,11pt,a4paper]{exam}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.2cm,headheight=14pt]{geometry}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\sisetup{per-mode=fraction,fraction-command=\frac}
+\usepackage{array,booktabs,tabularx,multirow}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage[most]{tcolorbox}
+\usepackage{lastpage}
+
+\usetikzlibrary{arrows.meta,calc,angles,quotes}
+
+\usepackage{setspace}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+\setstretch{1.08}
+\setlist[itemize]{itemsep=0.4em}
+
+% -----------------------------
+% Farben (Corporate-Farbschema Physik KFR)
+% -----------------------------
+\definecolor{titleblue}{HTML}{183A6B}
+\definecolor{accentblue}{HTML}{2E6F9E}
+\definecolor{lightblue}{HTML}{EAF4FB}
+\definecolor{verylightblue}{HTML}{F7FBFE}
+\definecolor{lightgray}{HTML}{F4F6F8}
+\definecolor{darkgray}{HTML}{4A4A4A}
+\definecolor{accentpurple}{HTML}{7B2D8E}
+\definecolor{groupteal}{HTML}{1B7F72}
+\definecolor{lightgroupteal}{HTML}{E8F5F3}
+\definecolor{lightpurple}{HTML}{F3EAF7}
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\tcbset{before skip=10pt, after skip=10pt}
+\newtcolorbox{titlebox}{
+  enhanced, colback=titleblue, colframe=titleblue, boxrule=0pt, arc=3mm,
+  left=3mm,right=3mm,top=3mm,bottom=3mm
+}
+
+\newlength{\aufgabenindent}
+\settowidth{\aufgabenindent}{10.\hskip\labelsep}
+
+% Praktikum I: Lernziele/Einleitung/Theorie/Aufgaben werden NICHT mehr
+% farbig gerahmt (nur Formel-, Hinweis- und Antwortbox bleiben Boxen) --
+% siehe institutionen/UZH-Praktikum-I/CLAUDE.md, Abschnitt "Boxen-Layout".
+\newenvironment{infobox}{%
+  \par\addvspace{10pt}\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+% taskbox/groupbox stehen in questions VOR dem ersten \question (Bilder,
+% Fliesstext) -- exam.cls' questions-Liste braucht dafür eine echte,
+% eigenständige Box (sonst "Something's wrong--perhaps a missing \item",
+% weil z.B. ein \begin{center} vor dem ersten \item der Aussenliste steht).
+% Deshalb bleiben es tcolorboxen, nur unsichtbar gemacht (keine Farbe/Rahmen,
+% kein Padding) statt sie durch reine Absätze zu ersetzen.
+\newtcolorbox{taskbox}[1][]{
+  enhanced, breakable,
+  colback=white, colframe=white, boxrule=0pt,
+  left=0mm,right=0mm,top=0mm,bottom=0mm,
+  before skip=10pt, after skip=10pt,
+  before upper={%
+    \def\tmpboxtitle{#1}%
+    \ifx\tmpboxtitle\empty\else\noindent\textbf{#1}\par\smallskip\fi
+  }
+}
+
+\newtcolorbox{groupbox}[1][Gruppenarbeit]{
+  enhanced, breakable,
+  colback=white, colframe=white, boxrule=0pt,
+  left=0mm,right=0mm,top=0mm,bottom=0mm,
+  before skip=10pt, after skip=10pt,
+  before upper={\noindent\textbf{#1}\par\smallskip}
+}
+
+% formelbox: kurze Formelsammlung zum Nachschlagen -- kein Theorie-Ersatz,
+% keine Herleitung (siehe arbeitsblatt2-gewichtskraft-federkraft-teil1.tex
+% dafuer), nur die fertigen Formeln als Gedaechtnisstuetze.
+\newtcolorbox{formelbox}[1][Formel]{
+  enhanced, breakable, colback=lightpurple, colframe=accentpurple,
+  title={#1}, fonttitle=\bfseries, boxrule=0.9pt, arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+\newtcolorbox{answerbox}{
+  breakable, colback=white, colframe=gray!55, boxrule=0.5pt, arc=1.5mm,
+  left=2mm,right=2mm,top=2mm,bottom=2mm
+}
+
+% --- Lösungen ein-/ausblenden -----------------------------------------------
+\noprintanswers
+% \printanswers
+
+\pointformat{}
+\renewcommand{\solutiontitle}{\noindent\color{titleblue}\textbf{Lösung:}\enspace}
+
+\pagestyle{headandfoot}
+\cfoot{\textcolor{darkgray}{Seite \thepage\ von \pageref{LastPage}}}
+
+\newcommand{\Kopfzeile}[4]{%
+  \begin{titlebox}
+    {\color{white}\sffamily\bfseries\Large #4}
+  \end{titlebox}
+  \vspace{0.5em}
+  \noindent\textbf{Klasse:}~#1 \hfill \textbf{Datum:}~#2 \hfill \textbf{Thema:}~#3
+    \hfill \textbf{Lehrperson:}~Loris Keller
+  \vspace{0.8em}
+  \lhead{\textcolor{darkgray}{#3}}
+  \rhead{\textcolor{darkgray}{#4}}
+}
+
+\newlength{\antwortraumlen}
+\newcommand{\Antwortraum}[1]{%
+  \pgfmathsetlength{\antwortraumlen}{#1*2.5cm}%
+  \begin{answerbox}
+    \rule{0pt}{\antwortraumlen}%
+  \end{answerbox}%
+}
+
+\newcommand{\Klasse}{2e}
+\newcommand{\Datum}{26.08.2026}
+\newcommand{\Thema}{Gewichtskraft \& Federkraft}
+\newcommand{\ZusatzaufgabenTitel}{Zusatzaufgaben: Gewichtskraft \& Federkraft}
+
+\begin{document}
+
+\Kopfzeile{\Klasse}{\Datum}{\Thema}{\ZusatzaufgabenTitel}
+
+\begin{infobox}
+\textbf{Zu diesen Zusatzaufgaben}\\
+Diese Übungsaufgaben ergänzen das Arbeitsblatt und das Aufgabenblatt
+\emph{Gewichtskraft \& Federkraft} und sind für die Vor-/Nachbereitung
+gedacht, nicht für den Lektioneneinsatz selbst. Alle benötigten Formeln
+und Herleitungen finden Sie im Arbeitsblatt bzw. im Aufgabenblatt.
+\end{infobox}
+
+\begin{formelbox}[Formelsammlung]
+\[
+  F_G = m\cdot g, \qquad F = D\cdot\Delta x.
+\]
+$g$ in $\si{\meter\per\second\squared}$ oder gleichwertig in
+$\si{\newton\per\kilogram}$ (es gilt $1\,\si{\newton\per\kilogram} =
+1\,\si{\meter\per\second\squared}$); $F_G$, $F$ in $\si{\newton}$; $m$ in
+$\si{\kilogram}$; $D$ in $\si{\newton\per\meter}$ (oder
+$\si{\newton\per\centi\meter}$); $\Delta x$ in $\si{\meter}$ oder
+$\si{\centi\meter}$.
+\end{formelbox}
+
+\begin{questions}
+
+\begin{taskbox}[Aufgabe 1: Gewichtskraft berechnen]
+\question Eine Astronautin hat eine Masse von $m=\SI{72}{\kilogram}$
+(inklusive Ausrüstung).
+\begin{parts}
+  \part[2] Berechnen Sie ihre Gewichtskraft auf der Erde.
+  \Antwortraum{2}
+  \begin{solution}
+  \[
+    F_{G,\text{Erde}} = m\cdot g_{\text{Erde}} = \SI{72}{\kilogram}\cdot\SI{9.81}{\meter\per\second\squared} = \SI{706.3}{\newton}.
+  \]
+  \end{solution}
+
+  \part[2] Berechnen Sie ihre Gewichtskraft auf dem Mond und vergleichen Sie
+  das Ergebnis mit (a). Was ist an ihrer Masse in diesem Vergleich anders,
+  was bleibt gleich?
+  \Antwortraum{2}
+  \begin{solution}
+  \[
+    F_{G,\text{Mond}} = m\cdot g_{\text{Mond}} = \SI{72}{\kilogram}\cdot\SI{1.62}{\meter\per\second\squared} = \SI{116.6}{\newton}.
+  \]
+  Die Gewichtskraft ist auf dem Mond rund sechsmal kleiner als auf der
+  Erde. Ihre Masse $m=\SI{72}{\kilogram}$ bleibt dabei in beiden Fällen
+  exakt gleich. Nur der Ortsfaktor $g$ hat sich geändert.
+  \end{solution}
+
+  \part[2] Eine Marssonde mit der Masse $m=\SI{150}{\kilogram}$ wird nach
+  der Landung auf dem Mars gewogen und zeigt eine Gewichtskraft von
+  $F_G=\SI{556.5}{\newton}$. Bestimmen Sie daraus den Ortsfaktor $g_{\text{Mars}}$.
+  \Antwortraum{2}
+  \begin{solution}
+  Aus $F_G=m\cdot g$ nach $g$ aufgelöst:
+  \[
+    g_{\text{Mars}} = \frac{F_G}{m} = \frac{\SI{556.5}{\newton}}{\SI{150}{\kilogram}} = \SI{3.71}{\meter\per\second\squared}.
+  \]
+  Der Ortsfaktor auf dem Mars liegt damit zwischen dem des Mondes und dem
+  der Erde. Er entspricht dem tatsächlichen Wert für den Planeten Mars.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+
+\begin{taskbox}[Aufgabe 2: Einheiten der Federkonstante]
+\question Zwei Federn wurden vermessen. Aus den jeweiligen
+$F$-$\Delta x$-Diagrammen wurden folgende Steigungen abgelesen:
+Feder~1: $D_1=\SI{42}{\newton\per\centi\meter}$,
+Feder~2: $D_2=\SI{25}{\newton\per\centi\meter}$.
+\begin{parts}
+  \part[2] Rechnen Sie beide Werte in die SI-Einheit N/m um. Zeigen Sie Ihren
+  Rechenweg.
+  \Antwortraum{2}
+  \begin{solution}
+  Da $\SI{1}{\centi\meter}=\SI{0.01}{\meter}$, gilt $\SI{1}{\newton\per\centi\meter}=\SI{100}{\newton\per\meter}$:
+  \[
+    D_1 = \SI{42}{\newton\per\centi\meter} = 42\cdot\SI{100}{\newton\per\meter} = \SI{4200}{\newton\per\meter}.
+  \]
+  \[
+    D_2 = \SI{25}{\newton\per\centi\meter} = 25\cdot\SI{100}{\newton\per\meter} = \SI{2500}{\newton\per\meter}.
+  \]
+  \end{solution}
+
+  \part[2] Welche der beiden Federn ist die stärkere (härtere) Feder, und
+  wie erkennt man das direkt am Wert von $D$? Ändert sich diese Antwort,
+  wenn man statt N/m die Werte in N/cm vergleicht?
+  \Antwortraum{2}
+  \begin{solution}
+  Feder~1 ist die stärkere Feder, da sie den grösseren Wert von $D$ besitzt:
+  Eine grössere Federkonstante $D$ bedeutet, dass bei gleicher Kraft eine
+  kleinere Längenänderung $\Delta x$ auftritt, die Feder also \glqq härter\grqq{}
+  ist. Der Vergleich \glqq Feder~1 ist stärker als Feder~2\grqq{} ändert sich
+  nicht, egal ob man N/cm- oder N/m-Werte vergleicht: Die Einheit
+  beeinflusst nur die Zahlenwerte, nicht die Rangfolge der beiden Federn.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+
+\begin{taskbox}[Aufgabe 3: Astronautenwissen]
+\question Ein Astronaut befindet sich weit entfernt von jedem
+Himmelskörper im Weltall, vollständig schwerelos.
+\begin{parts}
+  \part[2] Kann er dort mit einer Federwaage oder mit einer Balkenwaage das
+  Gewicht eines Gegenstands bestimmen? Begründen Sie Ihre Antwort.
+  \Antwortraum{2}
+  \begin{solution}
+  Nein, mit keiner der beiden Waagen: Der Gegenstand ist schwerelos, es
+  gibt also gar keine Gewichtskraft, die eine der beiden Waagen anzeigen
+  könnte. Die Masse liesse sich allenfalls über einen
+  Beschleunigungsversuch bestimmen (vgl. die Übung \glqq Wiegen im
+  Weltraum\grqq{} im Arbeitsblatt).
+  \end{solution}
+
+  \part[4] Der Astronaut hat vor dem Start zum Mond eine Masse von
+  $m=\SI{72.0}{\kilogram}$. Durch die Anstrengung des Fluges nimmt er ab.
+  Mit einer Federwaage stellt er auf dem Mond ein Körpergewicht von
+  $F_G=\SI{115}{\newton}$ fest. Berechnen Sie, wie viele Kilogramm er
+  abgenommen hat. Rechnen Sie mit $g_{\text{Erde}}=\SI{9.81}{\newton\per\kilogram}$
+  und $g_{\text{Mond}}=\SI{1.62}{\newton\per\kilogram}$.
+  \Antwortraum{4}
+  \begin{solution}
+  Seine neue Masse auf dem Mond folgt aus $F_G=m\cdot g_{\text{Mond}}$,
+  aufgelöst nach $m$:
+  \[
+    m = \frac{F_G}{g_{\text{Mond}}} = \frac{\SI{115}{\newton}}{\SI{1.62}{\newton\per\kilogram}} = \SI{71.0}{\kilogram}.
+  \]
+  Abgenommen hat er also
+  \[
+    \SI{72.0}{\kilogram} - \SI{71.0}{\kilogram} = \SI{1.0}{\kilogram}.
+  \]
+  \end{solution}
+\end{parts}
+\end{taskbox}
+
+\begin{taskbox}[Aufgabe 4: Gravitation auf einem unbekannten Planeten]
+\question Ein Astronaut wiegt auf der Erde für die Reise zu einem
+unbekannten Planeten einen Reisvorrat von $m=\SI{20}{\kilogram}$ ab.
+Rechnen Sie in dieser Aufgabe mit $g_{\text{Erde}}=\SI{10}{\newton\per\kilogram}$.
+\begin{parts}
+  \part[2] Der Astronaut landet mit seinem Vorrat auf dem unbekannten
+  Planeten. Was kann er ohne zusätzliche Hilfsmittel über Masse und
+  Gewichtskraft seines Vorrats auf dem Planeten aussagen?
+  \Antwortraum{2}
+  \begin{solution}
+  Die Masse ist ortsunabhängig und beträgt daher weiterhin
+  $\SI{20}{\kilogram}$. Über die Gewichtskraft kann er ohne weitere
+  Hilfsmittel dagegen keine Aussage machen, da der Ortsfaktor auf dem
+  unbekannten Planeten nicht bekannt ist.
+  \end{solution}
+
+  \part[2] Welches Hilfsmittel bräuchte der Astronaut, um mithilfe seines
+  Vorrats den Ortsfaktor auf dem unbekannten Planeten zu bestimmen?
+  \Antwortraum{2}
+  \begin{solution}
+  Er bräuchte eine Federwaage, mit der er die Gewichtskraft des Vorrats auf
+  dem Planeten messen könnte. Zusammen mit der bekannten Masse liesse sich
+  daraus über $g=F_G/m$ der Ortsfaktor bestimmen.
+  \end{solution}
+
+  \part[4] Der Astronaut verzehrt ein Drittel seines Vorrats. Zufällig ist
+  die Gewichtskraft des restlichen Vorrats auf dem unbekannten Planeten
+  jetzt genau so gross wie die Gewichtskraft des vollen Vorrats auf der
+  Erde. Bestimmen Sie den Ortsfaktor $g_x$ auf dem unbekannten Planeten.
+  \Antwortraum{4}
+  \begin{solution}
+  Die Gewichtskraft des vollen Vorrats auf der Erde:
+  \[
+    F_{G,\text{Erde}} = m\cdot g_{\text{Erde}} = \SI{20}{\kilogram}\cdot\SI{10}{\newton\per\kilogram} = \SI{200}{\newton}.
+  \]
+  Die Restmasse nach dem Verzehr eines Drittels beträgt
+  \[
+    m^\ast = \frac{2}{3}\cdot m = \frac{2}{3}\cdot\SI{20}{\kilogram} \approx \SI{13}{\kilogram}.
+  \]
+  Da die Gewichtskraft des Restvorrats auf dem unbekannten Planeten
+  ebenfalls $\SI{200}{\newton}$ beträgt, folgt
+  \[
+    g_x = \frac{F_{G,x}}{m^\ast} = \frac{\SI{200}{\newton}}{\SI{13}{\kilogram}} \approx \SI{15}{\newton\per\kilogram}.
+  \]
+  \end{solution}
+\end{parts}
+\end{taskbox}
+
+\begin{taskbox}[Aufgabe 5: Feder auf dem Mond]
+\question Eine elastische Schraubenfeder mit der Federkonstante
+$D=\SI{3.00}{\newton\per\centi\meter}$ wird auf dem Mond mit einem Körper
+der Masse $m=\SI{5.00}{\kilogram}$ belastet. Rechnen Sie mit
+$g_{\text{Mond}}=\SI{1.62}{\newton\per\kilogram}$.
+\begin{parts}
+  \part[2] Berechnen Sie die Gewichtskraft des Körpers auf dem Mond.
+  \Antwortraum{2}
+  \begin{solution}
+  \[
+    F_G = m\cdot g_{\text{Mond}} = \SI{5.00}{\kilogram}\cdot\SI{1.62}{\newton\per\kilogram} = \SI{8.10}{\newton}.
+  \]
+  \end{solution}
+
+  \part[2] Berechnen Sie, um wie viel sich die Feder dabei verlängert.
+  \Antwortraum{2}
+  \begin{solution}
+  Im Gleichgewicht gilt $F=F_G$, also $D\cdot\Delta x=F_G$, aufgelöst nach
+  $\Delta x$:
+  \[
+    \Delta x = \frac{F_G}{D} = \frac{\SI{8.10}{\newton}}{\SI{3.00}{\newton\per\centi\meter}} = \SI{2.70}{\centi\meter}.
+  \]
+  \end{solution}
+\end{parts}
+\end{taskbox}
+
+\end{questions}
+
+\end{document}

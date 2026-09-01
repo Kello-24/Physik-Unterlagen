@@ -1,0 +1,239 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Verlaufsplanung: Gewichtskraft & Federkraft (Doppellektion) -- Lektionsablauf-Tabelle
+% UZH Praktikum I -- Sara Romer Urban, Kantonsschule im Lee, HS2026
+% Klasse: 2e (26.08.2026)
+%
+% Kurzfassung von gewichtskraft-federkraft-lektionsplan.tex: nur Zeitplan und
+% die wichtigsten Eckdaten, ohne Begruendung/Offene-Punkte-Diskussion. Layout
+% an Zeitplan_Vorlage.tex angelehnt (longtable, alternierende Zeilenfarben),
+% Spaltenwahl an kondensatoren-verlaufsplanung.tex angelehnt: Inhalt, Zeit,
+% Lehrperson (Taetigkeit), SuS (Taetigkeit), Material, Sozialform.
+% =============================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[landscape,margin=1.6cm]{geometry}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage[table]{xcolor}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{14pt}
+\lhead{Physik -- Gewichtskraft \& Federkraft}
+\rhead{Lektionsablauf}
+\cfoot{\thepage}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+
+\definecolor{headgray}{RGB}{230,230,230}
+\definecolor{lightrow}{RGB}{245,245,245}
+
+\hypersetup{
+  colorlinks=true,
+  urlcolor=blue,
+  linkcolor=blue,
+  pdftitle={Lektionsablauf: Gewichtskraft \& Federkraft},
+  pdfauthor={Loris Keller}
+}
+
+\begin{document}
+
+\begin{center}
+    {\LARGE \textbf{Lektionsablauf: Gewichtskraft \& Federkraft}}\\[0.3cm]
+    \large Mechanik -- Doppellektion (2$\times$45 min) -- 2e, HS2026
+\end{center}
+
+\vspace{0.3cm}
+
+\renewcommand{\arraystretch}{1.3}
+\setlength{\LTpre}{6pt}
+\setlength{\LTpost}{6pt}
+
+\begin{longtable}{@{}p{5.3cm}p{1.3cm}p{5.9cm}p{5.9cm}p{3.5cm}p{2.4cm}@{}}
+\rowcolor{headgray}
+\textbf{Inhalt} & \textbf{Zeit} & \textbf{Lehrperson} & \textbf{Schülerinnen und Schüler} & \textbf{Material} & \textbf{Sozialform} \\
+\midrule
+\endfirsthead
+
+\rowcolor{headgray}
+\textbf{Inhalt} & \textbf{Zeit} & \textbf{Lehrperson} & \textbf{Schülerinnen und Schüler} & \textbf{Material} & \textbf{Sozialform} \\
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+
+\rowcolor{lightrow}
+\textbf{Wiederholung} \newline
+Kraftformel \& Werkstatt-Rückblick: $F\sim a$, Kraftmesser-Grundprinzip.
+&
+6'\newline{\footnotesize Ist:\dotfill}
+&
+Fragt ab, sammelt Antworten, gibt kurze Denkpause (B1 Vergewisserungsphase).
+&
+Denken kurz allein/zu zweit nach, äussern Antworten im Plenum.
+&
+Tafel/Beamer
+&
+Plenum
+\\
+
+\textbf{Übung: Fussballschuss} \newline
+$F=ma$ am neuen Beispiel (LZ1), Kinematik-Dynamik-Verknüpfung.
+&
+10'\newline{\footnotesize Ist:\dotfill}
+&
+Stellt Aufgabe, geht herum, moderiert Austausch im Plenum (C3 Think-Pair-Share).
+&
+Überlegen allein, tauschen sich zu zweit aus, rechnen im Arbeitsblatt.
+&
+Arbeitsblatt (Bild Fussballschuss)
+&
+Einzel- $\to$ Partnerarbeit $\to$ Plenum
+\\
+
+\rowcolor{lightrow}
+\textbf{Aktivierung 1: Steinstoss} \newline
+Gedankenaufgabe Erde vs. Mond -- Trägheit (LZ2).
+&
+4'\newline{\footnotesize Ist:\dotfill}
+&
+Stellt Frage, moderiert kurze Plenumsdiskussion (B1 Vergewisserungsphase).
+&
+Denken kurz allein nach, begründen im Arbeitsblatt, äussern Vermutung.
+&
+Arbeitsblatt
+&
+Einzelarbeit $\to$ Plenum
+\\
+
+\textbf{Aktivierung 2: Golfball} \newline
+Gedankenaufgabe Golfball auf dem Mond -- Gewichtskraft (LZ2/LZ3).
+&
+4'\newline{\footnotesize Ist:\dotfill}
+&
+Moderiert Partnerdiskussion, bestätigt historisches Ergebnis erst im Plenum (kein Video).
+&
+Diskutieren zu zweit, begründen im Arbeitsblatt.
+&
+Arbeitsblatt (Bild Golfball)
+&
+Partnerarbeit $\to$ Plenum
+\\
+
+\rowcolor{lightrow}
+\textbf{Theorie 1: Gewichtskraft} \newline
+$F_G=m\cdot g$, Ortsfaktor $g$ für Erde und Mond.
+&
+7'\newline{\footnotesize Ist:\dotfill}
+&
+Erklärt an der Tafel, knapp gehalten.
+&
+Hören zu, füllen Theorie im Arbeitsblatt.
+&
+Tafel/Beamer, Arbeitsblatt
+&
+Lehrervortrag
+\\
+
+\textbf{Theorie 2: Federkraft-Konzept} \newline
+Kräftegleichgewicht, Vorspannung, $\Delta x$ vs. $x$ (LZ6). Ohne Hookesches
+Gesetz.
+&
+7'\newline{\footnotesize Ist:\dotfill}
+&
+Erklärt Kalibrierungsprinzip, zeigt Federkraftmesser-Bild.
+&
+Hören zu, füllen Theorie im Arbeitsblatt.
+&
+Tafel/Beamer (Bild Federkraftmesser), Arbeitsblatt
+&
+Lehrervortrag
+\\
+
+\rowcolor{lightrow}
+\textbf{Übergang} \newline
+Wechsel zur Partnerarbeit: Gruppen bilden, Stationsmaterial verteilen.
+&
+4'\newline{\footnotesize Ist:\dotfill}
+&
+Teilt Klasse in Paare ein, verteilt Material.
+&
+Bilden Paare, holen Material, bauen Station auf.
+&
+Massstäbe, Federn, Massen, Laptops
+&
+Organisation
+\\
+
+\midrule
+\multicolumn{6}{@{}c@{}}{\textit{--- Ende Lektion 1 (42') / Beginn Lektion 2 ---}} \\
+\midrule
+
+\textbf{Lernaufgabe} \newline
+Federkraftmesser-Experiment: SuS leiten $F=D\cdot\Delta x$ und $D$ selbst
+her (LZ4, LZ5).
+&
+38'\newline{\footnotesize Ist:\dotfill}
+&
+Geht herum, gibt Hilfestellung, gibt die Formel nicht vor (D1 Lernaufgabe).
+&
+Messen zu zweit an zwei Federn, tragen Werte in Excel ein, lesen $D$ aus
+der Trendlinie ab, bearbeiten das Aufgabenblatt.
+&
+Stationsaufbau (Massstab, 2 Federn, Massen), Laptop, Excel-Vorlage,
+Aufgabenblatt
+&
+Partnerarbeit
+\\
+
+\rowcolor{lightrow}
+\textbf{Übung: Einheitenumrechnung} \newline
+N/cm $\to$ N/m, anhand eigener Messresultate (LZ7).
+&
+5'\newline{\footnotesize Ist:\dotfill}
+&
+Gibt kurzen Auftrag, sammelt Ergebnis im Plenum.
+&
+Rechnen individuell im Arbeitsblatt.
+&
+Arbeitsblatt, Taschenrechner
+&
+Einzelarbeit
+\\
+
+\textbf{Ausblick} \newline
+Hinweis auf Aufgabenblatt für Vor-/Nachbereitung.
+&
+5'\newline{\footnotesize Ist:\dotfill}
+&
+Fasst zusammen, verweist auf das Aufgabenblatt.
+&
+Hören zu, stellen letzte Fragen.
+&
+--
+&
+Plenum
+\\
+
+\rowcolor{lightrow}
+\multicolumn{1}{@{}p{5.3cm}}{\textbf{Zusammenfassung}} & \multicolumn{1}{p{1.3cm}}{\textbf{90' / 90'}} & \multicolumn{4}{@{}p{18.9cm}@{}}{\textit{Lektion 1: 42' (Phasen 1--7, inkl. Übergang). Lektion 2: 48' (Phasen 8--10). Bei Zeitdruck kürzen: zuerst Ausblick, danach Einheitenumrechnung (kann im Aufgabenblatt nachgeholt werden, da dort ohnehin an eigenen Messdaten geübt wird). Die Lernaufgabe nie kürzen, sie ist das didaktische Zentrum.}} \\
+
+\end{longtable}
+
+\vspace{0.2cm}
+{\small Lernziele, Begründung der Methodenwahl und offene Diskussionspunkte:
+siehe \texttt{gewichtskraft-federkraft-\allowbreak lektionsplan.pdf}.}
+
+\end{document}

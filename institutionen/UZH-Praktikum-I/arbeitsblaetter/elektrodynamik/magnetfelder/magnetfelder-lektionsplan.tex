@@ -1,0 +1,320 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Lektionsplan (Diskussionsgrundlage, NICHT das Arbeitsblatt selbst)
+% Magnetfelder -- UZH Praktikum I, Sara Romer Urban, KS im Lee, HS2026
+% Klasse: 4fh
+%
+% Stand 01.09.2026: komplett neu aus arbeitsblatt5-magnetfelder-teil1.tex
+% und aufgabenblatt4-magnetfelder-teil1.tex abgeleitet -- die vorherige
+% Fassung dieser Datei war veraltet (Ring/Helmholtz/Ringspule und
+% Permeabilitaet sind auf Loris' Wunsch nicht mehr Teil dieser
+% Doppellektion; die tatsaechliche Abfolge im Arbeitsblatt weicht auch
+% sonst deutlich von der alten Planung ab). Jede Tabellenzeile entspricht
+% jetzt direkt einem Abschnitt im Arbeitsblatt, in derselben Reihenfolge.
+% Neu: pro Phase eine Spalte "Fragen" (was im Unterrichtsgespraech zu
+% fragen ist) und "Kernaussagen" (was am Ende jeder Phase sitzen muss).
+% Ausserdem klargestellt (Stand 01.09.2026, zweite Korrektur): Das
+% Baukasten-Experiment direkt nach Oersted ist die SCHUELERAKTIVITAET
+% (Partnerarbeit) und laeuft NUR mit kleinen Kompassen, OHNE Eisenspaene.
+% Die beiden Eisenfeilspaene-Demonstrationen (gerader Leiter auf weisser
+% Flaeche; Spule auf Plexiglas-Halterung) sind separate, kuerzere
+% PLENUM-Demos von vorne, die je direkt VOR der zugehoerigen Formel
+% gezeigt werden -- als praezisere Bestaetigung dessen, was die SuS im
+% Baukasten bereits selbst mit den Kompassen beobachtet haben.
+% =============================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,landscape,margin=1.5cm]{geometry}
+\usepackage{array,booktabs,tabularx,xltabular}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\sisetup{per-mode=fraction,fraction-command=\frac}
+\usepackage{url}
+\Urlmuskip=0mu plus 1mu
+\def\UrlBreaks{\do\/\do-\do_}
+
+\definecolor{titleblue}{HTML}{183A6B}
+\definecolor{accentblue}{HTML}{2E6F9E}
+\definecolor{groupteal}{HTML}{1B7F72}
+\definecolor{darkgray}{HTML}{4A4A4A}
+\definecolor{warnred}{HTML}{9E2E2E}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\setlist[itemize]{leftmargin=1.1em,itemsep=0.15em,topsep=0.15em}
+
+\newcommand{\Methode}[1]{{\small\color{groupteal}\textbf{#1}}}
+
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{titleblue}}{\thesection}{0.6em}{}
+\titlespacing*{\section}{0pt}{1.2em}{0.5em}
+
+% Spaltentypen für die Tabelle
+\newcolumntype{Y}[1]{>{\raggedright\arraybackslash\small}p{#1}}
+
+\begin{document}
+\sloppy
+
+\begin{center}
+{\Huge\bfseries\color{titleblue}Lektionsplan: Magnetfelder}\\[0.4em]
+{\large Doppellektion (2$\times$45 Min.) -- Diskussionsgrundlage}
+\end{center}
+\vspace{0.5em}
+
+\noindent\textbf{Klasse:} 4fh (01.09.2026, nur 4fh) \hfill \textbf{Lehrperson:} Loris Keller
+
+\vspace{0.3em}
+\noindent\textcolor{darkgray}{Dieses Dokument ist \textbf{keine} Reinschrift des Arbeitsblatts, sondern
+die Planungsgrundlage dazu -- 1:1 aus dem fertigen
+\texttt{arbeitsblatt5-magnetfelder-teil1.tex} abgeleitet, in derselben
+Reihenfolge. Für jede Phase: Inhalt/Methode, was Sie im
+Unterrichtsgespräch fragen sollten, und die Kernaussage, die am Ende
+sitzen muss.}
+
+% =========================================================================
+\section*{1. Abgrenzung und Lernziele}
+
+\textbf{Im Fokus:} korrektes Einzeichnen von Magnetfeldern
+(Permanentmagnete, Regeln, Vergleich mit dem elektrischen Feld,
+Erdmagnetfeld), das Magnetfeld eines geraden stromdurchflossenen Leiters
+(Ørsted-Effekt, Rechte-Faust-Regel, Formel) und das Magnetfeld einer Spule
+(experimentell mit Eisenfeilspänen untersucht, Rechte-Faust-Regel, Formel,
+Windungsdichte).
+
+\textbf{Bereits bekannt (Werkstatt Magnetismus, nur Repetition):} Pole,
+Anziehung/Abstossung, kein magnetischer Monopol, Elementarmagnete-Modell,
+Weiss'sche Bezirke, Ferro-/Dia-/Paramagnetismus als Begriff.
+
+\textbf{Bewusst nicht Teil dieser Einheit:} Induktion/Faraday, Lorentzkraft
+(eigene spätere Doppellektionen), Ring/Helmholtz-Spule/Ringspule und
+magnetische Permeabilität (auf Loris' ausdrücklichen Wunsch aus dieser
+Doppellektion entfernt -- die Spulenformel wird direkt eingeführt, ohne den
+Umweg über Ring $\to$ zwei Ringe).
+
+\begin{itemize}[leftmargin=1.3cm,itemsep=0.3em]
+  \item[LZ1] Magnetfelder korrekt einzeichnen -- Regeln kennen und
+  anwenden, den strukturellen Unterschied zum elektrischen Feld benennen
+  (kein magnetischer Monopol), das Erdmagnetfeld einordnen.
+  \item[LZ2] den Ørsted-Effekt und das Magnetfeld eines geraden,
+  stromdurchflossenen Leiters beschreiben (Rechte-Faust-Regel) und die
+  Formel $B=\frac{\mu_0}{2\pi}\cdot\frac{I}{r}$ (magnetische Flussdichte)
+  anwenden.
+  \item[LZ3] das Magnetfeld einer Spule beschreiben (Rechte-Faust-Regel,
+  experimentell mit Eisenfeilspänen untersucht) und die Formel
+  $B=\mu_0\cdot\frac{N}{l}\cdot I=\mu_0\cdot n\cdot I$ (Windungsdichte $n$)
+  anwenden.
+\end{itemize}
+
+% =========================================================================
+\section*{2. Aufbau der Doppellektion}
+
+\begin{xltabular}{\textwidth}{@{}Y{2.1cm} Y{6.6cm} Y{6.6cm} Y{6.6cm} p{1.1cm}@{}}
+\toprule
+\textbf{Phase} & \textbf{Inhalt \& Methode} & \textbf{Fragen} & \textbf{Kernaussagen} & \textbf{Zeit} \\
+\midrule
+\endhead
+
+Repetition &
+\textbf{Magnete und Kompassnadel.} Bild: Kompassnadel zwischen zwei
+Stabmagneten (N/S einander zugewandt). \Methode{Einzelarbeit, dann
+Vergleich zu zweit}. &
+\begin{itemize}
+  \item Wie richtet sich die Nadel aus, und warum genau so?
+  \item Was wissen Sie aus der Werkstatt noch über Pole und
+  Elementarmagnete?
+\end{itemize} &
+\begin{itemize}
+  \item Die Kompassnadel folgt den Feldlinien; ihr Nordpol zeigt in
+  Feldrichtung (N $\to$ S).
+  \item Zwischen ungleichnamigen Polen ist das Feld dicht und stark
+  (Anziehung) -- die Nadel schlägt dort deutlich aus.
+\end{itemize} &
+6' \\[0.6em]
+
+Vergleich &
+\textbf{Punktladungsfeld vs. Stabmagnetfeld.} Zwei Bilder nebeneinander
+(elektrischer Dipol / Stabmagnet), beide sehen ähnlich aus.
+\Methode{Stillarbeit, dann Plenum}. &
+\begin{itemize}
+  \item Was fällt beim Vergleich der Bilder auf?
+  \item Wo liegt der Unterschied, obwohl die Form ähnlich aussieht?
+\end{itemize} &
+\begin{itemize}
+  \item Elektrische Ladungen können einzeln existieren (Monopol möglich).
+  \item Beim Magneten gibt es das nicht: Nord- und Südpol sind
+  untrennbar -- \textbf{kein magnetischer Monopol}.
+\end{itemize} &
+6' \\[0.6em]
+
+Theorie &
+\textbf{Regeln zum Zeichnen von Magnetfeldern} (5 Regeln), danach ein
+korrekt gezeichnetes Beispiel (Stabmagnetfeld) zur Kontrolle.
+\Methode{Lehrervortrag, geleitet}. &
+\begin{itemize}
+  \item Wo beginnen/enden Feldlinien -- aussen und innen des Magneten?
+  \item Was bedeutet eine dichtere Ballung von Feldlinien?
+\end{itemize} &
+\begin{itemize}
+  \item Aussen: N $\to$ S. Innen: S $\to$ N, jede Linie geschlossen.
+  \item Feldlinien kreuzen sich nie; Richtung = Kompassnadel-Nordpol;
+  Dichte = Stärke.
+\end{itemize} &
+6' \\[0.6em]
+
+Zeichenübung &
+\textbf{Zwei Stabmagnete, Nordpole zueinander.} SuS zeichnen die Feldlinien
+selbst in eine TikZ-Vorlage (nur die beiden Magnete vorgegeben). Danach
+\textbf{Fehlersuche}: eine absichtlich falsche Lösung mit sich
+kreuzenden Feldlinien zwischen den Nordpolen wird gezeigt.
+\Methode{Einzelarbeit + Plenumsdiskussion}. &
+\begin{itemize}
+  \item Was passiert zwischen zwei Nordpolen?
+  \item (Fehlersuche) Was stimmt an dieser Lösung nicht -- welche Regel
+  wird verletzt?
+\end{itemize} &
+\begin{itemize}
+  \item Gleichnamige Pole stossen sich ab; Feldlinien weichen seitlich
+  aus, kein Übergang, neutraler Punkt in der Mitte.
+  \item Feldlinien dürfen sich nie kreuzen (Fehler in der gezeigten
+  Lösung).
+\end{itemize} &
+10' \\[0.6em]
+
+Theorie &
+\textbf{Erdmagnetfeld.} Bild + Hinweisbox geografischer vs. magnetischer
+Pol. \Methode{Lehrervortrag, geleitet}. &
+\begin{itemize}
+  \item Warum zeigt der Kompass nach Norden, wenn Feldlinien doch vom
+  magnetischen Nordpol \emph{weg} verlaufen?
+\end{itemize} &
+\begin{itemize}
+  \item Geografischer Nordpol $\neq$ magnetischer Nordpol.
+  \item Am geografischen Nordpol liegt der \textbf{magnetische Südpol}
+  des Erdfelds.
+\end{itemize} &
+4' \\[0.6em]
+
+Überleitung &
+\textbf{Die Geschichte von Ørsted} (kurz, mit Bild). \Methode{Erzählimpuls}. &
+\begin{itemize}
+  \item Was könnte eine stromdurchflossene Leitung mit einem Magnetfeld
+  zu tun haben?
+\end{itemize} &
+\begin{itemize}
+  \item 1820, Zufallsentdeckung: Strom erzeugt selbst ein Magnetfeld --
+  erste Verbindung von Elektrizität und Magnetismus.
+\end{itemize} &
+3' \\[0.6em]
+
+Baukasten-Experiment &
+\textbf{SuS experimentieren selbst: Stromkreis mit Stableiter und Spule,
+nur kleine Kompasse (keine Eisenspäne).} Feld an beiden Bauteilen mit
+Kompassen erkunden, danach Stromrichtung umpolen und erneut beobachten.
+\Methode{Partnerarbeit}. &
+\begin{itemize}
+  \item Wie richten sich die Kompasse um den Leiter aus, wie in/um die
+  Spule?
+  \item Was verändert sich an \emph{beiden} Feldern bei Stromumkehr?
+\end{itemize} &
+\begin{itemize}
+  \item Leiter: Kompasse stellen sich tangential zu gedachten Kreisen.
+  Spule: innen einheitlich, an den Enden wie ein Stabmagnet, seitlich
+  schwächer.
+  \item Beide Feldrichtungen kehren sich bei Stromumkehr vollständig um;
+  Nord- und Südpol der Spule vertauschen sich.
+\end{itemize} &
+12' \\[0.6em]
+
+Experiment 1 &
+\textbf{Plenum-Demo: gerader Leiter auf weisser Fläche mit
+Eisenfeilspänen.} Draht senkrecht durch die Fläche, Strom ein-/
+ausschalten, Muster mit Eisenspänen sichtbar machen -- \textbf{direkt vor}
+der Formel, als präzisere Bestätigung dessen, was die SuS eben selbst mit
+Kompassen im Baukasten beobachtet haben. \Methode{Demonstration, Plenum}. &
+\begin{itemize}
+  \item Welches Muster bilden die Eisenspäne um den Draht?
+  \item Passt das zu dem, was Sie eben mit den Kompassen gesehen haben?
+\end{itemize} &
+\begin{itemize}
+  \item Konzentrische Kreise um den Leiter, bestätigt die eigene
+  Kompass-Beobachtung im Detail.
+\end{itemize} &
+5' \\[0.6em]
+
+Theorie &
+\textbf{Formel des geraden Leiters.} Rechte-Faust-Regel (Bild), dann
+$B=\frac{\mu_0}{2\pi}\cdot\frac{I}{r}$ -- SuS ergänzen Formel und Einheit
+selbst im Antwortfeld, bevor die Lösung gezeigt wird.
+\Methode{Lehrervortrag, geleitet, mit Schülerbeteiligung}. &
+\begin{itemize}
+  \item Welche Grössen könnten $B$ beeinflussen -- und wie (direkt oder
+  umgekehrt proportional)?
+  \item Welche Einheit könnte $B$ haben?
+\end{itemize} &
+\begin{itemize}
+  \item $B=\frac{\mu_0}{2\pi}\cdot\frac{I}{r}$; $B\propto I$,
+  $B\propto\frac1r$.
+  \item Einheit: Tesla (T) $=\,\si{\newton\per\ampere\per\meter}$.
+\end{itemize} &
+8' \\[0.6em]
+
+Experiment 2 &
+\textbf{Plenum-Demo: Spule auf Plexiglas-Halterung mit
+Eisenfeilspänen.} Feld der Spule mit Eisenspänen sichtbar machen (innen,
+an den Enden, seitlich) -- \textbf{direkt vor} der Formel, als präzisere
+Bestätigung dessen, was die SuS eben selbst mit Kompassen beobachtet
+haben. \Methode{Demonstration, Plenum}. &
+\begin{itemize}
+  \item Wie unterscheidet sich das Muster von dem des geraden Leiters?
+  \item Passt das zu dem, was Sie eben mit den Kompassen gesehen haben?
+\end{itemize} &
+\begin{itemize}
+  \item Im Inneren: starkes, homogenes Feld entlang der Spulenachse.
+  \item An den Enden: deutliche Pole wie bei einem Stabmagneten; seitlich
+  deutlich schwächer.
+\end{itemize} &
+5' \\[0.6em]
+
+Theorie &
+\textbf{Formel der Spule.} Rechte-Faust-Regel für die Spule (Bild,
+\emph{andere} Regel als beim Leiter!), dann
+$B=\mu_0\cdot\frac{N}{l}\cdot I$ -- SuS ergänzen Formel und Einheit selbst,
+danach Windungsdichte $n=\frac{N}{l}$ einführen.
+\Methode{Lehrervortrag, geleitet, mit Schülerbeteiligung}. &
+\begin{itemize}
+  \item Was passiert mit dem Feld bei mehr Windungen auf gleicher Länge?
+  \item Worin unterscheidet sich die Rechte-Faust-Regel hier von jener
+  beim geraden Leiter?
+\end{itemize} &
+\begin{itemize}
+  \item $B=\mu_0\cdot\frac{N}{l}\cdot I=\mu_0\cdot n\cdot I$ mit
+  Windungsdichte $n=\frac{N}{l}$.
+  \item Leiter: Daumen = Stromrichtung. Spule: Finger = Stromrichtung,
+  Daumen = Nordpol -- nicht verwechseln.
+\end{itemize} &
+8' \\
+\bottomrule
+\end{xltabular}
+
+\textcolor{darkgray}{\small Summe: 73' + 17' Puffer (Fragen, Übergänge,
+Materialverteilung bei den beiden Experimenten) = 90'.}
+
+% =========================================================================
+\section*{3. Anschlussdokument}
+
+Wie geplant entstanden ist ein separates \textbf{Aufgabenblatt}
+(\texttt{aufgabenblatt4-magnetfelder-teil1.tex}, im selben Ordner) für die
+Vor-/Nachbereitung: Feldlinien zeichnen, Stabmagnet-Polung bestimmen,
+Formelumstellung (gerader Leiter, Spule, jeweils mit Nicht-SI-Einheiten zum
+Umrechnen), Verständnisfragen zur Spule, sowie eine Ringspule-Zusatzaufgabe
+(bewusst als Vertiefung über den Stoff dieser Doppellektion hinaus, mit
+kurzer Erklärung direkt in der Aufgabe). Alle Aufgaben mit
+Schwierigkeitsgrad-Angabe und Lösung.
+
+\end{document}

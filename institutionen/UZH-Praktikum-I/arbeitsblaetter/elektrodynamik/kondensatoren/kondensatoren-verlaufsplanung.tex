@@ -1,0 +1,359 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Verlaufsplanung: Kondensatoren (Doppellektion) -- Lektionsablauf-Tabelle
+% UZH Praktikum I -- Sara Romer Urban, Kantonsschule im Lee, HS2026
+% Klassen: 4fh (regulaer, 25.08.2026) + 4cdeg (SP4, 28.08.2026)
+%
+% Vollstaendig ueberarbeitet am 2026-08-27 anhand von
+% kondensatoren-lektionsplan.md (selber Ordner) -- ersetzt den vorherigen
+% Ablauf (Coulombkraft-Herleitung, Sortieraufgabe vor Theorie 1), der im
+% Arbeitsblatt/Aufgabenblatt nicht mehr existiert. Aktueller Aufbau: staendiger
+% Wechsel Aufgabenblatt (PhET-/Excel-Lernaufgabe, Partnerarbeit) <-> Arbeitsblatt
+% (Theorie, Plenumsboxen, Demoversuch, Dielektrikum-Herleitung).
+%
+% Layout an Zeitplan_Vorlage.tex angelehnt (longtable, alternierende
+% Zeilenfarben). Spalten: Inhalt, Zeit, Lehrperson (Taetigkeit), SuS
+% (Taetigkeit), Material, Sozialform. Die Impulsfragen der Lehrperson und
+% die erwartbaren Schuelerfragen stehen (mit Antwort + Erklaerung) separat
+% in kondensatoren-fragenkatalog.tex/.pdf.
+% =============================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[landscape,margin=1.6cm]{geometry}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage[table]{xcolor}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Physik -- Kondensatoren}
+\rhead{Lektionsablauf}
+\cfoot{\thepage}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+
+\definecolor{headgray}{RGB}{230,230,230}
+\definecolor{lightrow}{RGB}{245,245,245}
+
+\hypersetup{
+  colorlinks=true,
+  urlcolor=blue,
+  linkcolor=blue,
+  pdftitle={Lektionsablauf: Kondensatoren},
+  pdfauthor={Loris Keller}
+}
+
+\begin{document}
+
+\begin{center}
+    {\LARGE \textbf{Lektionsablauf: Kondensatoren}}\\[0.3cm]
+    \large Elektrodynamik -- Doppellektion (2$\times$45 min) -- 4fh/4cdeg, HS2026
+\end{center}
+
+\vspace{0.2cm}
+{\small Ständiger Wechsel zwischen \textbf{Aufgabenblatt 3} (PhET-/Excel-Lernaufgabe,
+Partnerarbeit am Computer, Teil 1--4) und \textbf{Arbeitsblatt 4} (Theorie,
+Plenumsboxen, Demoversuch, Dielektrikum-Herleitung). Grundprinzip: erst selbst
+messen/beobachten, danach im Plenum vergleichen und die Formel festhalten --
+nie umgekehrt.}
+
+\vspace{0.3cm}
+
+\renewcommand{\arraystretch}{1.3}
+\setlength{\LTpre}{6pt}
+\setlength{\LTpost}{6pt}
+
+\begin{longtable}{@{}p{5.3cm}p{1.5cm}p{5.9cm}p{5.9cm}p{3.3cm}p{2.4cm}@{}}
+\rowcolor{headgray}
+\textbf{Inhalt} & \textbf{Zeit} & \textbf{Lehrperson} & \textbf{Schülerinnen und Schüler} & \textbf{Material} & \textbf{Sozialform} \\
+\midrule
+\endfirsthead
+
+\rowcolor{headgray}
+\textbf{Inhalt} & \textbf{Zeit} & \textbf{Lehrperson} & \textbf{Schülerinnen und Schüler} & \textbf{Material} & \textbf{Sozialform} \\
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+
+\rowcolor{lightrow}
+\textbf{Einstieg} \newline
+\textit{Arbeitsblatt} -- Box \glqq Einstieg: Wozu ein Kondensator?\grqq{}
+&
+4'\newline{\footnotesize Ist:\dotfill}
+&
+Zeigt die Bilder (Defibrillator, Kondensatoren-Sortiment), fragt mündlich:
+Wozu braucht es das neben einer Batterie? Was unterscheidet die
+Kondensatoren im Bild?
+&
+Betrachten die Bilder, hören zu, äussern erste Vermutungen (kein
+schriftlicher Auftrag).
+&
+Arbeitsblatt (Bilder)
+&
+Plenum
+\\
+
+\textbf{Theorie 1} \newline
+\textit{Arbeitsblatt} -- Theoriebox \glqq Der Kondensator\grqq{}: Aufbau,
+$U=E\cdot d$, Batterie-Skizzen (nicht angeschlossen/angeschlossen/getrennt).
+&
+8'\newline{\footnotesize Ist:\dotfill}
+&
+Erklärt den Plattenaufbau (±$Q$), zeigt $U=E\cdot d$ als bereits Bekanntes
+(keine Herleitung), erklärt anhand der drei Skizzen Strom und Ladung beim
+An-/Trennen der Batterie.
+&
+Hören zu, verfolgen die Skizzen im Arbeitsblatt. Keine eigene Aufgabe.
+&
+Arbeitsblatt
+&
+Lehrervortrag
+\\
+
+\rowcolor{lightrow}
+\textbf{Lernaufgabe Teil 1} \newline
+\textit{Aufgabenblatt} -- Intro-Box + \glqq Teil 1: Zusammenhang zwischen
+$Q$, $U$ und $C$\grqq{}
+&
+10'\newline{\footnotesize Ist:\dotfill}
+&
+Zeigt Simulation und Excel-Blatt \texttt{Teil 1 - U und Q} zuerst am
+Beamer, geht danach herum und unterstützt beim Messen.
+&
+Öffnen zu zweit Simulation und Excel-Datei. Messen $Q$ bei $\geq5$
+$U$-Werten (Geometrie konstant), beschreiben den Zusammenhang \textbf{offen}
+(noch keine vorgegebene Antwort), vergleichen $C$ mit der Simulationsanzeige.
+&
+Laptop, PhET-Simulation \glqq Capacitor Lab: Basics\grqq{}, Excel-Vorlage,
+Aufgabenblatt
+&
+Partnerarbeit (PC)
+\\
+
+\textbf{Plenum: Kondensatoren im Vergleich} \newline
+\textit{Arbeitsblatt} -- Groupbox, neues $Q$-$U$-Diagramm ($C_1$ vs. $C_2$)
+&
+6'\newline{\footnotesize Ist:\dotfill}
+&
+Moderiert den Vergleich am $Q$-$U$-Diagramm, lässt die Definitionsgleichung
+$C:=Q/U$ (Einheit Farad) gemeinsam herleiten und notieren, verweist auf die
+eigenen Messwerte aus Teil 1.
+&
+Erklären den Unterschied zwischen den beiden Kondensatoren im Diagramm,
+notieren die Definitionsgleichung $C:=Q/U$ und die pF/nF/µF/mF-Präfixe.
+&
+Arbeitsblatt, Tafel/Beamer
+&
+Plenum
+\\
+
+\rowcolor{lightrow}
+\textbf{Wassertankanalogie} \newline
+\textit{Arbeitsblatt} -- Theoriebox (Bilder, Sortieraufgabe, Rollen-Frage)
+&
+8'\newline{\footnotesize Ist:\dotfill}
+&
+Leitet kurz in die Analogie ein (Wasserfass-Bild, Ventil offen/zu), lässt
+die Sortieraufgabe zu zweit lösen, sammelt Antworten zur Rollen-Frage.
+&
+Betrachten die Analogie-Bilder, ordnen zu zweit Wassertank- und
+Kondensator-Grössen zu (Sortieraufgabe), beantworten \glqq Welche Rolle
+könnte ein Kondensator in einem Stromkreis spielen?\grqq
+&
+Arbeitsblatt
+&
+Partnerarbeit / Plenum
+\\
+
+\textbf{Theorie 2} \newline
+\textit{Arbeitsblatt} -- Theoriebox \glqq Kapazität und Plattengeometrie:
+die bekannten Bausteine\grqq{}
+&
+5'\newline{\footnotesize Ist:\dotfill}
+&
+Repetiert $E=Q/(\varepsilon_0\cdot A)$ und $U=E\cdot d$ als bereits
+bekannt, kombiniert sie bewusst noch nicht, erklärt die Hinweisbox zum
+homogenen Feld.
+&
+Hören zu, verfolgen die Repetition im Arbeitsblatt. Keine eigene Aufgabe.
+&
+Arbeitsblatt, Tafel/Beamer
+&
+Lehrervortrag
+\\
+
+\midrule
+\multicolumn{6}{@{}c@{}}{\textit{--- Ende Lektion 1 (41') / Beginn Lektion 2 ---}} \\
+\midrule
+
+\rowcolor{lightrow}
+\textbf{Lernaufgabe Teil 2} \newline
+\textit{Aufgabenblatt} -- \glqq Teil 2: Einfluss von Fläche und
+Abstand\grqq{}
+&
+10'\newline{\footnotesize Ist:\dotfill}
+&
+Hilft beim Wechsel zur nächsten Simulationsansicht und beim Blattwechsel
+in Excel (\texttt{Teil 2a}, \texttt{Teil 2b}).
+&
+Messen zu zweit zuerst $C$ vs. $A$ (Excel-Blatt \texttt{Teil 2a - A und
+C}), dann $C$ vs. $d$ (\texttt{Teil 2b - d und C}), beschreiben die
+Zusammenhänge im Diagramm \textbf{offen} ($C\sim A$ bzw. $C\sim 1/d$
+selbst erkennen).
+&
+Laptop, PhET-Simulation, Excel-Vorlage, Aufgabenblatt
+&
+Partnerarbeit (PC)
+\\
+
+\textbf{Plenum: Von der Geometrie zur Kondensatorformel} \newline
+\textit{Arbeitsblatt} -- Groupbox, algebraische Herleitung
+&
+6'\newline{\footnotesize Ist:\dotfill}
+&
+Moderiert die Herleitung an der Tafel: die drei bekannten Formeln ($E$,
+$U=E\cdot d$, $C=Q/U$) werden kombiniert, lässt Zwischenschritte
+vorschlagen.
+&
+Kombinieren im Plenum die drei Formeln algebraisch zu
+$C=\varepsilon_0\cdot A/d$, mit vollständigem Rechenweg.
+&
+Arbeitsblatt, Tafel/Beamer
+&
+Plenum
+\\
+
+\rowcolor{lightrow}
+\textbf{Formel notieren} \newline
+\textit{Aufgabenblatt} -- Teil 2, Marke \glqq Eure Kondensatorformel\grqq{}
+&
+2'\newline{\footnotesize Ist:\dotfill}
+&
+Kurzer Kontrollgang, ob alle die Formel richtig übertragen haben.
+&
+Tragen $C=\varepsilon_0\cdot A/d$ in eigener Handschrift ins Aufgabenblatt
+ein.
+&
+Aufgabenblatt
+&
+Partnerarbeit (PC)
+\\
+
+\textbf{Lernaufgabe Teil 3} \newline
+\textit{Aufgabenblatt} -- \glqq Teil 3: Kondensator von der Batterie
+getrennt\grqq{}
+&
+6'\newline{\footnotesize Ist:\dotfill}
+&
+Erinnert bei Bedarf an die \glqq getrennt\grqq-Skizze aus Theorie 1
+(Arbeitsblatt) als Gedankenstütze.
+&
+Laden den Kondensator wie in Teil 1, trennen ihn von der Batterie,
+verändern $d$, begründen mit $Q=C\cdot U$, dass $Q$ konstant bleibt und
+$U$ sich anpasst, prüfen es in der Simulation.
+&
+Laptop, PhET-Simulation, Aufgabenblatt
+&
+Partnerarbeit (PC)
+\\
+
+\rowcolor{lightrow}
+\textbf{Experiment} \newline
+\textit{Arbeitsblatt} -- Groupbox \glqq Experiment: Kondensator und
+Lichtquelle\grqq{} (alle nach vorne)
+&
+6'\newline{\footnotesize Ist:\dotfill}
+&
+Führt den Demoversuch vorne durch (Kondensatoren laden, an Lichtquelle
+anschliessen), holt zuerst die Vorhersagen ab (Predict-Observe-Explain).
+&
+Kommen nach vorne, sagen anhand der Wassertankanalogie voraus, ob die
+Lichtquelle bei allen Kondensatoren gleich lange leuchtet, beobachten
+danach den Versuch.
+&
+Kondensatoren (verschiedene Kapazitäten), Lichtquelle (LED),
+Spannungsquelle, Schalter, Arbeitsblatt
+&
+Demo (Plenum) + Einzelvorhersage
+\\
+
+\textbf{Lernaufgabe Teil 4} \newline
+\textit{Aufgabenblatt} -- \glqq Teil 4: Leuchtdauer im Simulationsscreen
+`Light Bulb'\grqq{} \textit{(1. Streichkandidat bei Zeitdruck.)}
+&
+4'\newline{\footnotesize Ist:\dotfill}
+&
+Kurze Unterstützung beim Screen-Wechsel.
+&
+Wechseln zum Screen \glqq Light Bulb\grqq, laden zwei Kondensatoren
+unterschiedlicher Kapazität bei derselben Spannung, trennen sie und lassen
+sie über die Glühbirne entladen -- bestätigen die Demo-Beobachtung und
+begründen sie zusätzlich mit $Q=C\cdot U$.
+&
+Laptop, PhET-Simulation, Aufgabenblatt
+&
+Partnerarbeit (PC)
+\\
+
+\rowcolor{lightrow}
+\textbf{Theorie 3 + Anwendung} \newline
+\textit{Arbeitsblatt} -- Theoriebox \glqq Das Dielektrikum\grqq{} +
+Beispielbox \glqq Kapazitive Sensoren\grqq{} \textit{(2. Streichkandidat:
+Anwendung nur kurz mündlich erwähnen.)}
+&
+8'\newline{\footnotesize Ist:\dotfill}
+&
+Erklärt anhand der Bilder die Polarisation und den Vergleich zum bereits
+bekannten Faraday-Käfig (dort vollständige, hier nur teilweise
+Feldauslöschung), danach kurz die Alltagsbeispiele (Kofferraumsensor,
+Touchscreen).
+&
+Betrachten die Bilder (Polarisation, Wassermolekül als Dipol,
+Faraday-Käfig-Vergleich, Kofferraumsensor/Touchscreen). Keine eigene
+Aufgabe.
+&
+Arbeitsblatt, Tafel/Beamer
+&
+Lehrervortrag
+\\
+
+\textbf{Herleitung} \newline
+\textit{Arbeitsblatt} -- Groupbox \glqq Herleitung (Partnerarbeit):
+Kapazität mit Dielektrikum\grqq{}
+&
+9'\newline{\footnotesize Ist:\dotfill}
+&
+Geht herum, hilft insbesondere bei Teilaufgabe (a) (Skizze der
+Nettoladung, mit Tipp-Hinweisbox) und (c) (Reaktion der Batterie).
+&
+Bearbeiten zu zweit: Nettoladung am Rand einzeichnen, Auswirkung auf $E$,
+auf die freie Ladung, auf $C$, leiten zuletzt
+$C=\varepsilon_r\cdot\varepsilon_0\cdot A/d$ über $\varepsilon_r:=C/C_0$
+her.
+&
+Arbeitsblatt, Taschenrechner
+&
+Partnerarbeit
+\\
+
+\rowcolor{lightrow}
+\multicolumn{1}{@{}p{5.3cm}}{\textbf{Zusammenfassung}} & \multicolumn{1}{p{1.5cm}}{\textbf{92'}} & \multicolumn{4}{@{}p{18.9cm}@{}}{\textit{Lektion 1: 41' (Phasen 1--6). Lektion 2: 51' (Phasen 7--14). Bei Zeitdruck zuerst Lernaufgabe Teil 4 streichen (bestätigt nur den unmittelbar vorher gezeigten Demoversuch), danach die Anwendungsbox nur kurz mündlich erwähnen statt im Detail zu besprechen.}} \\
+
+\end{longtable}
+
+\vspace{0.2cm}
+{\small Mögliche Impulsfragen der Lehrperson und erwartbare Schülerfragen mit Antwort und Erklärung: siehe \texttt{kondensatoren-\allowbreak fragenkatalog.pdf}.}
+
+\end{document}

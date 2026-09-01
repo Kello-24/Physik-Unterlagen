@@ -1,0 +1,24 @@
+Notizen aus der Besprechung mit Sara Romer Urban — Orientierung für die
+Erstellung des Arbeitsblatts Kondensatoren
+
+Vorwissen: Pyhsikalische grössen repetieren: E-feld, Spannung, Potential
+
+* Sortieraufgabe Mechanik vs elektrostatik (Energie, Arbeit, Bechleunigung etc)
+   * Begriffe der mechanik vergleichen mit der elektrostatik und zuordnen
+
+Inhalt: zentral: kapazität
+
+* Analogie Mechanik: Wassertank
+   * erwähne wozu der kondesnator gebraucht wird und erkläre das printip mit der analogie des wassertanks. mache hier nochmals eine sortieraufgabe wo die einzelnen aspekte des wassertanks dem des kondesnators zugeorndet werden
+
+Zu beachten: efeld im plattenkondesator ist konstant
+Experimente:
+
+* Kondensatoren mit verschiedenen capazitäten angeschlossen an einer spannungsquelle und an einer lichtquelle. Zuerst wird der Kondensator aufgeladen von der spannungsquelle und dann weggenommen und an die lichtquelle angeschlossen. Je nach Kapazität des Kondensators leichtet die lichtquelle unterschiedlich lange.
+* Phet Simulation: Plattenkondensator: [Simulationen | PhET Simulations](https://phet.colorado.edu/de/simulations/capacitor-lab-basics)
+Plattenkondensator kann an die spannungsquelle angeschlossen werden oder davon weggenommen werden. Je nachdem werden sich dann die grössen Kapazität, gespeicherte energie und ladung verändern, wenn man die geometrie verändert: Distanz, Fläche. Es kann auch eine flhlampe angeschlossen werden und je anch capazität glüht diese untercheidlich lange.
+   * Hierzu soll es eine lernaufgabe geben wo die sus die relation zwischen C,Q und V selst herausfidnen, indem sie sie Q als funktion von V in der simulation messen bei konstanter geometrie. Dann werden die messwerte in ein schon vorbereitetes Excel file eingetragen, wo sie herausfinden, dass die kapazität dei steigung der linearen glecihung ist. hierzu wird eine trendlinie eingefügt.
+   * Dann im zweiten teil sollen sie die effekte der geometrie, Fläche A der platten oder der distanz d auf die kapazität anschauen. dabei soll inner entweder A und d konstant gehalten werden und dann werte in das Diagramm C vs A oder C vs d eingefügt werden und die trendlinie geplottet werden. Am schluss kommen sie auf die realtion zwischen C und A und d.
+
+Was noch fehlt ist das dialektikum.erwähne was es ist und wie es den plattenkondesator verändert und wieso die kapazität steigt.
+Es woll noch ein Aufgaebnblatt erstellt werden, welches ein paar übungen zum oben erwähnten beinhlatet.

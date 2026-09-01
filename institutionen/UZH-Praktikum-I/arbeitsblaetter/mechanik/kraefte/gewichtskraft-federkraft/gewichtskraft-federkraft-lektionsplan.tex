@@ -1,0 +1,338 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Lektionsplan (Diskussionsgrundlage, NICHT das Arbeitsblatt selbst)
+% Gewichtskraft & Federkraft -- UZH Praktikum I, Sara Romer Urban, KS im Lee, HS2026
+% Klasse: 2e
+% =============================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usepackage{array,booktabs,tabularx,xltabular}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\sisetup{per-mode=fraction,fraction-command=\frac}
+
+\definecolor{titleblue}{HTML}{183A6B}
+\definecolor{accentblue}{HTML}{2E6F9E}
+\definecolor{groupteal}{HTML}{1B7F72}
+\definecolor{darkgray}{HTML}{4A4A4A}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+
+\newcommand{\Methode}[1]{{\small\color{groupteal}\textbf{#1}}}
+
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{titleblue}}{\thesection}{0.6em}{}
+\titlespacing*{\section}{0pt}{1.2em}{0.5em}
+
+\begin{document}
+\sloppy
+
+\begin{center}
+{\Huge\bfseries\color{titleblue}Lektionsplan: Gewichtskraft \& Federkraft}\\[0.4em]
+{\large Doppellektion (2$\times$45 Min.) -- Diskussionsgrundlage}
+\end{center}
+\vspace{0.5em}
+
+\noindent\textbf{Klasse:} 2e \hfill \textbf{Lehrperson:} Loris Keller
+
+\vspace{0.3em}
+\noindent\textcolor{darkgray}{Dieses Dokument ist \textbf{keine} Reinschrift des Arbeitsblatts, sondern die
+Planungsgrundlage dafür: Lernziele, Aufbau der Lektion und die gewählte
+Didaktik-Methode pro Phase (aus \texttt{Methodensammlung\_Physikunterricht.pdf}).
+Nach Absprache wird daraus das \texttt{.tex}-Arbeitsblatt lokal in VS Code
+erstellt.}
+
+% =========================================================================
+\section*{1. Abgrenzung und Lernziele}
+
+\textbf{Im Fokus:} Gewichtskraft ($F_G = m\cdot g$, ortsabhängig über den
+Ortsfaktor $g$) und Federkraft nach dem Hookeschen Gesetz
+($F = D\cdot\Delta x$, Federkonstante $D$ als Steigung im
+$F$-$\Delta x$-Diagramm), verknüpft über das Prinzip des
+Kräftegleichgewichts (Kalibrierung eines Kraftmessers).
+
+\textbf{Bereits bekannt (nur Repetition, keine Neueinführung):} $F\sim a$ aus
+dem Modellwagen-Experiment der letzten Stunde, das Grundprinzip eines
+Kraftmessers (Feder + Skala in Newton, aus der Werkstatt Kraft), der
+Ortsfaktor $g$ als Begriff.
+
+\textbf{Bewusst nicht Teil dieser Einheit:} die Trägheits-/Impuls-Stationen
+aus derselben Werkstatt (Münzen/Lineal, Crash-Test Bälle, Lokomotive/Magnete)
+-- diese gehören zur späteren Wechselwirkung-Einheit (Newton 3) und werden
+hier nur am Rande im Plenumsrückblick erwähnt. Ebenfalls nicht Teil:
+Federspannenergie, Reihen-/Parallelschaltung von Federn, Luftwiderstand
+(ein ursprünglich geplantes Hammer-und-Feder-Beispiel zur Mondlandung wurde
+deshalb wieder vollständig gestrichen, siehe Abschnitt~3) sowie das
+Federpendel (die Vertiefungsaufgabe \glqq Wiegen im Weltraum\grqq{} bleibt
+deshalb bewusst beim Stichwort Trägheit, ohne den
+Schwingungsmechanismus zu erklären).
+
+\begin{itemize}[leftmargin=1.3cm,itemsep=0.3em]
+  \item[LZ1] die Kraft-Relation $F\sim a$ auf ein neues Beispiel anwenden
+  (Fussballschuss) und damit Kinematik (Beschleunigung) und Dynamik (Kraft)
+  explizit verknüpfen.
+  \item[LZ2] zwischen Trägheit (Masse) und Gewichtskraft eines Körpers
+  unterscheiden und begründen, welche der beiden Grössen sich beim Wechsel
+  des Ortes (z.\,B. von der Erde zum Mond) ändert und welche gleich bleibt.
+  (Ergebnis bewusst nicht vorweggenommen, siehe Abschnitt 3.)
+  \item[LZ3] die Gewichtskraft berechnen ($F_G=m\cdot g$) und mit
+  unterschiedlichen Ortsfaktoren rechnen (Erde, Mond, ggf. unbekannter
+  Planet), inkl. Wissen, dass $g$ gleichwertig in $\text{m/s}^2$ oder
+  $\text{N/kg}$ angegeben werden kann.
+  \item[LZ4] explizit zwischen der Längen\emph{änderung} $\Delta x$ einer
+  Feder und ihrer absoluten Länge $x$ unterscheiden, insbesondere bei einer
+  bereits vorgespannten Feder.
+  \item[LZ5] aus eigenen Messdaten (Federkraftmesser-Experiment) den
+  Zusammenhang zwischen Federkraft $F$ und Längenänderung $\Delta x$
+  untersuchen, daraus die Federkonstante $D$ bestimmen und zwei Federn
+  unterschiedlicher Härte miteinander vergleichen. (Ergebnis bewusst nicht
+  vorweggenommen, siehe Abschnitt 3.)
+  \item[LZ6] das Kalibrierungsprinzip eines Kraftmessers erklären
+  (Gleichgewicht zwischen Feder- und Gewichtskraft) und es anwenden, um zu
+  beschreiben, wie sich aus einer unkalibrierten Feder mit einfachen
+  Mitteln ein funktionierender Kraftmesser bauen liesse.
+  \item[LZ7] die Einheit der Federkonstante von N/cm in N/m umrechnen.
+\end{itemize}
+
+% =========================================================================
+\section*{2. Aufbau der Doppellektion}
+
+\begin{xltabular}{\textwidth}{@{}p{2.6cm}X p{1.2cm}@{}}
+\toprule
+\textbf{Phase} & \textbf{Inhalt \& Methode} & \textbf{Zeit} \\
+\midrule
+\endhead
+
+Wiederholung &
+\textbf{Plenum: Kraftformel \& Werkstatt-Rückblick.} Kurze Auffrischung von
+$F\sim a$ (Modellwagen-Experiment) und der wichtigsten Beobachtungen aus der
+Werkstatt Kraft (Kraftmesser-Grundprinzip; Trägheits-Stationen nur am Rande
+erwähnt, nicht neu bearbeitet). \Methode{B1 Vergewisserungsphase} -- kurze
+aktive Denkpause (allein/zu zweit), bevor im Plenum weitergemacht wird. &
+6' \\[0.4em]
+
+Übung &
+\textbf{$F=ma$ am neuen Beispiel: Fussballschuss.} Ein Fussball hat vor dem
+Schuss $v=0$, danach eine gewisse Geschwindigkeit -- welche Kraft muss der
+Fuss ausgeübt haben (LZ1)? Explizite Verknüpfung Kinematik (Beschleunigung)
+$\leftrightarrow$ Dynamik (Kraft). \Methode{C3 Think-Pair-Share} -- zuerst
+allein überlegen, dann zu zweit austauschen, abschliessend im Plenum
+teilen. &
+10' \\[0.4em]
+
+Aktivierung 1 &
+\textbf{Steinstoss: Erde vs. Mond -- Trägheit.} Ein Astronaut schlägt sich
+mit dem Fuss zuerst auf der Erde, dann gedanklich auf dem Mond am selben
+Stein an: Tut es auf dem Mond mehr, weniger oder gleich weh? Kernpunkt: die
+Trägheit des Steins ist auf beiden Himmelskörpern exakt gleich, weil
+Trägheit eine Eigenschaft der Masse ist, nicht der Gravitation (PhysikLibre
+Kap.~4.2: \glqq Die Masse $m$ \dots{} wird auch als träge Masse oder
+Trägheit bezeichnet\grqq{}) (LZ2). \Methode{B1 Vergewisserungsphase} --
+kurze Denkpause allein, danach Plenum; kein Video nötig, da nichts
+Beobachtbares unterschiedlich ausfällt. &
+4' \\[0.4em]
+
+Aktivierung 2 &
+\textbf{Golfball auf dem Mond -- separat anschliessend.} Neue, getrennte
+Frage: Kommt ein Golfball auf dem Mond weiter als auf der Erde, und warum?
+Hier geht es nicht mehr um Trägheit, sondern um die kleinere Gewichtskraft
+(kleinerer Ortsfaktor $g$) (LZ2, Vorgriff LZ3). \Methode{B1
+Vergewisserungsphase} -- Partnerarbeit statt Einzelarbeit (reine
+Gedankenaufgabe, kein Experiment), danach Plenumsdiskussion, in der die
+Lehrperson das historische Ergebnis (Shepards Golfschlag, Apollo~14, 1971)
+bestätigt und die Erklärung über die kleinere Gewichtskraft sichert (kein
+Video, da verfügbares Archivmaterial in der Bildqualität zu schlecht ist). &
+4' \\[0.4em]
+
+Theorie 1 &
+\textbf{Gewichtskraft.} $F_G=m\cdot g$, Ortsfaktor $g$ für Erde und Mond,
+Trägheit-Gewichtskraft-Unterschied aus beiden Aktivierungen festigen (LZ2,
+LZ3). Statt einer Ortsfaktor-Tabelle zeigt eine Abbildung
+(\texttt{Ortsfaktoren\_Planeten.jpg}, Quelle astronomiefans.de) die
+Ortsfaktoren mehrerer Himmelskörper auf einen Blick; daran anschliessend
+wird erklärt, dass $g$ gleichwertig in $\text{m/s}^2$ oder $\text{N/kg}$
+angegeben werden kann (die Abbildung verwendet N/kg). Lehrervortrag,
+geleitet, knapp gehalten. &
+7' \\[0.4em]
+
+Theorie 2 &
+\textbf{Federkraft-Konzept, OHNE das Hookesche Gesetz vollständig
+vorzutragen.} Kalibrierungsprinzip eines Kraftmessers: die Feder dehnt sich,
+bis Feder- und Gewichtskraft im Gleichgewicht sind (LZ6). Vorspannung der
+Feder und der Unterschied zwischen Längenänderung $\Delta x$ und Federlänge
+$x$ werden eingeführt -- die \emph{quantitative} Beziehung $F=D\cdot\Delta x$
+und $D$ selbst leiten die SuS in der Lernaufgabe aus eigenen Messdaten her
+(siehe unten, analog zum Vorgehen bei Kondensatoren). Direkt im Anschluss
+eine kurze individuelle Transferfrage (\glqq Vorgespannte Federn im
+Alltag\grqq{}, z.\,B. Autofederung/Stossdämpfer): Nennen und begründen, wo
+eine bereits vorgespannte Feder im Alltag vorkommt (LZ4). Lehrervortrag,
+geleitet, knapp gehalten. &
+9' \\[0.4em]
+
+Übergang &
+\textbf{Wechsel zur Partnerarbeit.} Umbau vom Plenum zu Partnerstationen:
+Gruppen bilden, Stationsmaterial (Massstab, Federn, Massen, Laptop/Excel-
+Vorlage) verteilen. Bewusst als eigene Zeile budgetiert, statt in der
+Lernaufgabe unterzugehen -- dieser Wechsel kostet bei einer echten
+Messapparatur (anders als bei einer Simulation) real Zeit. &
+4' \\[0.4em]
+
+Lernaufgabe &
+\textbf{Federkraftmesser-Experiment (Partnerarbeit) -- SuS leiten
+$F=D\cdot\Delta x$ und $D$ selbst her.} Das Aufgabenblatt öffnet mit einer
+\glqq Ziel\grqq{}-Box (Untersuchungsfrage ohne Ergebnisvorwegnahme) und
+einer Kräftediagramm-Aufgabe (Kräfte an der im Gleichgewicht hängenden
+Masse selbst einzeichnen, als Brücke von Theorie~2 hierher). Danach
+Stationsaufbau: Massstab mit zwei verschiebbaren Köpfen, oberer Kopf beim
+Nullpunkt der ungespannten Feder gesetzt, Metallfuss zum Aufhängen, mehrere
+Massen. Teil~1: Messreihen mit dem exakten Ortsfaktor $g=\SI{9.81}{\newton
+\per\kilogram}$ aufnehmen, in die vorbereitete Excel-Vorlage eintragen
+(Diagramm/Achsen bereits fertig), Steigung $D$ ablesen und die eigenen
+N/cm-Werte zusätzlich von Hand in die SI-Einheit N/m umrechnen,
+Rechenweg zeigen (LZ4, LZ5, LZ7 -- diese Umrechnung ist damit direkt in die
+Lernaufgabe integriert, keine separate Übungsphase mehr nötig). Teil~2:
+zwei Federn unterschiedlicher Härte vergleichen, dann eine
+Konstruktionsaufgabe (aus der unkalibrierten, stärkeren Feder mit Stift,
+bekannten Massen und einem Gehäuse selbst eine Federwaage bauen, LZ6).
+Teil~3: mit dem eigenen $D$-Wert eine neue Auslenkung vorhersagen und am
+Stationsaufbau überprüfen, dann als Synthese-Frage: Wie müsste die
+Kalibrierung dieser Federwaage angepasst werden, wenn ein Astronaut sie auf
+dem Mond benutzen soll (LZ2, LZ3, LZ6 verknüpft; beide Fälle -- Newton-Skala
+bleibt unverändert korrekt, Kilogramm-Skala müsste umskaliert werden --
+werden von den SuS anhand der beiden Gleichgewichtsgleichungen hergeleitet).
+\Methode{D1 Lernaufgabe} -- die reale Messapparatur macht den linearen
+Zusammenhang direkt erfahrbar; $F=D\cdot\Delta x$ entsteht hier bei den
+Lernenden selbst, nicht im Theorie-Vortrag. Diese Phase ist das
+didaktische Zentrum der Doppellektion und erhält deshalb bewusst den
+grössten Zeitanteil, inklusive Auf-/Abbau der Federn, beider Messreihen und
+der SI-Einheiten-Umrechnung. &
+43' \\[0.4em]
+
+Ausblick &
+\textbf{Zusatzaufgaben.} Kurzer Hinweis auf das separate Dokument
+\texttt{gewichtskraft-federkraft-zusatzaufgaben.tex} (Gewichtskraft auf
+verschiedenen Himmelskörpern, Einheiten der Federkonstante an vorgegebenen
+Werten, sowie drei an LEIFI angelehnte Vertiefungsaufgaben) für
+Vor-/Nachbereitung. &
+3' \\
+
+\bottomrule
+\end{xltabular}
+
+\textcolor{darkgray}{\small Summe: 90 Min. Die frühere eigene Zeile
+\glqq Übung: Einheitenumrechnung N/cm~$\to$~N/m\grqq{} entfällt, weil diese
+Umrechnung neu direkt in Teil~1 der Lernaufgabe stattfindet (an den eigenen
+Messdaten, mit gezeigtem Rechenweg); die frei gewordene Zeit ist in die
+Lernaufgabe (neu 43') geflossen. Theorie~2 wurde um die kurze
+Alltagstransfer-Frage zur Vorspannung auf 9' verlängert, der Ausblick im
+Gegenzug auf 3' gekürzt, da \glqq Einheiten der Federkonstante\grqq{} und
+\glqq Gewichtskraft berechnen\grqq{} nicht mehr im Arbeitsblatt selbst
+erklärt werden müssen, sondern bereits als eigenständiges Zusatzdokument
+vorliegen.}
+
+\textcolor{darkgray}{\small Zusätzlich enthält das Arbeitsblatt eine
+Vertiefungsaufgabe (\glqq Wiegen im Weltraum\grqq{}, eine einzelne Frage
+zum Kalibrierungsprinzip in Schwerelosigkeit, ohne den
+Federpendel-/Trägheitsmechanismus zu erklären), die bewusst nicht in den 90
+Minuten budgetiert ist: als Zusatzaufgabe für schnelle SuS während der
+Lernaufgabe oder als Hausaufgabe. Getrennt davon steht das eigenständige
+Dokument \texttt{gewichtskraft-federkraft-zusatzaufgaben.tex} (5 Aufgaben,
+28 Punkte, \texttt{\textbackslash noprintanswers}) für weitere
+Vor-/Nachbereitung zur Verfügung, analog zu
+\texttt{kondensatoren-zusatzaufgaben.tex}.}
+
+% =========================================================================
+\section*{3. Begründung der Methodenwahl}
+
+Die Fussball-Aufgabe (C3 Think-Pair-Share) macht die Kinematik-Dynamik-
+Verknüpfung an einem alltagsnahen Beispiel konkret, statt sie abstrakt zu
+postulieren -- passend zur ausdrücklichen Vorgabe, diese Verbindung
+herzustellen.
+
+Die beiden Astronaut-Aktivierungen sind bewusst getrennt, weil sie
+unterschiedliche Kernaussagen haben und sonst leicht vermischt würden.
+Beide sind als reine Gedankenaufgaben angelegt (B1 Vergewisserungsphase),
+nicht als Predict-Observe-Explain (M4): Es gibt in keiner der beiden
+Aktivierungen etwas Beobachtbares, das ein Experiment oder ein Video
+bräuchte. Bei Aktivierung~1 (Steinstoss) ist das offensichtlich, da die
+Trägheit auf beiden Himmelskörpern identisch bleibt. Bei Aktivierung~2
+(Golfball) wäre ein Video naheliegend gewesen (Shepards Golfschlag,
+Apollo~14), aber das verfügbare Archivmaterial ist in der Bildqualität zu
+schlecht, um im Unterricht tatsächlich etwas erkennen zu lassen. Die
+Aktivierung bleibt deshalb ebenfalls eine reine Partnerdiskussion: Die SuS
+begründen ihre Vermutung zu zweit, und die Lehrperson bestätigt das
+historische Ergebnis erst in der anschliessenden Plenumsdiskussion, statt
+es über ein schwaches Video zu belegen. Die Reihenfolge (zuerst Trägheit,
+dann Gewichtskraft) bereitet ausserdem Theorie~1 vor, ohne die beiden
+Konzepte in einer einzigen Aktivität zu vermengen.
+
+Die Federkraftmesser-Lernaufgabe (D1) ist bewusst analog zur PhET-Lernaufgabe
+bei Kondensatoren aufgebaut: Theorie 2 liefert nur das Konzept
+(Kräftegleichgewicht, Vorspannung, $\Delta x$ vs. $x$), nicht die fertige
+Formel. Die SuS leiten $F=D\cdot\Delta x$ und den Wert von $D$ selbst aus
+ihren eigenen Messdaten her -- dasselbe Prinzip, das sich bei Kondensatoren
+bewährt hat, hier auf ein reales Experiment statt eine Simulation
+übertragen. \textbf{Entschieden:} Ja, konsequent bis in die Lernziele-Box
+hinein. Weder die Formel $F=D\cdot\Delta x$ noch der Hinweis, dass $D$
+einer Diagrammsteigung entspricht, taucht irgendwo im Arbeitsblatt vor der
+Lernaufgabe auf, auch nicht in der Lernziele-Box: LZ4/LZ5 wurden dafür
+bewusst kompetenzorientiert statt ergebnisoffen umformuliert (analog zu
+LZ2, siehe Abschnitt~1).
+
+Eine weitere Vertiefungsaufgabe wurde ergänzt, bewusst nicht als eigene
+Zeile im Zeitplan budgetiert, sondern als Zusatzangebot: \glqq Wiegen im
+Weltraum\grqq{} ersetzt eine frühere, rein erklärende Hinweisbox durch eine
+echte Transferaufgabe. Die SuS begründen selbst, warum ein Federkraftmesser
+in Schwerelosigkeit versagt, statt es nur zu lesen.
+
+Ein ursprünglich geplantes Hammer-und-Feder-Beispiel (Apollo~15, David
+Scott, 1971, zur Mondlandung-Simultaneität von Hammer und Feder) wurde
+wieder gestrichen: Der Effekt ist nur unter Ausschluss von Luftwiderstand
+korrekt erklärbar, und Luftwiderstand gehört nicht zum Thema dieser
+Doppellektion.
+
+% =========================================================================
+\section*{4. Anschlussdokument: Aufgabenblatt}
+
+Wie von Sara Romer gewünscht, entsteht zusätzlich ein separates
+Aufgabenblatt: Es öffnet mit einer kurzen Kräftediagramm-Aufgabe (die
+Kräfte an der im Gleichgewicht hängenden Masse selbst einzeichnen, als
+Brücke von Theorie~2 zur Lernaufgabe) und enthält danach das komplette
+Federkraftmesser-Stationsexperiment in drei Teilen: Messreihen aufnehmen,
+die beiden Federn vergleichen, sowie eine Vorhersage mit dem eigenen
+$D$-Wert und deren Überprüfung am Stationsaufbau.
+
+% =========================================================================
+\section*{5. Optionale Zusatzmaterialien (Selbstkontrolle, nicht Ersatz)}
+
+Als optionale Ergänzung zum realen Federkraftmesser-Experiment, nicht als
+Ersatz dafür: die PhET-Simulationen \glqq Hooke's Law\grqq{} und \glqq
+Masses and Springs\grqq{} (Selbstkontrolle/Vertiefung, z.\,B. als
+Hausaufgabe) sowie das phyphox-Experiment \glqq Spring\grqq{}, das
+allerdings eher auf Schwingungsfrequenz zielt und damit näher an der
+späteren Schwingungs-Einheit liegt als an der statischen Messung hier.
+
+% =========================================================================
+\section*{6. Offene Punkte zur Besprechung}
+
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.4em]
+  \item Die Lernaufgabe wurde auf 38' (plus 4' eigene Übergangszeile)
+  angehoben, damit der physische Stationsaufbau (Auf-/Abbau, zwei Federn,
+  Excel-Eingabe) realistisch Platz hat -- dafür wurden Wiederholung,
+  Fussball-Übung und beide Theorie-Blöcke gekürzt. Reicht das in der
+  Praxis, oder braucht die Lernaufgabe noch mehr Zeit als bei einer reinen
+  Simulation?
+  \item Reicht eine einzige Werkstatt-Station (zwei Federn), oder sollen
+  weitere Variationen (z. B. Gummiband als nichtlineares Gegenbeispiel)
+  ergänzt werden?
+\end{itemize}
+
+\end{document}

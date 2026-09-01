@@ -1,0 +1,250 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Lektionsplan (Diskussionsgrundlage, NICHT das Arbeitsblatt selbst)
+% Kraftaddition & Kraftzerlegung -- UZH Praktikum I, Sara Romer Urban, KS im Lee, HS2026
+% Klasse: 2e
+% =============================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usepackage{array,booktabs,tabularx,xltabular}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\sisetup{per-mode=fraction,fraction-command=\frac}
+\usepackage{url}
+\Urlmuskip=0mu plus 1mu
+\def\UrlBreaks{\do\/\do-\do_}
+
+\definecolor{titleblue}{HTML}{183A6B}
+\definecolor{accentblue}{HTML}{2E6F9E}
+\definecolor{groupteal}{HTML}{1B7F72}
+\definecolor{darkgray}{HTML}{4A4A4A}
+\definecolor{warnred}{HTML}{9E2E2E}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+
+\newcommand{\Methode}[1]{{\small\color{groupteal}\textbf{#1}}}
+
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{titleblue}}{\thesection}{0.6em}{}
+\titlespacing*{\section}{0pt}{1.2em}{0.5em}
+
+\begin{document}
+\sloppy
+
+\begin{center}
+{\Huge\bfseries\color{titleblue}Lektionsplan: Kraftaddition \& Kraftzerlegung}\\[0.4em]
+{\large Doppellektion (2$\times$45 Min.) -- Diskussionsgrundlage}
+\end{center}
+\vspace{0.5em}
+
+\noindent\textbf{Klasse:} 2e (02.09.2026) \hfill \textbf{Lehrperson:} Loris Keller
+
+\vspace{0.3em}
+\noindent\textcolor{darkgray}{Dieses Dokument ist \textbf{keine} Reinschrift des Arbeitsblatts, sondern die
+Planungsgrundlage dafür: Lernziele, Aufbau der Lektion und die gewählte
+Didaktik-Methode pro Phase (aus \texttt{Methodensammlung\_Physikunterricht.pdf}).
+Nach Absprache wird daraus das \texttt{.tex}-Arbeitsblatt/Aufgabenblatt lokal in
+VS Code erstellt. Direkte Fortsetzung von Gewichtskraft \& Federkraft
+(26.08.2026) -- dieselbe Feder-Masse-Skizze dient hier als Einstieg.}
+
+% =========================================================================
+\section*{1. Abgrenzung und Lernziele}
+
+\textbf{Im Fokus:} Kraft als vektorielle (gerichtete) Grösse einführen und
+zwei grafische Grundoperationen damit üben -- die Kraftaddition (zwei und
+mehrere Kräfte) und die Kraftzerlegung mit dem Kräfteparallelogramm.
+Einstieg über die bereits bekannte Feder-Masse-Skizze der letzten Lektion.
+
+\textbf{Bereits bekannt (nur Repetition, keine Neueinführung):}
+Gewichtskraft $F_G=m\cdot g$ und Federkraft $F=D\cdot\Delta x$ (letzte
+Doppellektion), die Feder-Masse-Skizze selbst und das Prinzip, dass sich
+Feder- und Gewichtskraft im Gleichgewicht die Waage halten (dort bereits
+als Kräftediagramm-Aufgabe gezeichnet, hier zum ersten Mal explizit als
+Vektor-Gleichgewicht formalisiert), Kraft in Newton.
+
+\textbf{Bewusst nicht Teil dieser Einheit:} rechnerische/komponentenweise
+Kraftaddition (Sinus/Kosinus-Zerlegung) -- ausschliesslich grafisch, wie
+vorgegeben. Ebenfalls nicht Teil: Normalkraft und schiefe Ebene (eigene
+Doppellektion \texttt{normalkraft/}, 09.09.2026 -- das klassische
+Zerlegungsbeispiel \glqq Hangabtriebskraft auf der schiefen Ebene\grqq{}
+wird deshalb hier bewusst nicht verwendet, damit dort noch etwas Neues zu
+entdecken bleibt), Wirklinie/Angriffspunkt-Verschiebung als eigenes
+Lernziel, Drehmoment/Hebelgesetze.
+
+\begin{itemize}[leftmargin=1.3cm,itemsep=0.3em]
+  \item[LZ1] Kraft als vektorielle Grösse (Betrag \emph{und} Richtung)
+  beschreiben und Kräfte an einem Körper korrekt einzeichnen (vom
+  Schwerpunkt aus, mit einheitlichem Kraft-Maßstab) -- am Beispiel der
+  Feder-Masse-Skizze das Kräftegleichgewicht als Vektor-Gleichgewicht
+  formulieren.
+  \item[LZ2] die grafische Summe (Resultierende) von zwei und von
+  mehreren an einem Angriffspunkt wirkenden Kräften konstruieren
+  (Kopf-an-Schwanz-Verfahren bzw. Kräfteparallelogramm bei zwei Kräften),
+  mit einheitlichem Kraft-Maßstab.
+  \item[LZ3] an einem selbst konstruierten Beispiel zeigen, dass der
+  Betrag der resultierenden Kraft im Allgemeinen \emph{nicht} der
+  arithmetischen Summe der einzelnen Kraftbeträge entspricht, sondern von
+  der Winkeldifferenz der beteiligten Kräfte abhängt.
+  \item[LZ4] eine gegebene Kraft mithilfe des Kräfteparallelogramms
+  grafisch in zwei vorgegebene Richtungen zerlegen (Kraftzerlegung als
+  Umkehrung der Kraftaddition).
+  \item[LZ5] für Kraftaddition und Kraftzerlegung je mindestens ein
+  Alltagsbeispiel nennen und die grafische Konstruktion darauf anwenden.
+\end{itemize}
+
+% =========================================================================
+\section*{2. Aufbau der Doppellektion}
+
+\begin{xltabular}{\textwidth}{@{}p{2.6cm}X p{1.2cm}@{}}
+\toprule
+\textbf{Phase} & \textbf{Inhalt \& Methode} & \textbf{Zeit} \\
+\midrule
+\endhead
+
+Repetition/ Anknüpfung &
+\textbf{Feder-Masse-Skizze: Kräfte einzeichnen.} Dieselbe Skizze wie in
+der letzten Lernaufgabe (Feder mit hängender Masse) -- Kräfte vom
+Schwerpunkt aus einzeichnen (LZ1, Repetition). \Methode{B1
+Vergewisserungsphase} -- kurze Einzelarbeit, danach Plenumsabgleich. &
+6' \\[0.4em]
+
+Theorie &
+\textbf{Kraft als Vektor, Kräftegleichgewicht.} Kraft hat Betrag
+\emph{und} Richtung, mathematisch ein Pfeil/Vektor $\vec F$ (PhysikLibre
+4.1.2). An der Feder-Masse-Skizze: Federkraft und Gewichtskraft sind
+gleich lang, zeigen aber in entgegengesetzte Richtung -- Vektorsumme
+gleich Null (LZ1). Lehrervortrag, geleitet, Tafelskizze. &
+10' \\[0.4em]
+
+Theorie/ Konstruktion &
+\textbf{Kraftaddition zweier Kräfte, Kräfteparallelogramm, Kraft-Maßstab.}
+Zwei Kräfte am selben Angriffspunkt grafisch addieren: Kräfteparallelogramm,
+Resultierende als Diagonale durch den Angriffspunkt (PhysikLibre 4.3.2).
+Konzept des Kraft-Maßstabs einführen (z.\,B. 1\,cm $\hat=$ 1\,N, PhysikLibre
+4.3.3) -- für alle Kraftpfeile im selben Diagramm verbindlich (LZ2).
+Lehrervortrag, gemeinsame Tafelkonstruktion. &
+10' \\[0.4em]
+
+Übung &
+\textbf{Kraftaddition mehrerer Kräfte, Alltagsbeispiele.} Kopf-an-Schwanz-
+Verfahren für mehr als zwei Kräfte am selben Angriffspunkt (PhysikLibre
+4.3.1) -- Reihenfolge der Pfeile ist beliebig, Ergebnis bleibt gleich.
+Gruppen konstruieren je ein eigenes Alltagsbeispiel (Tauziehen, Boot mit
+Motor und Seitenwind, Hund an zwei Leinen) auf dem Whiteboard und
+präsentieren kurz (LZ2, LZ5). \Methode{M3 Whiteboarding} -- Dreiergruppen,
+danach Boards hochhalten. &
+15' \\[0.4em]
+
+Kernaufgabe &
+\textbf{Resultierende $\neq$ Summe der Beträge.} Zwei gleich grosse Kräfte
+(z.\,B. je 4\,N) bei verschiedenen Zwischenwinkeln (0°, 90°, 180°, ggf.
+60°) grafisch addieren, Resultierende jeweils mit dem Maßstab ausmessen.
+Entdeckung: bei 0° ist die Resultierende maximal (Summe der Beträge), bei
+180° minimal, dazwischen liegt sie immer \emph{unterhalb} der
+arithmetischen Summe (LZ3). \Methode{M9 Produktives Üben} -- Winkel
+systematisch variieren, Muster selbst entdecken; Einzel-/Partnerarbeit. &
+15' \\[0.4em]
+
+Theorie &
+\textbf{Kraftzerlegung mit dem Kräfteparallelogramm.} Umkehrung von
+Kraftaddition: eine gegebene Kraft in zwei vorgegebene Richtungen
+zerlegen (PhysikLibre 4.3.4). Alltagsbeispiel: eine Verkehrsampel, die an
+zwei schräg gespannten Seilen hängt -- die Gewichtskraft wird in zwei
+Teilkräfte entlang der Seilrichtungen zerlegt (Bild 4.17) (LZ4).
+Lehrervortrag, geleitet, Tafelkonstruktion. &
+10' \\[0.4em]
+
+Übung &
+\textbf{Kraftzerlegung selbst konstruieren.} Partnerarbeit: eigene
+Zerlegungsaufgabe konstruieren (vorgegebene Kraft, vorgegebene Richtungen),
+plus ein selbst gewähltes Alltagsbeispiel (Zerlegung \emph{oder} weitere
+Addition) grafisch umsetzen (LZ4, LZ5). Alle Konstruktionen auf Feinraster
+mit angegebenem Maßstab, Resultat mit Lineal nachmessbar. Partnerarbeit,
+Lehrperson zirkuliert. &
+15' \\[0.4em]
+
+Abschluss &
+\textbf{Zusammenfassung und Ausblick aufs Aufgabenblatt.} Kurze
+Zusammenfassung der beiden Grundoperationen (Addition/Zerlegung) und
+Hinweis auf das separate Aufgabenblatt für weitere Übung. Plenum. &
+5' \\
+
+\bottomrule
+\end{xltabular}
+
+\textcolor{darkgray}{\small Summe: 86 Min. -- 4 Min. Puffer innerhalb der
+90 Min. der Doppellektion, bewusst als Reserve für die beiden
+Konstruktionsphasen (Whiteboarding, Kernaufgabe), deren Zeitbedarf je nach
+Zeichentempo der Klasse schwankt.}
+
+% =========================================================================
+\section*{3. Begründung der Methodenwahl}
+
+Die Kernaufgabe (Resultierende $\neq$ Summe der Beträge) ist bewusst als
+M9 Produktives Üben statt als einzelne Rechenaufgabe angelegt: Durch
+systematisches Variieren des Zwischenwinkels bei sonst gleichbleibenden
+Kraftbeträgen entdecken die SuS das Muster (Maximum bei 0°, Minimum bei
+180°) selbst, statt es nur vorgetragen zu bekommen -- passend zur
+expliziten Vorgabe, dass mindestens ein Beispiel zeigen soll, dass Kräfte
+sich nicht wie gewöhnliche Zahlen addieren.
+
+Die Alltagsbeispiel-Phase (Kraftaddition mehrerer Kräfte) nutzt M3
+Whiteboarding statt Lehrervortrag, weil die Konstruktion selbst
+(Kopf-an-Schwanz-Verfahren) beim eigenen Zeichnen viel eher verinnerlicht
+wird als beim Zusehen, und weil Alltagsbeispiele in der Gruppe
+diskutiert und verglichen werden sollen (mehrere plausible Beispiele
+kursieren erfahrungsgemäss, z.\,B. Tauziehen vs. Boot mit Seitenwind).
+
+Die abschliessende Zerlegungs-Übung ist bewusst Partnerarbeit statt
+Whiteboarding: Nach zwei bereits kollaborativen Phasen (Addition-Übung,
+Kernaufgabe) sorgt der Wechsel zur Partnerarbeit für Abwechslung und gibt
+jeder/jedem genügend eigene Zeichenzeit für eine individuell wählbare
+Aufgabe.
+
+Der Einstieg über die Feder-Masse-Skizze knüpft bewusst an eine bereits
+gezeichnete, vertraute Situation an (Sara Romers Vorgabe: Anknüpfung an
+die letzte Lektion), statt mit einem neuen, unbekannten Beispiel zu
+beginnen -- das Kräftegleichgewicht wird dadurch nicht neu eingeführt,
+sondern nur neu (als Vektorgleichung) interpretiert.
+
+% =========================================================================
+\section*{4. Grafische Aufgaben: Feinraster und Maßstab (verbindlich)}
+
+Wie vorgegeben erhält \emph{jede} grafische Konstruktionsaufgabe --
+sowohl im Arbeitsblatt als auch im Aufgabenblatt -- ein Feld mit feinem
+Punkt- oder Liniengitter sowie eine explizit angegebene Maßstabsangabe
+(z.\,B. \glqq 1\,cm $\hat=$ 1\,N\grqq{}). Die gegebenen Kraftpfeile sind
+exakt in der angegebenen Länge einzuzeichnen, sodass auch das Ergebnis
+(Resultierende bzw. Teilkräfte) mit demselben Maßstab nachgemessen werden
+kann -- die SuS sollen ihre Konstruktion selbst kontrollieren können,
+ohne die Lösung nachschlagen zu müssen. Diese Vorgabe gilt für alle
+Konstruktionsaufgaben der Kernaufgabe, der Whiteboarding-Übung und der
+abschliessenden Partnerarbeit gleichermassen.
+
+% =========================================================================
+\section*{5. Anschlussdokument: Aufgabenblatt}
+
+Wie von Sara Romer gewünscht, entsteht zusätzlich ein separates
+Aufgabenblatt mit reinen Übungsaufgaben zu Kraftaddition und
+-zerlegung -- alle grafisch, mit Feinraster und Maßstab wie oben --
+inklusive einer Aufgabe, in der die SuS ein eigenes Alltagsbeispiel frei
+wählen (Addition \emph{oder} Zerlegung) und selbst konstruieren.
+
+% =========================================================================
+\section*{6. Optionale Zusatzmaterialien (Selbstkontrolle, nicht Ersatz)}
+
+Als optionale Ergänzung zur eigenen grafischen Konstruktion, nicht als
+Ersatz dafür: die PhET-Simulationen \glqq Vector Addition\grqq{} (grafisch,
+Kopf-an-Schwanz und Parallelogramm) sowie \glqq Vector Addition:
+Equations\grqq{} (Komponentenschreibweise -- bewusst nicht Teil dieser
+Lektion, siehe Abschnitt 1).
+
+\end{document}

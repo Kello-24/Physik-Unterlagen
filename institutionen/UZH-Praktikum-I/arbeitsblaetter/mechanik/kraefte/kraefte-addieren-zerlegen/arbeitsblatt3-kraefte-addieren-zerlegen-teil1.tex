@@ -1,0 +1,705 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Arbeitsblatt 3: Kraftaddition & Kraftzerlegung
+% UZH Praktikum I -- Sara Romer Urban, Kantonsschule im Lee, HS2026
+% Klasse: 2e (02.09.2026)
+%
+% Direkte Fortsetzung von Gewichtskraft & Federkraft (26.08.2026): dieselbe
+% Feder-Masse-Skizze dient hier als Repetitions-/Anknuepfungs-Einstieg, an dem
+% zum ersten Mal explizit das Kraeftegleichgewicht als Vektorgleichung
+% formuliert wird. Enthaelt alle Papier-Konstruktionsaufgaben der Lektion
+% (Repetition, Kraftaddition zweier und mehrerer Kraefte, Kernaufgabe zur
+% Winkelabhaengigkeit der Resultierenden, Kraftzerlegung mit dem
+% Kraefteparallelogramm) -- ausschliesslich grafisch, keine rechnerische/
+% komponentenweise Kraftaddition (siehe Abgrenzung in lernziele.md). Das
+% separate Aufgabenblatt mit reinen Uebungsaufgaben entsteht laut
+% Lektionsplan Abschnitt 5 als eigenes Dokument.
+%
+% Quellen: lernziele.md (dieser Ordner), kraefte-addieren-zerlegen-
+% lektionsplan.tex (freigegebene Diskussionsgrundlage, dieser Ordner),
+% arbeitsblatt2-gewichtskraft-federkraft-teil1.tex (Feder-Masse-Skizze,
+% Vorlage fuer Box-Definitionen ohne Farbrahmen), PhysikLibre Kap. 4.1.2
+% (Kraft als Vektorgroesse) und 4.3 (4.3.1 Zusammenfassen von Kraeften,
+% 4.3.2 Kraefteparallelogramm, 4.3.3 Kraefteediagramm/Kraft-Massstab, 4.3.4
+% Aufteilung von Kraeften, Bild 4.17 Ampelbeispiel).
+% =============================================================================
+\documentclass[addpoints,11pt,a4paper]{exam}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.2cm,headheight=14pt]{geometry}
+\usepackage{amsmath}
+\usepackage{siunitx}
+% Hausstil: zusammengesetzte Einheiten immer als echter Bruch (\frac), nicht
+% als Inline-Schraegstrich oder \tfrac -- gilt global fuer jedes \si/\SI.
+\sisetup{per-mode=fraction,fraction-command=\frac}
+\usepackage{array,booktabs,tabularx,multirow}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage[most]{tcolorbox}
+\usepackage{lastpage}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\usetikzlibrary{arrows.meta,calc,angles,quotes,decorations.pathmorphing}
+
+\usepackage{setspace}
+\usepackage{needspace}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+\setstretch{1.08}
+\setlist[itemize]{itemsep=0.4em}
+
+% -----------------------------
+% Farben (Corporate-Farbschema Physik KFR)
+% -----------------------------
+\definecolor{titleblue}{HTML}{183A6B}
+\definecolor{accentblue}{HTML}{2E6F9E}
+\definecolor{lightblue}{HTML}{EAF4FB}
+\definecolor{lightgray}{HTML}{F4F6F8}
+\definecolor{darkgray}{HTML}{4A4A4A}
+\definecolor{accentorange}{HTML}{D9720C}
+\definecolor{accentpurple}{HTML}{7B2D8E}
+% Hinweisbox: Orange (accentorange), fuer wichtige Klarstellungen.
+\definecolor{lightorange}{HTML}{FCEEE0}
+% Formelbox: Violett (accentpurple), fuer die zentralen Merksaetze.
+\definecolor{lightpurple}{HTML}{F3EAF7}
+
+% Links (hyperref): farblich ans Corporate-Farbschema angeglichen.
+\hypersetup{
+  colorlinks=true,
+  urlcolor=accentblue,
+  linkcolor=accentblue,
+  pdftitle={Arbeitsblatt 3: Kraftaddition \& Kraftzerlegung},
+  pdfauthor={Loris Keller}
+}
+
+% -----------------------------
+% Spaltentypen
+% -----------------------------
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% -----------------------------
+% Boxen
+% -----------------------------
+\tcbset{before skip=10pt, after skip=10pt}
+\newtcolorbox{titlebox}{
+  enhanced,
+  colback=titleblue,
+  colframe=titleblue,
+  boxrule=0pt,
+  arc=3mm,
+  left=3mm,right=3mm,top=3mm,bottom=3mm
+}
+
+\newlength{\aufgabenindent}
+\settowidth{\aufgabenindent}{10.\hskip\labelsep}
+
+% Praktikum I: Lernziele/Einleitung/Theorie/Aufgaben werden NICHT mehr
+% farbig gerahmt (nur Formel-, Hinweis- und Antwortbox bleiben Boxen) --
+% siehe institutionen/UZH-Praktikum-I/CLAUDE.md, Abschnitt "Boxen-Layout".
+\newenvironment{infobox}{%
+  \par\addvspace{10pt}\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+\newenvironment{theoriebox}[1][Theorie]{%
+  \par\addvspace{10pt}\noindent\textbf{#1}\par\smallskip\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+% taskbox/groupbox stehen in questions VOR dem ersten \question (Bilder,
+% Fliesstext) -- exam.cls' questions-Liste braucht dafuer eine echte,
+% eigenstaendige Box (sonst "Something's wrong--perhaps a missing \item",
+% weil z.B. ein \begin{center} vor dem ersten \item der Aussenliste steht).
+% Deshalb bleiben es tcolorboxen, nur unsichtbar gemacht (keine Farbe/Rahmen,
+% kein Padding) statt sie durch reine Absaetze zu ersetzen.
+\newtcolorbox{taskbox}[1][]{
+  enhanced, breakable,
+  colback=white, colframe=white, boxrule=0pt,
+  left=0mm,right=0mm,top=0mm,bottom=0mm,
+  before skip=10pt, after skip=10pt,
+  before upper={%
+    \def\tmpboxtitle{#1}%
+    \ifx\tmpboxtitle\empty\else\noindent\textbf{#1}\par\smallskip\fi
+  }
+}
+
+\newtcolorbox{groupbox}[1][Gruppenarbeit]{
+  enhanced, breakable,
+  colback=white, colframe=white, boxrule=0pt,
+  left=0mm,right=0mm,top=0mm,bottom=0mm,
+  before skip=10pt, after skip=10pt,
+  before upper={\noindent\textbf{#1}\par\smallskip}
+}
+
+% beispielbox: fuer die Einleitung -- wie die anderen Inhaltsboxen ungerahmt.
+\newenvironment{beispielbox}[1][Beispiel]{%
+  \par\addvspace{10pt}\noindent\textbf{#1}\par\smallskip\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+% hinweisbox: Orange, fuer wichtige Klarstellungen/Verwechslungswarnungen.
+\newtcolorbox{hinweisbox}[1][Hinweis]{
+  enhanced,
+  breakable,
+  colback=lightorange,
+  colframe=accentorange,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+% formelbox: Violett, um die zentralen Merksaetze dieser Einheit hervorzuheben.
+\newtcolorbox{formelbox}[1][Merksatz]{
+  enhanced,
+  breakable,
+  colback=lightpurple,
+  colframe=accentpurple,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.9pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+\newtcolorbox{answerbox}{
+  breakable,
+  colback=white,
+  colframe=gray!55,
+  boxrule=0.5pt,
+  arc=1.5mm,
+  left=2mm,right=2mm,top=2mm,bottom=2mm
+}
+
+% Marke: kleines farbiges Inline-Label fuer Teilschritte/Ergebnis-Callouts.
+\newtcbox{\Marke}[1][accentpurple]{
+  nobeforeafter,
+  colback=#1,
+  colframe=#1,
+  coltext=white,
+  boxrule=0pt,
+  arc=2pt,
+  left=5pt,right=5pt,top=2pt,bottom=2pt,
+  fontupper=\bfseries\sffamily\small
+}
+
+% --- Feinraster-Helfer fuer alle grafischen Konstruktionsaufgaben ----------
+% Feld mit feinem Punkt-/Liniengitter (0.5 cm Nebenlinien, 1 cm Hauptlinien),
+% sodass bei Massstab 1 cm = 1 N jede Kraft exakt und nachmessbar
+% eingezeichnet werden kann. #1#2 = linke untere Ecke, #3#4 = rechte obere Ecke.
+\newcommand{\Feinraster}[4]{%
+  \draw[gray!22,step=0.5] (#1,#2) grid (#3,#4);
+  \draw[gray!55,step=1] (#1,#2) grid (#3,#4);
+}
+
+% Kraft-Massstab-Angabe (z.B. 1 cm = 1 N), einheitlich ueber siunitx statt
+% handgesetztem \text{cm}/\text{N} -- #1 = Laenge in cm, #2 = Kraft in N.
+\newcommand{\Massstab}[2]{\SI{#1}{\centi\meter}\mathrel{\hat=}\SI{#2}{\newton}}
+
+% --- Loesungen ein-/ausblenden -----------------------------------------------
+\noprintanswers
+%\printanswers
+
+\pointformat{}
+\renewcommand{\solutiontitle}{\noindent\color{titleblue}\textbf{L\"osung:}\enspace}
+
+\pagestyle{headandfoot}
+\cfoot{\textcolor{darkgray}{Seite \thepage\ von \pageref{LastPage}}}
+
+\newcommand{\Kopfzeile}[4]{%
+  \begin{titlebox}
+    {\color{white}\sffamily\bfseries\Large #4}
+  \end{titlebox}
+  \vspace{0.5em}
+  \noindent\textbf{Klasse:}~#1 \hfill \textbf{Datum:}~#2 \hfill \textbf{Thema:}~#3
+    \hfill \textbf{Lehrperson:}~Loris Keller
+  \vspace{0.8em}
+  \lhead{\textcolor{darkgray}{#3}}
+  \rhead{\textcolor{darkgray}{#4}}
+}
+
+\newlength{\antwortraumlen}
+\newcommand{\Antwortraum}[1]{%
+  \pgfmathsetlength{\antwortraumlen}{#1*2.5cm}%
+  \begin{answerbox}
+    \rule{0pt}{\antwortraumlen}%
+  \end{answerbox}%
+}
+
+% Werte fuer Kopfzeile zentral setzen
+\newcommand{\Klasse}{2e}
+\newcommand{\Datum}{02.09.2026}
+\newcommand{\Thema}{Kraftaddition \& Kraftzerlegung}
+\newcommand{\ArbeitsblattTitel}{Arbeitsblatt 3: Kraftaddition \& Kraftzerlegung}
+
+\begin{document}
+
+\Kopfzeile{\Klasse}{\Datum}{\Thema}{\ArbeitsblattTitel}
+
+% =============================================================================
+% Lernziele (aus lernziele.md)
+% =============================================================================
+\begin{infobox}
+\textbf{Lernziele}\\
+Am Ende dieser Doppellektion kann ich \dots
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.3em]
+  \item Kraft als vektorielle Grösse (Betrag \emph{und} Richtung) beschreiben und Kräfte an einem Körper korrekt einzeichnen (vom Schwerpunkt aus, mit einheitlichem Kraftmassstab) sowie am Beispiel der Feder-Masse-Skizze das Kräftegleichgewicht als Vektorgleichung formulieren. (LZ1)
+  \item die grafische Summe (Resultierende) von zwei und von mehreren an einem Angriffspunkt wirkenden Kräften konstruieren (Kräfteparallelogramm bzw. Kopf-an-Schwanz-Verfahren), mit einheitlichem Kraftmassstab. (LZ2)
+  \item an einem selbst konstruierten Beispiel untersuchen, wie der Betrag der resultierenden Kraft von der Winkeldifferenz zweier gleich grosser Kräfte abhängt. (LZ3)
+  \item eine gegebene Kraft mithilfe des Kräfteparallelogramms grafisch in zwei vorgegebene Richtungen zerlegen. (LZ4)
+  \item für Kraftaddition und Kraftzerlegung je ein Alltagsbeispiel nennen und die grafische Konstruktion darauf anwenden. (LZ5)
+\end{itemize}
+\end{infobox}
+
+% =============================================================================
+% Einleitung
+% =============================================================================
+\begin{beispielbox}[Einleitung: Wenn mehrere Kräfte gleichzeitig ziehen]
+Beim Tauziehen ziehen zwei Mannschaften mit jeweils grosser Kraft am selben
+Seil. Trotzdem bewegt sich das Seil oft nur langsam oder gar nicht. Ähnlich
+ergeht es einem Boot, das von seinem Motor \emph{und} gleichzeitig vom Wind
+seitlich angetrieben wird: Es fährt am Ende weder in die Richtung des Motors
+noch in die des Windes, sondern irgendwo dazwischen. In beiden Fällen wirken
+mehrere Kräfte gleichzeitig auf denselben Körper, und die Wirkung, die
+tatsächlich zu beobachten ist, entspricht keiner der einzelnen Kräfte allein.
+
+Damit man solche Situationen vorhersagen kann, braucht es eine Regel, wie
+sich mehrere Kräfte zu einer einzigen \emph{Gesamtwirkung} zusammensetzen,
+und ebenso die Umkehrung: Wie ersetzt man eine einzelne Kraft (zum Beispiel
+das Gewicht einer an zwei Seilen hängenden Ampel) durch zwei Teilkräfte, die
+zusammen dieselbe Wirkung haben? Genau darum geht es in dieser Doppellektion:
+Kraftaddition und Kraftzerlegung, beide rein grafisch mit Zeichnung und
+Lineal.
+\end{beispielbox}
+
+% =============================================================================
+% Repetition/Anknuepfung: Feder-Masse-Skizze (LZ1)
+% =============================================================================
+\begin{questions}
+\begin{taskbox}[Repetition: Die Feder-Masse-Skizze]
+\question In der letzten Doppellektion haben Sie bereits gezeichnet, dass
+sich Federkraft und Gewichtskraft bei einer ruhenden, hängenden Masse die
+Waage halten. Die Skizze unten zeigt dieselbe Situation noch einmal.
+
+\begin{center}
+\begin{tikzpicture}[>=Latex,scale=1.3]
+  \draw[very thick] (-1,3) -- (2,3);
+  \foreach \x in {-0.8,-0.4,...,1.8} { \draw (\x,3) -- (\x-0.25,3.3); }
+  \draw[decorate,decoration={coil,aspect=0.3,segment length=3.2pt,amplitude=3pt}] (0.5,3) -- (0.5,1.6);
+  \draw[fill=lightgray!60] (0.1,1.1) rectangle (0.9,1.6);
+  \node at (0.5,1.35) {$m$};
+  \fill (0.5,1.35) circle (0.6pt);
+\end{tikzpicture}
+\end{center}
+
+\begin{parts}
+  \part[2] Zeichnen Sie direkt in der Skizze oben, ausgehend vom Schwerpunkt
+  der Masse (markierter Punkt), die Federkraft $\vec F$ und die Gewichtskraft
+  $\vec F_G$ als Pfeile ein. Wählen Sie dafür einen selbst gewählten,
+  einheitlichen Kraftmassstab und beschriften Sie beide Pfeile.
+
+  \part[1] Formulieren Sie das Kräftegleichgewicht zwischen Federkraft und
+  Gewichtskraft nun als \emph{Vektorgleichung} (nicht nur als Aussage über
+  die Beträge).
+  \Antwortraum{1}
+  \begin{solution}
+  \[
+    \vec F + \vec F_G = \vec 0, \qquad \text{d.\,h. } \vec F = -\vec F_G.
+  \]
+  Die beiden Kraftvektoren sind gleich lang, zeigen aber in \emph{entgegengesetzte}
+  Richtungen; ihre Vektorsumme ist der Nullvektor.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Theorie 1: Kraft als vektorielle Groesse
+% =============================================================================
+\begin{theoriebox}[Kraft als vektorielle Grösse]
+Bisher wurde eine Kraft meist nur über ihren \textbf{\emph{Betrag}} (die
+Zahl in Newton) beschrieben. Das reicht jedoch nicht aus, um zu wissen, wie
+ein Körper auf mehrere gleichzeitig wirkende Kräfte reagiert: Zwei Kräfte
+von je $\SI{4}{\newton}$, die in dieselbe Richtung ziehen, wirken ganz
+anders zusammen als zwei Kräfte von je $\SI{4}{\newton}$, die in
+entgegengesetzte Richtungen ziehen, wie schon die Feder-Masse-Skizze oben
+zeigt.
+
+Deshalb hat jede Kraft nicht nur einen Betrag, sondern auch eine
+\textbf{\emph{Richtung}}. Eine Grösse mit Betrag \emph{und} Richtung heisst
+\textbf{\emph{Vektor}} und wird durch einen Pfeil dargestellt: Die Länge des
+Pfeils steht (nach einem einheitlichen Kraftmassstab) für den Betrag, die
+Pfeilrichtung für die Richtung der Kraft. Das Formelsymbol trägt deshalb
+einen Vektorpfeil: $\vec F$, Einheit weiterhin $\si{\newton}$.
+
+\begin{hinweisbox}[Hinweis: Kraftmassstab]
+Sobald mehrere Kraftpfeile im selben Diagramm gezeichnet werden, muss für
+\emph{alle} Pfeile derselbe Kraftmassstab gelten (z.\,B. $\Massstab{1}{1}$).
+Sonst lässt sich das Ergebnis nachher nicht mehr mit
+dem Lineal nachmessen. Ein Pfeil, der nur \glqq ungefähr passend\grqq{}
+gezeichnet wird, macht die ganze Konstruktion unbrauchbar.
+\end{hinweisbox}
+\end{theoriebox}
+
+% =============================================================================
+% Theorie 2: Kraftaddition zweier Kraefte, Kraefteparallelogramm
+% =============================================================================
+\begin{theoriebox}[Kraftaddition zweier Kräfte: das Kräfteparallelogramm]
+Wirken zwei Kräfte $\vec F_1$ und $\vec F_2$ am \textbf{\emph{selben
+Angriffspunkt}} eines Körpers, lässt sich ihre gemeinsame Wirkung durch eine
+einzige Ersatzkraft beschreiben, die \textbf{\emph{Resultierende}}
+$\vec F_{\text{res}}$. Sie wird mit dem \textbf{\emph{Kräfteparallelogramm}}
+konstruiert:
+
+\begin{enumerate}[leftmargin=1.2cm,itemsep=0.2em]
+  \item Beide Kräfte massstabsgetreu vom gemeinsamen Angriffspunkt aus
+  einzeichnen.
+  \item Das Parallelogramm ergänzen: An die Spitze von $\vec F_1$ eine Parallele
+  zu $\vec F_2$ zeichnen, und an die Spitze von $\vec F_2$ eine Parallele zu
+  $\vec F_1$.
+  \item Die Resultierende $\vec F_{\text{res}}$ ist die \textbf{\emph{Diagonale}}
+  des Parallelogramms, die durch den gemeinsamen Angriffspunkt verläuft (nicht
+  die andere Diagonale!).
+\end{enumerate}
+
+\begin{center}
+\begin{tikzpicture}[>=Latex,scale=1]
+  \Feinraster{0}{0}{5}{5}
+  \coordinate (A) at (0,0);
+  \coordinate (P1) at (3,0);
+  \coordinate (P2) at (0,4);
+  \coordinate (R) at (3,4);
+  \draw[dashed,gray] (P1) -- (R) -- (P2);
+  \draw[->,thick,titleblue] (A) -- (P1) node[midway,below]{$\vec F_1$};
+  \draw[->,thick,accentorange] (A) -- (P2) node[midway,left]{$\vec F_2$};
+  \draw[->,ultra thick,accentpurple] (A) -- (R) node[midway,above left]{$\vec F_{\text{res}}$};
+  \draw (0.7,0) arc[start angle=0,end angle=90,radius=0.7];
+  \node at (0.5,0.5) {\small $\theta$};
+\end{tikzpicture}
+\end{center}
+{\scriptsize Beispiel bei Massstab $\Massstab{1}{1}$: $F_1=\SI{3}{\newton}$
+nach rechts, $F_2=\SI{4}{\newton}$ nach oben, Zwischenwinkel $\theta=90^\circ$.
+Nachmessen der Diagonale mit dem Lineal ergibt $\SI{5}{\centi\meter}$, also
+$F_{\text{res}}=\SI{5}{\newton}$.}
+\end{theoriebox}
+
+% =============================================================================
+% Uebung: Kraftaddition mehrerer Kraefte + Alltagsbeispiel (M3 Whiteboarding)
+% =============================================================================
+\begin{questions}
+\begin{groupbox}[Whiteboarding: Kraftaddition mehrerer Kräfte]
+\question Bei mehr als zwei Kräften am selben Angriffspunkt funktioniert
+das Kräfteparallelogramm nicht mehr direkt. Stattdessen verwendet man das
+\textbf{\emph{Kopf-an-Schwanz-Verfahren}}: Die Kraftpfeile werden (immer im
+selben Kraftmassstab) nacheinander so aneinandergehängt, dass der Schwanz
+des nächsten Pfeils an der Spitze (dem \glqq Kopf\grqq{}) des vorherigen
+beginnt. Die Resultierende ist dann der Pfeil vom Schwanz des ersten Pfeils
+zur Spitze des letzten. Die Reihenfolge der Pfeile spielt dabei keine Rolle:
+das Ergebnis bleibt gleich.
+
+\begin{parts}
+  \part[4] Bilden Sie Dreiergruppen. Wählen Sie \emph{eines} der folgenden
+  Alltagsbeispiele, bei dem jeweils \textbf{\emph{drei}} Kräfte gleichzeitig
+  am selben Angriffspunkt wirken, und schätzen Sie für alle drei Kräfte
+  plausible Beträge und Richtungen:
+  \begin{itemize}[leftmargin=1cm]
+    \item Tauziehen mit drei Mannschaften, die an einem gemeinsamen
+    Ring in drei unterschiedliche Richtungen ziehen.
+    \item Ein Boot wird gleichzeitig vom Motor (Vortrieb), vom seitlich
+    einfallenden Wind und von der Strömung des Wassers angetrieben.
+    \item Ein Schlitten wird an drei Seilen von drei Personen gleichzeitig
+    in leicht unterschiedliche Richtungen gezogen.
+  \end{itemize}
+  Konstruieren Sie auf dem Whiteboard mit dem Kopf-an-Schwanz-Verfahren die
+  Resultierende aller drei Kräfte und halten Sie fest: In welche Richtung
+  würde sich der Körper (Ring, Boot, Schlitten) tatsächlich in Bewegung
+  setzen?
+
+  \part[2] Übertragen Sie Ihre Konstruktion massstabsgetreu ins Feinraster
+  unten (selbst gewählter Kraftmassstab, z.\,B. $\Massstab{1}{1}$)
+  und beschriften Sie jeden Kraftpfeil sowie die Resultierende.
+  \begin{center}
+  \begin{tikzpicture}[>=Latex,scale=1.3]
+    \Feinraster{0}{0}{8}{6}
+  \end{tikzpicture}
+  \end{center}
+\end{parts}
+\end{groupbox}
+\end{questions}
+
+% =============================================================================
+% Kernaufgabe: Resultierende vs. Winkel (M9 Produktives Ueben, LZ3)
+% =============================================================================
+\begin{questions}
+\begin{taskbox}[Kernaufgabe: Wie hängt die Resultierende vom Winkel ab?]
+\question Zwei gleich grosse Kräfte $F_1=F_2=\SI{4}{\newton}$ greifen am
+selben Punkt an. In den vier Feinrastern unten ist $F_1$ bereits waagrecht
+eingezeichnet, $F_2$ jeweils im angegebenen Zwischenwinkel $\theta$ dazu
+(Massstab: $\Massstab{1}{1}$).
+
+\begin{parts}
+  \part[6] Ergänzen Sie in jedem der vier Raster das Kräfteparallelogramm
+  (bzw. bei $\theta=0^\circ$ und $\theta=180^\circ$ die entartete, geradlinige
+  Konstruktion) und zeichnen Sie die Resultierende ein. Messen Sie deren
+  Länge mit dem Lineal nach und tragen Sie den Betrag $F_{\text{res}}$ in
+  die Tabelle darunter ein.
+
+\begin{center}
+\begin{tikzpicture}[>=Latex,scale=1]
+  \Feinraster{0}{-1}{9}{2}
+  \coordinate (A) at (0,0);
+  \draw[->,thick,titleblue] (A) -- (4,0.15) node[midway,above]{\scriptsize $F_1$};
+  \draw[->,thick,accentorange] (A) -- (4,-0.15) node[midway,below]{\scriptsize $F_2$};
+  \node[below] at (2,-1.3) {\scriptsize $\theta=0^\circ$};
+\end{tikzpicture}
+
+\begin{tikzpicture}[>=Latex,scale=1]
+  \Feinraster{0}{0}{7}{5}
+  \coordinate (A) at (0,0);
+  \coordinate (P1a) at (4,0);
+  \coordinate (P2a) at (2,3.4641);
+  \draw[->,thick,titleblue] (A) -- (P1a) node[midway,below]{\scriptsize $F_1$};
+  \draw[->,thick,accentorange] (A) -- (P2a) node[midway,above left]{\scriptsize $F_2$};
+  \draw (0.6,0) arc[start angle=0,end angle=60,radius=0.6];
+  \node[below] at (3.5,-0.6) {\scriptsize $\theta=60^\circ$};
+\end{tikzpicture}
+
+\begin{tikzpicture}[>=Latex,scale=1]
+  \Feinraster{0}{0}{5}{5}
+  \coordinate (A) at (0,0);
+  \draw[->,thick,titleblue] (A) -- (4,0) node[midway,below]{\scriptsize $F_1$};
+  \draw[->,thick,accentorange] (A) -- (0,4) node[midway,left]{\scriptsize $F_2$};
+  \node[below] at (2,-0.6) {\scriptsize $\theta=90^\circ$};
+\end{tikzpicture}
+
+\begin{tikzpicture}[>=Latex,scale=1]
+  \Feinraster{-5}{-1}{5}{1}
+  \coordinate (A) at (0,0);
+  \draw[->,thick,titleblue] (A) -- (4,0) node[midway,above]{\scriptsize $F_1$};
+  \draw[->,thick,accentorange] (A) -- (-4,0) node[midway,below]{\scriptsize $F_2$};
+  \node[below] at (0,-1.3) {\scriptsize $\theta=180^\circ$};
+\end{tikzpicture}
+\end{center}
+{\scriptsize Bei $\theta=0^\circ$ sind $F_1$ und $F_2$ zur besseren
+Sichtbarkeit leicht versetzt gezeichnet. Tatsächlich zeigen beide Kräfte
+exakt in dieselbe Richtung. Alle vier Raster gelten für denselben Massstab
+$\Massstab{1}{1}$; nachmessen mit dem Lineal ergibt also unmittelbar den
+Kraftbetrag in Newton.}
+
+\begin{solution}
+\begin{center}
+\begin{tikzpicture}[>=Latex,scale=1]
+  \Feinraster{0}{-1}{9}{2}
+  \coordinate (A) at (0,0);
+  \draw[->,thick,titleblue] (A) -- (4,0.15) node[midway,above]{\scriptsize $F_1$};
+  \draw[->,thick,accentorange] (A) -- (4,-0.15) node[midway,below]{\scriptsize $F_2$};
+  \draw[->,ultra thick,accentpurple] (A) -- (8,0) node[midway,above,yshift=6pt]{\scriptsize $F_{\text{res}}=\SI{8}{\newton}$};
+  \node[below] at (4,-1.3) {\scriptsize $\theta=0^\circ$};
+\end{tikzpicture}
+
+\begin{tikzpicture}[>=Latex,scale=1]
+  \Feinraster{0}{0}{7}{5}
+  \coordinate (A) at (0,0);
+  \coordinate (P1) at (4,0);
+  \coordinate (P2) at ({4*cos(60)},{4*sin(60)});
+  \coordinate (R) at ({4+4*cos(60)},{4*sin(60)});
+  \draw[dashed,gray] (P1) -- (R) -- (P2);
+  \draw[->,thick,titleblue] (A) -- (P1) node[midway,below]{\scriptsize $F_1$};
+  \draw[->,thick,accentorange] (A) -- (P2) node[midway,above left]{\scriptsize $F_2$};
+  \draw[->,ultra thick,accentpurple] (A) -- (R) node[midway,above]{\scriptsize $F_{\text{res}}\approx\SI{6.9}{\newton}$};
+  \node[below] at (3,-0.6) {\scriptsize $\theta=60^\circ$};
+\end{tikzpicture}
+
+\begin{tikzpicture}[>=Latex,scale=1]
+  \Feinraster{0}{0}{5}{5}
+  \coordinate (A) at (0,0);
+  \coordinate (P1) at (4,0);
+  \coordinate (P2) at (0,4);
+  \coordinate (R) at (4,4);
+  \draw[dashed,gray] (P1) -- (R) -- (P2);
+  \draw[->,thick,titleblue] (A) -- (P1) node[midway,below]{\scriptsize $F_1$};
+  \draw[->,thick,accentorange] (A) -- (P2) node[midway,left]{\scriptsize $F_2$};
+  \draw[->,ultra thick,accentpurple] (A) -- (R) node[midway,above left]{\scriptsize $F_{\text{res}}\approx\SI{5.7}{\newton}$};
+  \node[below] at (2,-0.6) {\scriptsize $\theta=90^\circ$};
+\end{tikzpicture}
+
+\begin{tikzpicture}[>=Latex,scale=1]
+  \Feinraster{-5}{-1}{5}{1}
+  \coordinate (A) at (0,0);
+  \draw[->,thick,titleblue] (A) -- (4,0) node[midway,above]{\scriptsize $F_1$};
+  \draw[->,thick,accentorange] (A) -- (-4,0) node[midway,below]{\scriptsize $F_2$};
+  \fill (0,0) circle (2pt);
+  \node[below] at (0,-1.3) {\scriptsize $\theta=180^\circ$, $F_{\text{res}}=\SI{0}{\newton}$};
+\end{tikzpicture}
+\end{center}
+Bei $\theta=0^\circ$ addieren sich die Kräfte vollständig (Vollwinkel,
+Wirklinie ist dieselbe); bei $\theta=180^\circ$ heben sie sich vollständig
+auf. In beiden Fällen entartet das Parallelogramm zu einer Strecke, daher
+genügt das direkte Aneinanderhängen der Pfeile.
+\end{solution}
+
+  \part[4] Ergänzen Sie die Tabelle mit den vier gemessenen Werten und
+  vergleichen Sie diese mit der arithmetischen Summe der beiden
+  Kraftbeträge ($F_1+F_2=\SI{8}{\newton}$). Formulieren Sie eine allgemeine
+  Aussage: Wie verändert sich $F_{\text{res}}$, wenn der Zwischenwinkel
+  $\theta$ von $0^\circ$ auf $180^\circ$ zunimmt? Gilt
+  $F_{\text{res}}=F_1+F_2$ auch bei $\theta\neq0^\circ$?
+
+  \begin{center}
+  \begin{tabular}{lcccc}
+  \toprule
+  $\theta$ & $0^\circ$ & $60^\circ$ & $90^\circ$ & $180^\circ$ \\
+  \midrule
+  $F_{\text{res}}$ (gemessen) & \rule{1.6cm}{0.4pt} & \rule{1.6cm}{0.4pt} & \rule{1.6cm}{0.4pt} & \rule{1.6cm}{0.4pt} \\
+  \bottomrule
+  \end{tabular}
+  \end{center}
+  \Antwortraum{2}
+  \begin{solution}
+  \begin{center}
+  \begin{tabular}{lcccc}
+  \toprule
+  $\theta$ & $0^\circ$ & $60^\circ$ & $90^\circ$ & $180^\circ$ \\
+  \midrule
+  $F_{\text{res}}$ (gemessen) & $\SI{8}{\newton}$ & $\approx\SI{6.9}{\newton}$ & $\approx\SI{5.7}{\newton}$ & $\SI{0}{\newton}$ \\
+  \bottomrule
+  \end{tabular}
+  \end{center}
+  Je grösser der Zwischenwinkel $\theta$, desto \textbf{\emph{kleiner}} wird
+  die Resultierende: Sie ist bei $\theta=0^\circ$ maximal (gleich der
+  arithmetischen Summe $F_1+F_2$) und bei $\theta=180^\circ$ minimal (hier
+  sogar null, weil $F_1=F_2$). $F_{\text{res}}=F_1+F_2$ gilt also
+  \textbf{\emph{nur}} für $\theta=0^\circ$, wenn beide Kräfte in dieselbe
+  Richtung zeigen. Für jeden anderen Zwischenwinkel liegt $F_{\text{res}}$
+  \emph{unterhalb} dieser arithmetischen Summe: Kräfte addieren sich also
+  \emph{nicht} wie gewöhnliche Zahlen, sondern wie Vektoren.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\begin{formelbox}[Merksatz: Kraftaddition]
+Zwei Kräfte am selben Angriffspunkt werden mit dem
+\textbf{\emph{Kräfteparallelogramm}} addiert; die Resultierende ist die
+Diagonale durch den gemeinsamen Angriffspunkt. Nur wenn beide Kräfte in
+\emph{dieselbe} Richtung zeigen ($\theta=0^\circ$), ist die Resultierende
+gleich der arithmetischen Summe der Beträge. Sonst ist sie kleiner.
+\end{formelbox}
+
+% =============================================================================
+% Theorie 3: Kraftzerlegung mit dem Kraefteparallelogramm (Ampelbeispiel)
+% =============================================================================
+\begin{theoriebox}[Kraftzerlegung: die Umkehrung der Kraftaddition]
+Manchmal ist der umgekehrte Fall gefragt: Eine Kraft ist gegeben, und man
+möchte wissen, welche zwei Teilkräfte in zwei \emph{vorgegebenen} Richtungen
+zusammen dieselbe Wirkung hätten. Das ist die \textbf{\emph{Kraftzerlegung}},
+dieselbe Konstruktion wie bei der Kraftaddition, nur in umgekehrter
+Reihenfolge:
+
+\begin{enumerate}[leftmargin=1.2cm,itemsep=0.2em]
+  \item Die gegebene Kraft $\vec F$ sowie die beiden vorgegebenen Richtungen
+  vom selben Angriffspunkt aus einzeichnen.
+  \item Von der Spitze von $\vec F$ aus Parallelen zu beiden Richtungen
+  ziehen, bis sie diese schneiden.
+  \item Die beiden Teilkräfte $\vec F_1$ und $\vec F_2$ sind die Strecken vom
+  Angriffspunkt bis zu den beiden Schnittpunkten.
+\end{enumerate}
+
+\begin{hinweisbox}[Hinweis: Addition oder Zerlegung?]
+Bei der \textbf{\emph{Addition}} sind die Beträge und Richtungen \emph{aller}
+Kräfte bereits bekannt, gesucht ist die Resultierende. Bei der
+\textbf{\emph{Zerlegung}} ist es umgekehrt: Nur \emph{eine} Kraft und die
+beiden \emph{Richtungen} der gesuchten Teilkräfte sind bekannt, ihre Beträge
+sind gesucht.
+\end{hinweisbox}
+
+\textbf{Beispiel:} Eine Verkehrsampel hängt an zwei schräg gespannten
+Seilen. Die Gewichtskraft $\vec F_G$ der Ampel zeigt senkrecht nach unten.
+Damit die Ampel in Ruhe bleibt, muss nach dem Kräftegleichgewicht
+(vgl.\ Feder-Masse-Skizze, LZ1) die Vektorsumme der beiden Seilkräfte genau
+$-\vec F_G$ ergeben. Deshalb wird nicht $\vec F_G$ selbst, sondern der ihr
+entgegengesetzte Vektor $-\vec F_G$ in die beiden vorgegebenen
+Seilrichtungen zerlegt: Die so gefundenen Teilkräfte $\vec F_1$, $\vec F_2$
+sind die Seilkräfte, mit denen die Seile tatsächlich an der Ampel ziehen und
+sie so im Gleichgewicht halten.
+
+\begin{center}
+\begin{tikzpicture}[>=Latex,scale=1.6]
+  \coordinate (A) at (0,0);
+  \coordinate (S1) at (-3,2.2);
+  \coordinate (S2) at (3,1.4);
+  \coordinate (P1) at (-2.5,1.8333);
+  \coordinate (P2) at (2.5,1.1667);
+  \coordinate (M) at (0,3);
+  \draw[very thick,gray] (A) -- (S1);
+  \draw[very thick,gray] (A) -- (S2);
+  \draw[->,ultra thick,titleblue] (A) -- (0,-3) node[midway,right]{$\vec F_G$};
+  \draw[->,dashed,darkgray] (A) -- (M) node[midway,left]{\scriptsize $-\vec F_G$};
+  \draw[dashed,gray] (M) -- (P1);
+  \draw[dashed,gray] (M) -- (P2);
+  \draw[->,thick,accentorange] (A) -- (P1) node[midway,above]{$\vec F_1$};
+  \draw[->,thick,accentpurple] (A) -- (P2) node[midway,above right]{$\vec F_2$};
+\end{tikzpicture}
+\end{center}
+{\scriptsize Zerlegung von $-\vec F_G$ (gestrichelt) in zwei Teilkräfte
+$\vec F_1$, $\vec F_2$ entlang der vorgegebenen Seilrichtungen (nach
+PhysikLibre, Bild 4.17). Die grauen Linien markieren die Seilrichtungen, die
+kurzen gestrichelten Linien die Parallelen, die $\vec F_1$ und $\vec F_2$
+festlegen.}
+\end{theoriebox}
+
+% =============================================================================
+% Uebung: Eigene Zerlegung + freies Alltagsbeispiel (Partnerarbeit, LZ4/LZ5)
+% =============================================================================
+\begin{questions}
+\begin{groupbox}[Partnerarbeit: Kraftzerlegung selbst konstruieren]
+\question
+\begin{parts}
+  \part[4] Ein Wäscheseil ist zwischen zwei Balkonen gespannt. In der Mitte
+  hängt ein nasses Wäschestück, das eine Gewichtskraft von $F_G=\SI{6}{\newton}$
+  senkrecht nach unten ausübt. Das Seil verläuft auf beiden Seiten des
+  Wäschestücks schräg nach oben, wie im Feinraster unten angedeutet.
+  Zerlegen Sie $\vec F_G$ grafisch in die beiden Teilkräfte $\vec F_1$,
+  $\vec F_2$ entlang der beiden Seilrichtungen und messen Sie deren Beträge.
+
+  \begin{center}
+  \begin{tikzpicture}[>=Latex,scale=1]
+    \Feinraster{-4}{-7}{4}{3.5}
+    \coordinate (A) at (0,0);
+    \draw[very thick,gray] (-3.5,1.4) -- (A) -- (3.5,2.6);
+    \draw[->,ultra thick,titleblue] (A) -- (0,-6) node[midway,right]{$\vec F_G=\SI{6}{\newton}$};
+  \end{tikzpicture}
+  \end{center}
+  \Antwortraum{2}
+  \begin{solution}
+  Konstruktion analog zum Ampelbeispiel: Von der Spitze von $\vec F_G$ aus
+  Parallelen zu den beiden Seilrichtungen ziehen; die Abschnitte vom
+  Angriffspunkt bis zu den Schnittpunkten sind $\vec F_1$ und $\vec F_2$. Da
+  die beiden Seilrichtungen hier unterschiedlich steil sind, sind auch
+  $F_1$ und $F_2$ unterschiedlich gross: das steilere Seilstück trägt den
+  grösseren Anteil von $F_G$.
+  \end{solution}
+
+  \part[4] Wählen Sie zu zweit \emph{ein} eigenes Alltagsbeispiel, entweder
+  für Kraftaddition oder für Kraftzerlegung, nicht notwendigerweise eines der
+  bereits behandelten. Skizzieren Sie die Situation kurz, zeichnen Sie die
+  beteiligten Kräfte massstabsgetreu in einem eigenen Feinraster ein und
+  konstruieren Sie Resultierende bzw. Teilkräfte.
+  \Antwortraum{5}
+\end{parts}
+\end{groupbox}
+\end{questions}
+
+\end{document}
