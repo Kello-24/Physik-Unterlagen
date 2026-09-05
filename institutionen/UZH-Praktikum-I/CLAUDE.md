@@ -40,8 +40,8 @@ Bearbeitung:
   die Simulation und Excel braucht.
 
 Beide Dokumente liegen im selben Themenordner (z. B.
-`elektrodynamik/kondensatoren/arbeitsblatt4-kondensatoren-teil1.tex` und
-`.../aufgabenblatt3-kondensatoren-teil1.tex`), analog dazu, wie ein
+`elektrodynamik/kondensatoren/arbeitsblatt4-kondensatoren.tex` und
+`.../aufgabenblatt3-kondensatoren.tex`), analog dazu, wie ein
 KFR-Thema Backward-Design-Dokument und Arbeitsblatt im selben Ordner hält.
 Siehe "Nummerierung und Dateibenennung" unten für das `x`/`y`-Namensschema.
 
@@ -64,19 +64,34 @@ gleichermassen, für alle Klassen (2e, 1f, 4fh, 4cdeg).
 
 ### Nummerierung und Dateibenennung: Arbeitsblatt/Aufgabenblatt
 
-Jedes Arbeitsblatt und Aufgabenblatt bekommt eine fortlaufende Nummer `x`
-und, bei mehrteiligen Themen, eine Teil-Nummer `y`. Datei- und Titelschema:
+Jedes Arbeitsblatt und Aufgabenblatt bekommt eine fortlaufende Nummer `x`.
+Die Teil-Nummer `y` (`teil<y>` im Dateinamen, `(Teil <y>)` im gedruckten
+Titel) erscheint **nur, wenn das Thema tatsächlich mehrteilig ist** — also
+nur, wenn zu diesem Dokument auch ein Teil 2 (oder mehr) existiert bzw.
+geplant ist. Für ein Thema mit nur einer Doppellektion (der Normalfall)
+bleibt `y` komplett weg, nicht `y=1`: kein "-teil1" im Dateinamen, kein
+"(Teil 1)" im Titel. Datei- und Titelschema:
 
 - **Dateiname** (überschreibt für diese beiden Dokumenttypen die
   generische `<thema>-<typ>.tex`-Vorlage aus Root-`CLAUDE.md`; lowercase,
   hyphenated, keine Umlaute gilt weiterhin):
-  `arbeitsblatt<x>-<thema>-teil<y>.tex` bzw.
-  `aufgabenblatt<x>-<thema>-teil<y>.tex`, z. B.
-  `arbeitsblatt4-kondensatoren-teil1.tex`,
-  `aufgabenblatt3-kondensatoren-teil1.tex`.
+  - Einteiliges Thema: `arbeitsblatt<x>-<thema>.tex` bzw.
+    `aufgabenblatt<x>-<thema>.tex`, z. B. `arbeitsblatt4-kondensatoren.tex`,
+    `aufgabenblatt3-kondensatoren.tex`.
+  - Mehrteiliges Thema: `arbeitsblatt<x>-<thema>-teil<y>.tex` bzw.
+    `aufgabenblatt<x>-<thema>-teil<y>.tex`, z. B.
+    `arbeitsblatt6-lorentzkraft-teil1.tex` (sobald zu diesem Thema auch
+    Teil 2 entsteht).
 - **Gedruckter Titel** (`\ArbeitsblattTitel`, für die SuS sichtbar): weiterhin
   die lesbare Form `Arbeitsblatt <x>: <Thema>` bzw. `Aufgabenblatt <x>:
-  <Thema>`, bei mehrteiligen Themen zusätzlich `(Teil <y>)` anhängen.
+  <Thema>`; nur bei mehrteiligen Themen zusätzlich `(Teil <y>)` anhängen,
+  sonst nichts anhängen.
+
+Wird ein ursprünglich einteilig geplantes Thema nachträglich zweiteilig
+(Teil 2 kommt dazu), das bestehende Dokument entsprechend umbenennen
+(Dateiname + Titel um `-teil1`/`(Teil 1)` ergänzen), nicht nur das neue
+Teil-2-Dokument benennen und das alte unbenannt lassen — sonst wäre "Teil
+2" ohne erkennbaren "Teil 1" verwirrend.
 
 **Herkunft von `x`:** zwei getrennte, pro Klasse laufende Zählungen (eine
 für Arbeitsblatt, eine für Aufgabenblatt), die Sara Romers eigene, bereits
@@ -95,7 +110,7 @@ raten.
 bestehenden `-teil-N`-Ordnerkonvention für mehrteilige Themen (siehe
 "Grundeinheit" oben, z. B. `lorentzkraft-teil-1/`, `lorentzkraft-teil-2/`)
 — jeder Teil ist ein eigenes Dokument mit eigenem `x`. Für ein Thema mit
-nur einer Doppellektion ist `y=1`.
+nur einer Doppellektion entfällt `y` ganz (siehe oben).
 
 ### Lernziele: Ergebnisse nicht vorwegnehmen
 
@@ -170,8 +185,8 @@ Technische Umsetzung beim Kopieren einer bestehenden Datei als Vorlage
 (statt frisch aus `vorlagen/arbeitsblatt-vorlage.tex`, das noch die
 farbigen KFR-Boxen definiert — dort NICHT ändern, das ist KFR-Hausstil):
 Box-Definitionen aus einer bereits umgestellten Datei übernehmen, z. B.
-`arbeitsblaetter/mechanik/kraefte/gewichtskraft-federkraft/arbeitsblatt2-gewichtskraft-federkraft-teil1.tex`
-oder `arbeitsblaetter/elektrodynamik/kondensatoren/aufgabenblatt3-kondensatoren-teil1.tex`.
+`arbeitsblaetter/mechanik/kraefte/gewichtskraft-federkraft/arbeitsblatt2-gewichtskraft-federkraft.tex`
+oder `arbeitsblaetter/elektrodynamik/kondensatoren/aufgabenblatt3-kondensatoren.tex`.
 Dabei zwei unterschiedliche Muster beachten:
 
 - `infobox`, `theoriebox`, `beispielbox`, `teilkopf`: reine

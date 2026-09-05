@@ -1,0 +1,435 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Arbeitsblatt 3: Kraftaddition & Kraftzerlegung
+% UZH Praktikum I -- Sara Romer Urban, Kantonsschule im Lee, HS2026
+% Klasse: 2e (02.09.2026)
+%
+% Kompakte Fassung nach Ueberarbeitung durch Loris (01.-02.09.2026): keine
+% Lernziele-Box, keine Einleitung -- startet direkt mit der vergroesserten
+% Feder-Masse-Skizze (samt Koordinatensystem/Kraeftediagramm-Inset) und
+% einem kurzen Kraeftegleichgewicht-Satz statt der fruaeheren Zeichen-
+% aufgabe. Die Vektor-Theorie nutzt das Seilziehen-Beispiel
+% (Bilder/seilziehen.png) als Illustration, dass Betrag \emph{und} Richtung
+% zaehlen. Kraefteparallelogramm- und Kraftzerlegung-Theorie verwenden
+% fertige Illustrationen aus Bilder/ statt eigener tikz-Diagramme
+% (kraefte_parallelogramm.png, lampe_aufgabe.png). Neu: Aufgabe zur
+% Addition von fuenf Kraeften (Bilder/5kraefte_addition_aufgabe(.png/
+% _loesung.png)). Die fruehere Kernaufgabe (Winkelabhaengigkeit der
+% Resultierenden), das Waescheseil-Beispiel und die freie
+% Alltagsbeispiel-Aufgabe wurden gestrichen; stattdessen schliesst das
+% Blatt mit einer Partnerarbeit, in der die SuS selbst eine Situation
+% erfinden und einander zum Loesen weitergeben. Reine Uebungsaufgaben
+% (Schiff, Seilbahn, Hundeschlitten, Seilzug mit drei Gewichten) stehen im
+% separaten aufgabenblatt2-kraefte-addieren-zerlegen.tex.
+%
+% Quellen: lernziele.md (dieser Ordner, Planungsstand vor der
+% Ueberarbeitung -- weicht in Aufbau/Umfang inzwischen von diesem Blatt ab),
+% kraefte-addieren-zerlegen-lektionsplan.tex (dieser Ordner),
+% arbeitsblatt2-gewichtskraft-federkraft.tex (Feder-Masse-Skizze,
+% Vorlage fuer Box-Definitionen ohne Farbrahmen).
+% =============================================================================
+\documentclass[addpoints,11pt,a4paper]{exam}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.2cm,headheight=14pt]{geometry}
+\usepackage{amsmath}
+\usepackage{siunitx}
+% Hausstil: zusammengesetzte Einheiten immer als echter Bruch (\frac), nicht
+% als Inline-Schraegstrich oder \tfrac -- gilt global fuer jedes \si/\SI.
+\sisetup{per-mode=fraction,fraction-command=\frac}
+\usepackage{array,booktabs,tabularx,multirow}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage[most]{tcolorbox}
+\usepackage{lastpage}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\usetikzlibrary{arrows.meta,calc,angles,quotes,decorations.pathmorphing}
+
+\usepackage{setspace}
+\usepackage{needspace}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+\setstretch{1.08}
+\setlist[itemize]{itemsep=0.4em}
+
+% -----------------------------
+% Farben (Corporate-Farbschema Physik KFR)
+% -----------------------------
+\definecolor{titleblue}{HTML}{183A6B}
+\definecolor{accentblue}{HTML}{2E6F9E}
+\definecolor{lightblue}{HTML}{EAF4FB}
+\definecolor{lightgray}{HTML}{F4F6F8}
+\definecolor{darkgray}{HTML}{4A4A4A}
+\definecolor{accentorange}{HTML}{D9720C}
+\definecolor{accentpurple}{HTML}{7B2D8E}
+% Hinweisbox: Orange (accentorange), fuer wichtige Klarstellungen.
+\definecolor{lightorange}{HTML}{FCEEE0}
+% Formelbox: Violett (accentpurple), fuer die zentralen Merksaetze.
+\definecolor{lightpurple}{HTML}{F3EAF7}
+
+% Links (hyperref): farblich ans Corporate-Farbschema angeglichen.
+\hypersetup{
+  colorlinks=true,
+  urlcolor=accentblue,
+  linkcolor=accentblue,
+  pdftitle={Arbeitsblatt 3: Kraftaddition \& Kraftzerlegung},
+  pdfauthor={Loris Keller}
+}
+
+% -----------------------------
+% Spaltentypen
+% -----------------------------
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% -----------------------------
+% Boxen
+% -----------------------------
+\tcbset{before skip=10pt, after skip=10pt}
+\newtcolorbox{titlebox}{
+  enhanced,
+  colback=titleblue,
+  colframe=titleblue,
+  boxrule=0pt,
+  arc=3mm,
+  left=3mm,right=3mm,top=3mm,bottom=3mm
+}
+
+\newlength{\aufgabenindent}
+\settowidth{\aufgabenindent}{10.\hskip\labelsep}
+
+% Praktikum I: Lernziele/Einleitung/Theorie/Aufgaben werden NICHT mehr
+% farbig gerahmt (nur Formel-, Hinweis- und Antwortbox bleiben Boxen) --
+% siehe institutionen/UZH-Praktikum-I/CLAUDE.md, Abschnitt "Boxen-Layout".
+\newenvironment{infobox}{%
+  \par\addvspace{10pt}\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+\newenvironment{theoriebox}[1][Theorie]{%
+  \par\addvspace{10pt}\noindent\textbf{#1}\par\smallskip\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+% taskbox/groupbox stehen in questions VOR dem ersten \question (Bilder,
+% Fliesstext) -- exam.cls' questions-Liste braucht dafuer eine echte,
+% eigenstaendige Box (sonst "Something's wrong--perhaps a missing \item",
+% weil z.B. ein \begin{center} vor dem ersten \item der Aussenliste steht).
+% Deshalb bleiben es tcolorboxen, nur unsichtbar gemacht (keine Farbe/Rahmen,
+% kein Padding) statt sie durch reine Absaetze zu ersetzen.
+\newtcolorbox{taskbox}[1][]{
+  enhanced, breakable,
+  colback=white, colframe=white, boxrule=0pt,
+  left=0mm,right=0mm,top=0mm,bottom=0mm,
+  before skip=10pt, after skip=10pt,
+  before upper={%
+    \def\tmpboxtitle{#1}%
+    \ifx\tmpboxtitle\empty\else\noindent\textbf{#1}\par\smallskip\fi
+  }
+}
+
+\newtcolorbox{groupbox}[1][Gruppenarbeit]{
+  enhanced, breakable,
+  colback=white, colframe=white, boxrule=0pt,
+  left=0mm,right=0mm,top=0mm,bottom=0mm,
+  before skip=10pt, after skip=10pt,
+  before upper={\noindent\textbf{#1}\par\smallskip}
+}
+
+% beispielbox: fuer die Einleitung -- wie die anderen Inhaltsboxen ungerahmt.
+\newenvironment{beispielbox}[1][Beispiel]{%
+  \par\addvspace{10pt}\noindent\textbf{#1}\par\smallskip\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+% hinweisbox: Orange, fuer wichtige Klarstellungen/Verwechslungswarnungen.
+\newtcolorbox{hinweisbox}[1][Hinweis]{
+  enhanced,
+  breakable,
+  colback=lightorange,
+  colframe=accentorange,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+% formelbox: Violett, um die zentralen Merksaetze dieser Einheit hervorzuheben.
+\newtcolorbox{formelbox}[1][Merksatz]{
+  enhanced,
+  breakable,
+  colback=lightpurple,
+  colframe=accentpurple,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.9pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+\newtcolorbox{answerbox}{
+  breakable,
+  colback=white,
+  colframe=gray!55,
+  boxrule=0.5pt,
+  arc=1.5mm,
+  left=2mm,right=2mm,top=2mm,bottom=2mm
+}
+
+% Marke: kleines farbiges Inline-Label fuer Teilschritte/Ergebnis-Callouts.
+\newtcbox{\Marke}[1][accentpurple]{
+  nobeforeafter,
+  colback=#1,
+  colframe=#1,
+  coltext=white,
+  boxrule=0pt,
+  arc=2pt,
+  left=5pt,right=5pt,top=2pt,bottom=2pt,
+  fontupper=\bfseries\sffamily\small
+}
+
+% --- Feinraster-Helfer fuer alle grafischen Konstruktionsaufgaben ----------
+% Feld mit feinem Punkt-/Liniengitter (0.5 Kaestchen Nebenlinien, 1 Kaestchen
+% Hauptlinien), sodass bei Massstab 1 Kaestchen = 1 N jede Kraft exakt und
+% nachzaehlbar eingezeichnet werden kann. #1#2 = linke untere Ecke, #3#4 =
+% rechte obere Ecke.
+\newcommand{\Feinraster}[4]{%
+  \draw[gray!22,step=0.5] (#1,#2) grid (#3,#4);
+  \draw[gray!55,step=1] (#1,#2) grid (#3,#4);
+}
+
+% Bild-Helfer: zentriertes Bild mit spuerbarem Abstand zum umgebenden Text
+% (statt nur des normalen Absatzabstands). #1 = Breite, #2 = Dateipfad.
+\newcommand{\Bild}[2]{%
+  \par\vspace{0.6cm}
+  \begin{center}
+    \includegraphics[width=#1]{#2}
+  \end{center}
+  \vspace{0.6cm}
+}
+
+% --- Loesungen ein-/ausblenden -----------------------------------------------
+\noprintanswers
+%\printanswers
+
+\pointformat{}
+\renewcommand{\solutiontitle}{\noindent\color{titleblue}\textbf{L\"osung:}\enspace}
+
+\pagestyle{headandfoot}
+\cfoot{\textcolor{darkgray}{Seite \thepage\ von \pageref{LastPage}}}
+
+\newcommand{\Kopfzeile}[4]{%
+  \begin{titlebox}
+    {\color{white}\sffamily\bfseries\Large #4}
+  \end{titlebox}
+  \vspace{0.5em}
+  \noindent\textbf{Klasse:}~#1 \hfill \textbf{Datum:}~#2 \hfill \textbf{Thema:}~#3
+    \hfill \textbf{Lehrperson:}~Loris Keller
+  \vspace{0.8em}
+  \lhead{\textcolor{darkgray}{#3}}
+  \rhead{\textcolor{darkgray}{#4}}
+}
+
+\newlength{\antwortraumlen}
+\newcommand{\Antwortraum}[1]{%
+  \pgfmathsetlength{\antwortraumlen}{#1*2.5cm}%
+  \begin{answerbox}
+    \rule{0pt}{\antwortraumlen}%
+  \end{answerbox}%
+}
+
+% Werte fuer Kopfzeile zentral setzen
+\newcommand{\Klasse}{2e}
+\newcommand{\Datum}{02.09.2026}
+\newcommand{\Thema}{Kraftaddition \& Kraftzerlegung}
+\newcommand{\ArbeitsblattTitel}{Arbeitsblatt 3: Kraftaddition \& Kraftzerlegung}
+
+\begin{document}
+
+\Kopfzeile{\Klasse}{\Datum}{\Thema}{\ArbeitsblattTitel}
+
+% =============================================================================
+% Repetition: Feder-Masse-Skizze mit Koordinatensystem (LZ1)
+% =============================================================================
+\textbf{Repetition}
+
+\begin{center}
+\begin{tikzpicture}[>=Latex,scale=1.8]
+  \draw[very thick] (-1,3) -- (2,3);
+  \foreach \x in {-0.8,-0.4,...,1.8} { \draw (\x,3) -- (\x-0.25,3.3); }
+  \draw[decorate,decoration={coil,aspect=0.3,segment length=3.2pt,amplitude=3pt}] (0.5,3) -- (0.5,1.6);
+  \draw[fill=lightgray!60] (0.1,1.1) rectangle (0.9,1.6);
+  \node at (0.5,1.35) {$m$};
+  \fill (0.5,1.35) circle (0.5pt);
+
+  \coordinate (O) at (3.8,1.75);
+  \draw[gray,dashed] (O) -- ++(0,-1.15);
+  \draw[->,gray] (O) -- ++(1.15,0) node[right]{\scriptsize $x$};
+  \draw[->,gray] (O) -- ++(0,1.15) node[above]{\scriptsize $y$};
+  \draw[->,ultra thick,titleblue] (O) -- ++(0,1) node[midway,right]{$\vec F$};
+  \draw[->,ultra thick,accentorange] (O) -- ++(0,-1) node[midway,right]{$\vec F_G$};
+  \fill (O) circle (1pt);
+\end{tikzpicture}
+\end{center}
+{\scriptsize Links: Feder-Masse-System. Rechts: dieselben Kräfte im
+Koordinatensystem.}
+
+Im Gleichgewicht gilt für die Vektorsumme aller Kräfte:
+$\vec F_{\text{res}} = \vec F + \vec F_G = \vec 0$.
+
+% =============================================================================
+% Theorie: Kraft als vektorielle Groesse
+% =============================================================================
+\begin{theoriebox}[Kraft als vektorielle Grösse]
+Eine Kraft ist eine \textbf{\emph{vektorielle Grösse}}: Sie hat einen Betrag
+und eine Richtung und wird deshalb immer in einem
+\textbf{\emph{Koordinatensystem}} beschrieben. In der Skizze oben zeigt die
+Gewichtskraft $\vec F_G$ in die negative $y$-Richtung, die Federkraft
+$\vec F$ in die positive $y$-Richtung. Es gibt aber auch Kräfte, die
+gleichzeitig eine $x$- und eine $y$-Komponente besitzen, also schräg im
+Koordinatensystem liegen.
+
+Ein einfaches Beispiel dafür, dass die Richtung einer Kraft genauso wichtig
+ist wie ihr Betrag: Beim Tauziehen ziehen zwei Mannschaften in
+entgegengesetzte Richtungen. Welche Mannschaft gewinnt, hängt vom Betrag
+\emph{beider} Kräfte ab, nicht nur vom eigenen.
+
+\Bild{15.5cm}{Bilder/seilziehen.png}
+
+\begin{hinweisbox}[Hinweis: Kraftmassstab]
+Zeichnet man mehrere Kraftpfeile in dasselbe Diagramm, muss für alle
+derselbe Kraftmassstab gelten (z.\,B. $1$ Kästchen $\hat=$ $\SI{1}{\newton}$).
+Sonst lässt sich das Ergebnis nachher nicht mehr nachmessen.
+\end{hinweisbox}
+\end{theoriebox}
+
+% =============================================================================
+% Theorie: Kraftaddition zweier Kraefte, Kraefteparallelogramm
+% =============================================================================
+\begin{theoriebox}[Kraftaddition zweier Kräfte: das Kräfteparallelogramm]
+Wirken zwei Kräfte $\vec F_1$ und $\vec F_2$ am \textbf{\emph{selben
+Angriffspunkt}} eines Körpers, lässt sich ihre gemeinsame Wirkung durch eine
+einzige Ersatzkraft beschreiben, die \textbf{\emph{Resultierende}}
+$\vec F_{\text{res}}$. Sie wird mit dem \textbf{\emph{Kräfteparallelogramm}}
+konstruiert:
+
+\begin{enumerate}[leftmargin=1.2cm,itemsep=0.2em]
+  \item Beide Kräfte massstabsgetreu vom gemeinsamen Angriffspunkt aus
+  einzeichnen.
+  \item Das Parallelogramm ergänzen: An die Spitze von $\vec F_1$ eine Parallele
+  zu $\vec F_2$ zeichnen, und an die Spitze von $\vec F_2$ eine Parallele zu
+  $\vec F_1$.
+  \item Die Resultierende $\vec F_{\text{res}}$ ist die \textbf{\emph{Diagonale}}
+  des Parallelogramms, die durch den gemeinsamen Angriffspunkt verläuft (nicht
+  die andere Diagonale!).
+\end{enumerate}
+
+\Bild{15.5cm}{Bilder/kraefte_parallelogramm.png}
+{\scriptsize Links: die beiden Kräfte $\vec F_1$, $\vec F_2$ vom gemeinsamen
+Angriffspunkt aus. Rechts: das ergänzte Parallelogramm mit der Resultierenden
+$\vec F_{\text{ges}}$ als Diagonale.}
+\end{theoriebox}
+
+% =============================================================================
+% Uebung: Fuenf Kraefte addieren
+% =============================================================================
+\needspace{6cm}
+\begin{questions}
+\begin{taskbox}[Aufgabe: Fünf Kräfte addieren]
+\question[6] Am selben Angriffspunkt greifen fünf Kräfte $\vec F_1$ bis
+$\vec F_5$ in unterschiedliche Richtungen an:
+
+\Bild{13cm}{Bilder/5kraefte_addition_aufgabe.png}
+
+Konstruieren Sie mit dem Kopf-an-Schwanz-Verfahren die Resultierende
+$\vec F_{\text{Ges}}$ aller fünf Kräfte: Hängen Sie die Pfeile (in
+beliebiger Reihenfolge) mit gleichbleibender Länge und Richtung
+aneinander, und zeichnen Sie den Pfeil vom ersten Schwanz zur letzten
+Spitze ein.
+
+\begin{center}
+\begin{tikzpicture}[>=Latex,scale=1]
+  \Feinraster{0}{0}{10}{8}
+\end{tikzpicture}
+\end{center}
+
+\begin{solution}
+\Bild{12.5cm}{Bilder/5kraefte_addition_aufgabe_loesung.png}
+\end{solution}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Theorie: Kraftzerlegung mit dem Kraefteparallelogramm
+% =============================================================================
+\begin{theoriebox}[Kraftzerlegung: die Umkehrung der Kraftaddition]
+Manchmal ist der umgekehrte Fall gefragt: Eine Kraft ist gegeben, und man
+möchte wissen, welche zwei Teilkräfte in zwei \emph{vorgegebenen} Richtungen
+zusammen dieselbe Wirkung hätten. Das ist die \textbf{\emph{Kraftzerlegung}},
+dieselbe Konstruktion wie bei der Kraftaddition, nur in umgekehrter
+Reihenfolge:
+
+\begin{enumerate}[leftmargin=1.2cm,itemsep=0.2em]
+  \item Die gegebene Kraft $\vec F$ sowie die beiden vorgegebenen Richtungen
+  vom selben Angriffspunkt aus einzeichnen.
+  \item Von der Spitze von $\vec F$ aus Parallelen zu beiden Richtungen
+  ziehen, bis sie diese schneiden.
+  \item Die beiden Teilkräfte $\vec F_1$ und $\vec F_2$ sind die Strecken vom
+  Angriffspunkt bis zu den beiden Schnittpunkten.
+\end{enumerate}
+
+\begin{hinweisbox}[Hinweis: Addition oder Zerlegung?]
+Bei der \textbf{\emph{Addition}} sind die Beträge und Richtungen \emph{aller}
+Kräfte bereits bekannt, gesucht ist die Resultierende. Bei der
+\textbf{\emph{Zerlegung}} ist es umgekehrt: Nur \emph{eine} Kraft und die
+beiden \emph{Richtungen} der gesuchten Teilkräfte sind bekannt, ihre Beträge
+sind gesucht.
+\end{hinweisbox}
+
+\textbf{Beispiel:} Eine Lampe hängt an zwei Seilen zwischen zwei Wänden. Die
+Gewichtskraft $\vec F_G$ wird in die beiden Seilrichtungen zerlegt.
+
+\Bild{15.5cm}{Bilder/lampe_aufgabe.png}
+\end{theoriebox}
+
+% =============================================================================
+% Partnerarbeit: eigene Situation erfinden (Addition oder Zerlegung)
+% =============================================================================
+\begin{questions}
+\begin{groupbox}[Partnerarbeit: Erfinden Sie Ihre eigene Situation]
+\question Denken Sie sich zu zweit eine eigene Situation aus, in der
+mehrere Kräfte auf einen Körper wirken (Addition) oder eine Kraft in zwei
+Richtungen zerlegt werden kann (Zerlegung). Seien Sie kreativ: Die Situation
+darf auch ungewöhnlich oder erfunden sein, muss aber physikalisch sinnvoll
+sein.
+
+\begin{parts}
+  \part[3] Skizzieren Sie Ihre Situation unten: Zeichnen Sie den Körper, den
+  Angriffspunkt sowie entweder mehrere Kraftpfeile (Addition) oder eine Kraft
+  mit zwei vorgegebenen Richtungen (Zerlegung) massstabsgetreu ein. Geben Sie
+  den verwendeten Kraftmassstab an, und bei einer Zerlegung zusätzlich die
+  beiden Richtungen, falls diese nicht bereits aus der Skizze ersichtlich
+  sind.
+  \Antwortraum{2.5}
+
+  \part[5] Tauschen Sie die Skizze mit Ihrem Partner/Ihrer Partnerin.
+  Bestimmen Sie grafisch (je nachdem, was Ihnen vorgegeben wurde) entweder
+  die Resultierende oder die beiden Teilkräfte, und tragen Sie die
+  Konstruktion direkt in die Skizze oben ein.
+\end{parts}
+\end{groupbox}
+\end{questions}
+
+\end{document}

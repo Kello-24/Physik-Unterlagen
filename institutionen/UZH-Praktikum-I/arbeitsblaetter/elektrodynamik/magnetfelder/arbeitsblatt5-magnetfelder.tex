@@ -7,10 +7,13 @@
 %
 % Ablauf (direkt mit Loris per Chat abgestimmt, 31.08.2026 -- ersetzt die
 % Reihenfolge aus einer frueheren Fassung dieser Datei):
-%   1. Repetition Magnete/Kompassnadel (Werkstatt-Quiz + Bildfrage zum
-%      Kompassverhalten in Naehe eines Magneten -- Bild folgt von Loris).
-%   2. Vergleich elektrisches Punktladungsfeld vs. Stabmagnetfeld (Bilder
-%      folgen von Loris).
+%   0. Kurze Definition "Magnetfeld" (Stand 03.09.2026, neu).
+%   1. Repetition Magnete/Kompassnadel: Zeichenuebung "Kompassnadeln
+%      einzeichnen" (sechs Kreise, TikZ-Skizze zweier zugewandter
+%      Stabmagnete); das Foto zwei_magnete.png dient nur noch als
+%      zusaetzliche Loesung zum Vergleich (Stand 03.09.2026 ueberarbeitet
+%      -- die fruehere separate Bildfrage-Aufgabe wurde entfernt).
+%   2. Vergleich elektrisches Punktladungsfeld vs. Stabmagnetfeld.
 %   3. Regeln zum Zeichnen von Feldlinien + Zeichenuebung (zwei Stabmagnete,
 %      gleichnamige Pole zueinander).
 %   4. Erdmagnetfeld.
@@ -28,11 +31,13 @@
 % separat nachgezogen werden, bevor sie wieder als Quelle fuer dieses
 % Dokument gelten.
 %
-% Noch keine eigenen Skizzen fuer die neuen Abschnitte (Kompass-Bild,
-% Punktladungsfeld/Stabmagnetfeld-Vergleich, Erdmagnetfeld) -- echte Bilder
-% folgen, sobald sie vorliegen; bis dahin bewusst nur Text (siehe
-% TODO-Kommentare im Fliesstext). leiter.png/spule.png sind bereits
-% vorhanden und werden weiterhin verwendet.
+% Stand 03.09.2026: Bilder fuer alle Abschnitte liegen inzwischen vor
+% (zwei_magnete.png, elektrisches_fled_punktladungen.jpg,
+% magnetfeld_permanentmagnet.png, erdmagnetfeld.png,
+% Erdmagnetfeld-innen-scaled.jpg bei der Spule als Analogie, leiter.png,
+% spule.png). Die Formeln fuer B (gerader Leiter, Spule) stehen auf
+% Wunsch direkt im Fliesstext -- keine Fill-in-the-blank-Antwortbox mehr,
+% die SuS sollen sie nicht mehr selbst herleiten.
 %
 % Quellen: Vorwissen/Magnetismus/Werkstatt_Magnetismus.docx
 % (15-Posten-Werkstatt, bereits bekannt), PhysikLibre Kap. 13.1/13.4 (dieser
@@ -231,6 +236,16 @@
   fontupper=\bfseries\sffamily\small
 }
 
+% Kompasskreis/Kompassnadel: leerer Kreis (Aufgabe) bzw. Kreis mit Nadel in
+% Richtung #3 (Lösung, Winkel in Grad, 0 = nach rechts) für die
+% Kompassnadel-Zeichenübung bei Magnetfeldern.
+\newcommand{\Kompasskreis}[2]{\draw[thick] (#1,#2) circle (0.38);}
+\newcommand{\Kompassnadel}[3]{%
+  \draw[thick] (#1,#2) circle (0.38);
+  \draw[thick,-{Latex[length=2.2mm]}] ($(#1,#2)+(#3+180:0.28)$) -- ($(#1,#2)+(#3:0.28)$);
+  \node[font=\scriptsize\bfseries] at ($(#1,#2)+(#3:0.58)$) {N};
+}
+
 % --- Lösungen ein-/ausblenden -----------------------------------------------
 \noprintanswers
 %\printanswers
@@ -272,29 +287,102 @@
 \Kopfzeile{\Klasse}{\Datum}{\Thema}{\ArbeitsblattTitel}
 
 % =============================================================================
-% Repetition: Magnete und Kompassnadel (Werkstatt)
+% Definition: Magnetfeld
+% =============================================================================
+\begin{theoriebox}[Magnetfeld: Definition]
+\textbf{\emph{Ein Magnetfeld}} ist ein Modell für den Raum, in dem
+magnetische Wirkungen auftreten.
+\end{theoriebox}
+
+% =============================================================================
+% Kompassnadeln einzeichnen (Repetition; Foto als zusätzliche Lösung)
 % =============================================================================
 \begin{questions}
-\begin{taskbox}[Repetition: Magnete und Kompassnadel]
-\question Betrachten Sie das Bild: Eine kleine Kompassnadel liegt zwischen
-zwei Stabmagneten, deren Nordpol (links) und Südpol (rechts) einander
-zugewandt sind.
+\begin{taskbox}[Kompassnadeln einzeichnen]
+\question Zwei gleich starke Stabmagnete liegen sich gegenüber, dabei
+sind ihr Nordpol (links) und ihr Südpol (rechts) einander zugewandt.
+Zeichnen Sie in jeden der acht Kreise ein, wie sich eine dort platzierte
+Kompassnadel ausrichten würde (Pfeil vom Süd- zum Nordpol der Nadel,
+\glqq N\grqq{} am Nordpolende der Nadel).
+\begin{answerbox}
 \begin{center}
-  \includegraphics[width=8cm]{Bilder/zwei_magnete.png}
+\begin{tikzpicture}[>=Latex,scale=1]
+  % linker Magnet: S (links) -- N (rechts, zeigt zur Mitte)
+  \draw[thick] (-4.5,0) rectangle (-2,0.9);
+  \draw[thick] (-3.25,0) -- (-3.25,0.9);
+  \node at (-3.875,0.45) {S};
+  \node at (-2.625,0.45) {N};
+  % rechter Magnet: S (links, zeigt zur Mitte) -- N (rechts)
+  \draw[thick] (2,0) rectangle (4.5,0.9);
+  \draw[thick] (3.25,0) -- (3.25,0.9);
+  \node at (2.625,0.45) {S};
+  \node at (3.875,0.45) {N};
+  \Kompasskreis{0}{0.45}
+  \Kompasskreis{-1.3}{1.9}
+  \Kompasskreis{1.3}{1.9}
+  \Kompasskreis{0}{-1.5}
+  \Kompasskreis{-1.3}{-1.9}
+  \Kompasskreis{1.3}{-1.9}
+  \Kompasskreis{-5.3}{0.45}
+  \Kompasskreis{5.3}{0.45}
+\end{tikzpicture}
+\end{center}
+\end{answerbox}
+\begin{solution}
+\begin{center}
+\begin{tikzpicture}[>=Latex,scale=1]
+  \draw[thick] (-4.5,0) rectangle (-2,0.9);
+  \draw[thick] (-3.25,0) -- (-3.25,0.9);
+  \node at (-3.875,0.45) {S};
+  \node at (-2.625,0.45) {N};
+  \draw[thick] (2,0) rectangle (4.5,0.9);
+  \draw[thick] (3.25,0) -- (3.25,0.9);
+  \node at (2.625,0.45) {S};
+  \node at (3.875,0.45) {N};
+  \Kompassnadel{0}{0.45}{0}
+  \Kompassnadel{-1.3}{1.9}{55}
+  \Kompassnadel{1.3}{1.9}{-55}
+  \Kompassnadel{0}{-1.5}{0}
+  \Kompassnadel{-1.3}{-1.9}{-55}
+  \Kompassnadel{1.3}{-1.9}{55}
+  \Kompassnadel{-5.3}{0.45}{0}
+  \Kompassnadel{5.3}{0.45}{0}
+  \node at (0.55,1.05) {\scriptsize 1};
+  \node at (-1.85,2.5) {\scriptsize 2};
+  \node at (1.85,2.5) {\scriptsize 3};
+  \node at (0.55,-1.95) {\scriptsize 4};
+  \node at (-1.85,-2.5) {\scriptsize 5};
+  \node at (1.85,-2.5) {\scriptsize 6};
+  \node at (-4.75,1.05) {\scriptsize 7};
+  \node at (5.85,1.05) {\scriptsize 8};
+\end{tikzpicture}
+\end{center}
+Kreis 1 liegt genau auf der Linie zwischen den beiden zugewandten Polen.
+Die Nadel zeigt dort waagrecht von Nord- zu Südpol. Kreis 2 liegt näher
+am Nordpol und oberhalb der Mittellinie: Die Feldlinien treten dort
+schräg nach oben aus dem Nordpol aus, bevor sie sich später Richtung
+Südpol krümmen. Die Nadel zeigt entsprechend schräg nach oben rechts.
+Kreis 3 liegt spiegelbildlich näher am Südpol: Dort krümmen sich die
+Feldlinien bereits nach unten in den Südpol hinein, die Nadel zeigt
+deshalb schräg nach unten rechts. Kreis 4 liegt unterhalb der Magnete auf
+der Mittellinie. Dort verläuft das Feld wie bei Kreis 1 im Wesentlichen
+waagrecht von Nord- zu Südpol. Die Kreise 5 und 6 liegen unterhalb der
+Magnete, spiegelbildlich zu den Kreisen 2 und 3. Die Nadeln zeigen dort
+ebenfalls schräg, allerdings mit vertauschter Neigung (Kreis 5 schräg
+nach unten rechts, Kreis 6 schräg nach oben rechts). Die Kreise 7 und 8
+liegen an den äusseren Enden der beiden Magnete, ausserhalb von ihnen,
+aber ebenfalls auf der gemeinsamen Mittellinie -- dort zeigt die Nadel
+wieder waagrecht nach rechts, genau wie bei Kreis 1: Auf der Achse eines
+Magnetpaars zeigt das Feld sowohl zwischen als auch ausserhalb der Pole
+stets in dieselbe Richtung.
+
+Zum Vergleich: dieselbe Anordnung als Foto, mit einer echten Kompassnadel
+auf der Mittellinie (entspricht Kreis 1).
+\begin{center}
+  \includegraphics[width=7cm]{Bilder/zwei_magnete.png}
 \end{center}
 {\scriptsize Kompassnadel im Feld zwischen den einander zugewandten Polen
 zweier Stabmagnete.}
-
-Beschreiben Sie, wie sich die Kompassnadel ausrichtet, und erklären Sie
-mithilfe der Feldlinien, warum.
-\Antwortraum{2}
-\begin{solution}
-Die Kompassnadel richtet sich mit ihrem Nordpol in Richtung der
-Feldlinien aus, die im Zwischenraum vom Nordpol (links) zum Südpol
-(rechts) verlaufen -- ihr Nordpol zeigt also in Richtung des rechten
-Magneten. Da sich die Felder beider Magnete im Zwischenraum überlagern
-und dort besonders dicht sind (die beiden Magnete ziehen sich an),
-schlägt die Nadel dort deutlich aus.
 \end{solution}
 \end{taskbox}
 \end{questions}
@@ -318,8 +406,8 @@ Stabmagneten (ebenfalls ein Dipol).
   \includegraphics[height=5cm]{Bilder/elektrisches_fled_punktladungen.jpg}\\
   elektrischer Dipol
 \end{minipage}\hfill
-\begin{minipage}[t]{5.2cm}\centering
-  \includegraphics[height=5cm]{Bilder/magnetfeld_permanentmagnet.png}\\
+\begin{minipage}[t]{6.2cm}\centering
+  \includegraphics[height=6cm]{Bilder/magnetfeld_permanentmagnet.png}\\
   Stabmagnet
 \end{minipage}
 \end{center}
@@ -351,12 +439,6 @@ gibt es nicht.
   \item Die Richtung an einem Punkt entspricht der Richtung, in die der Nordpol einer dort platzierten Kompassnadel zeigt.
   \item Je dichter die Feldlinien gezeichnet sind, desto stärker ist das Feld an dieser Stelle.
 \end{itemize}
-
-\begin{center}
-  \includegraphics[height=5cm]{Bilder/magnetfeld_permanentmagnet.png}
-\end{center}
-{\scriptsize Nach diesen Regeln korrekt gezeichnetes Magnetfeld eines
-Stabmagneten.}
 \end{theoriebox}
 
 \begin{questions}
@@ -450,6 +532,15 @@ erzeugt.
 Genau diesen Effekt untersuchen Sie jetzt selbst.
 \end{beispielbox}
 
+\begin{hinweisbox}[Achtung, wichtiger Unterschied]
+Ab jetzt betrachten wir keine \textbf{Permanentmagnete} (Stabmagnete)
+mehr, sondern \textbf{Elektromagnete}: Magnetfelder, die durch
+elektrischen Strom erzeugt werden. Ein Elektromagnet besitzt
+\textbf{keine festen Pole} -- die Richtung seines Feldes hängt direkt
+von der Stromrichtung ab und lässt sich jederzeit durch Umpolen
+umkehren.
+\end{hinweisbox}
+
 % =============================================================================
 % Baukasten-Experiment (Partnerarbeit): Feld bei Leiter und Spule
 % =============================================================================
@@ -459,13 +550,16 @@ Genau diesen Effekt untersuchen Sie jetzt selbst.
 % (noch nicht erstellt -- keine eigene Skizze an dieser Stelle).
 \question Sie erhalten einen Baukasten mit einem Stromkreis, der einen
 geraden Stableiter und eine Spule enthält, sowie mehrere kleine
-Kompassnadeln.
+Kompassnadeln. Der Stromkreis wird über einen Schalter eingeschaltet,
+dessen \glqq On\grqq-Taste Sie \textbf{gedrückt halten} müssen, damit
+Strom fliesst. Lassen Sie los, fliesst kein Strom mehr. Mit demselben
+Schalter können Sie ausserdem die Stromrichtung umpolen.
 \begin{parts}
   \part[4] Untersuchen Sie mit den Kompassnadeln \textbf{beide} Bauteile
   nacheinander. Beschreiben Sie für \textbf{jedes} der beiden Felder, wie
   sich die Nadeln ausrichten: beim geraden Stableiter in verschiedenen
-  Abständen rund um den Draht (wie bei Ørsted); bei der Spule innerhalb,
-  an ihren beiden Enden, und seitlich davon.
+  Abständen rund um den Draht (wie bei Ørsted); bei der Spule innerhalb
+  der Spule.
   \Antwortraum{4}
   \begin{solution}
   \textbf{Gerader Leiter:} Die Kompassnadeln stellen sich tangential zu
@@ -473,11 +567,7 @@ Kompassnadeln.
   Ausschlag.
 
   \textbf{Spule:} Im Inneren zeigen alle Kompassnadeln in dieselbe
-  Richtung entlang der Spulenachse (ein starkes, einheitliches Feld). An
-  den beiden Enden der Spule zeigen sich deutlich erkennbare Pole: Die
-  Nadeln richten sich dort wie bei einem gewöhnlichen Stabmagneten aus.
-  Seitlich neben der Spule ist das Feld dagegen deutlich schwächer und
-  weniger einheitlich.
+  Richtung entlang der Spulenachse (ein starkes, einheitliches Feld).
   \end{solution}
 
   \part[3] Kehren Sie jetzt die Stromrichtung im Stromkreis um. Was
@@ -490,8 +580,8 @@ Kompassnadeln.
   Richtung aus.
 
   \textbf{Spule:} Ebenfalls vollständige Umkehr -- die Kompassnadeln im
-  Inneren zeigen jetzt in die Gegenrichtung, und Nord- und Südpol der
-  Spule vertauschen sich.
+  Inneren zeigen jetzt in die Gegenrichtung, das Feld der Spule zeigt
+  also insgesamt in die entgegengesetzte Richtung.
   \end{solution}
 \end{parts}
 \end{groupbox}
@@ -515,40 +605,15 @@ Stromrichtung, geben die gekrümmten Finger die Richtung des Magnetfelds an.
 {\scriptsize Rechte-Faust-Regel für den geraden Leiter: Daumen zeigt in
 Stromrichtung $I$, die gekrümmten Finger zeigen die Richtung von $\vec B$.}
 
-Die \textbf{\emph{magnetische Flussdichte}} $B$ im Abstand $r$ von einem
-geraden Leiter mit Stromstärke $I$ beträgt (ergänzen Sie die Formel und
-die Einheit von $B$):
-\begin{answerbox}
-\vspace{0.9cm}
-\hspace{1.5cm}$B = {}$\par
-\vspace{0.9cm}
-\end{answerbox}
-\begin{solution}
+\begin{formelbox}[Magnetische Flussdichte: gerader Leiter]
 \[
-  B = \frac{\mu_0}{2\pi}\cdot\frac{I}{r}, \qquad \text{Einheit von } B\colon\ \si{\tesla}.
+  B = \frac{\mu_0}{2\pi}\cdot\frac{I}{r}
 \]
-Dabei ist $\mu_0$ die \textbf{\emph{magnetische Feldkonstante}}
-$\mu_0 = 4\pi\cdot10^{-7}\,\si{\newton\per\ampere\squared}$, eine
-Naturkonstante, die angibt, wie leicht sich ein Magnetfeld im Vakuum
-aufbauen lässt.
-
-Einheit von $B$: Aus $[\mu_0]=\si{\newton\per\ampere\squared}$ und
-$[I/r]=\si{\ampere\per\meter}$ folgt (ein Faktor $\si{\ampere}$ kürzt sich
-weg):
-\[
-  [B] = \si{\newton\per\ampere\squared}\cdot\si{\ampere\per\meter}
-      = \SI{1}{\newton\per\ampere\per\meter}.
-\]
-Diese Einheitenkombination hat einen eigenen Namen:
-\[
-  \SI{1}{\newton\per\ampere\per\meter} = \text{1 Tesla} = \SI{1}{\tesla}.
-\]
-\end{solution}
-
-Aus der Formel lässt sich das \textbf{\emph{Skalierungsverhalten}} direkt
-ablesen: $B$ ist \textbf{\emph{proportional}} zur Stromstärke $I$ (doppelter
-Strom $\to$ doppeltes Feld) und \textbf{\emph{umgekehrt proportional}} zum
-Abstand $r$ (doppelter Abstand $\to$ halbes Feld).
+$\mu_0 = 4\pi\cdot10^{-7}\,\si{\newton\per\ampere\squared}$ (magnetische
+Feldkonstante); Einheit von $B$: $\si{\tesla}$ (Tesla, benannt nach
+Nikola Tesla). Herleitung der Einheit (im Plenum):
+\vspace{1.3cm}
+\end{formelbox}
 \end{theoriebox}
 
 \begin{theoriebox}[Das Magnetfeld der Spule]
@@ -561,28 +626,36 @@ Baukasten-Experiment beobachtet.
   \includegraphics[width=7.5cm]{Bilder/spule.png}
 \end{center}
 {\scriptsize Rechte-Faust-Regel für die Spule: Zeigen die gekrümmten Finger
-in Stromrichtung (Windungsrichtung), zeigt der Daumen zum Nordpol der
-Spule.}
+in Stromrichtung (Windungsrichtung), zeigt der Daumen in Richtung des
+Feldes im Innern der Spule.}
 
-Für eine Spule mit $N$ Windungen auf der Länge $l$ gilt für die
-magnetische Flussdichte im Inneren (ergänzen Sie die Formel und die
-Einheit von $B$):
-\begin{answerbox}
-\vspace{0.9cm}
-\hspace{1.5cm}$B = {}$\par
-\vspace{0.9cm}
-\end{answerbox}
-\begin{solution}
+\begin{formelbox}[Magnetische Flussdichte: Spule]
 \[
-  B = \mu_0\cdot\frac{N}{l}\cdot I, \qquad \text{Einheit von } B\colon\ \si{\tesla}.
+  B = \mu_0\cdot\frac{N}{l}\cdot I = \mu_0\cdot n\cdot I
 \]
-($N$ ist eine reine Zahl ohne Einheit, $l$ in \si{\meter}, $I$ in
-\si{\ampere}.) Den Quotienten $n=\frac{N}{l}$ (Windungen pro Meter
-Spulenlänge) nennt man die \textbf{\emph{Windungsdichte}} $n$; damit lässt
-sich die Formel auch kompakter schreiben als $B=\mu_0\cdot n\cdot I$.
-\end{solution}
+$N$: Windungszahl, $l$: Spulenlänge, $n=\frac{N}{l}$: Windungsdichte;
+Einheit von $B$: $\si{\tesla}$.
+\end{formelbox}
+
+\begin{center}
+  \includegraphics[width=9cm]{Bilder/Einflussgroessen_spuhle.png}
+\end{center}
+{\scriptsize Einflussgrössen auf $B$: mehr Strom oder mehr Windungen
+vergrössern $B$, eine längere Spule (bei gleicher Windungszahl)
+verkleinert $B$.}
+
 Das homogene Feld im Inneren einer Spule ist die magnetische Entsprechung
 des homogenen elektrischen Feldes im Inneren eines Plattenkondensators.
+
+Auch das eingangs gezeigte Erdmagnetfeld entsteht nach genau diesem
+Prinzip: Schraubenförmige Strömungen im flüssigen äusseren Erdkern wirken
+wie unzählige kleine Spulen und erzeugen dadurch das Magnetfeld der Erde.
+
+\begin{center}
+  \includegraphics[width=7.5cm]{Bilder/Erdmagnetfeld-innen-scaled.jpg}
+\end{center}
+{\scriptsize Ursache des Erdmagnetfelds: schraubenförmige Strömungen im
+flüssigen äusseren Kern wirken wie viele kleine Spulen.}
 \end{theoriebox}
 
 \begin{hinweisbox}[Achtung, Verwechslungsgefahr]
@@ -590,8 +663,66 @@ Es gibt \textbf{zwei verschiedene} Rechte-Faust-Regeln: Beim
 \textbf{geraden Leiter} zeigt der \textbf{Daumen} in Stromrichtung, die
 \textbf{Finger} zeigen die Feldrichtung. Bei der \textbf{Spule} ist es
 umgekehrt: Die \textbf{Finger} zeigen in Stromrichtung (Windungsrichtung),
-der \textbf{Daumen} zeigt zum Nordpol. Prüfen Sie bei jeder Aufgabe zuerst,
-um welchen Fall es sich handelt.
+der \textbf{Daumen} zeigt in Richtung des Feldes im Innern. Prüfen Sie bei
+jeder Aufgabe zuerst, um welchen Fall es sich handelt.
 \end{hinweisbox}
+
+\begin{questions}
+\begin{taskbox}[Frage: Leiter- und Spulenfeld im Vergleich]
+\question Wie unterscheidet sich das Magnetfeld eines geraden,
+stromdurchflossenen Leiters von demjenigen im Innern einer
+stromdurchflossenen Spule?
+\Antwortraum{2}
+\begin{solution}
+Beim geraden Leiter bilden die Feldlinien konzentrische Kreise um den
+Draht; die Feldstärke nimmt mit wachsendem Abstand $r$ vom Draht ab. Im
+Innern einer Spule dagegen verlaufen die Feldlinien parallel zur
+Spulenachse, und das Feld ist nahezu \textbf{\emph{homogen}}: Die
+Feldstärke ist im ganzen Innenraum (fernab der Enden) praktisch überall
+gleich gross.
+\end{solution}
+\end{taskbox}
+\end{questions}
+
+\begin{questions}
+\begin{taskbox}[Frage: Richtung des Spulenfelds]
+\question Betrachten Sie die beiden Spulen unten, seitlich aufgeschnitten
+gezeichnet. Beide sind an derselben Batterie-Polung angeschlossen ($+$
+jeweils links, $-$ jeweils rechts), aber \textbf{unterschiedlich
+gewickelt}: Spule A ist rechtsgewickelt, Spule B linksgewickelt.
+\begin{center}
+\begin{minipage}[t]{7cm}\centering
+  \includegraphics[width=6.5cm]{Bilder/windung_rechts.png}\\
+  Spule A (rechtsgewickelt)
+\end{minipage}\hfill
+\begin{minipage}[t]{7cm}\centering
+  \includegraphics[width=6.5cm]{Bilder/windung_links.png}\\
+  Spule B (linksgewickelt)
+\end{minipage}
+\end{center}
+
+Welche \textbf{zwei} Faktoren legen zusammen fest, in welche Richtung
+entlang der Spulenachse das Magnetfeld im Innern einer Spule zeigt? Fahren
+Sie ausserdem mit den gekrümmten Fingern der rechten Hand dem
+gezeichneten Draht in Stromrichtung (von $+$ nach $-$) entlang: Wohin
+zeigt der Daumen bei Spule A, wohin bei Spule B?
+\Antwortraum{3}
+\begin{solution}
+Erstens die \textbf{\emph{Stromrichtung}} (Polung, d.\,h. welche Klemme
+der Batterie an welches Spulenende angeschlossen ist) und zweitens die
+\textbf{\emph{Windungsrichtung}} der Spule (im oder gegen den
+Uhrzeigersinn gewickelt). Kehrt man nur einen der beiden Faktoren um,
+kehrt sich die Feldrichtung im Innern der Spule um; kehrt man beide
+gleichzeitig um, zeigt das Feld wieder in dieselbe Richtung wie zuvor.
+
+Bei Spule A und Spule B ist die Stromrichtung (Polung) identisch, nur die
+Windungsrichtung ist entgegengesetzt -- nach obiger Regel zeigt das Feld
+im Innern der beiden Spulen deshalb in \textbf{entgegengesetzte}
+Richtungen: Finden Sie mit der rechten Hand am Bild heraus, wohin der
+Daumen bei Spule A zeigt -- bei Spule B zeigt er dann in die genau
+entgegengesetzte Richtung.
+\end{solution}
+\end{taskbox}
+\end{questions}
 
 \end{document}

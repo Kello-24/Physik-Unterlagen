@@ -240,8 +240,8 @@
 % --- Lösungen ein-/ausblenden -----------------------------------------------
 % Schülerexemplar (Standard): \noprintanswers
 % Lehrer-/Lösungsexemplar:    \printanswers
-\noprintanswers
-%\printanswers
+%\noprintanswers
+\printanswers
 
 % --- Punkte bleiben intern, werden aber nicht gedruckt ----------------------
 % Arbeitsblätter sind nicht benotet. \question[n]/\part[n] bekommen trotzdem
@@ -1302,8 +1302,13 @@ $Q$ ($t=\SI{5}{\second}$) bei $s=\SI{12.5}{\meter}$.
   Deine Zeichnung wird nicht exakt mit der folgenden Lösung
   übereinstimmen. Das ist normal, die Tangente wird nur qualitativ
   abgeschätzt. Werte zwischen etwa $\SI{1.5}{\meter\per\second}$ und
-  $\SI{2.5}{\meter\per\second}$ gelten als korrekt abgelesen; die exakte
-  Tangente ergibt $v(P) \approx \SI{2}{\meter\per\second}$.
+  $\SI{2.5}{\meter\per\second}$ gelten als korrekt abgelesen. In dieser
+  Lösung wurden auf der eingezeichneten Tangente die beiden Punkte
+  $(t=\SI{1}{\second},\,s=\SI{0}{\meter})$ und
+  $(t=\SI{3}{\second},\,s=\SI{4}{\meter})$ abgelesen:
+  \[
+    v(P) \approx \frac{\SI{4}{\meter}-\SI{0}{\meter}}{\SI{3}{\second}-\SI{1}{\second}} = \SI{2}{\meter\per\second}.
+  \]
   \begin{center}
   \begin{tikzpicture}[scale=0.95]
     \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (6,6);
@@ -1324,8 +1329,13 @@ $Q$ ($t=\SI{5}{\second}$) bei $s=\SI{12.5}{\meter}$.
   \begin{solution}
   Auch hier gilt: qualitativ abgeschätzt, Toleranz erwartet. Werte
   zwischen etwa $\SI{4}{\meter\per\second}$ und $\SI{6}{\meter\per\second}$
-  gelten als korrekt abgelesen; die exakte Tangente ergibt
-  $v(Q) \approx \SI{5}{\meter\per\second}$.
+  gelten als korrekt abgelesen. In dieser Lösung wurden auf der
+  eingezeichneten Tangente die beiden Punkte
+  $(t=\SI{4.2}{\second},\,s=\SI{8.5}{\meter})$ und
+  $(t=\SI{5.8}{\second},\,s=\SI{16.5}{\meter})$ abgelesen:
+  \[
+    v(Q) \approx \frac{\SI{16.5}{\meter}-\SI{8.5}{\meter}}{\SI{5.8}{\second}-\SI{4.2}{\second}} = \SI{5}{\meter\per\second}.
+  \]
   \begin{center}
   \begin{tikzpicture}[scale=0.95]
     \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (6,6);

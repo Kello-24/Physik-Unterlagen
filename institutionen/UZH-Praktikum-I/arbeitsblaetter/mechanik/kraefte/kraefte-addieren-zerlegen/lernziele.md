@@ -3,7 +3,7 @@
 Klasse: 2e (02.09.2026, siehe PLAN_Dokumentengenerierung.md). Direkte
 Fortsetzung von Gewichtskraft & Federkraft (26.08.2026) — dieselbe
 Feder-Masse-Skizze aus jener Lektion (Kräftediagramm-Aufgabe zu Beginn der
-Lernaufgabe, `arbeitsblatt2-gewichtskraft-federkraft-teil1.tex`) dient hier
+Lernaufgabe, `arbeitsblatt2-gewichtskraft-federkraft.tex`) dient hier
 als Einstieg. Quelle: `PhysikLibre.pdf` Kap. 4.1.2 (Kraft als Vektorgrösse),
 4.3 „Anwenden von Kräften" (4.3.1 Zusammenfassen von Kräften, 4.3.2
 Kräfteparallelogramm, 4.3.3 Kräftediagramm/Kraft-Maßstab, 4.3.4 Aufteilung

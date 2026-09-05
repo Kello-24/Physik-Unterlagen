@@ -451,26 +451,18 @@ interpretierbar.
 \end{theoriebox}
 
 % Übung direkt zur vorangehenden Theoriebox: Geschwindigkeitsvektoren
-% massstabsgetreu einzeichnen (Teil b), dann darauf aufbauend eine
-% Anwendung mit Relativgeschwindigkeit (Teile c/d, Überholmanöver auf der
-% Autobahn), bewusst als Vertiefung/Transfer über die Theoriebox hinaus,
-% keine eigene Lernzielnummer. Werte bewusst so gewählt, dass $v_1$ genau
-% der Autobahnhöchstgeschwindigkeit entspricht (120 km/h) und die in
-% Teil d) errechnete nötige Überholgeschwindigkeit diese leicht
-% überschreitet: Das zeigt, dass ein Überholmanöver bei Tempo 120 gegen
-% einen Lastwagen (Tempo 80, die für Lastwagen geltende
-% Autobahnhöchstgeschwindigkeit) im gegebenen Zeitfenster gar nicht
-% regelkonform möglich ist. Bilder/Autos_Geschwindigkeit.png (leer, für
-% Teil b) und Bilder/Autos_Geschwindigkeit_Loesung.png (mit
+% massstabsgetreu einzeichnen, bewusst als Vertiefung/Transfer über die
+% Theoriebox hinaus, keine eigene Lernzielnummer. Die Fortsetzung mit
+% Relativgeschwindigkeit/Überholmanöver gehört inhaltlich zum Thema
+% Bewegungsgleichungen und lebt dort, nicht hier. Bilder/Autos_Geschwindigkeit.png
+% (leer, für Teil b) und Bilder/Autos_Geschwindigkeit_Loesung.png (mit
 % eingezeichneten Vektoren, 120 km/h Auto hinten, 80 km/h Lastwagen
 % vorne, Referenzpfeil 40 km/h) sind aufeinander abgestimmt.
 \begin{questions}
 \begin{taskbox}[Übung: Geschwindigkeitsvektoren beim Überholmanöver auf der Autobahn]
-\question[13] Auf der Autobahn (Höchstgeschwindigkeit
+\question[6] Auf der Autobahn (Höchstgeschwindigkeit
 $\SI{120}{\kilo\meter\per\hour}$) nähert sich ein Auto (im Bild links,
-hinten) einem Lastwagen (im Bild rechts, vorne). Zum Zeitpunkt
-$t=\SI{0}{\second}$ beträgt der Abstand zwischen den beiden Fahrzeugen
-$d_0=\SI{70}{\meter}$ (siehe Bild).
+hinten) einem Lastwagen (im Bild rechts, vorne).
 
 Das Auto fährt mit $v_1=\SI{33.33}{\meter\per\second}$. Der Lastwagen vor
 ihm ist um $\SI{40}{\kilo\meter\per\hour}$ langsamer unterwegs: Für
@@ -501,103 +493,6 @@ $\SI{80}{\kilo\meter\per\hour}$.
   \includegraphics[width=0.9\linewidth]{Bilder/Autos_Geschwindigkeit_Loesung.png}
   \end{center}
   \end{solution}
-
-  \part[3] Das Auto will erst dann den Blinker setzen und mit dem
-  Überholmanöver beginnen, wenn der Abstand zum Lastwagen auf
-  $\SI{40}{\meter}$ Sicherheitsabstand geschrumpft ist. Nach welcher Zeit
-  $t$ ist das der Fall?
-  \Antwortraum{3}
-  \begin{solution}
-  Relativgeschwindigkeit: $v_1-v_2 \approx \SI{33.33}{\meter\per\second}
-  - \SI{22.22}{\meter\per\second} = \SI{11.11}{\meter\per\second}$. Der
-  Abstand muss dazu um $d_0-\SI{40}{\meter}=\SI{30}{\meter}$ abnehmen:
-  \[
-    t = \frac{\SI{30}{\meter}}{\SI{11.11}{\meter\per\second}}
-    \approx \SI{2.70}{\second}.
-  \]
-  \end{solution}
-
-  \part[4] Für das eigentliche Überholmanöver (auf der Überholspur)
-  bleiben dem Auto nur $\SI{6}{\second}$, weil sich von hinten bereits
-  ein schnelleres Fahrzeug nähert und die Spur zügig wieder freigegeben
-  werden muss. Danach soll das Auto $\SI{30}{\meter}$ Vorsprung vor dem
-  Lastwagen haben. Wie schnell muss das überholende Auto während des
-  Manövers mindestens fahren, wenn der Lastwagen dabei unverändert mit
-  $v_2$ weiterfährt? Gib das Ergebnis in $\si{\meter\per\second}$
-  \emph{und} in $\si{\kilo\meter\per\hour}$ an.
-  \Antwortraum{4}
-  \begin{solution}
-  Zu Beginn des Manövers liegt das Auto noch $\SI{40}{\meter}$ zurück, am
-  Ende soll es $\SI{30}{\meter}$ Vorsprung haben: Relativ zum Lastwagen
-  muss es also $\SI{40}{\meter}+\SI{30}{\meter}=\SI{70}{\meter}$
-  aufholen, und zwar in $\SI{6}{\second}$:
-  \[
-    \Delta v = \frac{\SI{70}{\meter}}{\SI{6}{\second}}
-    \approx \SI{11.67}{\meter\per\second}.
-  \]
-  Die nötige Geschwindigkeit des überholenden Autos:
-  \[
-    v_{\text{überhol}} = v_2 + \Delta v \approx \SI{22.22}{\meter\per\second}
-    + \SI{11.67}{\meter\per\second} = \SI{33.89}{\meter\per\second}
-    \approx \SI{122.0}{\kilo\meter\per\hour}.
-  \]
-  \textbf{Hinweis:} Das liegt über der zulässigen
-  Autobahnhöchstgeschwindigkeit von $\SI{120}{\kilo\meter\per\hour}$.
-  Dieses Überholmanöver ist im gegebenen Zeitfenster also gar nicht
-  regelkonform durchführbar, das Auto müsste dafür zu schnell fahren.
-  \end{solution}
-\end{parts}
-\end{taskbox}
-\end{questions}
-
-\begin{questions}
-\begin{taskbox}[Übung: Geschwindigkeit und Schnelligkeit im s-t-Diagramm]
-\question[6] Ein Läufer trainiert auf einer geraden Strecke. Das folgende
-$s$-$t$-Diagramm zeigt seine Bewegung.
-
-\begin{center}
-\begin{tikzpicture}[scale=0.5]
-  \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (9,13);
-  \draw[->] (-0.3,0) -- (9.7,0) node[right] {\scriptsize $t$ in s};
-  \draw[->] (0,-0.3) -- (0,13.7) node[above] {\scriptsize $s$ in m};
-  \foreach \x/\lbl in {0/0,4/40,5/50,9/90} \draw (\x,0.15) -- (\x,-0.15) node[below] {\scriptsize \lbl};
-  \foreach \y/\lbl in {0/0,4/40,8/80,12/120} \draw (0.15,\y) -- (-0.15,\y) node[left] {\scriptsize \lbl};
-  \draw[thick,titleblue] (0,0) -- (4,12) -- (5,12) -- (9,4);
-  \filldraw[black] (0,0) circle (1.6pt);
-  \filldraw[black] (4,12) circle (1.6pt);
-  \filldraw[black] (5,12) circle (1.6pt);
-  \filldraw[black] (9,4) circle (1.6pt);
-\end{tikzpicture}
-\end{center}
-
-\begin{parts}
-  \part[2] Bestimme die Geschwindigkeit $v$ und die Schnelligkeit
-  $\lvert v\rvert$ im ersten Abschnitt ($t=0$ bis $t=\SI{40}{\second}$).
-  \Antwortraum{2}
-  \begin{solution}
-  $v = \dfrac{\SI{120}{\meter}-\SI{0}{\meter}}{\SI{40}{\second}-\SI{0}{\second}} = \SI{3}{\meter\per\second}$.
-  Da $v$ positiv ist: $\lvert v\rvert = \SI{3}{\meter\per\second}$.
-  \end{solution}
-
-  \part[2] Bestimme die Geschwindigkeit $v$ und die Schnelligkeit
-  $\lvert v\rvert$ im zweiten Abschnitt ($t=\SI{40}{\second}$ bis
-  $t=\SI{50}{\second}$).
-  \Antwortraum{2}
-  \begin{solution}
-  Der Ort ändert sich nicht ($s$ bleibt bei $\SI{120}{\meter}$, der Läufer
-  steht still): $v = \SI{0}{\meter\per\second}$, also auch
-  $\lvert v\rvert = \SI{0}{\meter\per\second}$.
-  \end{solution}
-
-  \part[2] Bestimme die Geschwindigkeit $v$ und die Schnelligkeit
-  $\lvert v\rvert$ im dritten Abschnitt ($t=\SI{50}{\second}$ bis
-  $t=\SI{90}{\second}$).
-  \Antwortraum{2}
-  \begin{solution}
-  $v = \dfrac{\SI{40}{\meter}-\SI{120}{\meter}}{\SI{90}{\second}-\SI{50}{\second}} = \dfrac{-\SI{80}{\meter}}{\SI{40}{\second}} = -\SI{2}{\meter\per\second}$.
-  Der Läufer bewegt sich hier rückwärts (negative Richtung); seine
-  Schnelligkeit ist $\lvert v\rvert = \SI{2}{\meter\per\second}$.
-  \end{solution}
 \end{parts}
 \end{taskbox}
 \end{questions}
@@ -617,60 +512,49 @@ sich ein Objekt befindet (das zeigt das $s$-$t$-Diagramm), sondern
 
 \begin{center}
 \begin{tikzpicture}[scale=0.85]
+  \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (5,3);
   \draw[->] (-0.3,0) -- (5.7,0) node[right] {\scriptsize $t$ in s};
   \draw[->] (0,-0.3) -- (0,4) node[above] {\scriptsize $v$ in $\si{\meter\per\second}$};
-  \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (5,3);
+  \foreach \x in {1,2,3,4,5} \draw (\x,0.08) -- (\x,-0.08) node[below] {\scriptsize \x};
+  \foreach \y in {1,2,3} \draw (0.08,\y) -- (-0.08,\y) node[left] {\scriptsize \y};
   \draw[thick,titleblue] (0,2) -- (5,2);
   \filldraw[black] (3,2) circle (1.6pt) node[above] {\scriptsize $(t,\,v(t))=(\SI{3}{\second},\,\SI{2}{\meter\per\second})$};
 \end{tikzpicture}
 \end{center}
 \end{theoriebox}
 
-\begin{theoriebox}[Konstante Geschwindigkeit im v-t-Diagramm]
-Bewegt sich ein Objekt mit konstanter Geschwindigkeit (eine
-\textbf{\emph{gleichförmige Bewegung}}, wie bereits beim $s$-$t$-Diagramm
-kennengelernt), ist sein $v$-$t$-Diagramm eine \textbf{\emph{waagrechte
-Gerade}}: Die Geschwindigkeit ändert sich mit der Zeit nicht.
-
-Liegt diese waagrechte Linie genau auf der $t$-Achse ($v=0$), befindet
-sich das Objekt in \textbf{\emph{Ruhe}}.
+\begin{questions}
+\begin{taskbox}[Übung: Verschiedene Geschwindigkeiten ins v-t-Diagramm einzeichnen]
+\question[2] Trage die folgenden drei (je für sich konstanten)
+Geschwindigkeiten in dasselbe $v$-$t$-Diagramm ein:
+$v_1=\SI{3}{\meter\per\second}$, $v_2=\SI{1.5}{\meter\per\second}$ und
+$v_3=\SI{0}{\meter\per\second}$.
 
 \begin{center}
 \begin{tikzpicture}[scale=0.85]
-  \draw[->] (-0.3,0) -- (5.7,0) node[right] {\scriptsize $t$};
-  \draw[->] (0,-0.3) -- (0,4) node[above] {\scriptsize $v$};
-  \draw[thick,titleblue] (0,2.5) -- (4.3,2.5) node[right] {\scriptsize konstante Geschwindigkeit};
-  \draw[thick,accentorange] (0,0) -- (4.3,0);
-  \node[accentorange] at (2.2,0.35) {\scriptsize Ruhe ($v=0$)};
+  \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (5,4);
+  \draw[->] (-0.3,0) -- (5.7,0) node[right] {\scriptsize $t$ in s};
+  \draw[->] (0,-0.3) -- (0,4.5) node[above] {\scriptsize $v$ in $\si{\meter\per\second}$};
+  \foreach \x in {1,2,3,4,5} \draw (\x,0.08) -- (\x,-0.08) node[below] {\scriptsize \x};
+  \foreach \y in {1,2,3,4} \draw (0.08,\y) -- (-0.08,\y) node[left] {\scriptsize \y};
 \end{tikzpicture}
 \end{center}
-
-Zeichnet man mehrere waagrechte Linien auf unterschiedlicher Höhe in
-dasselbe Diagramm, bewegen sich die entsprechenden Objekte mit
-unterschiedlichen (aber je für sich konstanten) Geschwindigkeiten. Die
-\textbf{\emph{Höhe}} einer Linie zeigt die Geschwindigkeit. Eine Linie
-kann dabei auch \emph{unterhalb} der $t$-Achse liegen. Das zeigt (wie
-in der vorherigen Theoriebox besprochen) eine Bewegung in die negative
-Richtung.
-
+\begin{solution}
 \begin{center}
 \begin{tikzpicture}[scale=0.85]
-  \draw[->] (-0.3,0) -- (5.7,0) node[right] {\scriptsize $t$};
-  \draw[->] (0,-0.3) -- (0,4) node[above] {\scriptsize $v$};
-  \draw[thick,titleblue] (0,3) -- (4.3,3) node[right] {\scriptsize schnell};
-  \draw[thick,accentorange] (0,1.7) -- (4.3,1.7) node[right] {\scriptsize langsamer};
-  \draw[thick,accentpurple] (0,0) -- (4.3,0);
-  \node[accentpurple] at (2.2,0.35) {\scriptsize Ruhe};
+  \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (5,4);
+  \draw[->] (-0.3,0) -- (5.7,0) node[right] {\scriptsize $t$ in s};
+  \draw[->] (0,-0.3) -- (0,4.5) node[above] {\scriptsize $v$ in $\si{\meter\per\second}$};
+  \foreach \x in {1,2,3,4,5} \draw (\x,0.08) -- (\x,-0.08) node[below] {\scriptsize \x};
+  \foreach \y in {1,2,3,4} \draw (0.08,\y) -- (-0.08,\y) node[left] {\scriptsize \y};
+  \draw[thick,titleblue] (0,3) -- (5,3) node[right] {\scriptsize $v_1$};
+  \draw[thick,accentorange] (0,1.5) -- (5,1.5) node[right] {\scriptsize $v_2$};
+  \draw[thick,accentpurple] (0,0) -- (5,0) node[right] {\scriptsize $v_3$ (Ruhe)};
 \end{tikzpicture}
 \end{center}
-
-\textbf{Hinweis:} Alle drei Linien oben sind waagrecht, also ist ihre
-Steigung überall null: \emph{keines} der drei Objekte beschleunigt,
-unabhängig davon, wie hoch oder tief die jeweilige Linie liegt. Eine
-höhere Linie bedeutet \emph{nur} eine grössere (aber weiterhin konstante)
-Geschwindigkeit, \textbf{nicht} eine stärkere Beschleunigung. Das ist
-eine der häufigsten Verwechslungen bei $v$-$t$-Diagrammen.
-\end{theoriebox}
+\end{solution}
+\end{taskbox}
+\end{questions}
 
 \begin{questions}
 \begin{taskbox}[Übung: Geschwindigkeit, Schnelligkeit und v-t-Diagramm bei einer Wanderung]
@@ -683,25 +567,17 @@ dem Gipfel von $\SI{20}{\minute}$. Der Abstieg (dieselbe Strecke von
 $\SI{2}{\kilo\meter}$) dauert nur $\SI{24}{\minute}$.
 
 \begin{parts}
-  \part[2] Berechne die Geschwindigkeit $v$ und die Schnelligkeit
-  $\lvert v\rvert$ für den Aufstieg.
-  \Antwortraum{2}
+  \part[5] Berechne die Geschwindigkeit $v$ und die Schnelligkeit
+  $\lvert v\rvert$ für alle drei Phasen der Wanderung: den Aufstieg, die
+  Pause auf dem Gipfel und den Abstieg.
+  \Antwortraum{5}
   \begin{solution}
+  Aufstieg:
   $v = \dfrac{\SI{2}{\kilo\meter}}{\SI{40}{\minute}} = \SI{0.05}{\kilo\meter\per\minute} = \SI{3}{\kilo\meter\per\hour}$
-  (positiv, da bergwärts). $\lvert v\rvert = \SI{3}{\kilo\meter\per\hour}$.
-  \end{solution}
-
-  \part[1] Wie lautet die Geschwindigkeit $v$ während der Pause auf dem
-  Gipfel?
-  \Antwortraum{1}
-  \begin{solution}
-  $v = \SI{0}{\kilo\meter\per\hour}$: Die Wanderin bewegt sich nicht.
-  \end{solution}
-
-  \part[2] Berechne die Geschwindigkeit $v$ und die Schnelligkeit
-  $\lvert v\rvert$ für den Abstieg.
-  \Antwortraum{2}
-  \begin{solution}
+  (positiv, da bergwärts). $\lvert v\rvert = \SI{3}{\kilo\meter\per\hour}$.\\
+  Pause: $v = \SI{0}{\kilo\meter\per\hour}$, die Wanderin bewegt sich
+  nicht. Also auch $\lvert v\rvert = \SI{0}{\kilo\meter\per\hour}$.\\
+  Abstieg:
   $v = \dfrac{-\SI{2}{\kilo\meter}}{\SI{24}{\minute}} = -\SI{0.0833}{\kilo\meter\per\minute} = -\SI{5}{\kilo\meter\per\hour}$
   (negativ, da talwärts). $\lvert v\rvert = \SI{5}{\kilo\meter\per\hour}$.
   Der Abstieg ist also schneller als der Aufstieg.
@@ -743,9 +619,7 @@ $\SI{2}{\kilo\meter}$) dauert nur $\SI{24}{\minute}$.
 \begin{theoriebox}[Fläche unter der Kurve: Der zurückgelegte Weg]
 Bewegt sich ein Objekt während der Zeit $\Delta t = t_2 - t_1$ mit
 konstanter Geschwindigkeit $v$, kennst du aus dem $s$-$t$-Diagramm bereits
-die Beziehung $s = v \cdot t$. Im $v$-$t$-Diagramm hat das eine schöne
-geometrische Bedeutung: Die zurückgelegte Strecke $s$ entspricht genau der
-\textbf{\emph{Fläche}} zwischen der $v$-$t$-Linie und der $t$-Achse.
+die Beziehung $s = v \cdot t$.
 
 \begin{center}
 \begin{tikzpicture}[scale=0.85]
@@ -757,27 +631,12 @@ geometrische Bedeutung: Die zurückgelegte Strecke $s$ entspricht genau der
   \draw[dashed,gray] (4.5,0) -- (4.5,2);
   \draw (1.5,0.15) -- (1.5,-0.15) node[below] {\scriptsize $t_1$};
   \draw (4.5,0.15) -- (4.5,-0.15) node[below] {\scriptsize $t_2$};
-  \node at (3,1) {\scriptsize Fläche $= v \cdot \Delta t = s$};
   \node[left] at (0,2) {\scriptsize $v$};
 \end{tikzpicture}
 \end{center}
 
-Diese Fläche ist ein Rechteck mit Höhe $v$ und Breite $\Delta t$:
-\[
-  s = \text{Fläche} = v \cdot \Delta t = v \cdot (t_2 - t_1).
-\]
-
-\textbf{Warum ist das so?} Eine kurze Einheitenanalyse zeigt es: Die
-Einheit von $v$ ist $\si{\meter\per\second}$, die Einheit von $t$ ist
-$\si{\second}$. Multipliziert man beide,
-\[
-  \si{\meter\per\second} \cdot \si{\second} = \si{\meter},
-\]
-erhält man genau die Einheit einer Strecke. Das ist kein Zufall: Die
-Fläche unter einer $v$-$t$-Kurve hat \emph{immer} die Einheit einer
-Strecke, unabhängig davon, wie die Kurve aussieht. Bei einer
-gleichförmigen Bewegung (waagrechte Linie) ist diese Fläche einfach ein
-Rechteck und damit besonders leicht zu berechnen.
+\textbf{Definition und Formel} (gemeinsam im Unterricht erarbeitet):
+\Antwortraum{1}
 \end{theoriebox}
 
 \begin{questions}
@@ -789,7 +648,7 @@ $\SI{20}{\second}$.
 
 \begin{parts}
   \part[2] Berechne die zurückgelegte Strecke der Velofahrerin und des
-  Joggers mithilfe der Fläche im jeweiligen $v$-$t$-Diagramm.
+  Joggers mithilfe der Formel $s = v \cdot t$.
   \Antwortraum{2}
   \begin{solution}
   Velofahrerin: $s = \SI{4}{\meter\per\second}\cdot\SI{10}{\second} = \SI{40}{\meter}$.\\
@@ -808,6 +667,8 @@ $\SI{20}{\second}$.
     \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (20,5);
     \draw[->] (-0.3,0) -- (20.5,0) node[right] {\scriptsize $t$ in s};
     \draw[->] (0,-0.3) -- (0,5.5) node[above] {\scriptsize $v$ in $\si{\meter\per\second}$};
+    \foreach \x in {5,10,15,20} \draw (\x,0.15) -- (\x,-0.15) node[below] {\scriptsize \x};
+    \foreach \y in {1,2,3,4,5} \draw (0.15,\y) -- (-0.15,\y) node[left] {\scriptsize \y};
   \end{tikzpicture}
   \end{center}
 
@@ -817,6 +678,8 @@ $\SI{20}{\second}$.
     \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (20,5);
     \draw[->] (-0.3,0) -- (20.5,0) node[right] {\scriptsize $t$ in s};
     \draw[->] (0,-0.3) -- (0,5.5) node[above] {\scriptsize $v$ in $\si{\meter\per\second}$};
+    \foreach \x in {5,10,15,20} \draw (\x,0.15) -- (\x,-0.15) node[below] {\scriptsize \x};
+    \foreach \y in {1,2,3,4,5} \draw (0.15,\y) -- (-0.15,\y) node[left] {\scriptsize \y};
   \end{tikzpicture}
   \end{center}
   \begin{solution}
@@ -826,6 +689,8 @@ $\SI{20}{\second}$.
     \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (20,5);
     \draw[->] (-0.3,0) -- (20.5,0) node[right] {\scriptsize $t$ in s};
     \draw[->] (0,-0.3) -- (0,5.5) node[above] {\scriptsize $v$ in $\si{\meter\per\second}$};
+    \foreach \x in {5,10,15,20} \draw (\x,0.15) -- (\x,-0.15) node[below] {\scriptsize \x};
+    \foreach \y in {1,2,3,4,5} \draw (0.15,\y) -- (-0.15,\y) node[left] {\scriptsize \y};
     \filldraw[lightblue] (0,0) rectangle (10,4);
     \draw[thick,titleblue] (0,4) -- (10,4);
     \node at (5,2) {\scriptsize Fläche $=4\cdot10=\SI{40}{\meter}$};
@@ -838,6 +703,8 @@ $\SI{20}{\second}$.
     \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (20,5);
     \draw[->] (-0.3,0) -- (20.5,0) node[right] {\scriptsize $t$ in s};
     \draw[->] (0,-0.3) -- (0,5.5) node[above] {\scriptsize $v$ in $\si{\meter\per\second}$};
+    \foreach \x in {5,10,15,20} \draw (\x,0.15) -- (\x,-0.15) node[below] {\scriptsize \x};
+    \foreach \y in {1,2,3,4,5} \draw (0.15,\y) -- (-0.15,\y) node[left] {\scriptsize \y};
     \filldraw[lightblue] (0,0) rectangle (20,2);
     \draw[thick,titleblue] (0,2) -- (20,2);
     \node at (10,1) {\scriptsize Fläche $=2\cdot20=\SI{40}{\meter}$};

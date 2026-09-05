@@ -1,0 +1,380 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Aufgabenblatt 2: Kraftaddition & Kraftzerlegung
+% UZH Praktikum I -- Sara Romer Urban, Kantonsschule im Lee, HS2026
+% Klasse: 2e (02.09.2026)
+%
+% Reine Uebungsaufgaben zu Kraftaddition/-zerlegung (Sara Romers Vorgabe,
+% siehe kraefte-addieren-zerlegen-lektionsplan.tex Abschnitt 5), alle
+% grafisch, kein einleitender Erklaerkasten. Bei allen bildbasierten
+% Aufgaben (Schiff, Seilbahn, Seilzug) zeichnen die SuS direkt in die
+% jeweilige Abbildung hinein -- kein separates Feinraster zum Uebertragen
+% mehr. Vier Aufgaben: Schiff (Addition zweier Schlepperkraefte), Seilbahn
+% (Zerlegung der Gewichtskraft im Gleichgewicht), Seilzug mit drei
+% Gewichten (Addition zweier gegebener, konkreter Seilkraefte 180 N/380 N
+% bei selbst gewaehltem Kraftmassstab, um auf die Gewichtskraft des
+% mittleren, unbekannten Gewichts zu kommen -- das fruehere
+% Seilziehen-Beispiel steht jetzt stattdessen in der Vektor-Theorie von
+% arbeitsblatt3-kraefte-addieren-zerlegen.tex), sowie neu ein reines
+% Gitter-Konstruktions-Beispiel (Aufgabe 4: drei vorgegebene Kraftpfeile,
+% Massstab gegeben, Kopf-an-Schwanz-Addition, Betrag der Resultierenden
+% ablesen). Die fruehere Hundeschlitten-Aufgabe wurde gestrichen. Theorie,
+% Lernziele und alles im Plenum Behandelte stehen in jenem Arbeitsblatt.
+%
+% Quellen: lernziele.md, kraefte-addieren-zerlegen-lektionsplan.tex (dieser
+% Ordner), Bilder/schiff_aufgabe(.png/_loesung.png),
+% Bilder/seilbahn_aufgabe(.png/_loesung.png),
+% Bilder/kraftzerlegung_seilzug_aufgabe.png.
+% =============================================================================
+\documentclass[addpoints,11pt,a4paper]{exam}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.2cm,headheight=14pt]{geometry}
+\usepackage{amsmath}
+\usepackage{siunitx}
+% Hausstil: zusammengesetzte Einheiten immer als echter Bruch (\frac), nicht
+% als Inline-Schraegstrich oder \tfrac -- gilt global fuer jedes \si/\SI.
+\sisetup{per-mode=fraction,fraction-command=\frac}
+\usepackage{array,booktabs,tabularx,multirow}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage[most]{tcolorbox}
+\usepackage{lastpage}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\usetikzlibrary{arrows.meta,calc,angles,quotes,decorations.pathmorphing}
+
+\usepackage{setspace}
+\usepackage{needspace}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+\setstretch{1.08}
+\setlist[itemize]{itemsep=0.4em}
+
+% -----------------------------
+% Farben (Corporate-Farbschema Physik KFR)
+% -----------------------------
+\definecolor{titleblue}{HTML}{183A6B}
+\definecolor{accentblue}{HTML}{2E6F9E}
+\definecolor{lightblue}{HTML}{EAF4FB}
+\definecolor{lightgray}{HTML}{F4F6F8}
+\definecolor{darkgray}{HTML}{4A4A4A}
+\definecolor{accentorange}{HTML}{D9720C}
+\definecolor{accentpurple}{HTML}{7B2D8E}
+% Hinweisbox: Orange (accentorange), fuer wichtige Klarstellungen.
+\definecolor{lightorange}{HTML}{FCEEE0}
+% Formelbox: Violett (accentpurple), fuer die zentralen Merksaetze.
+\definecolor{lightpurple}{HTML}{F3EAF7}
+
+% Links (hyperref): farblich ans Corporate-Farbschema angeglichen.
+\hypersetup{
+  colorlinks=true,
+  urlcolor=accentblue,
+  linkcolor=accentblue,
+  pdftitle={Aufgabenblatt 2: Kraftaddition \& Kraftzerlegung},
+  pdfauthor={Loris Keller}
+}
+
+% -----------------------------
+% Spaltentypen
+% -----------------------------
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% -----------------------------
+% Boxen
+% -----------------------------
+\tcbset{before skip=10pt, after skip=10pt}
+\newtcolorbox{titlebox}{
+  enhanced,
+  colback=titleblue,
+  colframe=titleblue,
+  boxrule=0pt,
+  arc=3mm,
+  left=3mm,right=3mm,top=3mm,bottom=3mm
+}
+
+\newlength{\aufgabenindent}
+\settowidth{\aufgabenindent}{10.\hskip\labelsep}
+
+% Praktikum I: Lernziele/Einleitung/Theorie/Aufgaben werden NICHT mehr
+% farbig gerahmt (nur Formel-, Hinweis- und Antwortbox bleiben Boxen) --
+% siehe institutionen/UZH-Praktikum-I/CLAUDE.md, Abschnitt "Boxen-Layout".
+\newenvironment{infobox}{%
+  \par\addvspace{10pt}\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+\newenvironment{theoriebox}[1][Theorie]{%
+  \par\addvspace{10pt}\noindent\textbf{#1}\par\smallskip\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+% taskbox/groupbox stehen in questions VOR dem ersten \question (Bilder,
+% Fliesstext) -- exam.cls' questions-Liste braucht dafuer eine echte,
+% eigenstaendige Box (sonst "Something's wrong--perhaps a missing \item",
+% weil z.B. ein \begin{center} vor dem ersten \item der Aussenliste steht).
+% Deshalb bleiben es tcolorboxen, nur unsichtbar gemacht (keine Farbe/Rahmen,
+% kein Padding) statt sie durch reine Absaetze zu ersetzen.
+\newtcolorbox{taskbox}[1][]{
+  enhanced, breakable,
+  colback=white, colframe=white, boxrule=0pt,
+  left=0mm,right=0mm,top=0mm,bottom=0mm,
+  before skip=10pt, after skip=10pt,
+  before upper={%
+    \def\tmpboxtitle{#1}%
+    \ifx\tmpboxtitle\empty\else\noindent\textbf{#1}\par\smallskip\fi
+  }
+}
+
+\newtcolorbox{groupbox}[1][Gruppenarbeit]{
+  enhanced, breakable,
+  colback=white, colframe=white, boxrule=0pt,
+  left=0mm,right=0mm,top=0mm,bottom=0mm,
+  before skip=10pt, after skip=10pt,
+  before upper={\noindent\textbf{#1}\par\smallskip}
+}
+
+% beispielbox: fuer die Einleitung -- wie die anderen Inhaltsboxen ungerahmt.
+\newenvironment{beispielbox}[1][Beispiel]{%
+  \par\addvspace{10pt}\noindent\textbf{#1}\par\smallskip\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+% hinweisbox: Orange, fuer wichtige Klarstellungen/Verwechslungswarnungen.
+\newtcolorbox{hinweisbox}[1][Hinweis]{
+  enhanced,
+  breakable,
+  colback=lightorange,
+  colframe=accentorange,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+% formelbox: Violett, um die zentralen Merksaetze dieser Einheit hervorzuheben.
+\newtcolorbox{formelbox}[1][Merksatz]{
+  enhanced,
+  breakable,
+  colback=lightpurple,
+  colframe=accentpurple,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.9pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+\newtcolorbox{answerbox}{
+  breakable,
+  colback=white,
+  colframe=gray!55,
+  boxrule=0.5pt,
+  arc=1.5mm,
+  left=2mm,right=2mm,top=2mm,bottom=2mm
+}
+
+% Marke: kleines farbiges Inline-Label fuer Teilschritte/Ergebnis-Callouts.
+\newtcbox{\Marke}[1][accentpurple]{
+  nobeforeafter,
+  colback=#1,
+  colframe=#1,
+  coltext=white,
+  boxrule=0pt,
+  arc=2pt,
+  left=5pt,right=5pt,top=2pt,bottom=2pt,
+  fontupper=\bfseries\sffamily\small
+}
+
+% --- Feinraster-Helfer fuer alle grafischen Konstruktionsaufgaben ----------
+% Feld mit feinem Punkt-/Liniengitter (0.5 Kaestchen Nebenlinien, 1 Kaestchen
+% Hauptlinien), sodass bei Massstab 1 Kaestchen = 1 N jede Kraft exakt und
+% nachzaehlbar eingezeichnet werden kann. #1#2 = linke untere Ecke, #3#4 =
+% rechte obere Ecke.
+\newcommand{\Feinraster}[4]{%
+  \draw[gray!22,step=0.5] (#1,#2) grid (#3,#4);
+  \draw[gray!55,step=1] (#1,#2) grid (#3,#4);
+}
+
+% Bild-Helfer: zentriertes Bild mit spuerbarem Abstand zum umgebenden Text
+% (statt nur des normalen Absatzabstands). #1 = Breite, #2 = Dateipfad.
+\newcommand{\Bild}[2]{%
+  \par\vspace{0.6cm}
+  \begin{center}
+    \includegraphics[width=#1]{#2}
+  \end{center}
+  \vspace{0.6cm}
+}
+
+% --- Loesungen ein-/ausblenden -----------------------------------------------
+\noprintanswers
+%\printanswers
+
+\pointformat{}
+\renewcommand{\solutiontitle}{\noindent\color{titleblue}\textbf{L\"osung:}\enspace}
+
+\pagestyle{headandfoot}
+\cfoot{\textcolor{darkgray}{Seite \thepage\ von \pageref{LastPage}}}
+
+\newcommand{\Kopfzeile}[4]{%
+  \begin{titlebox}
+    {\color{white}\sffamily\bfseries\Large #4}
+  \end{titlebox}
+  \vspace{0.5em}
+  \noindent\textbf{Klasse:}~#1 \hfill \textbf{Datum:}~#2 \hfill \textbf{Thema:}~#3
+    \hfill \textbf{Lehrperson:}~Loris Keller
+  \vspace{0.8em}
+  \lhead{\textcolor{darkgray}{#3}}
+  \rhead{\textcolor{darkgray}{#4}}
+}
+
+\newlength{\antwortraumlen}
+\newcommand{\Antwortraum}[1]{%
+  \pgfmathsetlength{\antwortraumlen}{#1*2.5cm}%
+  \begin{answerbox}
+    \rule{0pt}{\antwortraumlen}%
+  \end{answerbox}%
+}
+
+% Werte fuer Kopfzeile zentral setzen
+\newcommand{\Klasse}{2e}
+\newcommand{\Datum}{02.09.2026}
+\newcommand{\Thema}{Kraftaddition \& Kraftzerlegung}
+\newcommand{\ArbeitsblattTitel}{Aufgabenblatt 2: Kraftaddition \& Kraftzerlegung}
+
+\begin{document}
+
+\Kopfzeile{\Klasse}{\Datum}{\Thema}{\ArbeitsblattTitel}
+
+% =============================================================================
+% Aufgabe 1: Schiff (Addition zweier Schlepperkraefte)
+% =============================================================================
+\begin{questions}
+\begin{taskbox}[Aufgabe 1: Zwei Schlepper ziehen ein Schiff]
+\question[5] Ein Containerschiff wird gleichzeitig von zwei Schleppern mit
+den Kräften $\vec F_1$ und $\vec F_2$ gezogen:
+
+Zeichnen Sie direkt in die Skizze unten: Wählen Sie einen selbst gewählten
+Kraftmassstab, und konstruieren Sie grafisch die Resultierende $\vec F_R$,
+mit der sich das Schiff tatsächlich bewegt.
+
+\Bild{15.5cm}{Bilder/schiff_aufgabe.png}
+
+\begin{solution}
+\Bild{15cm}{Bilder/schiff_aufgabe_loesung.png}
+\end{solution}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Aufgabe 2: Seilbahn (Zerlegung, Gleichgewicht)
+% =============================================================================
+\newpage
+\begin{questions}
+\begin{taskbox}[Aufgabe 2: Seilbahngondel im Gleichgewicht]
+\question[5] Eine Seilbahngondel hängt in Ruhe am Tragseil. Die Gewichtskraft
+$\vec F_g$ der Gondel samt Passagieren muss deshalb vollständig von den
+beiden Seilabschnitten aufgenommen werden: Es gilt
+$\vec F_{S1}+\vec F_{S2}+\vec F_g=\vec F_{\text{res}}=\vec 0$.
+
+Zeichnen Sie direkt in die Skizze unten: Wählen Sie einen selbst gewählten
+Kraftmassstab für $\vec F_g$ (die eingezeichneten Seilrichtungen mit dem
+Geodreieck abmessen), und zerlegen Sie $\vec F_g$ grafisch in die beiden
+Seilkraftkomponenten $\vec F_{S1}$ und $\vec F_{S2}$.
+
+\Bild{15.5cm}{Bilder/seilbahn_aufgabe.png}
+
+\begin{solution}
+\Bild{15cm}{Bilder/seilbahn_aufgabe_loesung.png}
+\end{solution}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Aufgabe 3: Kraefte am Seilzug (Addition zweier gegebener Seilkraefte)
+% =============================================================================
+\newpage
+\begin{questions}
+\begin{taskbox}[Aufgabe 3: Kräfte am Seilzug]
+\question[5] An einem Seilzug mit zwei Rollen hängen zwei Gewichte mit den
+Gewichtskräften $F_1=\SI{180}{\newton}$ und $F_2=\SI{380}{\newton}$. Am
+Knotenpunkt in der Mitte hängt ein drittes, noch unbekanntes Gewicht
+senkrecht nach unten:
+
+Zeichnen Sie direkt in die Skizze unten: Wählen Sie einen selbst gewählten
+Kraftmassstab, und zeichnen Sie $\vec F_1$ und $\vec F_2$ mit den
+entsprechenden Längen entlang der eingezeichneten Seilrichtungen ein
+(Winkel mit dem Geodreieck von der Abbildung abmessen). Bestimmen Sie
+anschliessend ebenfalls direkt in der Skizze grafisch
+(Kräfteparallelogramm) die Resultierende $\vec F_1+\vec F_2$: Ihr Betrag
+entspricht der Gewichtskraft des mittleren, unbekannten Gewichts.
+
+\Bild{15cm}{Bilder/kraftzerlegung_seilzug_aufgabe.png}
+
+\begin{solution}
+Damit der Knoten in Ruhe bleibt, muss die Resultierende $\vec F_1+\vec F_2$
+senkrecht nach unten zeigen -- das ist eine gute Kontrolle für die eigene
+Konstruktion. Ihr Betrag ergibt (je nach gemessenem Winkel) die gesuchte
+Gewichtskraft des mittleren Gewichts, ungefähr $\SI{390}{\newton}$.
+\end{solution}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Aufgabe 4: Mehrere Kraefte im Gitter addieren (Gitter + Massstab gegeben)
+% =============================================================================
+\newpage
+\begin{questions}
+\begin{taskbox}[Aufgabe 4: Mehrere Kräfte im Gitter addieren]
+\question[5] Am Punkt $A$ greifen drei Kräfte $\vec F_1$, $\vec F_2$,
+$\vec F_3$ an (Massstab: $1$ Kästchen $\hat=$ $\SI{4}{\newton}$):
+
+\begin{center}
+\begin{tikzpicture}[>=Latex,scale=1]
+  \Feinraster{-3}{-4}{9}{7}
+  \coordinate (A) at (0,0);
+  \draw[->,thick,titleblue] (A) -- (3,0) node[midway,above]{\scriptsize $\vec F_1$};
+  \draw[->,thick,accentorange] (A) -- (0,4) node[midway,left]{\scriptsize $\vec F_2$};
+  \draw[->,thick,accentpurple] (A) -- (1,-1) node[below right=1pt]{\scriptsize $\vec F_3$};
+  \node[below left] at (A) {$A$};
+\end{tikzpicture}
+\end{center}
+
+Konstruieren Sie mit dem Kopf-an-Schwanz-Verfahren direkt im Gitter die
+Resultierende $\vec F_{\text{ges}}=\vec F_1+\vec F_2+\vec F_3$. Lesen Sie
+deren Länge in Kästchen ab, und bestimmen Sie mit dem angegebenen Massstab
+den Betrag $F_{\text{ges}}$ in Newton.
+
+\begin{solution}
+\begin{center}
+\begin{tikzpicture}[>=Latex,scale=1]
+  \Feinraster{-3}{-4}{9}{7}
+  \coordinate (A) at (0,0);
+  \coordinate (P1) at (3,0);
+  \coordinate (P2) at (3,4);
+  \coordinate (P3) at (4,3);
+  \draw[->,thick,titleblue] (A) -- (P1) node[midway,above]{\scriptsize $\vec F_1$};
+  \draw[->,thick,accentorange] (P1) -- (P2) node[midway,right]{\scriptsize $\vec F_2$};
+  \draw[->,thick,accentpurple] (P2) -- (P3) node[midway,above]{\scriptsize $\vec F_3$};
+  \draw[->,ultra thick,darkgray] (A) -- (P3) node[midway,below right]{\scriptsize $\vec F_{\text{ges}}$, $5$ Kästchen};
+\end{tikzpicture}
+\end{center}
+Die Resultierende ist $5$ Kästchen lang, also
+$F_{\text{ges}}=5\cdot\SI{4}{\newton}=\SI{20}{\newton}$.
+\end{solution}
+\end{taskbox}
+\end{questions}
+
+\end{document}

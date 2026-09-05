@@ -1,0 +1,117 @@
+Standortbestimmung: s-t-Diagramm
+Kantonsschule KFR -- Physik, 4. Klasse, 1. HS, Mechanik
+Fragen und Loesungsschluessel (Quelle: s-t-diagramm-standortbestimmung.tex)
+=============================================================================
+
+Frage 1
+-------
+Eine Person geht auf einer geraden Strasse. Ihre Bewegung ergibt ein
+s-t-Diagramm, das ansteigt, dann eine Weile waagrecht verlaeuft (Plateau)
+und anschliessend wieder auf den Ausgangswert zurueckfaellt.
+
+Welche Beschreibung passt zu diesem Diagramm?
+  A) Die Person geht einen Huegel hinauf, macht oben eine Pause und geht
+     dann auf der anderen Seite wieder hinunter.
+  B) Die Person entfernt sich zuerst von ihrem Startpunkt, bleibt dann
+     kurz stehen und bewegt sich anschliessend wieder in Richtung
+     Startpunkt zurueck.
+  C) Die Person bewegt sich die ganze Zeit mit konstanter Geschwindigkeit
+     vorwaerts.
+  D) Die Person steht die ganze Zeit still.
+
+Richtige Antwort: B
+
+Frage 2
+-------
+Zwei Fahrzeuge (A und B) fahren auf derselben Strasse. Das Diagramm zeigt
+zwei Geraden: Fahrzeug A startet hoeher und steigt flach an, Fahrzeug B
+startet tiefer und steigt steiler an. Eine gestrichelte senkrechte Linie
+markiert einen gemeinsamen Zeitpunkt, an dem A immer noch weiter oben
+liegt als B.
+
+Zum Zeitpunkt der gestrichelten Linie: Welches Fahrzeug ist in diesem
+Moment schneller unterwegs?
+  A) Fahrzeug A, weil es sich zu diesem Zeitpunkt weiter oben befindet
+     (groesserer Ort s).
+  B) Fahrzeug B, weil seine Linie an dieser Stelle steiler verlaeuft.
+  C) Beide sind gleich schnell, weil beide Linien Geraden sind.
+  D) Das laesst sich aus dem Diagramm nicht bestimmen.
+
+Richtige Antwort: B
+
+Frage 3
+-------
+Ein Ball befindet sich auf einer Rampe (Nullpunkt der s-Achse am unteren
+Ende der Rampe, positive Werte von s liegen rampaufwaerts). Das Diagramm
+zeigt eine fallende Gerade (negative Steigung), waehrend der Ball die
+Rampe hinunterrollt.
+
+Was bedeutet die negative Steigung in diesem Diagramm?
+  A) Die Zeit laeuft in diesem Abschnitt rueckwaerts.
+  B) Der Ort s des Balls nimmt mit der Zeit ab: Er bewegt sich in die
+     negative Richtung.
+  C) Der Ball wird langsamer, bis er stehen bleibt.
+  D) Das Diagramm ist physikalisch nicht moeglich.
+
+Richtige Antwort: B
+
+Frage 4
+-------
+Das s-t-Diagramm zeigt eine lineare Bewegung, die nicht bei s=0 beginnt:
+Punkt (t1,s1) = (1 s, 2 m) und Punkt (t2,s2) = (5 s, 6 m).
+
+Wie berechnest du die Geschwindigkeit dieser Bewegung richtig?
+  A) v = s2/t2 = 6 m / 5 s = 1.2 m/s
+  B) v = (s2-s1)/(t2-t1) = (6 m - 2 m)/(5 s - 1 s) = 1 m/s
+  C) v = s1/t1 = 2 m / 1 s = 2 m/s
+  D) v = s2 - s1 = 4 m
+
+Richtige Antwort: B
+
+Frage 5
+-------
+Ein Postauto faehrt in zwei Etappen mit unterschiedlicher Geschwindigkeit:
+Etappe 1 von (0 min, 0 km) nach (2 min, 4 km); Etappe 2 von (2 min, 4 km)
+nach (6 min, 6 km).
+
+Wie gross ist die Durchschnittsgeschwindigkeit ueber die gesamte Fahrt
+(von t=0 bis t=6 min)?
+  A) 90 km/h
+  B) 75 km/h
+  C) 60 km/h
+  D) 150 km/h
+
+Richtige Antwort: C
+(Gesamtstrecke 6 km / Gesamtzeit 6 min = 60 km/h. B ist das arithmetische
+Mittel der beiden Etappen-Geschwindigkeiten 120 km/h und 30 km/h -- ein
+haeufiger, aber falscher Rechenweg, da die Etappen unterschiedlich lange
+dauern.)
+
+Frage 6
+-------
+Vier Schuelerinnen und Schueler zeichnen je ein s-t-Diagramm:
+  A) Verlauf faellt zunaechst leicht, steigt danach wieder (Mulde).
+  B) Waagrechte Linie (konstanter Ort).
+  C) Ansteigende Gerade (konstante Geschwindigkeit).
+  D) Ansteigende Linie mit einem senkrechten Sprung nach unten und
+     anschliessendem Weiteranstieg.
+
+Welches davon kann die Bewegung eines realen Objekts NICHT darstellen?
+  A) Diagramm A
+  B) Diagramm B
+  C) Diagramm C
+  D) Diagramm D
+
+Richtige Antwort: D
+(Ein senkrechter Abschnitt im s-t-Diagramm wuerde eine Ortsaenderung in
+null Zeit bedeuten, also eine unendlich grosse Geschwindigkeit -- das ist
+physikalisch nicht moeglich.)
+
+=============================================================================
+Loesungsschluessel (kompakt)
+1: B
+2: B
+3: B
+4: B
+5: C
+6: D

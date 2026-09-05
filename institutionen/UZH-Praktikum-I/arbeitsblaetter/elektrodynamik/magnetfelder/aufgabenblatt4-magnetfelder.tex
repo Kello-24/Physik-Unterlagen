@@ -17,24 +17,31 @@
 % Nach Schwierigkeit geordnet (leicht -> mittelschwer, gemaess LEIFIphysik-
 % Einstufung bzw. eigener Einschaetzung fuer die beiden Bildaufgaben) und
 % mit explizitem Schwierigkeitsgrad-Vermerk (\Schwierigkeit-Makro) direkt
-% unter jedem Aufgabentitel. Aufgabe 3 und 4 sind bewusst auf je zwei
-% Formelumstellungs-Teilaufgaben gekuerzt (statt drei/vier wie in den
-% LEIFIphysik-Originalaufgaben) -- reines Einsetzen in dieselbe Formel
-% mehrfach hintereinander ist wenig lehrreich, sobald das Prinzip einmal
-% sitzt. Aufgabe 5 verzichtet entsprechend auf die redundante numerische
-% Teilaufgabe (identisches Aufgabenmuster wie Aufgabe 4) und behaelt nur
-% die beiden Verstaendnisfragen (Skalierung, Weicheisenkern). Alle
-% verbleibenden Formelumstellungs-Zahlenwerte verwenden bewusst
-% Nicht-SI-Einheiten (mA, mm, nT, µT), sodass zuerst ins SI-System
-% umgerechnet werden muss.
+% unter jedem Aufgabentitel.
 %
-% Hinweis: Ringspule (Aufgabe 6) und Permeabilitaet/Weicheisenkern (Aufgabe
-% 5, zweite Verstaendnisfrage) sind im aktuellen Arbeitsblatt
-% (arbeitsblatt5-magnetfelder-teil1.tex) NICHT mehr enthalten (siehe dessen
-% Header-Kommentar) -- hier als Zusatz-/Vertiefungsaufgaben aufgenommen,
-% weil sie dieselbe Spulenformel verwenden und in den Quellmaterialien
-% vorlagen; kurze Erklaersaetze bruecken die fehlende Theorie direkt in der
-% Aufgabe.
+% Stand 03.09.2026: Aufgaben 3, 5, 6, 7 zur magnetischen Flussdichte
+% ueberarbeitet, damit dieselbe Rechenoperation (nach B, N bzw. I umstellen)
+% nicht mehrfach identisch wiederholt wird -- jede Aufgabe testet jetzt eine
+% andere Faehigkeit: Aufgabe 3 direktes Einsetzen (nach B) UND eine
+% Verstaendnisfrage zur Proportionalitaet (ohne zu rechnen); Aufgabe 4 (neu)
+% Oersted-Versuch fuer beide Stromrichtungen skizzieren; Aufgabe 5 Umstellen
+% nach N; Aufgabe 6 Skalierungs-Verstaendnis (die Weicheisenkern-Frage wurde
+% entfernt, da im Unterricht nicht behandelt); Aufgabe 7 (Zusatz) Polung per
+% Rechte-Faust-Regel UND Umstellen nach I. Alle Formelumstellungs-Zahlenwerte
+% verwenden bewusst Nicht-SI-Einheiten (mA, mm, nT, µT), sodass zuerst ins
+% SI-System umgerechnet werden muss -- die Formelsammlung nennt dafuer jetzt
+% auch die relevanten SI-Vorsilben (Milli/Mikro/Nano) oben, nicht nur die
+% Zieleinheit je Symbol.
+%
+% Hinweis: Ringspule (Aufgabe 7) ist im aktuellen Arbeitsblatt
+% (arbeitsblatt5-magnetfelder.tex) NICHT enthalten (siehe dessen
+% Header-Kommentar) -- hier als Zusatz-/Vertiefungsaufgabe aufgenommen, weil
+% sie dieselbe Spulenformel verwendet und im Quellmaterial vorlag; ein
+% kurzer Erklaersatz brueckt die fehlende Theorie direkt in der Aufgabe. Die
+% Weicheisenkern-Frage (frueher Aufgabe 5, zweite Verstaendnisfrage) wurde
+% ganz gestrichen (Stand 03.09.2026), da Permeabilitaet/Weicheisenkern auch
+% im Unterricht nicht behandelt wurde -- entsprechend auch die
+% Kernmaterial-Formel aus der Formelsammlung entfernt.
 %
 % Aufgabe 2 (Stabmagnet-Polung): Die Loesung ist aus dem Feldlinienmuster
 % erschlossen (glatter Uebergang = Anziehung/entgegengesetzte Orientierung,
@@ -220,15 +227,16 @@
 % Formelsammlung
 % =============================================================================
 \begin{formelbox}[Formelsammlung]
+Vorsilben (zuerst in SI-Einheiten umrechnen!): $1\,\text{m}X=10^{-3}\,X$
+(Milli), $1\,\mu X=10^{-6}\,X$ (Mikro), $1\,\text{n}X=10^{-9}\,X$ (Nano).
 \begin{align*}
   B &= \frac{\mu_0}{2\pi}\cdot\frac{I}{r} &&\text{gerader Leiter, Abstand } r\\
   B &= \mu_0\cdot\frac{N}{l}\cdot I &&\text{Spule, Länge } l\\
-  B &= \mu_0\cdot\frac{N}{l}\cdot I &&\text{Ringspule, } l = \pi\cdot d \ (d = \text{mittlerer Durchmesser})\\
-  B &= \mu_0\cdot\mu_r\cdot\frac{N}{l}\cdot I &&\text{Spule mit Kernmaterial (z.\,B. Weicheisen)}
+  B &= \mu_0\cdot\frac{N}{l}\cdot I &&\text{Ringspule, } l = \pi\cdot d \ (d = \text{mittlerer Durchmesser})
 \end{align*}
 $\mu_0=4\pi\cdot10^{-7}\,\si{\newton\per\ampere\squared}=1{,}26\cdot10^{-6}\,\si{\newton\per\ampere\squared}$;
 $I$ in \si{\ampere}; $r,\,l,\,d$ in \si{\meter}; $N$ dimensionslos; $B$ in
-\si{\tesla}; $\mu_r$ dimensionslos.
+\si{\tesla}.
 \end{formelbox}
 
 % =============================================================================
@@ -288,10 +296,10 @@ deshalb \emph{gleich} wie der obere gepolt sein (N links, S rechts).
 \end{questions}
 
 % =============================================================================
-% Aufgabe 3 (leicht): Gerader Leiter -- Formelumstellung
+% Aufgabe 3 (leicht): Gerader Leiter -- Anwendung und Verständnis
 % =============================================================================
 \begin{questions}
-\begin{taskbox}[Aufgabe 3: Gerader Leiter -- Formelumstellung]
+\begin{taskbox}[Aufgabe 3: Gerader Leiter -- Anwendung und Verständnis]
 \Schwierigkeit{leicht}
 \question[2] Ein unendlich langer, gerader Leiter wird von einem Strom der
 Stärke $I=\SI{850}{\milli\ampere}$ durchflossen. Berechnen Sie den Betrag
@@ -308,47 +316,137 @@ $r=\SI{25}{\milli\meter}=\SI{0.025}{\meter}$.
 \]
 \end{solution}
 
-\question[3] Im Abstand $r=\SI{12}{\centi\meter}$ von einem sehr langen,
-stromdurchflossenen, geraden Leiter misst man eine magnetische Flussdichte
-von $B=\SI{40}{\nano\tesla}$. Berechnen Sie die Stärke des Stroms, der
-durch den Leiter fliesst.
-\Antwortraum{3}
+\question[2] Bei welchem der beiden folgenden Fälle ist die magnetische
+Flussdichte $B$ grösser -- Fall A (Stromstärke verdoppelt, Abstand
+gleich) oder Fall B (Abstand halbiert, Stromstärke gleich)? Begründen Sie
+\textbf{ohne zu rechnen}, allein anhand der Formel.
+\Antwortraum{2}
 \begin{solution}
-Umrechnen in SI-Einheiten: $B=\SI{40}{\nano\tesla}=\SI{4.0e-8}{\tesla}$.
-\[
-  B = \mu_0\cdot\frac{1}{2\pi\cdot r}\cdot I
-  \quad\Longrightarrow\quad
-  I = \frac{B\cdot 2\pi\cdot r}{\mu_0}
-\]
-\[
-  I = \frac{\SI{4.0e-8}{\tesla}\cdot 2\pi\cdot\SI{0.12}{\meter}}{1{,}26\cdot10^{-6}\,\si{\newton\per\ampere\squared}}
-    = \SI{0.024}{\ampere} = \SI{24}{\milli\ampere}.
-\]
+Beide Fälle ergeben dieselbe Flussdichte $B$: In Fall A verdoppelt sich
+$B$, weil $B$ direkt \textbf{\emph{proportional}} zu $I$ ist (doppeltes
+$I$ $\to$ doppeltes $B$). In Fall B verdoppelt sich $B$ ebenfalls, weil
+$B$ \textbf{\emph{umgekehrt proportional}} zu $r$ ist (halber Abstand
+$\to$ doppeltes $B$). Beide Fälle bewirken also denselben Effekt.
 \end{solution}
 \end{taskbox}
 \end{questions}
 
 % =============================================================================
-% Aufgabe 4 (leicht): Zylinderspule -- Formelumstellung
+% Aufgabe 4 (leicht): Oersted-Versuch skizzieren
 % =============================================================================
 \begin{questions}
-\begin{taskbox}[Aufgabe 4: Zylinderspule -- Formelumstellung]
+\begin{taskbox}[Aufgabe 4: Oersted-Versuch skizzieren]
 \Schwierigkeit{leicht}
-\question[2] Eine $\SI{40}{\centi\meter}$ lange, luftgefüllte Zylinderspule
-mit $N=800$ Windungen wird von einem Strom der Stärke $I=\SI{650}{\milli\ampere}$
-durchflossen. Berechnen Sie die magnetische Flussdichte im Innenraum der
-Spule.
-\Antwortraum{2}
+\question[4] Skizzieren Sie den Oersted-Versuch mit dem geraden
+Stableiter, von oben betrachtet. Die Batterie ist über zwei Stäbe mit
+dem Leiter verbunden: Der Strom fliesst im einen Stab nach oben, im
+anderen nach unten -- von oben gesehen kommt der Strom also in einem
+Stab aus der Ebene heraus ($\odot$), im anderen fliesst er in die Ebene
+hinein ($\otimes$). Zeichnen Sie für \textbf{beide} Batterie-Polungen
+das Magnetfeld um \textbf{beide} Stäbe ein: mehrere konzentrische
+Kreise, mit Pfeilen, welche die Richtung des Feldes zeigen.
+\begin{center}
+\begin{minipage}[t]{7.6cm}\centering
+\footnotesize Ursprüngliche Polung\\[1mm]
+\begin{answerbox}
+\vspace{1.8cm}
+\begin{center}
+\begin{tikzpicture}[>=Latex,thick]
+  \begin{scope}[shift={(-1.5,0)}]
+    \draw (0,0) circle (0.18);
+    \fill (0,0) circle (0.05);
+  \end{scope}
+  \begin{scope}[shift={(1.5,0)}]
+    \draw (0,0) circle (0.18);
+    \draw (-0.11,-0.11) -- (0.11,0.11);
+    \draw (-0.11,0.11) -- (0.11,-0.11);
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+\vspace{1.8cm}
+\end{answerbox}
+\end{minipage}\hfill
+\begin{minipage}[t]{7.6cm}\centering
+\footnotesize Batterie umgepolt\\[1mm]
+\begin{answerbox}
+\vspace{1.8cm}
+\begin{center}
+\begin{tikzpicture}[>=Latex,thick]
+  \begin{scope}[shift={(-1.5,0)}]
+    \draw (0,0) circle (0.18);
+    \draw (-0.11,-0.11) -- (0.11,0.11);
+    \draw (-0.11,0.11) -- (0.11,-0.11);
+  \end{scope}
+  \begin{scope}[shift={(1.5,0)}]
+    \draw (0,0) circle (0.18);
+    \fill (0,0) circle (0.05);
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+\vspace{1.8cm}
+\end{answerbox}
+\end{minipage}
+\end{center}
 \begin{solution}
-Umrechnen in SI-Einheiten: $l=\SI{40}{\centi\meter}=\SI{0.40}{\meter}$,
-$I=\SI{650}{\milli\ampere}=\SI{0.650}{\ampere}$.
-\[
-  B = \mu_0\cdot\frac{N}{l}\cdot I
-    = 1{,}26\cdot10^{-6}\,\si{\newton\per\ampere\squared}\cdot\frac{800}{\SI{0.40}{\meter}}\cdot\SI{0.650}{\ampere}
-    = \SI{1.6e-3}{\tesla}.
-\]
+\begin{center}
+\begin{minipage}[t]{6.3cm}\centering
+\footnotesize Ursprüngliche Polung\\[1mm]
+\begin{tikzpicture}[>=Latex,thick,scale=0.85]
+  \begin{scope}[shift={(-1.5,0)}]
+    \draw (0,0) circle (0.18);
+    \fill (0,0) circle (0.05);
+    \foreach \r in {0.5,0.85,1.2}{
+      \draw[-{Latex[length=2mm]}] (\r,0) arc (0:75:\r);
+    }
+  \end{scope}
+  \begin{scope}[shift={(1.5,0)}]
+    \draw (0,0) circle (0.18);
+    \draw (-0.11,-0.11) -- (0.11,0.11);
+    \draw (-0.11,0.11) -- (0.11,-0.11);
+    \foreach \r in {0.5,0.85,1.2}{
+      \draw[-{Latex[length=2mm]}] (\r,0) arc (0:-75:\r);
+    }
+  \end{scope}
+\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}[t]{6.3cm}\centering
+\footnotesize Batterie umgepolt\\[1mm]
+\begin{tikzpicture}[>=Latex,thick,scale=0.85]
+  \begin{scope}[shift={(-1.5,0)}]
+    \draw (0,0) circle (0.18);
+    \draw (-0.11,-0.11) -- (0.11,0.11);
+    \draw (-0.11,0.11) -- (0.11,-0.11);
+    \foreach \r in {0.5,0.85,1.2}{
+      \draw[-{Latex[length=2mm]}] (\r,0) arc (0:-75:\r);
+    }
+  \end{scope}
+  \begin{scope}[shift={(1.5,0)}]
+    \draw (0,0) circle (0.18);
+    \fill (0,0) circle (0.05);
+    \foreach \r in {0.5,0.85,1.2}{
+      \draw[-{Latex[length=2mm]}] (\r,0) arc (0:75:\r);
+    }
+  \end{scope}
+\end{tikzpicture}
+\end{minipage}
+\end{center}
+Rechte-Faust-Regel, an jedem Stab einzeln angewendet: Zeigt der Daumen in
+Stromrichtung, geben die gekrümmten Finger die Feldrichtung an. Beim Stab
+mit $\odot$ (Strom kommt zu Ihnen) krümmen sich die Finger \textbf{gegen
+den Uhrzeigersinn}. Beim Stab mit $\otimes$ (Strom fliesst von Ihnen weg)
+krümmen sich die Finger \textbf{im Uhrzeigersinn}. Beim Umpolen der
+Batterie kehrt sich die Stromrichtung in \textbf{beiden} Stäben um --
+damit tauschen auch beide Felder ihre Richtung.
 \end{solution}
+\end{taskbox}
+\end{questions}
 
+% =============================================================================
+% Aufgabe 5 (leicht): Zylinderspule -- Formelumstellung
+% =============================================================================
+\begin{questions}
+\begin{taskbox}[Aufgabe 5: Zylinderspule -- Formelumstellung]
+\Schwierigkeit{leicht}
 \question[3] Im Innenraum einer $\SI{35}{\centi\meter}$ langen,
 luftgefüllten Spule, durch die ein Strom der Stärke $I=\SI{120}{\milli\ampere}$
 fliesst, herrscht ein Feld mit $B=\SI{950}{\micro\tesla}$. Berechnen Sie
@@ -372,10 +470,10 @@ $B=\SI{950}{\micro\tesla}=\SI{9.50e-4}{\tesla}$.
 \end{questions}
 
 % =============================================================================
-% Aufgabe 5 (mittel): Spule -- Verständnisfragen
+% Aufgabe 6 (mittel): Spule -- Verständnisfragen
 % =============================================================================
 \begin{questions}
-\begin{taskbox}[Aufgabe 5: Spule -- Verständnisfragen]
+\begin{taskbox}[Aufgabe 6: Spule -- Verständnisfragen]
 \Schwierigkeit{mittel}
 \question[2] Erläutern Sie, wie sich das Magnetfeld der Spule verändert,
 wenn der Strom $I$ verdreifacht und gleichzeitig die Länge $l$ der Spule
@@ -388,26 +486,14 @@ halbiert wird (Windungszahl $N$ bleibt gleich).
 Das Magnetfeld versechsfacht sich: Die Verdreifachung von $I$ verdreifacht
 $B$, die Halbierung von $l$ verdoppelt $B$ zusätzlich ($3\times2=6$).
 \end{solution}
-
-\question[2] Erläutern Sie, wie sich das Magnetfeld der Spule verändert,
-wenn die Spule nicht mit Luft, sondern mit einem Weicheisenkern gefüllt
-ist.
-\Antwortraum{2}
-\begin{solution}
-Mit Kernmaterial gilt $B=\mu_0\cdot\mu_r\cdot\frac{N}{l}\cdot I$ statt
-$B=\mu_0\cdot\frac{N}{l}\cdot I$ -- das Feld wird um den Faktor $\mu_r$
-verstärkt. Da die relative Permeabilität $\mu_r$ von Weicheisen bis zu
-$5000$ betragen kann, wird das Magnetfeld durch den Weicheisenkern
-massiv verstärkt.
-\end{solution}
 \end{taskbox}
 \end{questions}
 
 % =============================================================================
-% Aufgabe 6 (mittelschwer): Ringspule
+% Aufgabe 7 (mittelschwer): Ringspule
 % =============================================================================
 \begin{questions}
-\begin{taskbox}[Aufgabe 6: Ringspule]
+\begin{taskbox}[Aufgabe 7: Ringspule]
 \Schwierigkeit{mittelschwer}
 \begin{hinweisbox}[Hinweis]
 Biegt man eine lange Zylinderspule zu einem Ring (Ringspule/Torus), gilt

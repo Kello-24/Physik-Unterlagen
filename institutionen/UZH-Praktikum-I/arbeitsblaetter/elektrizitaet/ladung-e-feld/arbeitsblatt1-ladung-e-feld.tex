@@ -1,0 +1,436 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Arbeitsblatt 1: Elektrische Feldlinien zeichnen
+% UZH Praktikum I -- Sara Romer Urban, Kantonsschule im Lee, HS2026
+% Klasse: 1f (02.09.2026), aus PLAN_Dokumentengenerierung.md.
+%
+% Bewusst schlank gehalten (Wunsch: "ohne viel Text, es soll nur ums
+% E-Feld zeichnen gehen"): keine Lernziele-/Einleitungsbox (wie bereits bei
+% kraefte-addieren-zerlegen/magnetfelder in diesem Ordner -- Praktikum I
+% startet direkt mit Inhalt). Coulombkraft/Anziehung-Abstossung sowie eine
+% erste Einfuehrung ins elektrische Feld sind laut Vorwissen/Elektrostatik
+% (elektrodynamik/Vorwissen/Elektrostatik/Arbeitsblatt1+2) bereits bekannt
+% -- deshalb hier nur eine kurze Repetition, keine erneute Herleitung.
+%
+% Die vier Zeichenuebungen (Einzelladung +/-, Dipol, Plattenkondensator)
+% zeigen als Aufgabe nur die tikz-Skizze der Ladungen/Platten (leeres
+% Feld zum Einzeichnen); die fertigen Feldlinienbilder liegen als Bilder/
+% bereits vor und erscheinen erst in der Loesung (Konvention "SuS selbst
+% ergaenzen lassen", institutionen/UZH-Praktikum-I/CLAUDE.md).
+%
+% Numerierung "Arbeitsblatt1": elektrizitaet/Vorwissen (der fuer 1f
+% korrekte Bereichsordner) enthaelt noch keine nummerierten Dokumente
+% Sara Romers -- nur die scheinbar dazugehoerigen Arbeitsblatt1-3 liegen
+% (vermutlich falsch einsortiert) unter elektrodynamik/Vorwissen/
+% Elektrostatik/. Falls das die tatsaechliche 1f-Nummerierung fortsetzt,
+% mit Sara Romer abgleichen und Dateiname ggf. anpassen.
+% =============================================================================
+\documentclass[addpoints,11pt,a4paper]{exam}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.2cm,headheight=14pt]{geometry}
+\usepackage{amsmath}
+\usepackage{siunitx}
+% Hausstil: zusammengesetzte Einheiten immer als echter Bruch (\frac), nicht
+% als Inline-Schraegstrich oder \tfrac -- gilt global fuer jedes \si/\SI.
+\sisetup{per-mode=fraction,fraction-command=\frac}
+\usepackage{array,booktabs,tabularx,multirow}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage[most]{tcolorbox}
+\usepackage{lastpage}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\usetikzlibrary{arrows.meta,calc,angles,quotes}
+
+\usepackage{setspace}
+\usepackage{needspace}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+\setstretch{1.08}
+\setlist[itemize]{itemsep=0.4em}
+
+% -----------------------------
+% Farben (Corporate-Farbschema Physik KFR)
+% -----------------------------
+\definecolor{titleblue}{HTML}{183A6B}
+\definecolor{accentblue}{HTML}{2E6F9E}
+\definecolor{lightblue}{HTML}{EAF4FB}
+\definecolor{lightgray}{HTML}{F4F6F8}
+\definecolor{darkgray}{HTML}{4A4A4A}
+\definecolor{accentorange}{HTML}{D9720C}
+\definecolor{accentpurple}{HTML}{7B2D8E}
+\definecolor{lightorange}{HTML}{FCEEE0}
+\definecolor{lightpurple}{HTML}{F3EAF7}
+
+% Links (hyperref): farblich ans Corporate-Farbschema angeglichen.
+\hypersetup{
+  colorlinks=true,
+  urlcolor=accentblue,
+  linkcolor=accentblue,
+  pdftitle={Arbeitsblatt 1: Elektrische Feldlinien zeichnen},
+  pdfauthor={Loris Keller}
+}
+
+% -----------------------------
+% Spaltentypen
+% -----------------------------
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% -----------------------------
+% Boxen
+% -----------------------------
+\tcbset{before skip=10pt, after skip=10pt}
+\newtcolorbox{titlebox}{
+  enhanced,
+  colback=titleblue,
+  colframe=titleblue,
+  boxrule=0pt,
+  arc=3mm,
+  left=3mm,right=3mm,top=3mm,bottom=3mm
+}
+
+\newlength{\aufgabenindent}
+\settowidth{\aufgabenindent}{10.\hskip\labelsep}
+
+% Praktikum I: Lernziele/Einleitung/Theorie/Aufgaben werden NICHT farbig
+% gerahmt (nur Formel-, Hinweis- und Antwortbox bleiben Boxen) -- siehe
+% institutionen/UZH-Praktikum-I/CLAUDE.md, Abschnitt "Boxen-Layout".
+\newenvironment{infobox}{%
+  \par\addvspace{10pt}\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+\newenvironment{theoriebox}[1][Theorie]{%
+  \par\addvspace{10pt}\noindent\textbf{#1}\par\smallskip\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+\newtcolorbox{taskbox}[1][]{
+  enhanced, breakable,
+  colback=white, colframe=white, boxrule=0pt,
+  left=0mm,right=0mm,top=0mm,bottom=0mm,
+  before skip=10pt, after skip=10pt,
+  before upper={%
+    \def\tmpboxtitle{#1}%
+    \ifx\tmpboxtitle\empty\else\noindent\textbf{#1}\par\smallskip\fi
+  }
+}
+
+\newtcolorbox{groupbox}[1][Gruppenarbeit]{
+  enhanced, breakable,
+  colback=white, colframe=white, boxrule=0pt,
+  left=0mm,right=0mm,top=0mm,bottom=0mm,
+  before skip=10pt, after skip=10pt,
+  before upper={\noindent\textbf{#1}\par\smallskip}
+}
+
+\newenvironment{beispielbox}[1][Beispiel]{%
+  \par\addvspace{10pt}\noindent\textbf{#1}\par\smallskip\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+\newtcolorbox{hinweisbox}[1][Hinweis]{
+  enhanced,
+  breakable,
+  colback=lightorange,
+  colframe=accentorange,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+\newtcolorbox{formelbox}[1][Formel]{
+  enhanced,
+  breakable,
+  colback=lightpurple,
+  colframe=accentpurple,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.9pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+\newtcolorbox{answerbox}{
+  breakable,
+  colback=white,
+  colframe=gray!55,
+  boxrule=0.5pt,
+  arc=1.5mm,
+  left=2mm,right=2mm,top=2mm,bottom=2mm
+}
+
+% Bild-Helfer: zentriertes Bild mit spuerbarem Abstand zum umgebenden Text.
+% #1 = Breite, #2 = Dateipfad.
+\newcommand{\Bild}[2]{%
+  \par\vspace{0.6cm}
+  \begin{center}
+    \includegraphics[width=#1]{#2}
+  \end{center}
+  \vspace{0.6cm}
+}
+
+% Ladungssymbole fuer die Zeichenuebungen (rot/blau, wie in den
+% Loesungsbildern in Bilder/).
+\tikzset{
+  posladung/.style={circle,fill=red,draw=black,thick,minimum size=8mm,
+    font=\bfseries\Large\color{white}},
+  negladung/.style={circle,fill=blue,draw=black,thick,minimum size=8mm,
+    font=\bfseries\Large\color{white}}
+}
+
+% --- Loesungen ein-/ausblenden -----------------------------------------------
+\noprintanswers
+%\printanswers
+
+\pointformat{}
+\renewcommand{\solutiontitle}{\noindent\color{titleblue}\textbf{L\"osung:}\enspace}
+
+\pagestyle{headandfoot}
+\cfoot{\textcolor{darkgray}{Seite \thepage\ von \pageref{LastPage}}}
+
+\newcommand{\Kopfzeile}[4]{%
+  \begin{titlebox}
+    {\color{white}\sffamily\bfseries\Large #4}
+  \end{titlebox}
+  \vspace{0.5em}
+  \noindent\textbf{Klasse:}~#1 \hfill \textbf{Datum:}~#2 \hfill \textbf{Thema:}~#3
+    \hfill \textbf{Lehrperson:}~Loris Keller
+  \vspace{0.8em}
+  \lhead{\textcolor{darkgray}{#3}}
+  \rhead{\textcolor{darkgray}{#4}}
+}
+
+\newlength{\antwortraumlen}
+\newcommand{\Antwortraum}[1]{%
+  \pgfmathsetlength{\antwortraumlen}{#1*2.5cm}%
+  \begin{answerbox}
+    \rule{0pt}{\antwortraumlen}%
+  \end{answerbox}%
+}
+
+% Werte fuer Kopfzeile zentral setzen
+\newcommand{\Klasse}{1f}
+\newcommand{\Datum}{02.09.2026}
+\newcommand{\Thema}{Elektrisches Feld}
+\newcommand{\ArbeitsblattTitel}{Arbeitsblatt 1: Elektrische Feldlinien zeichnen}
+
+\begin{document}
+
+\Kopfzeile{\Klasse}{\Datum}{\Thema}{\ArbeitsblattTitel}
+
+% =============================================================================
+% Repetition: Anziehung/Abstossung, Influenz
+% =============================================================================
+\textbf{Repetition}
+
+Sie wissen bereits: Gleichnamige Ladungen stossen sich ab, ungleichnamige
+ziehen sich an. Diese Kraft wirkt als Fernwirkung, ganz ohne Berührung:
+Über das elektrische Feld spürt ein Körper die Anwesenheit einer Ladung
+auch aus einiger Entfernung. Nähert sich eine Ladung sogar einem
+neutralen Leiter, verschieben sich dort dessen Ladungsträger. Das nennt
+man \textbf{\emph{Influenz}}. Genau diese Wirkung stellen wir jetzt
+bildlich dar: mit \textbf{\emph{elektrischen Feldlinien}}.
+
+% =============================================================================
+% Theorie: Regeln zum Zeichnen elektrischer Feldlinien
+% =============================================================================
+\begin{theoriebox}[Elektrische Feldlinien zeichnen]
+\textbf{\emph{Regeln zum Zeichnen elektrischer Feldlinien:}}
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.2em]
+  \item Feldlinien beginnen bei \textbf{\emph{positiven}} Ladungen und enden bei \textbf{\emph{negativen}} Ladungen. Bei nur einer einzelnen Ladung enden sie im Unendlichen.
+  \item Die Richtung einer Feldlinie an einem Punkt ist die Richtung, in die eine dort platzierte kleine \textbf{\emph{positive Probeladung}} gedrückt würde.
+  \item Feldlinien kreuzen oder berühren sich nie.
+  \item Je dichter die Feldlinien gezeichnet sind, desto \textbf{\emph{stärker}} ist das Feld an dieser Stelle.
+  \item Auf der Oberfläche eines geladenen Leiters (z.\,B. einer Platte) stehen Feldlinien immer \textbf{\emph{senkrecht}}.
+\end{itemize}
+
+\textbf{\emph{Homogenes Feld:}} Verlaufen die Feldlinien überall parallel
+und gleich dicht, ist das Feld an jeder Stelle gleich stark und gleich
+gerichtet. Man nennt es dann \textbf{\emph{homogen}}. Ändern sich Richtung
+oder Dichte von Ort zu Ort, ist das Feld \textbf{\emph{inhomogen}}.
+
+\begin{hinweisbox}[Ihre Eselsbrücke bei jeder Aufgabe]
+Fragen Sie sich an jedem Punkt: \textbf{\emph{Was würde mit einer kleinen
+positiven Probeladung genau hier passieren?}} In diese Richtung zeigt die
+Feldlinie an dieser Stelle.
+\end{hinweisbox}
+\end{theoriebox}
+
+% =============================================================================
+% Aufgabe 1: Einzelne positive Ladung
+% =============================================================================
+\needspace{9.5cm}
+\begin{questions}
+\begin{taskbox}[Aufgabe 1: Einzelne positive Ladung]
+\question[4]
+\begin{parts}
+  \part[3] Zeichnen Sie die Feldlinien um die abgebildete positive
+  Ladung ein.
+  \begin{answerbox}
+  \vspace{2.1cm}
+  \begin{center}
+  \begin{tikzpicture}[scale=1]
+    \node[posladung] at (0,0) {$+$};
+  \end{tikzpicture}
+  \end{center}
+  \vspace{2.1cm}
+  \end{answerbox}
+  \begin{solution}
+  \Bild{5cm}{Bilder/punktladung_positiv.png}
+  \end{solution}
+
+  \part[1] Ist das Feld homogen oder inhomogen? Begründen Sie kurz.
+  \begin{answerbox}
+  \vspace{0.7cm}
+  \end{answerbox}
+  \begin{solution}
+  Inhomogen: Die Feldlinien laufen radial auseinander. Mit wachsendem
+  Abstand von der Ladung werden sie weniger dicht, das Feld wird also
+  schwächer.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Aufgabe 2: Einzelne negative Ladung
+% =============================================================================
+\needspace{9.5cm}
+\begin{questions}
+\begin{taskbox}[Aufgabe 2: Einzelne negative Ladung]
+\question[4]
+\begin{parts}
+  \part[3] Zeichnen Sie die Feldlinien um die abgebildete negative
+  Ladung ein.
+  \begin{answerbox}
+  \vspace{3.4cm}
+  \begin{center}
+  \begin{tikzpicture}[scale=1]
+    \node[negladung] at (0,0) {$-$};
+  \end{tikzpicture}
+  \end{center}
+  \vspace{3.4cm}
+  \end{answerbox}
+  \begin{solution}
+  \Bild{5cm}{Bilder/punktladung_negativ.png}
+  \end{solution}
+
+  \part[1] Ist das Feld homogen oder inhomogen? Begründen Sie kurz.
+  \begin{answerbox}
+  \vspace{0.7cm}
+  \end{answerbox}
+  \begin{solution}
+  Inhomogen: Die Feldlinien laufen radial auf die Ladung zu. Mit
+  wachsendem Abstand von der Ladung werden sie weniger dicht, das Feld
+  wird also schwächer.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Aufgabe 3: Dipol
+% =============================================================================
+\needspace{13cm}
+\begin{questions}
+\begin{taskbox}[Aufgabe 3: Dipol]
+\question[5]
+\begin{parts}
+  \part[4] Zeichnen Sie die Feldlinien zwischen den beiden abgebildeten
+  Ladungen ein.
+  \begin{answerbox}
+  \vspace{3.7cm}
+  \begin{center}
+  \begin{tikzpicture}[scale=1.15]
+    \node[posladung] at (-1.6,0) {$+$};
+    \node[negladung] at (1.6,0) {$-$};
+  \end{tikzpicture}
+  \end{center}
+  \vspace{3.7cm}
+  \end{answerbox}
+  \begin{solution}
+  \Bild{7cm}{Bilder/dipol.png}
+  \end{solution}
+
+  \part[1] Ist das Feld homogen oder inhomogen? Begründen Sie kurz.
+  \begin{answerbox}
+  \vspace{0.7cm}
+  \end{answerbox}
+  \begin{solution}
+  Inhomogen: Die Feldlinien sind gekrümmt, ihre Richtung und Dichte
+  ändern sich von Ort zu Ort.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Aufgabe 4: Plattenkondensator
+% =============================================================================
+\needspace{11.5cm}
+\begin{questions}
+\begin{taskbox}[Aufgabe 4: Zwei parallele Platten]
+\question[6]
+\begin{parts}
+  \part[4] Zeichnen Sie die Feldlinien zwischen und um die beiden
+  abgebildeten, entgegengesetzt geladenen Platten ein.
+  \begin{answerbox}
+  \vspace{2.4cm}
+  \begin{center}
+  \begin{tikzpicture}[scale=1]
+    \draw[very thick,red] (-3,1) -- (3,1);
+    \foreach \x in {-2.6,-1.95,...,2.6} { \node[red] at (\x,1.35) {$+$}; }
+    \draw[very thick,blue] (-3,-1) -- (3,-1);
+    \foreach \x in {-2.6,-1.95,...,2.6} { \node[blue] at (\x,-1.35) {$-$}; }
+  \end{tikzpicture}
+  \end{center}
+  \vspace{2.4cm}
+  \end{answerbox}
+  \begin{solution}
+  \Bild{9cm}{Bilder/plattencondensator.png}
+  \end{solution}
+
+  \part[2] Ist das Feld homogen oder inhomogen? Begründen Sie kurz.
+  \begin{answerbox}
+  \vspace{1.1cm}
+  \end{answerbox}
+  \begin{solution}
+  In der Mitte zwischen den Platten, fern vom Rand, homogen: Dort
+  verlaufen die Feldlinien parallel und gleich dicht. Am Rand dagegen
+  inhomogen, dort krümmen sich die Feldlinien nach aussen (Streufeld).
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Abschluss: Van-de-Graaf-Generator
+% =============================================================================
+\begin{beispielbox}[Anwendung: der Van-de-Graaf-Generator]
+Ein Förderband transportiert laufend Ladung zur Kugel oben hinauf, wodurch
+sich diese immer stärker positiv auflädt. Eine zweite, geerdete Kugel
+nähert sich: Durch das Feld der ersten Kugel werden aus der Erde
+Elektronen angezogen, sodass sich die zweite Kugel negativ auflädt, ganz
+ohne Berührung, genau wie einleitend besprochen. Wird das elektrische
+Feld zwischen den beiden Kugeln stark genug, springt ein Funke über.
+
+\Bild{7.5cm}{Bilder/van_de_Graaf_generator.png}
+{\scriptsize Aufbau und Funktionsweise eines Van-de-Graaf-Generators.}
+\end{beispielbox}
+
+\end{document}

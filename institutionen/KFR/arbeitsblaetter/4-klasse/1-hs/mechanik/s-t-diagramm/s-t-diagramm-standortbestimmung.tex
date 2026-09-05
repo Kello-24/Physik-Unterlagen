@@ -121,27 +121,6 @@ $\square$~vor der Doppellektion \hfill $\square$~nach der Doppellektion
 
 \begin{questions}
 
-\question Das folgende $s$-$t$-Diagramm zeigt die Bewegung eines Zugs.
-\begin{center}
-\begin{tikzpicture}[scale=0.75]
-  \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (6,5);
-  \draw[->] (-0.3,0) -- (6.7,0) node[right] {\scriptsize $t$ in min};
-  \draw[->] (0,-0.3) -- (0,5.5) node[above] {\scriptsize $s$ in km};
-  \foreach \x in {1,2,3,4,5,6} \draw (\x,0.06) -- (\x,-0.06) node[below] {\scriptsize \x};
-  \foreach \y in {1,2,3,4,5} \draw (0.06,\y) -- (-0.06,\y) node[left] {\scriptsize \y};
-  \draw[thick,titleblue] (0,1) -- (6,4);
-  \draw[dashed,gray] (3,0) -- (3,2.5) -- (0,2.5);
-  \filldraw[accentblue] (3,2.5) circle (1.8pt);
-\end{tikzpicture}
-\end{center}
-Wo befindet sich der Zug zum Zeitpunkt $t=\SI{3}{\minute}$?
-\begin{choices}
-  \choice Bei $s=\SI{3}{\kilo\meter}$.
-  \CorrectChoice Bei $s=\SI{2.5}{\kilo\meter}$.
-  \choice Bei $s=\SI{1}{\kilo\meter}$.
-  \choice Bei $s=\SI{4}{\kilo\meter}$.
-\end{choices}
-
 \question Eine Person geht auf einer geraden Strasse. Ihre Bewegung ergibt
 das folgende $s$-$t$-Diagramm.
 \begin{center}
@@ -161,66 +140,6 @@ Welche Beschreibung passt zu diesem Diagramm?
   \choice Die Person bewegt sich die ganze Zeit mit konstanter
   Geschwindigkeit vorwärts.
   \choice Die Person steht die ganze Zeit still.
-\end{choices}
-
-\question Das folgende Diagramm zeigt die Bewegung eines Aufzugs.
-\begin{center}
-\begin{tikzpicture}[scale=0.75]
-  \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (7,4);
-  \draw[->] (-0.3,0) -- (7.7,0) node[right] {\scriptsize $t$ in s};
-  \draw[->] (0,-0.3) -- (0,4.5) node[above] {\scriptsize $s$ in m};
-  \draw[thick,titleblue] (0,0.5) -- (2,3) -- (5,3) -- (7,1.5);
-  \node[titleblue,above] at (3.5,3.05) {\scriptsize waagrechter Abschnitt};
-\end{tikzpicture}
-\end{center}
-Was macht der Aufzug während des \emph{waagrechten} Abschnitts im
-Diagramm?
-\begin{choices}
-  \choice Er bewegt sich besonders schnell.
-  \choice Er bewegt sich mit konstanter, aber kleiner Geschwindigkeit.
-  \CorrectChoice Er steht still (Geschwindigkeit $=\SI{0}{\meter\per\second}$).
-  \choice Er ändert gerade die Richtung.
-\end{choices}
-
-\question Vier Schülerinnen und Schüler zeichnen je ein $s$-$t$-Diagramm.
-Welches davon kann die Bewegung eines realen Objekts \emph{nicht}
-darstellen?
-\begin{center}
-\begin{tabular}{@{}cccc@{}}
-\begin{tikzpicture}[scale=0.5]
-  \draw[->] (-0.2,0) -- (3.2,0) node[right] {\scriptsize $t$};
-  \draw[->] (0,-0.2) -- (0,3.2) node[above] {\scriptsize $s$};
-  \draw[thick,titleblue] (0,0.3) -- (3,2.7);
-  \node[below] at (1.5,-0.7) {\scriptsize A};
-\end{tikzpicture}
-&
-\begin{tikzpicture}[scale=0.5]
-  \draw[->] (-0.2,0) -- (3.2,0) node[right] {\scriptsize $t$};
-  \draw[->] (0,-0.2) -- (0,3.2) node[above] {\scriptsize $s$};
-  \draw[thick,titleblue] (0,0.5) -- (1.3,2) -- (1.3,0.7) -- (3,2.5);
-  \node[below] at (1.5,-0.7) {\scriptsize B};
-\end{tikzpicture}
-&
-\begin{tikzpicture}[scale=0.5]
-  \draw[->] (-0.2,0) -- (3.2,0) node[right] {\scriptsize $t$};
-  \draw[->] (0,-0.2) -- (0,3.2) node[above] {\scriptsize $s$};
-  \draw[thick,titleblue] (0,2.5) -- (1.5,1.5) -- (3,2.5);
-  \node[below] at (1.5,-0.7) {\scriptsize C};
-\end{tikzpicture}
-&
-\begin{tikzpicture}[scale=0.5]
-  \draw[->] (-0.2,0) -- (3.2,0) node[right] {\scriptsize $t$};
-  \draw[->] (0,-0.2) -- (0,3.2) node[above] {\scriptsize $s$};
-  \draw[thick,titleblue] (0,1.5) -- (3,1.5);
-  \node[below] at (1.5,-0.7) {\scriptsize D};
-\end{tikzpicture}
-\end{tabular}
-\end{center}
-\begin{choices}
-  \choice Diagramm A
-  \CorrectChoice Diagramm B
-  \choice Diagramm C
-  \choice Diagramm D
 \end{choices}
 
 \question Zwei Fahrzeuge fahren auf derselben Strasse; das Diagramm zeigt
@@ -269,28 +188,6 @@ Was bedeutet die \emph{negative} Steigung in diesem Diagramm?
   \choice Das Diagramm ist physikalisch nicht möglich.
 \end{choices}
 
-\question Zwei Läuferinnen bewegen sich auf einer geraden Bahn. Das
-Diagramm zeigt ihre Bewegung.
-\begin{center}
-\begin{tikzpicture}[scale=0.75]
-  \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (6,4);
-  \draw[->] (-0.3,0) -- (6.7,0) node[right] {\scriptsize $t$ in s};
-  \draw[->] (0,-0.3) -- (0,4.5) node[above] {\scriptsize $s$ in m};
-  \draw[thick,titleblue] (0,0.5) -- (6,3.5) node[right] {\scriptsize 1};
-  \draw[thick,accentorange] (0,3.5) -- (6,0.5) node[right] {\scriptsize 2};
-\end{tikzpicture}
-\end{center}
-Welche Aussage über die beiden Läuferinnen trifft zu?
-\begin{choices}
-  \choice Läuferin 1 ist schneller als Läuferin 2, weil ihre Linie nach
-  oben zeigt.
-  \CorrectChoice Beide sind gleich schnell unterwegs (gleicher Betrag der
-  Steigung), bewegen sich aber in entgegengesetzte Richtungen.
-  \choice Läuferin 2 bewegt sich gar nicht, weil ihre Linie fällt.
-  \choice Es lässt sich nicht vergleichen, da die Linien unterschiedlich
-  verlaufen.
-\end{choices}
-
 \question Das folgende $s$-$t$-Diagramm zeigt eine lineare Bewegung, die
 nicht bei $s=0$ beginnt.
 \begin{center}
@@ -315,126 +212,69 @@ Wie berechnest du die Geschwindigkeit dieser Bewegung richtig?
   \choice $v = s_2 - s_1 = \SI{4}{\meter}$
 \end{choices}
 
-\question Ein Velofahrer startet bei $s=\SI{0}{\meter}$, fährt
-$\SI{80}{\meter}$ in positive Richtung, kehrt danach um und fährt
-$\SI{30}{\meter}$ in negative Richtung zurück.
+\question Ein Postauto fährt in zwei Etappen mit unterschiedlicher
+Geschwindigkeit, wie im folgenden Diagramm gezeigt.
 \begin{center}
-\begin{tikzpicture}[scale=0.9]
-  \draw[->] (-0.3,0) -- (6,0) node[right] {\scriptsize $t$};
-  \draw[->] (0,-0.3) -- (0,4.7) node[above] {\scriptsize $s$ in m};
-  \draw[dashed,gray] (0,4) -- (3,4);
-  \draw[dashed,gray] (0,2.5) -- (5,2.5);
-  \node[left] at (0,4) {\scriptsize 80};
-  \node[left] at (0,2.5) {\scriptsize 50};
-  \node[left] at (0,0) {\scriptsize 0};
-  \draw[thick,titleblue] (0,0) -- (3,4) -- (5,2.5);
+\begin{tikzpicture}[scale=0.75]
+  \draw[gray!20] (0,0) grid[xstep=1,ystep=1] (6,6);
+  \draw[->] (-0.3,0) -- (6.7,0) node[right] {\scriptsize $t$ in min};
+  \draw[->] (0,-0.3) -- (0,6.5) node[above] {\scriptsize $s$ in km};
+  \foreach \x in {1,2,3,4,5,6} \draw (\x,0.06) -- (\x,-0.06) node[below] {\scriptsize \x};
+  \foreach \y in {1,2,3,4,5,6} \draw (0.06,\y) -- (-0.06,\y) node[left] {\scriptsize \y};
+  \draw[thick,titleblue] (0,0) -- (2,4) -- (6,6);
   \filldraw[black] (0,0) circle (1.6pt);
-  \filldraw[black] (3,4) circle (1.6pt);
-  \filldraw[black] (5,2.5) circle (1.6pt);
+  \filldraw[black] (2,4) circle (1.6pt);
+  \filldraw[black] (6,6) circle (1.6pt);
 \end{tikzpicture}
 \end{center}
+Wie gross ist die Durchschnittsgeschwindigkeit über die gesamte Fahrt
+(von $t=0$ bis $t=\SI{6}{\minute}$)?
 \begin{choices}
-  \choice Der zurückgelegte Weg beträgt $\SI{50}{\meter}$.
-  \CorrectChoice Der zurückgelegte Weg beträgt $\SI{110}{\meter}$.
-  \choice Der zurückgelegte Weg ist gleich der Ortsänderung, also
-  $\SI{50}{\meter}$.
-  \choice Der zurückgelegte Weg lässt sich ohne Diagramm nicht bestimmen.
+  \choice $\SI{90}{\kilo\meter\per\hour}$
+  \choice $\SI{75}{\kilo\meter\per\hour}$
+  \CorrectChoice $\SI{60}{\kilo\meter\per\hour}$
+  \choice $\SI{150}{\kilo\meter\per\hour}$
 \end{choices}
 
-\question Kann man einem Objekt zu einem einzelnen Zeitpunkt (z.\,B.\
-genau bei $t=\SI{3}{\second}$) überhaupt eine Geschwindigkeit zuordnen?
-\begin{center}
-\begin{tikzpicture}[scale=0.8]
-  \draw[->] (-0.3,0) -- (5.5,0) node[right] {\scriptsize $t$};
-  \draw[->] (0,-0.3) -- (0,4.5) node[above] {\scriptsize $s$};
-  \draw[thick,titleblue,domain=0:5,samples=50,smooth] plot (\x,{0.16*\x*\x});
-  \draw[thick,accentpurple,dashed] (1.5,-0.06) -- (4.8,3.24) node[right] {\scriptsize Tangente};
-  \filldraw[black] (3,1.44) circle (1.8pt) node[below right] {\scriptsize $t=\SI{3}{\second}$};
-\end{tikzpicture}
-\end{center}
-\begin{choices}
-  \choice Nein, für eine Geschwindigkeit braucht man immer zwei
-  verschiedene, klar auseinanderliegende Messzeitpunkte. Zu einem
-  einzelnen Zeitpunkt ist das unmöglich.
-  \CorrectChoice Ja, das ist die Momentangeschwindigkeit. Sie entspricht
-  der Steigung der Tangente an das $s$-$t$-Diagramm an diesem Punkt.
-  \choice Nein, das ergibt nur bei einer gleichförmigen Bewegung Sinn.
-  \choice Ja, aber nur, wenn sich das Objekt in diesem Moment gerade nicht
-  bewegt.
-\end{choices}
-
-\question Welches der folgenden vier Diagramme zeigt eine
-\textbf{\emph{gleichförmige}} Bewegung, bei der sich das Objekt tatsächlich
-bewegt (konstante Geschwindigkeit ungleich null)?
+\question Vier Schülerinnen und Schüler zeichnen je ein $s$-$t$-Diagramm.
+Welches davon kann die Bewegung eines realen Objekts \emph{nicht}
+darstellen?
 \begin{center}
 \begin{tabular}{@{}cccc@{}}
 \begin{tikzpicture}[scale=0.5]
   \draw[->] (-0.2,0) -- (3.2,0) node[right] {\scriptsize $t$};
   \draw[->] (0,-0.2) -- (0,3.2) node[above] {\scriptsize $s$};
-  \draw[thick,titleblue] (0,0.3) -- (3,2.7);
+  \draw[thick,titleblue] (0,2.5) -- (1.5,1.5) -- (3,2.5);
   \node[below] at (1.5,-0.7) {\scriptsize A};
 \end{tikzpicture}
 &
 \begin{tikzpicture}[scale=0.5]
   \draw[->] (-0.2,0) -- (3.2,0) node[right] {\scriptsize $t$};
   \draw[->] (0,-0.2) -- (0,3.2) node[above] {\scriptsize $s$};
-  \draw[thick,titleblue,domain=0:3,samples=40,smooth] plot (\x,{0.3*\x*\x});
+  \draw[thick,titleblue] (0,1.5) -- (3,1.5);
   \node[below] at (1.5,-0.7) {\scriptsize B};
 \end{tikzpicture}
 &
 \begin{tikzpicture}[scale=0.5]
   \draw[->] (-0.2,0) -- (3.2,0) node[right] {\scriptsize $t$};
   \draw[->] (0,-0.2) -- (0,3.2) node[above] {\scriptsize $s$};
-  \draw[thick,titleblue] (0,1.5) -- (3,1.5);
+  \draw[thick,titleblue] (0,0.3) -- (3,2.7);
   \node[below] at (1.5,-0.7) {\scriptsize C};
 \end{tikzpicture}
 &
 \begin{tikzpicture}[scale=0.5]
   \draw[->] (-0.2,0) -- (3.2,0) node[right] {\scriptsize $t$};
   \draw[->] (0,-0.2) -- (0,3.2) node[above] {\scriptsize $s$};
-  \draw[thick,titleblue] (0,0.3) -- (1.5,2.5) -- (3,1);
+  \draw[thick,titleblue] (0,0.5) -- (1.3,2) -- (1.3,0.7) -- (3,2.5);
   \node[below] at (1.5,-0.7) {\scriptsize D};
 \end{tikzpicture}
 \end{tabular}
 \end{center}
 \begin{choices}
-  \CorrectChoice Diagramm A
+  \choice Diagramm A
   \choice Diagramm B
   \choice Diagramm C
-  \choice Diagramm D
-\end{choices}
-
-\question Eine Katze sitzt zunächst still, rennt dann für kurze Zeit sehr
-schnell nach vorne und bleibt anschliessend wieder abrupt stehen. Welches
-Diagramm passt zu dieser Beschreibung?
-\begin{center}
-\begin{tabular}{@{}ccc@{}}
-\begin{tikzpicture}[scale=0.6]
-  \draw[->] (-0.2,0) -- (4.2,0) node[right] {\scriptsize $t$};
-  \draw[->] (0,-0.2) -- (0,3.2) node[above] {\scriptsize $s$};
-  \draw[thick,titleblue] (0,0.4) -- (1,0.4) -- (2.5,2.8) -- (4,2.8);
-  \node[below] at (2,-0.7) {\scriptsize A};
-\end{tikzpicture}
-&
-\begin{tikzpicture}[scale=0.6]
-  \draw[->] (-0.2,0) -- (4.2,0) node[right] {\scriptsize $t$};
-  \draw[->] (0,-0.2) -- (0,3.2) node[above] {\scriptsize $s$};
-  \draw[thick,titleblue] (0,0.4) -- (4,2.8);
-  \node[below] at (2,-0.7) {\scriptsize B};
-\end{tikzpicture}
-&
-\begin{tikzpicture}[scale=0.6]
-  \draw[->] (-0.2,0) -- (4.2,0) node[right] {\scriptsize $t$};
-  \draw[->] (0,-0.2) -- (0,3.2) node[above] {\scriptsize $s$};
-  \draw[thick,titleblue] (0,2.8) -- (1,2.8) -- (2.5,0.4) -- (4,0.4);
-  \node[below] at (2,-0.7) {\scriptsize C};
-\end{tikzpicture}
-\end{tabular}
-\end{center}
-\begin{choices}
-  \CorrectChoice Diagramm A
-  \choice Diagramm B
-  \choice Diagramm C
+  \CorrectChoice Diagramm D
 \end{choices}
 
 \end{questions}

@@ -18,11 +18,11 @@ nachziehen.
 
 Die Doppellektion wechselt durchgehend zwischen zwei Dokumenten:
 
-- **Arbeitsblatt 4** (`arbeitsblatt4-kondensatoren-teil1.tex`) — liegt bei den SuS
+- **Arbeitsblatt 4** (`arbeitsblatt4-kondensatoren.tex`) — liegt bei den SuS
   auf dem Pult, wird für Theorie-Input, Plenumsdiskussionen und die
   Partnerarbeits-Herleitung zum Dielektrikum gebraucht. Bleibt während der
   ganzen Doppellektion offen.
-- **Aufgabenblatt 3** (`aufgabenblatt3-kondensatoren-teil1.tex`) — liegt am
+- **Aufgabenblatt 3** (`aufgabenblatt3-kondensatoren.tex`) — liegt am
   Computerarbeitsplatz, wird für die vier Teile der PhET-/Excel-Lernaufgabe
   gebraucht (Partnerarbeit zu zweit an der Simulation).
 
@@ -87,11 +87,11 @@ Zeitdruck:
 
 ## Drei Dokumente: Arbeitsblatt, Aufgabenblatt, Zusatzaufgaben
 
-- **`arbeitsblatt4-kondensatoren-teil1.tex`** — Lernziele, Einstieg, alle
+- **`arbeitsblatt4-kondensatoren.tex`** — Lernziele, Einstieg, alle
   Theorie-Boxen, beide Plenums-Boxen, die Wassertankanalogie (inkl.
   Sortieraufgabe und Rollen-Frage), der Demoversuch und die
   Dielektrikum-Herleitung. Alles ausser der PhET-/Excel-Lernaufgabe.
-- **`aufgabenblatt3-kondensatoren-teil1.tex`** — ausschliesslich die
+- **`aufgabenblatt3-kondensatoren.tex`** — ausschliesslich die
   PhET-/Excel-Lernaufgabe (Teil 1–4), die die SuS zu zweit am Computer
   bearbeiten. Kein einleitender Erklärkasten (Konvention, siehe
   `institutionen/UZH-Praktikum-I/CLAUDE.md`) — Loris erklärt den Zusammenhang
