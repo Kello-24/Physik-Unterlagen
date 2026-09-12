@@ -1,0 +1,415 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Aufgabenblatt 3: Normalkraft
+% UZH Praktikum I -- Sara Romer Urban, Kantonsschule im Lee, HS2026
+% Klasse: 2e (09.09.2026)
+%
+% Reine Uebungsaufgaben zur Normalkraft/schiefen Ebene, kein einleitender
+% Erklaerkasten (siehe institutionen/UZH-Praktikum-I/CLAUDE.md). Drei Aufgaben,
+% keine Wiederverwendung der Arbeitsblatt-Bilder: (1) Schlitten auf einer neuen
+% schiefen Ebene (alpha=20 Grad) -- Gewichtskraft berechnen, dann grafisch in
+% Hangabtriebskraft/Normalkraft-Komponente/Normalkraft zerlegen (eigene
+% TikZ-Skizze, selbst gewaehlter Kraftmassstab wie beim Lampe-Beispiel aus
+% kraefte-addieren-zerlegen), (2) direkte Fortsetzung: aus der grafisch
+% bestimmten Hangabtriebskraft Beschleunigung und Endgeschwindigkeit berechnen
+% (LZ5, neue Zahlenwerte gegenueber der Bergziege im Arbeitsblatt), (3) kurze
+% Ranking-Aufgabe (LZ2, ohne Bild) -- Normalkraft dreier verschieden schwerer
+% Fahrzeuge auf waagrechter Strasse vergleichen; bewusst eine andere Perspektive
+% auf LZ2 als die Klotz-Aufgabe im Arbeitsblatt (verschiedene Koerper statt
+% derselbe Koerper in verschiedenen Situationen), um Redundanz zu vermeiden.
+%
+% Quellen: lernziele.md, normalkraft-lektionsplan.tex (dieser Ordner).
+% =============================================================================
+\documentclass[addpoints,11pt,a4paper]{exam}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.2cm,headheight=14pt]{geometry}
+\usepackage{amsmath}
+\usepackage{siunitx}
+% Hausstil: zusammengesetzte Einheiten immer als echter Bruch (\frac), nicht
+% als Inline-Schraegstrich oder \tfrac -- gilt global fuer jedes \si/\SI.
+\sisetup{per-mode=fraction,fraction-command=\frac}
+\usepackage{array,booktabs,tabularx,multirow}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage[most]{tcolorbox}
+\usepackage{lastpage}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\usetikzlibrary{arrows.meta,calc,angles,quotes,decorations.pathmorphing}
+
+\usepackage{setspace}
+\usepackage{needspace}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+\setstretch{1.08}
+\setlist[itemize]{itemsep=0.4em}
+
+% -----------------------------
+% Farben (Corporate-Farbschema Physik KFR)
+% -----------------------------
+\definecolor{titleblue}{HTML}{183A6B}
+\definecolor{accentblue}{HTML}{2E6F9E}
+\definecolor{lightblue}{HTML}{EAF4FB}
+\definecolor{lightgray}{HTML}{F4F6F8}
+\definecolor{darkgray}{HTML}{4A4A4A}
+\definecolor{accentorange}{HTML}{D9720C}
+\definecolor{accentpurple}{HTML}{7B2D8E}
+% Hinweisbox: Orange (accentorange), fuer wichtige Klarstellungen.
+\definecolor{lightorange}{HTML}{FCEEE0}
+% Formelbox: Violett (accentpurple), fuer die zentralen Merksaetze.
+\definecolor{lightpurple}{HTML}{F3EAF7}
+
+% Links (hyperref): farblich ans Corporate-Farbschema angeglichen.
+\hypersetup{
+  colorlinks=true,
+  urlcolor=accentblue,
+  linkcolor=accentblue,
+  pdftitle={Aufgabenblatt 3: Normalkraft},
+  pdfauthor={Loris Keller}
+}
+
+% -----------------------------
+% Spaltentypen
+% -----------------------------
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% -----------------------------
+% Boxen
+% -----------------------------
+\tcbset{before skip=10pt, after skip=10pt}
+\newtcolorbox{titlebox}{
+  enhanced,
+  colback=titleblue,
+  colframe=titleblue,
+  boxrule=0pt,
+  arc=3mm,
+  left=3mm,right=3mm,top=3mm,bottom=3mm
+}
+
+\newlength{\aufgabenindent}
+\settowidth{\aufgabenindent}{10.\hskip\labelsep}
+
+% Praktikum I: Lernziele/Einleitung/Theorie/Aufgaben werden NICHT mehr
+% farbig gerahmt (nur Formel-, Hinweis- und Antwortbox bleiben Boxen) --
+% siehe institutionen/UZH-Praktikum-I/CLAUDE.md, Abschnitt "Boxen-Layout".
+\newenvironment{infobox}{%
+  \par\addvspace{10pt}\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+\newenvironment{theoriebox}[1][Theorie]{%
+  \par\addvspace{10pt}\noindent\textbf{#1}\par\smallskip\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+% taskbox/groupbox stehen in questions VOR dem ersten \question (Bilder,
+% Fliesstext) -- exam.cls' questions-Liste braucht dafuer eine echte,
+% eigenstaendige Box (sonst "Something's wrong--perhaps a missing \item",
+% weil z.B. ein \begin{center} vor dem ersten \item der Aussenliste steht).
+% Deshalb bleiben es tcolorboxen, nur unsichtbar gemacht (keine Farbe/Rahmen,
+% kein Padding) statt sie durch reine Absaetze zu ersetzen.
+\newtcolorbox{taskbox}[1][]{
+  enhanced, breakable,
+  colback=white, colframe=white, boxrule=0pt,
+  left=0mm,right=0mm,top=0mm,bottom=0mm,
+  before skip=10pt, after skip=10pt,
+  before upper={%
+    \def\tmpboxtitle{#1}%
+    \ifx\tmpboxtitle\empty\else\noindent\textbf{#1}\par\smallskip\fi
+  }
+}
+
+\newtcolorbox{groupbox}[1][Gruppenarbeit]{
+  enhanced, breakable,
+  colback=white, colframe=white, boxrule=0pt,
+  left=0mm,right=0mm,top=0mm,bottom=0mm,
+  before skip=10pt, after skip=10pt,
+  before upper={\noindent\textbf{#1}\par\smallskip}
+}
+
+% beispielbox: fuer die Einleitung -- wie die anderen Inhaltsboxen ungerahmt.
+\newenvironment{beispielbox}[1][Beispiel]{%
+  \par\addvspace{10pt}\noindent\textbf{#1}\par\smallskip\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+% hinweisbox: Orange, fuer wichtige Klarstellungen/Verwechslungswarnungen.
+\newtcolorbox{hinweisbox}[1][Hinweis]{
+  enhanced,
+  breakable,
+  colback=lightorange,
+  colframe=accentorange,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+% formelbox: Violett, um die zentralen Merksaetze dieser Einheit hervorzuheben.
+\newtcolorbox{formelbox}[1][Merksatz]{
+  enhanced,
+  breakable,
+  colback=lightpurple,
+  colframe=accentpurple,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.9pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+\newtcolorbox{answerbox}{
+  breakable,
+  colback=white,
+  colframe=gray!55,
+  boxrule=0.5pt,
+  arc=1.5mm,
+  left=2mm,right=2mm,top=2mm,bottom=2mm
+}
+
+% Marke: kleines farbiges Inline-Label fuer Teilschritte/Ergebnis-Callouts.
+\newtcbox{\Marke}[1][accentpurple]{
+  nobeforeafter,
+  colback=#1,
+  colframe=#1,
+  coltext=white,
+  boxrule=0pt,
+  arc=2pt,
+  left=5pt,right=5pt,top=2pt,bottom=2pt,
+  fontupper=\bfseries\sffamily\small
+}
+
+% Bild-Helfer: zentriertes Bild mit spuerbarem Abstand zum umgebenden Text
+% (statt nur des normalen Absatzabstands). #1 = Breite, #2 = Dateipfad.
+\newcommand{\Bild}[2]{%
+  \par\vspace{0.6cm}
+  \begin{center}
+    \includegraphics[width=#1]{#2}
+  \end{center}
+  \vspace{0.6cm}
+}
+
+% --- Loesungen ein-/ausblenden -----------------------------------------------
+%\noprintanswers
+\printanswers
+
+\pointformat{}
+\renewcommand{\solutiontitle}{\noindent\color{titleblue}\textbf{L\"osung:}\enspace}
+
+\pagestyle{headandfoot}
+\cfoot{\textcolor{darkgray}{Seite \thepage\ von \pageref{LastPage}}}
+
+\newcommand{\Kopfzeile}[4]{%
+  \begin{titlebox}
+    {\color{white}\sffamily\bfseries\Large #4}
+  \end{titlebox}
+  \vspace{0.5em}
+  \noindent\textbf{Klasse:}~#1 \hfill \textbf{Datum:}~#2 \hfill \textbf{Thema:}~#3
+    \hfill \textbf{Lehrperson:}~Loris Keller
+  \vspace{0.8em}
+  \lhead{\textcolor{darkgray}{#3}}
+  \rhead{\textcolor{darkgray}{#4}}
+}
+
+\newlength{\antwortraumlen}
+\newcommand{\Antwortraum}[1]{%
+  \pgfmathsetlength{\antwortraumlen}{#1*2.5cm}%
+  \begin{answerbox}
+    \rule{0pt}{\antwortraumlen}%
+  \end{answerbox}%
+}
+
+% Werte fuer Kopfzeile zentral setzen
+\newcommand{\Klasse}{2e}
+\newcommand{\Datum}{09.09.2026}
+\newcommand{\Thema}{Normalkraft}
+\newcommand{\ArbeitsblattTitel}{Aufgabenblatt 3: Normalkraft}
+
+\begin{document}
+
+\Kopfzeile{\Klasse}{\Datum}{\Thema}{\ArbeitsblattTitel}
+
+% =============================================================================
+% Aufgabe 1: Schlitten auf schiefer Ebene (Gewichtskraft + grafische Zerlegung)
+% =============================================================================
+\begin{questions}
+\begin{taskbox}[Aufgabe 1: Ein Schlitten auf der Piste]
+\question[7] Ein Schlitten mit Kind (Gesamtmasse $m=\SI{30}{\kilogram}$)
+steht still auf einer reibungsfreien, verschneiten Rampe mit
+Neigungswinkel $\alpha=\SI{20}{\degree}$:
+
+\begin{center}
+\begin{tikzpicture}[>=Latex,scale=2.5]
+  \def\hangwidth{5}
+  \def\winkelgrad{20}
+  \pgfmathsetmacro{\hoehe}{\hangwidth*tan(\winkelgrad)}
+  \coordinate (F) at (0,0);
+  \coordinate (S) at (\hangwidth,\hoehe);
+  \draw[thick,darkgray] (F) -- (S);
+  \draw[thick,darkgray] (F) -- ++(\hangwidth,0);
+  \draw[dashed,gray] (F) -- ++(\hangwidth,0);
+  \coordinate (H) at ($(F)+(1,0)$);
+  \pic[draw=accentblue,angle radius=0.8cm] {angle=S--F--H};
+  \node[accentblue] at ($(F)+(1.05,0.28)$) {$\alpha$};
+  \coordinate (K) at ($(F)!0.55!(S)$);
+  \draw[fill=lightgray!60,rotate around={\winkelgrad:(K)}]
+    ($(K)+(-0.35,0)$) rectangle ++(0.7,0.5);
+  \node[rotate=\winkelgrad,inner sep=1pt] at ($(K)+(-{0.42*sin(\winkelgrad)},{0.42*cos(\winkelgrad)})$) {\scriptsize Schlitten};
+  \coordinate (SP) at ($(K)+(-{0.25*sin(\winkelgrad)},{0.25*cos(\winkelgrad)})$);
+  \fill (SP) circle (1pt);
+  \draw[->,ultra thick,accentorange] (SP) -- ++(0,-1.6) node[midway,right]{$\vec F_g$};
+\end{tikzpicture}
+\end{center}
+
+\begin{parts}
+\part[2] Berechnen Sie die Gewichtskraft $F_g$ von Schlitten und Kind
+zusammen.
+
+\Antwortraum{1.5}
+
+\begin{solution}
+\[
+F_g = m\cdot g = \SI{30}{\kilogram}\cdot\SI{9.81}{\meter\per\second\squared}
+    \approx\SI{294}{\newton}
+\]
+\end{solution}
+
+\part[5] Zeichnen Sie $\vec F_g$ mit einem selbst gewählten
+Kraftmassstab senkrecht nach unten in die Skizze oben ein. Konstruieren
+Sie anschliessend grafisch (Hilfslinien parallel/senkrecht zur Rampe,
+Kräfteparallelogramm als Rechteck) die parallele Komponente
+$\vec F_{G\parallel}$, die senkrechte Komponente $\vec F_{G\perp}$ und
+die Normalkraft $\vec F_N$.
+
+\begin{solution}
+Zur Kontrolle (nicht vorrechnen, nur für den Konstruktionsvergleich):
+Bei einem flachen Winkel von $\SI{20}{\degree}$ ist $F_{G\parallel}$
+deutlich kleiner als $F_g$, $F_N$ dagegen fast so gross wie $F_g$, mit
+erwarteter Grössenordnung $F_{G\parallel}\approx\SI{100}{\newton}$ und
+$F_N\approx\SI{276}{\newton}$.
+\end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Aufgabe 2: Endgeschwindigkeit des Schlittens (LZ5)
+% =============================================================================
+\newpage
+\begin{questions}
+\begin{taskbox}[Aufgabe 2: Der Schlitten rutscht los]
+\question[8] Der Schlitten aus Aufgabe 1 rutscht aus der Ruhe eine
+Hanglänge von $s=\SI{12}{\meter}$ hinunter.
+
+\begin{parts}
+\part[3] Welche der beiden Kräfte aus Ihrer Konstruktion in Aufgabe 1
+ist für die Beschleunigung entlang des Hangs verantwortlich? Nutzen Sie
+diese Kraft und das 2. Newtonsche Gesetz, um die Beschleunigung $a$ zu
+berechnen.
+
+\Antwortraum{2}
+
+\begin{solution}
+Verantwortlich ist die parallele Komponente $F_{G\parallel}$ der
+Gewichtskraft, nicht die volle Gewichtskraft $F_g$, denn die
+senkrechte Komponente $F_{G\perp}$ wird bereits von der Normalkraft
+$F_N$ ausgeglichen. Nach $a$ auflösen:
+\[
+F_{G\parallel}=m\cdot a \quad\Longrightarrow\quad a=\frac{F_{G\parallel}}{m}
+\]
+Werte einsetzen:
+\[
+a=\frac{\SI{100}{\newton}}{\SI{30}{\kilogram}}\approx\SI{3.3}{\meter\per\second\squared}
+\]
+\end{solution}
+
+\part[3] Bestimmen Sie mit $v^2=2\cdot a\cdot s$ die Endgeschwindigkeit
+$v$ des Schlittens am Ende der Rampe.
+
+\Antwortraum{2}
+
+\begin{solution}
+Nach $v$ auflösen:
+\[
+v^2=2\cdot a\cdot s \quad\Longrightarrow\quad v=\sqrt{2\cdot a\cdot s}
+\]
+Werte einsetzen:
+\[
+v=\sqrt{2\cdot\SI{3.3}{\meter\per\second\squared}\cdot\SI{12}{\meter}}
+  \approx\SI{8.9}{\meter\per\second}
+\]
+\end{solution}
+
+\part[2] Wie lange dauert die Hangabfahrt? Nutzen Sie dafür
+$v=a\cdot t$ mit Ihren Werten für $a$ und $v$.
+
+\Antwortraum{1.5}
+
+\begin{solution}
+Nach $t$ auflösen:
+\[
+v=a\cdot t \quad\Longrightarrow\quad t=\frac{v}{a}
+\]
+Werte einsetzen:
+\[
+t=\frac{\SI{8.9}{\meter\per\second}}{\SI{3.3}{\meter\per\second\squared}}
+  \approx\SI{2.7}{\second}
+\]
+\end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Aufgabe 3: Normalkraft dreier Fahrzeuge (LZ2, andere Perspektive)
+% =============================================================================
+\newpage
+\begin{questions}
+\begin{taskbox}[Aufgabe 3: Fahrrad, Auto, Lastwagen]
+\question[5] Ein Fahrrad, ein Auto und ein Lastwagen stehen alle still
+auf derselben waagrechten Strasse.
+
+\begin{parts}
+\part[3] Ordnen Sie die drei Normalkräfte der Grösse nach (kleinste
+zuerst), und begründen Sie kurz.
+
+\Antwortraum{2}
+
+\begin{solution}
+Alle drei Fahrzeuge sind in Ruhe: Es gilt jeweils $F_N=F_g=m\cdot g$.
+Da die Masse von Fahrrad, Auto und Lastwagen zunimmt, nimmt auch die
+Normalkraft in dieser Reihenfolge zu:
+$F_N(\text{Fahrrad}) < F_N(\text{Auto}) < F_N(\text{Lastwagen})$.
+\end{solution}
+
+\part[2] Alle drei Fahrzeuge parken nun stattdessen (mit angezogener
+Bremse) auf einer abschüssigen Strasse. Ändert sich die Reihenfolge aus
+(a)?
+
+\Antwortraum{1.5}
+
+\begin{solution}
+Nein. Auf der geneigten Strasse wird bei allen drei Fahrzeugen derselbe
+Anteil der Gewichtskraft als parallele Komponente abgezweigt, weil der
+Neigungswinkel für alle drei gleich ist. Die Normalkraft wird deshalb
+bei allen drei Fahrzeugen im gleichen Verhältnis kleiner, und an der
+Reihenfolge ändert das nichts.
+\end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\end{document}

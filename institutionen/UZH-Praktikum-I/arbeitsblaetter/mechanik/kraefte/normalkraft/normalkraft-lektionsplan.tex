@@ -1,0 +1,267 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Lektionsplan (Diskussionsgrundlage, NICHT das Arbeitsblatt selbst)
+% Normalkraft -- UZH Praktikum I, Sara Romer Urban, KS im Lee, HS2026
+% Klasse: 2e
+% =============================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usepackage{array,booktabs,tabularx,xltabular}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\sisetup{per-mode=fraction,fraction-command=\frac}
+\usepackage{url}
+\Urlmuskip=0mu plus 1mu
+\def\UrlBreaks{\do\/\do-\do_}
+
+\definecolor{titleblue}{HTML}{183A6B}
+\definecolor{accentblue}{HTML}{2E6F9E}
+\definecolor{groupteal}{HTML}{1B7F72}
+\definecolor{darkgray}{HTML}{4A4A4A}
+\definecolor{warnred}{HTML}{9E2E2E}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+
+\newcommand{\Methode}[1]{{\small\color{groupteal}\textbf{#1}}}
+
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{titleblue}}{\thesection}{0.6em}{}
+\titlespacing*{\section}{0pt}{1.2em}{0.5em}
+
+\begin{document}
+\sloppy
+
+\begin{center}
+{\Huge\bfseries\color{titleblue}Lektionsplan: Normalkraft}\\[0.4em]
+{\large Doppellektion (2$\times$45 Min.) -- Diskussionsgrundlage}
+\end{center}
+\vspace{0.5em}
+
+\noindent\textbf{Klasse:} 2e (09.09.2026)
+\noindent\textbf{Lehrperson:} Loris Keller
+
+\vspace{0.3em}
+\noindent\textcolor{darkgray}{Dieses Dokument ist \textbf{keine} Reinschrift des Arbeitsblatts, sondern die
+Planungsgrundlage dafür: Lernziele, Aufbau der Lektion und die gewählte
+Didaktik-Methode pro Phase (aus \texttt{Methodensammlung\_Physikunterricht.pdf}).
+Nach Absprache wird daraus das \texttt{.tex}-Arbeitsblatt/Aufgabenblatt lokal in
+VS Code erstellt. Der Aufbau folgt dem von Loris vorgeschlagenen Ablauf:
+Federwaage-Repetition $\to$ Tisch/kognitiver Konflikt $\to$ elastische
+Unterlage als sichtbarer Beleg $\to$ Definition der Normalkraft $\to$
+Klotz-Übung $\to$ schiefe Ebene (grafisch, drei Winkel) $\to$
+Hangabtriebskraft-Formeln $\to$ Anwendungsaufgabe.}
+
+% =========================================================================
+\section*{1. Abgrenzung und Lernziele}
+
+\textbf{Im Fokus:} Einführung der Normalkraft als Reaktionskraft
+(inkl. mikroskopischer Ursache: elektrische Abstossung zwischen Atomen/
+Molekülen der Oberfläche, PhysikLibre 4.1.5), danach Anwendung der
+bereits bekannten grafischen Kraftzerlegung auf die schiefe Ebene
+(PhysikLibre 4.8.1/4.8.2). Hangabtriebskraft und Normalkraft-Komponente
+werden \textbf{ausschliesslich grafisch} bestimmt und mit dem
+Kraft-Massstab ausgemessen -- Sinus/Cosinus sind der Klasse noch nicht
+bekannt.
+
+\textbf{Bereits bekannt (nur Repetition, keine Neueinführung):}
+Kräftegleichgewicht als Vektorgleichung, Kraft als vektorielle Grösse,
+grafische Kraftzerlegung mit dem Kräfteparallelogramm (alle: letzte
+Doppellektion, Kraftaddition \& Kraftzerlegung); die Feder-Masse-Skizze
+mit Feder- und Gewichtskraft im Gleichgewicht (Gewichtskraft \&
+Federkraft); $F=m\cdot a$ (Vorwissen).
+
+\textbf{Bewusst nicht Teil dieser Einheit:} das dritte Newtonsche
+Gesetz/Wechselwirkungsgesetz (Aktio-Reaktio) -- eigene Lektion
+\texttt{wechselwirkung/} (2e, 16.09.2026, eine Woche später); die
+Normalkraft wird deshalb hier rein phänomenologisch eingeführt (Oberfläche
+übt eine sichtbare Gegenkraft senkrecht zu sich aus), ohne den Begriff
+Aktio-Reaktio oder das Körper-auf-Unterlage-Gegenstück zu benennen.
+Ebenfalls nicht Teil: die rechnerische/trigonometrische Bestimmung von
+Hangabtriebskraft und Normalkraft-Komponente (PhysikLibre 4.8.3 --
+Sinus/Cosinus den SuS noch nicht bekannt); Reibungskraft im Detail -- bei
+der Abschlussaufgabe wird \glqq reibungsfrei\grqq{} explizit
+vorausgesetzt. Ebenfalls nicht Teil: Kräfte für gekrümmte Bahnen/
+Zentripetalkraft (PhysikLibre 4.9), Kräfte in beschleunigten
+Bezugssystemen (PhysikLibre 4.10).
+
+\begin{itemize}[leftmargin=1.3cm,itemsep=0.3em]
+  \item[LZ1] die Normalkraft als Reaktionskraft einer Oberfläche
+  erklären, die senkrecht zu ihr wirkt und mikroskopisch durch die
+  elektrische Abstossung zwischen den Atomen/Molekülen der Oberfläche
+  entsteht (PhysikLibre 4.1.5).
+  \item[LZ2] in verschiedenen Situationen Gewichtskraft und Normalkraft
+  miteinander vergleichen und begründen, wann sie gleich gross sind und
+  wann nicht.
+  \item[LZ3] die Gewichtskraft auf einer schiefen Ebene grafisch in
+  Hangabtriebskraft (parallel zur Ebene) und Normalkraft-Komponente
+  (senkrecht zur Ebene) zerlegen, für unterschiedliche Neigungswinkel,
+  inkl. korrekt eingezeichneter Normalkraft.
+  \item[LZ4] Hangabtriebskraft und Normalkraft-Komponente rein grafisch
+  bestimmen -- Hilfslinien parallel/normal zur Ebene, Kräfteparallelogramm
+  (hier ein Rechteck) mit der Gewichtskraft als Diagonale, und die beiden
+  Seiten mit dem Kraft-Massstab ausmessen (PhysikLibre 4.8.2; ohne
+  Sinus/Cosinus).
+  \item[LZ5] mithilfe der grafisch bestimmten Hangabtriebskraft und
+  $F=m\cdot a$ die Beschleunigung und daraus (mit bekannter Kinematik) die
+  Endgeschwindigkeit eines reibungsfrei den Hang hinunterrutschenden
+  Körpers berechnen.
+\end{itemize}
+
+% =========================================================================
+\section*{2. Aufbau der Doppellektion}
+
+\begin{xltabular}{\textwidth}{@{}p{2.6cm}X p{1.2cm}@{}}
+\toprule
+\textbf{Phase} & \textbf{Inhalt \& Methode} & \textbf{Zeit} \\
+\midrule
+\endhead
+
+Repetition &
+\textbf{Federwaage mit Gewicht.} Nochmals fragen: welche Kräfte wirken
+hier, wie sieht das Kräftegleichgewicht aus? Direkter Rückgriff auf
+Gewichtskraft/Federkraft und Kraftaddition/-zerlegung. Plenumsgespräch. &
+5' \\[0.4em]
+
+Aktivierung &
+\textbf{Tisch mit Gegenstand -- kognitiver Konflikt.} Frage: welche
+Kräfte wirken hier, und warum bewegt sich der Gegenstand nicht durch den
+Tisch? SuS merken: die Gewichtskraft allein erklärt das nicht -- es muss
+eine weitere Kraft geben. \Methode{C3 Think-Pair-Share} -- zuerst allein,
+dann zu zweit, danach Plenum. &
+5' \\[0.4em]
+
+Phänomen &
+\textbf{Elastische Unterlage als sichtbarer Beleg.} Bild/Demo einer
+verformbaren Unterlage mit aufliegender Masse
+(\texttt{Normalkraft\_elastische\_oberfläche.png}): die Verformung macht
+die Gegenkraft sichtbar, bevor sie formal benannt wird. Kurzer Impuls,
+Plenum. &
+5' \\[0.4em]
+
+Theorie &
+\textbf{Definition Normalkraft.} Reaktionskraft senkrecht zur Oberfläche;
+mikroskopische Ursache: elektrische Abstossung zwischen den Atomen/
+Molekülen der Oberfläche (PhysikLibre 4.1.5,
+\texttt{atoms-repelling-normal-force.jpg}). Bewusst rein phänomenologisch
+(LZ1) -- das Körper-auf-Unterlage-Gegenstück und der Begriff
+Aktio-Reaktio bleiben der Wechselwirkungs-Lektion (16.09.2026)
+vorbehalten. Lehrervortrag, geleitet. &
+6' \\[0.4em]
+
+Übung &
+\textbf{Klotz-Aufgabe.} Bild mit Klotz in verschiedenen Situationen
+(\texttt{Normalkraft\_klotz.png}): Gewichtskraft und Normalkraft jeweils
+vergleichen (gleich gross? grösser? kleiner?) (LZ2). \Methode{C1
+Sortieraufgabe}, danach Plenumsabgleich mit Lösungsbild
+(\texttt{Normalkraft\_klotz\_loesung.png}). &
+10' \\[0.4em]
+
+Übergang &
+\textbf{Repetition Kraftzerlegung.} Kurze Erinnerung an das
+Kräfteparallelogramm aus der letzten Lektion -- Überleitung zur schiefen
+Ebene. Plenum. &
+3' \\[0.4em]
+
+Theorie/ Konstruktion &
+\textbf{Schiefe Ebene: Hangabtriebskraft grafisch ermitteln.} Vorlage
+\texttt{schiefe\_ebene\_1.png} zeigt dieselbe Bergziege auf einer
+vereisten Bergwand bei drei Neigungswinkeln $\alpha_1{=}20^\circ$,
+$\alpha_2{=}30^\circ$, $\alpha_3{=}60^\circ$ (Gradzahlen vorgeschlagen, im Bild
+nicht fix vorgegeben). Am ersten Winkel $\alpha_1$ gemeinsam an der Tafel:
+Hilfslinien parallel/normal zur Ebene, Kräfteparallelogramm mit der
+Gewichtskraft als Diagonale -- wird zum Rechteck, da die Richtungen
+senkrecht aufeinander stehen. Die beiden Rechtecksseiten
+($F_{G\parallel}$, $F_{G\perp}$) sowie $F_N$ werden direkt mit dem
+Kraft-Massstab ausgemessen, \textbf{keine Formel} nötig (PhysikLibre
+4.8.2) (LZ3, LZ4). Lehrervortrag, gemeinsame Tafelkonstruktion. &
+10' \\[0.4em]
+
+Übung &
+\textbf{Selbständige Zerlegung für $\alpha_2$ und $\alpha_3$.} Auf
+derselben Vorlage konstruieren die SuS nun eigenständig für die beiden
+verbleibenden Winkel Hangabtriebskraft, Normalkraft-Komponente und
+Normalkraft, und lesen alle Kräfte mit dem Massstab ab (LZ3, LZ4).
+Feinraster und Massstab wie beim Kraftaddition-Thema (siehe Abschnitt 3).
+Kontrolle mit den Lösungsbildern
+(\texttt{schiefe\_ebene\_1\_loesung\_kräftezerlegung.png},
+\texttt{schiefe\_ebene\_1\_loesung\_normalkraft.png}, die bereits alle
+drei Winkel zeigen). \Methode{M9 Produktives Üben} -- durch den Vergleich
+der drei Winkel beobachten die SuS selbst, wie sich Hangabtriebskraft und
+Normalkraft-Komponente mit der Steigung verändern. Einzel-/Partnerarbeit. &
+15' \\[0.4em]
+
+Übung/ Anwendung &
+\textbf{Die Bergziege auf dem Eis -- Endgeschwindigkeit.} Dieselbe
+Bergziege rutscht reibungsfrei bei $\alpha_2{=}30^\circ$ (Masse
+$m=\SI{80}{\kilo\gram}$, Hanglänge $s=\SI{10}{\meter}$, Start aus der
+Ruhe) die vereiste Bergwand hinunter. Hangabtriebskraft wie zuvor grafisch
+konstruieren und mit dem Massstab ausmessen (erwartungsgemäss
+$F_{HA}\approx\SI{390}{\newton}$), daraus mit $F_{HA}=m\cdot a$ die
+Beschleunigung ($a\approx\SI{4.9}{\meter\per\second\squared}$) und mit
+$v^2=2\cdot a\cdot s$ die Endgeschwindigkeit
+($v\approx\SI{9.9}{\meter\per\second}$) bestimmen (LZ5). Einzelarbeit,
+Plenumsabgleich. &
+16' \\[0.4em]
+
+Abschluss &
+\textbf{Zusammenfassung und Ausblick aufs Aufgabenblatt.} Kurze
+Zusammenfassung, Hinweis auf das separate Aufgabenblatt für weitere
+Übung. Plenum. &
+5' \\
+
+\bottomrule
+\end{xltabular}
+
+\textcolor{darkgray}{\small Summe: 80 Min. -- 10 Min. Puffer innerhalb der
+90 Min. der Doppellektion.}
+
+% =========================================================================
+\section*{3. Grafische Aufgaben: Feinraster und Massstab (verbindlich)}
+
+Wie beim Kraftaddition/Kraftzerlegung-Thema erhält jede grafische
+Konstruktionsaufgabe -- sowohl in der Lektion als auch im Aufgabenblatt --
+ein Feld mit feinem Punkt- oder Liniengitter sowie eine explizit
+angegebene Massstabsangabe (z.\,B. \glqq 1\,cm $\hat=$ 1\,N\grqq{}), sodass
+die gegebene Gewichtskraft exakt in der angegebenen Länge einzuzeichnen
+ist und die konstruierten Komponenten (Hangabtriebskraft,
+Normalkraft-Komponente) nachmessbar bleiben.
+
+% =========================================================================
+\section*{4. Offene Punkte zur Besprechung}
+
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.4em]
+  \item \textbf{Vorgeschlagene Gradzahlen $\alpha_1,\alpha_2,\alpha_3$:}
+  Die Vorlage \texttt{schiefe\_ebene\_1.png} zeigt die drei Neigungswinkel
+  nur symbolisch, ohne Gradzahlen. Ich habe $20^\circ$/$30^\circ$/$60^\circ$
+  vorgeschlagen (steigende Reihenfolge, $30^\circ$ zusätzlich für die
+  Bergziege-Endgeschwindigkeitsaufgabe wiederverwendet). Bitte bestätigen
+  oder anpassen, falls andere Werte besser zur gezeichneten Steilheit der
+  drei Ebenen passen.
+  \item \textbf{Zeitbudget Klotz-Übung und schiefe Ebene:} Beide Phasen
+  beinhalten reales Zeichnen/Vergleichen/Ausmessen -- falls das
+  erfahrungsgemäss länger dauert als veranschlagt, ist die Übung
+  \glqq Selbständige Zerlegung für $\alpha_2$ und $\alpha_3$\grqq{} (15')
+  der Kandidat zum Kürzen (z.\,B. nur $\alpha_2$, $\alpha_3$ als
+  Hausaufgabe/im Aufgabenblatt nachholen), da die Bergziege-Aufgabe auf
+  denselben Fertigkeiten aufbaut und im Aufgabenblatt ohnehin weitere
+  Übung dazu folgt.
+\end{itemize}
+
+% =========================================================================
+\section*{5. Anschlussdokument: Aufgabenblatt}
+
+Wie bei den vorherigen Themen entsteht zusätzlich ein separates
+Aufgabenblatt mit weiteren Übungsaufgaben zur Normalkraft und zur schiefen
+Ebene -- inklusive weiterer grafischer Konstruktionen mit Feinraster und
+Massstab (siehe Abschnitt 3) sowie zusätzlicher Rechenaufgaben zu
+Hangabtriebskraft und Endgeschwindigkeit.
+
+\end{document}

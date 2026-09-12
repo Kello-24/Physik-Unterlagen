@@ -1,0 +1,257 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Zusatzaufgabe: Plattenkondensator mit Grieskoernern
+% UZH Praktikum I -- Sara Romer Urban, Kantonsschule im Lee, HS2026
+% Klasse: 1f, Thema elektrizitaet/e-feld-vertiefung/ (Bezugsdatum 09.09.2026).
+%
+% Einzelne Zusatzaufgabe (kein Arbeitsblatt/Aufgabenblatt im Sinne der
+% institutionen/UZH-Praktikum-I/CLAUDE.md-Typologie, sondern ein
+% eigenstaendiges Enrichment-/Vertiefungsblatt fuer schnelle SuS oder als
+% Hausaufgabe), passend zum bereits behandelten Plattenkondensator-Feld
+% (arbeitsblaetter/elektrizitaet/ladung-e-feld/arbeitsblatt1-ladung-e-feld.tex,
+% Aufgabe 4) und zur Influenz (e-feld-vertiefung/arbeitsblatt2, Faradayscher
+% Kaefig). Der Grieskoerner-Versuch macht dieselbe Polarisation an vielen
+% kleinen Teilchen statt an einem einzigen Leiter sichtbar.
+%
+% Bild Ausrichtung_von_Grieskoernern_Bild_2_0.svg/.pdf zeigt das fertige
+% Ergebnis (ausgerichtete, polarisierte Grieskoerner zwischen den Platten)
+% und erscheint deshalb nur in der Loesung, nicht in der Aufgabe selbst --
+% die Aufgabe stellt bewusst nur einen leeren Antwortbereich bereit
+% (Konvention "SuS selbst ergaenzen lassen", CLAUDE.md), da die SuS sowohl
+% den Kondensator als auch die Grieskoerner selbst zeichnen sollen.
+% =============================================================================
+\documentclass[addpoints,11pt,a4paper]{exam}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.2cm,headheight=14pt]{geometry}
+\usepackage{amsmath}
+\usepackage{siunitx}
+% Hausstil: zusammengesetzte Einheiten immer als echter Bruch (\frac), nicht
+% als Inline-Schraegstrich oder \tfrac -- gilt global fuer jedes \si/\SI.
+\sisetup{per-mode=fraction,fraction-command=\frac}
+\usepackage{array,booktabs,tabularx,multirow}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage[most]{tcolorbox}
+\usepackage{lastpage}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\usetikzlibrary{arrows.meta,calc,angles,quotes}
+
+\usepackage{setspace}
+\usepackage{needspace}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+\setstretch{1.08}
+\setlist[itemize]{itemsep=0.4em}
+
+% -----------------------------
+% Farben (Corporate-Farbschema Physik KFR)
+% -----------------------------
+\definecolor{titleblue}{HTML}{183A6B}
+\definecolor{accentblue}{HTML}{2E6F9E}
+\definecolor{lightblue}{HTML}{EAF4FB}
+\definecolor{lightgray}{HTML}{F4F6F8}
+\definecolor{darkgray}{HTML}{4A4A4A}
+\definecolor{accentorange}{HTML}{D9720C}
+\definecolor{accentpurple}{HTML}{7B2D8E}
+\definecolor{lightorange}{HTML}{FCEEE0}
+\definecolor{lightpurple}{HTML}{F3EAF7}
+
+% Links (hyperref): farblich ans Corporate-Farbschema angeglichen.
+\hypersetup{
+  colorlinks=true,
+  urlcolor=accentblue,
+  linkcolor=accentblue,
+  pdftitle={Zusatzaufgabe: Plattenkondensator mit Grieskoernern},
+  pdfauthor={Loris Keller}
+}
+
+% -----------------------------
+% Spaltentypen
+% -----------------------------
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% -----------------------------
+% Boxen
+% -----------------------------
+\tcbset{before skip=10pt, after skip=10pt}
+\newtcolorbox{titlebox}{
+  enhanced,
+  colback=titleblue,
+  colframe=titleblue,
+  boxrule=0pt,
+  arc=3mm,
+  left=3mm,right=3mm,top=3mm,bottom=3mm
+}
+
+\newlength{\aufgabenindent}
+\settowidth{\aufgabenindent}{10.\hskip\labelsep}
+
+% Praktikum I: Lernziele/Einleitung/Theorie/Aufgaben werden NICHT farbig
+% gerahmt (nur Formel-, Hinweis- und Antwortbox bleiben Boxen) -- siehe
+% institutionen/UZH-Praktikum-I/CLAUDE.md, Abschnitt "Boxen-Layout".
+\newenvironment{infobox}{%
+  \par\addvspace{10pt}\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+\newenvironment{theoriebox}[1][Theorie]{%
+  \par\addvspace{10pt}\noindent\textbf{#1}\par\smallskip\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+\newtcolorbox{taskbox}[1][]{
+  enhanced, breakable,
+  colback=white, colframe=white, boxrule=0pt,
+  left=0mm,right=0mm,top=0mm,bottom=0mm,
+  before skip=10pt, after skip=10pt,
+  before upper={%
+    \def\tmpboxtitle{#1}%
+    \ifx\tmpboxtitle\empty\else\noindent\textbf{#1}\par\smallskip\fi
+  }
+}
+
+\newtcolorbox{groupbox}[1][Gruppenarbeit]{
+  enhanced, breakable,
+  colback=white, colframe=white, boxrule=0pt,
+  left=0mm,right=0mm,top=0mm,bottom=0mm,
+  before skip=10pt, after skip=10pt,
+  before upper={\noindent\textbf{#1}\par\smallskip}
+}
+
+\newenvironment{beispielbox}[1][Beispiel]{%
+  \par\addvspace{10pt}\noindent\textbf{#1}\par\smallskip\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+\newtcolorbox{hinweisbox}[1][Hinweis]{
+  enhanced,
+  breakable,
+  colback=lightorange,
+  colframe=accentorange,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+\newtcolorbox{formelbox}[1][Formel]{
+  enhanced,
+  breakable,
+  colback=lightpurple,
+  colframe=accentpurple,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.9pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+\newtcolorbox{answerbox}{
+  breakable,
+  colback=white,
+  colframe=gray!55,
+  boxrule=0.5pt,
+  arc=1.5mm,
+  left=2mm,right=2mm,top=2mm,bottom=2mm
+}
+
+% Bild-Helfer: zentriertes Bild mit spuerbarem Abstand zum umgebenden Text.
+% #1 = Breite, #2 = Dateipfad.
+\newcommand{\Bild}[2]{%
+  \par\vspace{0.6cm}
+  \begin{center}
+    \includegraphics[width=#1]{#2}
+  \end{center}
+  \vspace{0.6cm}
+}
+
+% --- Loesungen ein-/ausblenden -----------------------------------------------
+%\noprintanswers
+\printanswers
+
+\pointformat{}
+\renewcommand{\solutiontitle}{\noindent\color{titleblue}\textbf{L\"osung:}\enspace}
+
+\pagestyle{headandfoot}
+\cfoot{\textcolor{darkgray}{Seite \thepage\ von \pageref{LastPage}}}
+
+\newcommand{\Kopfzeile}[4]{%
+  \begin{titlebox}
+    {\color{white}\sffamily\bfseries\Large #4}
+  \end{titlebox}
+  \vspace{0.5em}
+  \noindent\textbf{Klasse:}~#1 \hfill \textbf{Datum:}~#2 \hfill \textbf{Thema:}~#3
+    \hfill \textbf{Lehrperson:}~Loris Keller
+  \vspace{0.8em}
+  \lhead{\textcolor{darkgray}{#3}}
+  \rhead{\textcolor{darkgray}{#4}}
+}
+
+\newlength{\antwortraumlen}
+\newcommand{\Antwortraum}[1]{%
+  \pgfmathsetlength{\antwortraumlen}{#1*2.5cm}%
+  \begin{answerbox}
+    \rule{0pt}{\antwortraumlen}%
+  \end{answerbox}%
+}
+
+% Werte fuer Kopfzeile zentral setzen
+\newcommand{\Klasse}{1f}
+\newcommand{\Datum}{09.09.2026}
+\newcommand{\Thema}{Elektrisches Feld: Polarisation}
+\newcommand{\ArbeitsblattTitel}{Zusatzaufgabe: Plattenkondensator mit Grieskörnern}
+
+\begin{document}
+
+\Kopfzeile{\Klasse}{\Datum}{\Thema}{\ArbeitsblattTitel}
+
+\begin{theoriebox}[Der Grieskörner-Versuch]
+Streut man feine \textbf{\emph{Grieskörner}} in Öl zwischen die Platten
+eines Plattenkondensators und legt eine Spannung an, richten sich die
+Körner sichtbar aus. Jedes Korn wird dabei durch das elektrische Feld
+\textbf{\emph{polarisiert}}, genau wie ein Leiter bei der
+\textbf{\emph{Influenz}}: Auf der einen Seite sammeln sich positive, auf
+der anderen negative Ladungen. Dadurch verhält sich jedes Korn wie ein
+kleiner Dipol und richtet sich entlang der Feldlinie aus, in der es sich
+gerade befindet. Aneinandergereiht machen so viele kleine Körner die sonst
+unsichtbaren Feldlinien im Kondensator sichtbar.
+\end{theoriebox}
+
+\needspace{12cm}
+\begin{questions}
+\begin{taskbox}[Zusatzaufgabe]
+\question[4] Zeichnen Sie einen Plattenkondensator: zwei parallele,
+entgegengesetzt geladene Platten, angeschlossen an eine Spannungsquelle.
+Zeichnen Sie anschliessend zwischen die Platten mehrere Grieskörner ein, so
+wie sie sich durch die Polarisation im elektrischen Feld ausrichten.
+
+\begin{answerbox}
+\vspace{12cm}
+\end{answerbox}
+
+\begin{solution}
+Die Grieskörner richten sich entlang der (hier waagrechten) Feldlinien
+aus: Jedes Korn zeigt mit seiner positiven Seite zur negativen Platte und
+mit seiner negativen Seite zur positiven Platte, und die Körner reihen
+sich dabei zu Ketten zwischen den Platten aneinander.
+
+\Bild{9cm}{Bilder/Ausrichtung_von_Grieskoernern_Bild_2_0.pdf}
+\end{solution}
+\end{taskbox}
+\end{questions}
+
+\end{document}

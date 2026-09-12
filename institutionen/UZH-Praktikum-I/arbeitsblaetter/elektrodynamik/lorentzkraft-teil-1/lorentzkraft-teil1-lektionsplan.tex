@@ -1,0 +1,552 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Lektionsplan (Diskussionsgrundlage, NICHT das Arbeitsblatt selbst)
+% Lorentzkraft Teil 1: Kraft auf stromdurchflossene Leiter
+% UZH Praktikum I, Sara Romer Urban, KS im Lee, HS2026
+% Klassen: 4fh + 4cdeg
+% Induktive Reihenfolge Phaenomen -> makroskopisches Modell -> mikroskopisch
+% =============================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usepackage{array,booktabs,tabularx,xltabular}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\sisetup{per-mode=fraction,fraction-command=\frac}
+\usepackage{url}
+\Urlmuskip=0mu plus 1mu
+\def\UrlBreaks{\do\/\do-\do_}
+
+\definecolor{titleblue}{HTML}{183A6B}
+\definecolor{accentblue}{HTML}{2E6F9E}
+\definecolor{groupteal}{HTML}{1B7F72}
+\definecolor{darkgray}{HTML}{4A4A4A}
+\definecolor{warnred}{HTML}{9E2E2E}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+
+\newcommand{\Methode}[1]{{\small\color{groupteal}\textbf{#1}}}
+
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{titleblue}}{\thesection}{0.6em}{}
+\titlespacing*{\section}{0pt}{1.2em}{0.5em}
+
+\begin{document}
+\sloppy
+
+\begin{center}
+{\Huge\bfseries\color{titleblue}Lektionsplan: Lorentzkraft Teil 1}\\[0.2em]
+{\Large\bfseries\color{titleblue}Magnetische Kraft auf stromdurchflossene Leiter}\\[0.4em]
+{\large Doppellektion (2$\times$45 Min.) -- Diskussionsgrundlage}
+\end{center}
+\vspace{0.5em}
+
+\noindent\textbf{Klassen:} 4fh (15.09.2026) + 4cdeg (18.09.2026), gemeinsames Material
+
+\noindent\textbf{Lehrperson:} Loris Keller
+
+\vspace{0.3em}
+\noindent\textcolor{darkgray}{\textbf{Begriffe in diesem Dokument:} die
+makroskopische Kraft auf einen stromdurchflossenen Leiter im Feld
+($F=IlB$) heisst \textbf{magnetische Kraft}; die Kraft auf eine einzelne
+bewegte Ladung ($F=qvB$) heisst \textbf{Lorentzkraft}. Die magnetische
+Kraft ist die Summe der Lorentzkraft über alle Ladungsträger im Leiter --
+beide Begriffe werden im Folgenden konsequent unterschieden.}
+
+\vspace{0.3em}
+\noindent\textcolor{darkgray}{Dieses Dokument ist \textbf{keine} Reinschrift eines Schülerdokuments, sondern die
+Planungsgrundlage dafür: Lernziele, Aufbau der Lektion und die gewählte
+Didaktik-Methode pro Phase. Nach Absprache werden daraus lokal in VS Code
+\textbf{drei separate Dokumente} erstellt: (1) ein
+\textbf{Experimente-Dokument} (Protokoll/Anleitung für Leiterschaukel,
+zwei Drähte und Fadenstrahlrohr), (2) ein \textbf{Arbeitsblatt}
+(Theorie/Erarbeitung für die Lektion selbst) und (3) ein
+\textbf{Aufgabenblatt} (zusätzliche Übungsaufgaben) -- siehe Abschnitt 4.
+Direkte Fortsetzung von Magnetfelder (4fh 01.09.2026) -- die Feldformel
+des geraden Leiters wird hier direkt weiterverwendet. Teil 2 (spätere
+Doppellektion) behandelt die Lorentzkraft auf einzelne \emph{freie}
+bewegte Ladungen (Kreisbahn, Fadenstrahlrohr, Anwendungen).}
+
+% =========================================================================
+\section*{1. Abgrenzung und Lernziele}
+
+\textbf{Im Fokus:} induktiver Aufbau vom Phänomen zum Modell -- zuerst
+Beobachtung an zwei Experimenten (Leiterschaukel, zwei parallele Leiter),
+dann die \textbf{magnetische Kraft} auf den Leiter als makroskopisches
+Modell ($F=I\cdot l\cdot B$, Drei-Finger-Regel), dann die Herleitung der
+eigentlichen \textbf{Lorentzkraft} $F=qvB$ (Kraft auf eine \emph{einzelne}
+bewegte Ladung), die zeigt, warum die magnetische Kraft gilt und warum
+sich die zwei Leiter je nach Stromrichtung anziehen oder abstossen.
+Begrifflich wichtig: $F=qvB$ \emph{ist} die Lorentzkraft, $F=IlB$ heisst
+magnetische Kraft und ist nur ihre Summe für viele Ladungsträger in einem
+Leiter. Direkt nach der Herleitung der Lorentzkraft wird zuerst der Aufbau
+des Fadenstrahlrohrs erklärt (was mit den Elektronen passiert), bevor ein
+Predict-Observe-Explain-Zyklus dieselbe Lorentzkraft in ihrer reinsten
+Form an einer freien Ladung zeigt und die SuS die Kreisbewegung der
+Elektronen als Zentripetalkraft-Wirkung der Lorentzkraft erklären --
+bevor danach zu den zwei Leitern
+zurückgekehrt wird, um dieselbe mikroskopische Perspektive auf ein
+zweites Phänomen (Anziehung/Abstossung) anzuwenden. Am Ende der Lektion
+mündet das Ganze in einen kurzen Ausblick auf Teil 2, das die Lorentzkraft
+auf freie Ladungen quantitativ vertieft.
+
+\textbf{Bereits bekannt (nur Repetition, keine Neueinführung):} das
+Magnetfeld eines geraden, stromdurchflossenen Leiters
+($B=\frac{\mu_0}{2\pi}\cdot\frac{I}{r}$, Magnetfelder-Doppellektion),
+Feldlinien, $\odot$/$\otimes$-Konvention; zwei bereits bekannte
+rechte-Hand-Regeln (gerader Leiter, Spule) -- wichtiger Bezugspunkt, weil
+mit der Drei-Finger-Regel eine \emph{dritte}, andersartige Handregel hinzukommt,
+diesmal zusätzlich in zwei Varianten (rechts/positiv, links/negativ);
+Zentripetalkraft (Mechanik) -- wird bereits hier für die qualitative
+Erklärung der Kreisbahn im Fadenstrahlrohr gebraucht (LZ6) und in Teil 2
+quantitativ vertieft ($r=mv/qB$); das
+\textbf{Kreuzprodukt inkl.\ Sinus-Betragsformel} ($|\vec a\times\vec
+b|=ab\sin\alpha$, aus Mathematik) -- neu bestätigtes Vorwissen, das den
+allgemeinen Winkel-Fall mathematisch zugänglich macht.
+
+\textbf{Bewusst nicht Teil dieser Einheit (Kernstoff):} die vollständige
+Vektorform $\vec F=I\cdot\vec l\times\vec B$ bzw.\ $\vec F=q\cdot\vec
+v\times\vec B$ ist kein eigenständiges Lernziel -- im Zentrum steht
+weiterhin der senkrechte Fall ($\vec I\perp\vec B$ bzw.\ $\vec v\perp\vec
+B$) mit der Drei-Finger-Regel, da die Experimente selbst senkrecht aufgebaut
+sind; die allgemeine Formel $F=IlB\sin\alpha$ wird trotzdem kurz in der
+Theorie erwähnt, da das Kreuzprodukt bereits bekannt ist, dazu Aufgaben
+mit beliebigem Winkel im Aufgabenblatt (siehe Abschnitt 4/5). Ebenfalls
+nicht Teil: die \emph{quantitative} Lorentzkraft auf einzelne \emph{freie}
+bewegte Ladungen (Bahnradius $r=mv/qB$, sechs Anwendungen -- Teil 2),
+Induktion, Elektromotor-Funktionsprinzip im Detail. Die \emph{qualitative}
+Erklärung der Kreisbahn im Fadenstrahlrohr (LZ6) ist davon ausgenommen und
+findet bereits hier statt.
+
+\begin{itemize}[leftmargin=1.3cm,itemsep=0.3em]
+  \item[LZ1] die Beobachtungen an der Leiterschaukel und an zwei
+  parallelen Leitern beschreiben, ohne diese bereits zu erklären.
+  \item[LZ2] die Formel $F=I\cdot l\cdot B$ für die \textbf{magnetische
+  Kraft} auf einen stromdurchflossenen Leiter im (senkrechten) Magnetfeld
+  anwenden.
+  \item[LZ3] die Richtung der magnetischen Kraft mit der Drei-Finger-Regel
+  (Daumen = Strom/Ursache, Zeigefinger = Feld/Vermittlung,
+  Mittelfinger = Kraft/Wirkung; rechte Hand, da die Stromrichtung per
+  Konvention die Bewegungsrichtung positiver Ladungsträger ist) bestimmen
+  und explizit von den beiden bereits bekannten rechte-Hand-Regeln
+  unterscheiden. Ab LZ5 kommt dieselbe Regel auch als
+  \textbf{linke-Hand-Variante für negative Ladungsträger} zum Einsatz.
+  \item[LZ4] die eigene Beobachtung am Leiterschaukel-Experiment (LZ1)
+  mithilfe von LZ2 und LZ3 (magnetische Kraft, Drei-Finger-Regel) selbst erklären.
+  \item[LZ5] die \textbf{Lorentzkraft} $F=qvB$ als Kraft auf eine
+  \emph{einzelne} bewegte Ladung herleiten und ihre \textbf{Richtung
+  ebenfalls mit der Drei-Finger-Regel bestimmen} -- rechte Hand für
+  \emph{positive}, linke Hand für \emph{negative} Ladungen (Daumen =
+  Geschwindigkeit $v$ der Ladung statt Stromrichtung), sodass sich die
+  Richtung für beide Vorzeichen direkt ablesen lässt, ohne einen
+  zusätzlichen Umkehr-Schritt; zeigen, dass die Summe über $Q=It$ wieder die
+  magnetische Kraft $F=IlB$ ergibt -- die magnetische Kraft ist die
+  makroskopische Konsequenz der Lorentzkraft für einen Leiter, nicht die
+  Lorentzkraft selbst.
+  \item[LZ6] die Kreisbewegung der Elektronen im Fadenstrahlrohr
+  \textbf{erklären}, indem die Lorentzkraft als \textbf{Zentripetalkraft}
+  gedeutet wird (stets senkrecht zu $v$ $\Rightarrow$ nur Richtungs-, kein
+  Betragswechsel von $v$ $\Rightarrow$ Kreisbahn); die Krümmungsrichtung
+  mit der linken-Hand-Variante der Drei-Finger-Regel bestimmen (Elektronen
+  negativ geladen) -- im Rahmen eines Predict-Observe-Explain-Zyklus im
+  Plenum.
+  \item[LZ7] die Kraft zwischen zwei parallelen stromdurchflossenen
+  Leitern herleiten (Feldformel des geraden Leiters kombiniert mit der
+  magnetischen Kraft $F=I\cdot l\cdot B$: $\frac{F}{l}=\frac{\mu_0}{2\pi}
+  \cdot\frac{I_1\cdot I_2}{r}$).
+  \item[LZ8] erklären, wieso gleichgerichtete Ströme sich anziehen und
+  entgegengesetzt gerichtete Ströme sich abstossen -- mithilfe von LZ5
+  (Drei-Finger-Regel an einer einzelnen Ladung im Feld des Nachbarleiters).
+\end{itemize}
+
+% =========================================================================
+\section*{2. Aufbau der Doppellektion}
+
+\begin{xltabular}{\textwidth}{@{}p{2.6cm}X p{1.2cm}@{}}
+\toprule
+\textbf{Phase} & \textbf{Inhalt \& Methode} & \textbf{Zeit} \\
+\midrule
+\endhead
+
+Einstieg &
+\textbf{Advance Organizer: Rückblick + Alltagsbeispiele + Roadmap.}
+Rückblick: bei Magnetfelder gelernt, dass bewegte Ladungen (Ströme) ein
+Magnetfeld erzeugen -- neue Frage: was passiert, wenn eine bewegte Ladung
+sich selbst in einem Magnetfeld befindet? Explizit klären: gemeint ist ein
+\textbf{externes} Magnetfeld (von aussen, z.\,B.\ von einem Magneten oder
+einem anderen Leiter), \emph{nicht} das Feld, das die Ladung selbst
+erzeugt. Danach zwei Bilder als Aufhänger: Lautsprecher/Elektromotor
+(stromdurchflossene Spule bewegt sich im Feld -- magnetische Kraft) und
+Polarlicht (geladene Teilchen aus dem Sonnenwind werden vom Erdmagnetfeld
+auf gekrümmte Bahnen gelenkt -- Lorentzkraft). Kurze Fragen dazu,
+\emph{ohne} aufzulösen, dann Roadmap als Tafelskizze (3 Stationen:
+magnetische Kraft $\to$ Lorentzkraft $\to$ freie Ladung in Teil 2), die
+während der Lektion sichtbar bleibt -- Details und vollständiger Text
+siehe Abschnitt 2.1. \Methode{A1 Advance Organizer} -- Lehrervortrag mit
+kurzem Unterrichtsgespräch, Plenum. &
+3' \\[0.4em]
+
+Aktivierung &
+\textbf{Leiterschaukel: reine Beobachtung.} Leiterschaukel im Magnetfeld
+(umgebauter Magnetfelder-Baukasten, Spule entfernt), Stromkreis umpolbar.
+Strom anschliessen, Richtung der Auslenkung bei unterschiedlicher
+Strom-/Feldpolung beobachten und notieren -- bewusst nur Beobachtung,
+noch keine Erklärung (LZ1). Sozialform unbestätigt (siehe Abschnitt 5). &
+6' \\[0.4em]
+
+Aktivierung &
+\textbf{Zwei parallele Leiter: reine Beobachtung.} Zwei stromdurch-
+flossene Drähte, je nach Stromrichtung Anziehung oder Abstossung -- auch
+hier bewusst nur Beobachtung, noch keine Erklärung (LZ1). Sozialform
+unbestätigt (siehe Abschnitt 5). &
+5' \\[0.4em]
+
+Theorie &
+\textbf{Magnetische Kraft: Formel und Drei-Finger-Regel.} $F=I\cdot l\cdot B$ für
+den senkrechten Fall als magnetische Kraft auf den Leiter einführen
+(LZ2). Richtung über die Drei-Finger-Regel (rechte Hand, drei paarweise
+senkrechte Finger) -- explizit gegen die beiden bereits bekannten
+rechte-Hand-Regeln abgrenzen (LZ3); kurzer Hinweis, dass ab der
+Lorentzkraft dieselbe Regel auch mit der linken Hand für negative
+Ladungsträger verwendet wird. Kurze Erwähnung des allgemeinen
+Winkel-Falls ($F=IlB\sin\alpha$, Kreuzprodukt bereits aus der Mathematik
+bekannt) -- hier aber stets $\alpha=90^\circ$. Lehrervortrag, geleitet,
+Tafelskizze. &
+10' \\[0.4em]
+
+Rückkehr &
+\textbf{Leiterschaukel: eigene Beobachtung erklären.} Mit der neuen
+Formel und der Drei-Finger-Regel die eigene Beobachtung aus der
+Leiterschaukel-Aktivierung selbst erklären (LZ4). \Methode{C3 Think-Pair-Share} -- zuerst allein
+anwenden, dann zu zweit vergleichen, danach Plenum. &
+5' \\[0.4em]
+
+Übung &
+\textbf{Anwendung der magnetischen Kraft und Drei-Finger-Regel.} Kurze Aufgaben:
+Kraft berechnen, Richtung mit der Drei-Finger-Regel bestimmen. Individuelles
+Üben. &
+6' \\[0.4em]
+
+Vertiefung &
+\textbf{Herleitung der Lorentzkraft.} Warum wirkt überhaupt eine Kraft auf
+den ganzen Leiter? Einzelne Ladungsträger im Feld erfahren je die
+Lorentzkraft $F=qvB$ (dieselbe Drei-Finger-Regel, jetzt auf eine Ladung
+angewendet -- rechte Hand für positive, linke Hand für negative Ladungen);
+mit $Q=It$ und $v=l/t$ zeigen, dass die Summe der
+Einzelkräfte wieder die magnetische Kraft $F=IlB$ ergibt (LZ5) -- $F=qvB$
+\emph{ist} die Lorentzkraft, $F=IlB$ die magnetische Kraft -- nur ihre
+Summe für den Leiter. Gemeinsam entwickelte Kurzherleitung im Plenum. &
+12' \\[0.4em]
+
+Theorie &
+\textbf{Wie funktioniert das Fadenstrahlrohr?} Aufbau erklären, \emph{ohne}
+die Kreisbahn vorwegzunehmen: die Elektronen werden durch eine Spannung
+beschleunigt, treten dann in ein (näherungsweise homogenes) Magnetfeld
+ein und werden durch das Restgas im Rohr als leuchtende Bahn sichtbar
+gemacht. Lehrervortrag, Tafelskizze, Plenum. &
+4' \\[0.4em]
+
+POE &
+\textbf{Predict-Observe-Explain: Fadenstrahlrohr.} \emph{Predict:} die SuS sagen mithilfe
+von $F=qvB$ (Kraft stets senkrecht zu $v$) und der aus der Mechanik
+bekannten Zentripetalkraft eine Kreisbahn voraus. \emph{Observe:} das Feld
+wird eingeschaltet, die Elektronen laufen sichtbar auf einer Kreisbahn --
+dieselbe Lorentzkraft, jetzt an einer \emph{freien} Ladung ohne
+Leiterwand, in ihrer reinsten Form gezeigt. \emph{Explain:} die SuS
+erklären im Plenum, wie sich die Elektronen verhalten -- die Lorentzkraft
+wirkt als Zentripetalkraft, die Krümmungsrichtung folgt aus der
+linken-Hand-Variante der Drei-Finger-Regel (Elektronen negativ geladen,
+LZ6). \Methode{M4 Predict-Observe-Explain} -- Lehrer-Demonstration,
+Plenum. &
+8' \\[0.4em]
+
+Theorie &
+\textbf{Rückkehr zu den zwei Leitern: Herleitung.} Feld des ersten
+Leiters am Ort des zweiten
+($B_1(r)=\frac{\mu_0}{2\pi}\cdot\frac{I_1}{r}$, bereits bekannt aus der
+Magnetfelder-Doppellektion) einsetzen in
+$F=I_2\cdot l\cdot B_1$ ergibt
+$\frac{F}{l}=\frac{\mu_0}{2\pi}\cdot\frac{I_1\cdot I_2}{r}$ (LZ7).
+Gemeinsame Herleitung an der Tafel, ggf. Teilschritte in Partnerarbeit. &
+10' \\[0.4em]
+
+Theorie &
+\textbf{Anziehung vs. Abstossung -- mikroskopisch erklärt.} Drei-Finger-Regel an
+einer einzelnen Ladung im Feld des jeweils anderen Leiters anwenden:
+gleiche Stromrichtung $\Rightarrow$ Anziehung, entgegengesetzte Richtung
+$\Rightarrow$ Abstossung (LZ8) -- dieselbe mikroskopische Perspektive wie
+beim Fadenstrahlrohr und in der Vertiefungsphase, jetzt auf das zweite
+Phänomen angewendet; explizit gegen die Intuition \glqq gleich stösst
+ab\grqq{} (Pole, Ladungen) abgrenzen. Lehrervortrag, geleitet. &
+6' \\[0.4em]
+
+Ausblick &
+\textbf{Historischer Kontext (optional).} Dieser Aufbau diente früher
+direkt zur Definition der Einheit Ampere (vor der SI-Neudefinition 2019)
+-- Quelle/Details noch zu verifizieren. Als Erstes streichbar bei
+Zeitdruck. &
+3' \\[0.4em]
+
+Abschluss &
+\textbf{Zusammenfassung und Ausblick auf Teil 2/Aufgabenblatt.} Kurze
+Zusammenfassung der Lektion, kurzer Ausblick, dass Teil 2 die Lorentzkraft
+auf freie Ladungen (Kreisbahn, sechs Anwendungen) systematisch vertieft,
+Hinweis auf das separate Aufgabenblatt für weitere Übung. Plenum. &
+3' \\
+
+\bottomrule
+\end{xltabular}
+
+\textcolor{darkgray}{\small Summe: 81 Min. -- 9 Min. Puffer innerhalb der
+90 Min. der Doppellektion -- siehe Zeitbudget in Abschnitt 5.}
+
+\subsection*{2.1 Ausgestaltungsvorschlag: Advance Organizer}
+
+Ziel: in 3 Minuten Interesse wecken und die Roadmap der Lektion zeigen,
+\emph{ohne} die Experimente inhaltlich vorwegzunehmen -- mit zwei
+konkreten Alltagsbeispielen statt einer abstrakten Ankündigung, eines pro
+Kraft-Typ dieser Lektion.
+
+\textbf{Rückblick als Einstieg (wichtig).} Bei Magnetfelder haben die SuS
+gelernt: bewegte Ladungen (Ströme) erzeugen ein Magnetfeld. Die neue Frage
+dieser Lektion dreht das um: Was passiert, wenn eine bewegte Ladung sich
+selbst in einem Magnetfeld befindet? Zentral dabei: gemeint ist ein
+\textbf{externes} Magnetfeld -- eines, das von aussen kommt (z.\,B.\ von
+einem Permanentmagneten oder einem anderen Leiter) -- \emph{nicht} das
+Magnetfeld, das die bewegte Ladung selbst erzeugt. Diese Unterscheidung
+sollte explizit angesprochen werden, da sie sonst leicht verwechselt wird
+(die SuS kennen aus Magnetfelder nur die Richtung \glqq Ladung/Strom
+$\to$ Feld\grqq{}, jetzt kommt \glqq Feld $\to$ Kraft auf die Ladung\grqq{}
+dazu).
+
+\textbf{Beispiel 1 (magnetische Kraft, $F=IlB$): Lautsprecher oder
+Elektromotor.} In jedem Lautsprecher sitzt eine stromdurchflossene Spule
+in einem starken Magnetfeld; fliesst Strom, bewegt sich die Spule und
+damit die Membran -- genau das erzeugt den Ton. Derselbe Mechanismus
+steckt im Elektromotor (Rasierapparat, Ventilator, Fensterheber,
+elektrische Zahnbürste). Frage an die Klasse: \glqq Was hat ein
+Lautsprecher mit einem stromdurchflossenen Draht in einem Magnetfeld zu
+tun?\grqq{}
+
+\textbf{Beispiel 2 (Lorentzkraft, $F=qvB$): Polarlicht (Nordlicht/Aurora).}
+Geladene Teilchen aus dem Sonnenwind treffen auf das Erdmagnetfeld und
+werden davon auf spiralförmige Bahnen zu den Polen abgelenkt -- dort
+leuchten sie beim Auftreffen auf die Atmosphäre. Hier wirkt dieselbe Art
+Kraft nicht auf einen ganzen Draht, sondern auf \emph{einzelne} freie
+geladene Teilchen. Frage an die Klasse: \glqq Warum bewegen sich diese
+Teilchen nicht geradeaus, sondern auf einer gekrümmten Bahn?\grqq{}
+
+\textbf{Konkreter Ablauf (ca.\ 3'):}
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.2em]
+  \item (ca.\ 40'') Rückblick + neue Frage stellen: bewegte Ladungen
+  erzeugen ein Magnetfeld (bekannt) -- was passiert umgekehrt, wenn eine
+  bewegte Ladung sich in einem \textbf{externen} Magnetfeld befindet?
+  Explizit klarstellen, dass \emph{nicht} das selbst erzeugte Feld gemeint
+  ist.
+  \item (ca.\ 40'') Beide Bilder zeigen (Folie/Ausdruck/Skizze), die
+  beiden Fragen stellen, kurz im Raum stehen lassen -- \emph{ohne}
+  aufzulösen. Ziel ist Neugier, keine Antwort.
+  \item (ca.\ 40'') Überleitung: \glqq Beide Phänomene haben denselben
+  Ursprung: eine Kraft, die externe Magnetfelder auf Ströme bzw.\ auf
+  bewegte Ladungen ausüben. Genau die untersuchen wir jetzt zwei
+  Doppellektionen lang.\grqq{}
+  \item (ca.\ 60'') Roadmap als knappe Tafelskizze (3 Stationen), die
+  während der ganzen Lektion sichtbar bleiben kann: \glqq Zuerst schauen
+  wir uns die Kraft auf den ganzen Leiter an -- die magnetische Kraft, wie
+  beim Lautsprecher/Elektromotor. Danach fragen wir, was auf der Ebene der
+  einzelnen Ladung passiert -- das ist die Lorentzkraft, wie beim
+  Polarlicht. Und in der nächsten Doppellektion schauen wir, was passiert,
+  wenn eine Ladung nicht mehr im Leiter gebunden, sondern ganz frei ist --
+  so wie beim Polarlicht oder in einem Teilchenbeschleuniger.\grqq{}
+\end{itemize}
+
+\textbf{Weitere mögliche Alltagsbeispiele} (Ersatz/Ergänzung): ein alter
+Röhrenbildschirm/Röhrenfernseher (Elektronen werden durch Magnetspulen
+abgelenkt -- historischer Vorläufer des Fadenstrahlrohrs, ohne das hier
+schon zu verraten); ein Massenspektrometer oder ein Teilchenbeschleuniger
+(z.\,B.\ CERN) als \glqq wozu braucht man das in der Forschung?\grqq{}-Ausblick.
+
+\subsection*{2.2 Kerninhalte und Leitfragen je Phase}
+
+Kurzüberblick über die wichtigste inhaltliche Botschaft und die Leitfrage
+jeder Phase aus Abschnitt 2 -- als schneller Fahrplan, auch für die
+spätere Arbeitsblatt-Erstellung.
+
+\begin{itemize}[leftmargin=1.3cm,itemsep=0.3em]
+  \item \textbf{Einstieg (Advance Organizer):} bewegte Ladungen erzeugen
+  ein Magnetfeld (bekannt) -- was passiert umgekehrt, wenn eine bewegte
+  Ladung sich in einem \emph{externen} Magnetfeld befindet? Dieselbe Kraft
+  steckt in Lautsprecher/Elektromotor und in Polarlichtern.
+  \emph{Leitfrage:} Was passiert, wenn eine bewegte Ladung sich in einem
+  externen (nicht selbst erzeugten) Magnetfeld befindet?
+  \item \textbf{Aktivierung Leiterschaukel:} ein stromdurchflossener
+  Leiter im Feld wird ausgelenkt, je nach Strom-/Feldrichtung anders.
+  \emph{Leitfrage:} Was passiert mit einem stromdurchflossenen Leiter im
+  Magnetfeld?
+  \item \textbf{Aktivierung zwei Leiter:} zwei stromdurchflossene Leiter
+  ziehen sich an oder stossen sich ab. \emph{Leitfrage:} Warum ziehen sich
+  zwei stromdurchflossene Leiter manchmal an und stossen sich manchmal ab?
+  \item \textbf{Theorie Magnetische Kraft:} $F=IlB$ als Modell,
+  Drei-Finger-Regel (rechte Hand) für die Richtung, allgemeiner
+  Winkel-Fall kurz erwähnt. \emph{Leitfrage:} Wie berechnet man die Kraft
+  auf den Leiter, und wie findet man ihre Richtung?
+  \item \textbf{Rückkehr Leiterschaukel:} die eigene Beobachtung wird mit
+  Formel und Regel selbst erklärt. \emph{Leitfrage:} Kann ich meine eigene
+  Beobachtung jetzt selbst erklären?
+  \item \textbf{Übung:} Anwendung von Formel und Drei-Finger-Regel an
+  Beispielen. \emph{Leitfrage:} Wie wende ich Formel und Regel sicher an?
+  \item \textbf{Vertiefung Herleitung Lorentzkraft:} $F=IlB$ ist die Summe
+  der Lorentzkraft $F=qvB$ über alle einzelnen Ladungsträger.
+  \emph{Leitfrage:} Warum wirkt die Kraft überhaupt auf den ganzen Leiter
+  -- was passiert dabei auf der Ebene der einzelnen Ladungen?
+  \item \textbf{Theorie Fadenstrahlrohr-Aufbau:} Funktionsweise
+  (Beschleunigung, Eintritt ins Feld, Sichtbarmachung durch Restgas) --
+  ohne das Ergebnis vorwegzunehmen. \emph{Leitfrage:} Wie kann man die
+  Bewegung einer einzelnen freien Ladung überhaupt sichtbar machen?
+  \item \textbf{POE Fadenstrahlrohr:} die Lorentzkraft wirkt als
+  Zentripetalkraft und erzeugt eine Kreisbahn; Richtung über die linke
+  Hand (negative Ladung). \emph{Leitfrage:} Wie bewegt sich eine freie
+  Ladung, auf die die Lorentzkraft wirkt?
+  \item \textbf{Theorie Rückkehr zwei Leiter (Herleitung):} das
+  Kraftgesetz zwischen zwei parallelen Leitern ergibt sich aus Feldformel
+  und magnetischer Kraft kombiniert. \emph{Leitfrage:} Wie hängt die Kraft
+  zwischen zwei Leitern von Abstand und Stromstärken ab?
+  \item \textbf{Theorie Anziehung vs.\ Abstossung:} mikroskopische
+  Erklärung über die Lorentzkraft auf eine Ladung im Feld des
+  Nachbarleiters. \emph{Leitfrage:} Warum genau zieht gleiche
+  Stromrichtung an, entgegengesetzte stösst ab?
+  \item \textbf{Ausblick historischer Kontext (optional):} dieser Aufbau
+  diente früher direkt zur Definition der Einheit Ampere. \emph{Leitfrage:}
+  Wie wurde die Stromstärke-Einheit eigentlich früher definiert?
+  \item \textbf{Abschluss:} Zusammenfassung, Ausblick auf die quantitative
+  Vertiefung in Teil 2. \emph{Leitfrage:} Was passiert mit derselben
+  Kraft, wenn die Ladung ganz frei ist?
+\end{itemize}
+
+% =========================================================================
+\section*{3. Begründung der Methodenwahl}
+
+Beide Experimente sind bewusst als \glqq Beobachten zuerst, Erklären
+später\grqq{} angelegt, nicht als vollständiger Predict-Observe-Explain-
+Zyklus (M4): Vor der Theorie fehlt den SuS die Grundlage für eine
+begründete Vorhersage -- eine Vorhersage ohne Konzept würde nur zu
+zufälligem Raten führen, nicht zu echtem Vorwissen-Konflikt. Die
+Rückkehr zum Leiterschaukel-Experiment nach der Theorie (C3 Think-Pair-
+Share) schliesst den Bogen aber explizit: die SuS wenden die neue Regel
+aktiv auf ihre eigene, bereits gemachte Beobachtung an, statt nur ein
+neues Beispiel zu rechnen.
+
+Die Herleitung der Lorentzkraft folgt bewusst \emph{nach} der magnetischen
+Kraft als makroskopischem Modell, nicht davor: Die SuS kennen zu diesem
+Zeitpunkt bereits $F=IlB$ und die Drei-Finger-Regel und können die Lorentzkraft
+$F=qvB$ deshalb als vertiefende Begründung des bereits Verstandenen
+einordnen,
+statt als isolierte neue Formel -- auch wenn $F=qvB$ physikalisch die
+grundlegendere Grösse ist. Direkt danach wird dieselbe Lorentzkraft am
+Fadenstrahlrohr an einer freien Ladung gezeigt (zweite Anwendung), bevor
+die mikroskopische Perspektive ein drittes Mal auf die zwei Leiter
+angewendet wird (Anziehung/Abstossung) -- die Wiederholung an mehreren
+Beispielen in kurzer Folge soll die neue Denkweise festigen und zugleich
+zeigen, wie weit dieselbe Kraft trägt: vom Leiter bis zur freien Ladung,
+bevor die Lektion wieder zum Leiter zurückkehrt.
+
+Das Fadenstrahlrohr wird bewusst in zwei getrennten Phasen behandelt statt
+in einer einzigen Demonstration: zuerst der Aufbau (was mit den
+Elektronen passiert), \emph{ohne} die Kreisbahn vorwegzunehmen, danach ein
+vollständiger Predict-Observe-Explain-Zyklus (M4). Diese Trennung stellt
+sicher, dass die SuS beim \emph{Predict} tatsächlich etwas vorhersagen
+(die Kraft steht senkrecht zu $v$, ist also analog zur bereits bekannten
+Zentripetalkraft) und nicht nur eine unbekannte Apparatur bestaunen -- die
+Vorhersage braucht das Wissen über den Aufbau, aber nicht das Ergebnis.
+Damit wird die qualitative Kreisbahn-Erklärung bereits hier abschliessend
+geleistet; Teil 2 kann direkt mit der quantitativen Vertiefung
+($r=mv/qB$) einsteigen, statt dieselbe Frage nochmals zu stellen (siehe
+Abschnitt 5).
+
+Die Herleitung der Kraft zwischen zwei Leitern (LZ7) verknüpft bewusst
+zwei bereits an anderer Stelle eingeführte Formeln (Feld des geraden
+Leiters, Kraft auf einen Leiter im Feld) statt eine neue Formel direkt
+vorzugeben -- die SuS sehen dadurch, dass die neue Grösse keine
+eigenständige Regel ist, sondern eine direkte Konsequenz aus bereits
+Bekanntem.
+
+% =========================================================================
+\section*{4. Anschlussdokumente: Experimente, Arbeitsblatt, Aufgabenblatt}
+
+Aus diesem Lektionsplan entstehen drei separate Dokumente:
+
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.4em]
+  \item \textbf{Experimente-Dokument:} Protokoll/Anleitung für die drei
+  Experimente dieser Lektion (Leiterschaukel, zwei parallele Leiter,
+  Fadenstrahlrohr) -- Aufbau, Durchführung, was die SuS jeweils
+  beobachten und notieren sollen.
+  \item \textbf{Arbeitsblatt:} Theorie- und Erarbeitungsdokument für die
+  Lektion selbst (analog zu den bisherigen Themen), entlang der in
+  Abschnitt 2 beschriebenen Phasen.
+  \item \textbf{Aufgabenblatt:} zusätzliche Übungsaufgaben zur
+  magnetischen Kraft ($F=I\cdot l\cdot B$), zur Richtungsbestimmung
+  (rechte/linke Hand je nach Vorzeichen), zur
+  Lorentzkraft, zum allgemeinen Winkel-Fall ($F=IlB\sin\alpha$) und zur
+  Kraft zwischen zwei parallelen Leitern.
+\end{itemize}
+
+% =========================================================================
+\section*{5. Offene Punkte zur Besprechung}
+
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.4em]
+  \item \textcolor{warnred}{\textbf{Konsequenz für Teil 2:}} Vor dem
+  Fadenstrahlrohr wird zuerst der Aufbau erklärt und danach ein
+  vollständiger Predict-Observe-Explain-Zyklus mit demselben Experiment
+  durchgeführt (LZ6). Damit ist die qualitative Frage \glqq bewegt sich
+  die Ladung im Kreis?\grqq{} nach Teil 1 bereits beantwortet und gezeigt.
+  Der für Teil 2 geplante Einstieg
+  (\texttt{diskussion-teil1-teil2-inhalte.md}) darf diese Frage deshalb
+  nicht nochmals als Überraschung anlegen, sondern sollte direkt auf die
+  \textbf{quantitative} Vertiefung fokussieren: Herleitung des Bahnradius
+  ($r=mv/qB$) und seine Abhängigkeit von Spannung, Feldstärke und
+  spezifischer Ladung, sowie die sechs Anwendungen. Bitte
+  \texttt{diskussion-teil1-teil2-inhalte.md} entsprechend anpassen.
+  \item \textbf{Sozialform der beiden Experimente:} Sind Leiterschaukel
+  und/oder Zwei-Leiter-Aufbau als Schülerexperiment (mehrere Sets,
+  Partner-/Gruppenarbeit, wie beim Magnetfelder-Schülerexperiment) oder
+  als Lehrer-Demonstration (ein Aufbau, ähnlich der Ørsted-Demo bei
+  Magnetfelder) gedacht? Beeinflusst Zeitbudget und Methodenwahl direkt.
+  \item \textbf{Reihenfolge der beiden Beobachtungen:} Sollen beide
+  Beobachtungen nacheinander als zwei Stationen laufen (wie hier
+  geplant, gemeinsame Theorie danach für beide), oder soll zuerst die
+  Leiterschaukel komplett durchlaufen werden (Beobachtung $\to$ Theorie
+  $\to$ mikroskopisch) und erst danach separat die zwei Leiter?
+  \item \textbf{PhysikLibre-Referenz:} Kapitel 13.5 \glqq Leiter in
+  Magnetfeldern\grqq{} liegt bereits als Referenz-PDF im Repo vor --
+  genaue Seitenzahlen/Abschnitte innerhalb des Kapitels wurden aber noch
+  nicht im Detail gegengeprüft.
+  \item \textbf{Vorwissen-Material:} die Datei
+  \texttt{Werkstatt\_Magnetismus.docx} (in
+  \texttt{elektrodynamik/Vorwissen/Magnetismus/}) liegt im Repo vor,
+  wurde aber inhaltlich noch nicht konsultiert -- falls Sara Romer dort
+  bereits
+  Apparatur-Fotos, verwendete Formulierungen oder einen bevorzugten
+  Schwierigkeitsgrad festgehalten hat, sollte das vor der Arbeitsblatt-
+  Erstellung noch eingearbeitet werden.
+  \item \textbf{Historischer Ampere-Exkurs:} Nice-to-have, nicht
+  zeitkritisch -- als Erstes streichbar, falls die Lektion zu voll wird.
+  \item \textbf{Zeitbudget:} Elf Phasen mit Fachinhalt (Advance Organizer,
+  zwei Beobachtungen, makroskopisches Modell, Rückkehr, Übung, Herleitung
+  der Lorentzkraft, Fadenstrahlrohr-Aufbau, Fadenstrahlrohr-POE, Herleitung
+  Kraft zwischen Leitern, mikroskopische Erklärung Anziehung/Abstossung)
+  ergeben bei 9' Puffer eine machbare Doppellektion (die separate
+  Repetition der Feldformel des geraden Leiters entfällt, da bereits
+  Vorwissen aus Magnetfelder). Falls trotzdem eng, erster Streichkandidat
+  ist der historische Ampere-Exkurs (3'); als Nächstes die
+  Feldlinien-Betrachtung (\glqq Gummifäden\grqq{}-Modell) als optionaler
+  zweiter Erklärungsweg zur Leiterschaukel.
+\end{itemize}
+
+\end{document}

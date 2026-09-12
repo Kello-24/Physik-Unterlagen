@@ -1,0 +1,41 @@
+Quiz: Magnetfelder
+
+Frage 1
+Was ist ein Magnetfeld?
+A. Eine physikalische Kraft, die nur zwischen zwei Permanentmagneten wirkt
+B. Ein Modell für den Raum, in dem magnetische Wirkungen auftreten
+C. Die Bezeichnung für den Nordpol eines Stabmagneten
+D. Eine Einheit zur Messung der Stärke eines Elektromagneten
+Antwort: B
+
+Frage 2
+Welche der folgenden Aussagen über das Zeichnen von Magnetfeldlinien ist falsch?
+A. Feldlinien verlaufen ausserhalb des Magneten vom Nordpol zum Südpol
+B. Feldlinien können sich kreuzen, wenn zwei Magnete nahe beieinander liegen
+C. Je dichter die Feldlinien gezeichnet sind, desto stärker ist das Feld
+D. Jede Feldlinie ist eine geschlossene Kurve
+Antwort: B
+
+Frage 3
+Eine rechtsgewickelte Spule ist an eine Batterie angeschlossen, Pluspol links, Minuspol rechts. Fährt man mit den gekrümmten Fingern der rechten Hand dem Draht in Stromrichtung entlang, von Plus nach Minus, in welche Richtung zeigt der Daumen, also das Magnetfeld im Innern der Spule?
+A. Nach links, Richtung Pluspol
+B. Nach rechts, Richtung Minuspol
+C. Senkrecht nach oben
+D. Senkrecht nach unten
+Antwort: B
+
+Frage 4
+Für das Magnetfeld eines geraden, stromdurchflossenen Leiters gilt B = \frac{\mu_0}{2\pi} \cdot \frac{I}{r}. Man verdreifacht den Strom I und halbiert gleichzeitig den Abstand r vom Draht. Was passiert mit B?
+A. B verdoppelt sich
+B. B verdreifacht sich
+C. B versechsfacht sich
+D. B bleibt gleich gross
+Antwort: C
+
+Frage 5
+Die magnetische Flussdichte im Innern einer Spule ist gegeben durch B = \mu_0 \cdot \frac{N}{l} \cdot I. Zwei Spulen werden vom gleich grossen Strom I durchflossen. Spule A hat 150 Windungen bei einer Länge von 25 cm, Spule B hat 300 Windungen bei einer Länge von 60 cm. Welche Spule erzeugt die grössere Flussdichte B im Innern?
+A. Spule A
+B. Spule B
+C. Beide Spulen erzeugen die gleiche Flussdichte
+D. Ohne den Wert von I lässt sich das nicht bestimmen
+Antwort: A

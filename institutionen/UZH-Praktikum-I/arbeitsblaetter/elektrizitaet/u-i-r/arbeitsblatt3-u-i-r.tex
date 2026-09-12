@@ -1,0 +1,607 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Arbeitsblatt 3: Strom, Spannung und Widerstand
+% UZH Praktikum I -- Sara Romer Urban, Kantonsschule im Lee, HS2026
+% Klasse: 1f (16.09.2026), aus PLAN_Dokumentengenerierung.md.
+%
+% Enthaelt aktuell nur den qualitativen Einstieg (Wasserkreislaufanalogie,
+% vier Bauteil-Abschnitte Batterie/Widerstand/LED/Schalter mit je einer
+% Kontrollfrage, Fehlersuche im Stromkreis), der auf Wunsch aus
+% arbeitsblatt2-e-feld-vertiefung.tex (elektrizitaet/e-feld-vertiefung/)
+% hierher verschoben wurde -- dort war er urspruenglich als "Teil 2: Beginn
+% Stromkreise" derselben Doppellektion (09.09.2026) geplant, gehoert
+% inhaltlich aber zu dieser Doppellektion (16.09.2026). Bewusst weiterhin
+% ohne Einheiten (Ampere/Volt) und ohne das quantitative Ohm'sche Gesetz --
+% das war beim Verschieben bereits so angelegt (siehe
+% e-feld-vertiefung/lernziele.md, Abschnitt "Abgrenzung"). Eine eigene
+% lernziele.md fuer dieses Thema (inkl. der noch fehlenden quantitativen
+% Lernziele zu R=U/I) sowie der Lektionsplan stehen noch aus -- dieses
+% Dokument ist bislang nur der verschobene Baustein, nicht das vollstaendige
+% Arbeitsblatt fuer die Doppellektion.
+%
+% Die urspruenglich als Gruppenpuzzle (Expertenkarten Strom/Spannung/
+% Widerstand, Dreiergruppen-Jigsaw) angelegten Abschnitte wurden auf Wunsch
+% zu ausfuehrlichem Fliesstext umgebaut, organisiert nach den vier Bauteilen
+% Batterie/Widerstand/LED/Schalter statt nach den drei abstrakten Groessen,
+% mit je einem Schaltzeichen (circuitikz) und einer eigenen Kontrollfrage
+% pro Bauteil. Die Groessen Spannung $U$ (bei der Batterie), Widerstand $R$
+% (beim Widerstand) und Strom $I$ (beim Schalter, der den Stromfluss erst
+% ermoeglicht) werden dabei jeweils im Kontext des passenden Bauteils
+% eingefuehrt. Die Jigsaw-Methode (D3 Partner-/Gruppenpuzzle) passt nicht
+% mehr sauber auf vier statt drei Themen und wurde deshalb fallengelassen --
+% falls doch wieder eine Gruppenarbeitsphase gewuenscht ist, sind die vier
+% theoriebox-Abschnitte weiterhin einzeln als Lesetext pro Kleingruppe
+% einsetzbar.
+%
+% Die urspruengliche Sortieraufgabe (Wasserkreislauf <-> Stromkreis) wurde
+% beim Verschieben ersatzlos gestrichen (auf Wunsch), nicht mitgenommen.
+%
+% Alle Bilder in Bilder/ werden verwendet, mit Ausnahme von
+% schrittspannung.jpg (liegt hier, gehoert aber thematisch zum Gewitter und
+% wird im anderen Arbeitsblatt verwendet, e-feld-vertiefung/). batterie.png,
+% water-circuit2-static.png, simple-circuit2-static.svg/.pdf,
+% electric-charge-and-electric-current-static.svg/.pdf und
+% resistor-static.jpg lagen hier bereits (bzw. wurden als Kopie in
+% e-feld-vertiefung/Bilder/ wieder entfernt, nachdem der Stromkreis-Teil
+% hierher zurueckverschoben wurde). drude-model-static.svg/.pdf (mikroskopisches
+% Modell, Vertiefung Widerstand) und water-current-circuits-static.jpg
+% (Wasserpark-Foto, Alltagsbezug zur Analogie) waren zunaechst ungenutzt
+% vorgesehen, werden jetzt aber verwendet. images.png (vereinfachtes
+% Batterie-Schaltsymbol) und vattenfall-aufbau-led.jpg (Aufbau einer LED,
+% Anode/Kathode) sowie widerstand.jpg (Wasseranalogie fuer Widerstand als
+% Engstelle) kamen neu dazu.
+% phet-logo-trademarked.png wurde von elektrodynamik/kondensatoren/Bilder/
+% hierher kopiert (gleiches Logo, gleiche Verlinkungskonvention wie dort).
+% Abschliessender Hinweis auf die PhET-Simulation "Stromkreislabor:
+% Gleichstrom" (Circuit Construction Kit DC) ist bewusst nur ein Link zum
+% freien Ausprobieren, keine eigene bepunktete Lernaufgabe -- deshalb bleibt
+% dieses Dokument ein Arbeitsblatt und wird nicht zum Aufgabenblatt (jene
+% Kategorie ist laut institutionen/UZH-Praktikum-I/CLAUDE.md fuer Aufgaben
+% reserviert, die eine PhET-Simulation tatsaechlich brauchen, um geloest zu
+% werden).
+% =============================================================================
+\documentclass[addpoints,11pt,a4paper]{exam}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.2cm,headheight=14pt]{geometry}
+\usepackage{amsmath}
+\usepackage{siunitx}
+% Hausstil: zusammengesetzte Einheiten immer als echter Bruch (\frac), nicht
+% als Inline-Schraegstrich oder \tfrac -- gilt global fuer jedes \si/\SI.
+\sisetup{per-mode=fraction,fraction-command=\frac}
+\usepackage{array,booktabs,tabularx,multirow}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[european]{circuitikz}
+\usepackage{physics}
+\usepackage[most]{tcolorbox}
+\usepackage{lastpage}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\usetikzlibrary{arrows.meta,calc,angles,quotes}
+
+\usepackage{setspace}
+\usepackage{needspace}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+\setstretch{1.08}
+\setlist[itemize]{itemsep=0.4em}
+
+% -----------------------------
+% Farben (Corporate-Farbschema Physik KFR)
+% -----------------------------
+\definecolor{titleblue}{HTML}{183A6B}
+\definecolor{accentblue}{HTML}{2E6F9E}
+\definecolor{lightblue}{HTML}{EAF4FB}
+\definecolor{lightgray}{HTML}{F4F6F8}
+\definecolor{darkgray}{HTML}{4A4A4A}
+\definecolor{accentorange}{HTML}{D9720C}
+\definecolor{accentpurple}{HTML}{7B2D8E}
+\definecolor{lightorange}{HTML}{FCEEE0}
+\definecolor{lightpurple}{HTML}{F3EAF7}
+
+% Links (hyperref): farblich ans Corporate-Farbschema angeglichen.
+\hypersetup{
+  colorlinks=true,
+  urlcolor=accentblue,
+  linkcolor=accentblue,
+  pdftitle={Arbeitsblatt 3: Strom, Spannung und Widerstand},
+  pdfauthor={Loris Keller}
+}
+
+% -----------------------------
+% Spaltentypen
+% -----------------------------
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% -----------------------------
+% Boxen
+% -----------------------------
+\tcbset{before skip=10pt, after skip=10pt}
+\newtcolorbox{titlebox}{
+  enhanced,
+  colback=titleblue,
+  colframe=titleblue,
+  boxrule=0pt,
+  arc=3mm,
+  left=3mm,right=3mm,top=3mm,bottom=3mm
+}
+
+\newlength{\aufgabenindent}
+\settowidth{\aufgabenindent}{10.\hskip\labelsep}
+
+% Praktikum I: Lernziele/Einleitung/Theorie/Aufgaben werden NICHT farbig
+% gerahmt (nur Formel-, Hinweis- und Antwortbox bleiben Boxen) -- siehe
+% institutionen/UZH-Praktikum-I/CLAUDE.md, Abschnitt "Boxen-Layout".
+\newenvironment{infobox}{%
+  \par\addvspace{10pt}\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+\newenvironment{theoriebox}[1][Theorie]{%
+  \par\addvspace{10pt}\noindent\textbf{#1}\par\smallskip\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+\newtcolorbox{taskbox}[1][]{
+  enhanced, breakable,
+  colback=white, colframe=white, boxrule=0pt,
+  left=0mm,right=0mm,top=0mm,bottom=0mm,
+  before skip=10pt, after skip=10pt,
+  before upper={%
+    \def\tmpboxtitle{#1}%
+    \ifx\tmpboxtitle\empty\else\noindent\textbf{#1}\par\smallskip\fi
+  }
+}
+
+\newtcolorbox{groupbox}[1][Gruppenarbeit]{
+  enhanced, breakable,
+  colback=white, colframe=white, boxrule=0pt,
+  left=0mm,right=0mm,top=0mm,bottom=0mm,
+  before skip=10pt, after skip=10pt,
+  before upper={\noindent\textbf{#1}\par\smallskip}
+}
+
+\newenvironment{beispielbox}[1][Beispiel]{%
+  \par\addvspace{10pt}\noindent\textbf{#1}\par\smallskip\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+\newtcolorbox{hinweisbox}[1][Hinweis]{
+  enhanced,
+  breakable,
+  colback=lightorange,
+  colframe=accentorange,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+\newtcolorbox{formelbox}[1][Formel]{
+  enhanced,
+  breakable,
+  colback=lightpurple,
+  colframe=accentpurple,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.9pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+\newtcolorbox{answerbox}{
+  breakable,
+  colback=white,
+  colframe=gray!55,
+  boxrule=0.5pt,
+  arc=1.5mm,
+  left=2mm,right=2mm,top=2mm,bottom=2mm
+}
+
+% Bild-Helfer: zentriertes Bild mit spuerbarem Abstand zum umgebenden Text.
+% #1 = Breite, #2 = Dateipfad.
+\newcommand{\Bild}[2]{%
+  \par\vspace{0.6cm}
+  \begin{center}
+    \includegraphics[width=#1]{#2}
+  \end{center}
+  \vspace{0.6cm}
+}
+
+% --- Loesungen ein-/ausblenden -----------------------------------------------
+%\noprintanswers
+\printanswers
+
+\pointformat{}
+\renewcommand{\solutiontitle}{\noindent\color{titleblue}\textbf{L\"osung:}\enspace}
+
+\pagestyle{headandfoot}
+\cfoot{\textcolor{darkgray}{Seite \thepage\ von \pageref{LastPage}}}
+
+\newcommand{\Kopfzeile}[4]{%
+  \begin{titlebox}
+    {\color{white}\sffamily\bfseries\Large #4}
+  \end{titlebox}
+  \vspace{0.5em}
+  \noindent\textbf{Klasse:}~#1 \hfill \textbf{Datum:}~#2 \hfill \textbf{Thema:}~#3
+    \hfill \textbf{Lehrperson:}~Loris Keller
+  \vspace{0.8em}
+  \lhead{\textcolor{darkgray}{#3}}
+  \rhead{\textcolor{darkgray}{#4}}
+}
+
+\newlength{\antwortraumlen}
+\newcommand{\Antwortraum}[1]{%
+  \pgfmathsetlength{\antwortraumlen}{#1*2.5cm}%
+  \begin{answerbox}
+    \rule{0pt}{\antwortraumlen}%
+  \end{answerbox}%
+}
+
+% Werte fuer Kopfzeile zentral setzen
+\newcommand{\Klasse}{1f}
+\newcommand{\Datum}{16.09.2026}
+\newcommand{\Thema}{Stromkreis}
+\newcommand{\ArbeitsblattTitel}{Arbeitsblatt 3: Strom, Spannung und Widerstand}
+
+\begin{document}
+
+\Kopfzeile{\Klasse}{\Datum}{\Thema}{\ArbeitsblattTitel}
+
+% =============================================================================
+% Theorie: Wasserkreislaufanalogie
+% =============================================================================
+In einem \textbf{\emph{Stromkreis}} fliessen Ladungen kontrolliert durch
+Kabel, angetrieben von einer Batterie.
+
+\begin{theoriebox}[Die Wasserkreislaufanalogie]
+Eine \textbf{\emph{Batterie}} trennt Ladungen und erzeugt so ein
+Potenzialgefälle zwischen ihren beiden Polen, das den Ladungsfluss antreibt
+(\textbf{\emph{Spannung}}). Solange der Kreis geschlossen ist, erneuert die
+Batterie dieses Feld laufend. Anders als beim Faradayschen Käfig gleicht
+es sich hier nie aus.
+
+\Bild{9.5cm}{Bilder/batterie.png}
+
+Die Batterie treibt den Ladungsfluss an, genau wie eine
+\textbf{\emph{Pumpe}} den Wasserfluss in einem Wasserkreislauf antreibt.
+Die restlichen Grundelemente eines Stromkreises lassen sich ebenso mit
+einem Wasserkreislauf vergleichen, wie die folgenden zwei Bilder zeigen.
+
+\Bild{9cm}{Bilder/water-circuit2-static.png}
+\Bild{6cm}{Bilder/simple-circuit2-static.pdf}
+
+Auch im Alltag begegnet Ihnen ein echter Wasserkreislauf, in dem Wasser
+ständig hochgepumpt wird und dann wieder herunterfliesst, zum Beispiel in
+einem Wasserpark:
+
+\Bild{7cm}{Bilder/water-current-circuits-static.jpg}
+{\small Was entspricht hier der Pumpe, was den Rohren?}
+\end{theoriebox}
+
+% =============================================================================
+% Die vier Bauteile: Batterie, Widerstand, LED, Schalter
+% =============================================================================
+Ein Stromkreis besteht aus einzelnen Bauteilen, die jeweils ein eigenes
+\textbf{\emph{Schaltzeichen}} haben, mit dem man sie in einem Schaltplan
+darstellt. Die folgenden Abschnitte stellen die vier wichtigsten Bauteile
+im Detail vor: Batterie, Widerstand, LED und Schalter. Dabei werden auch
+die drei physikalischen Grössen Spannung $U$, Widerstand $R$ und Strom $I$
+erklärt.
+
+\needspace{12cm}
+\begin{theoriebox}[Die Batterie]
+Die \textbf{\emph{Batterie}} ist die Antriebsquelle des Stromkreises. In
+ihrem Inneren trennt sie fortlaufend positive und negative Ladungen und
+hält sie an ihren beiden Polen getrennt. Die linke Teilskizze unten zeigt
+diesen Zustand bei einer aufgeladenen, aber noch nicht angeschlossenen
+Batterie: An der Kathode (zum Beispiel aus Kohle) sammeln sich positive
+Ladungen, an der Anode (zum Beispiel aus Zink) negative, getrennt durch
+den Elektrolyt dazwischen. Diese Ladungstrennung erzeugt zwischen den
+beiden Polen ein Potenzialgefälle, die \textbf{\emph{Spannung}} $U$. Sie
+entspricht dem Höhenunterschied, den eine Pumpe im Wasserkreislauf
+erzeugt: Je grösser die Spannung, desto stärker treibt sie die
+Ladungsträger durch den Stromkreis, genau wie ein grösserer
+Höhenunterschied das Wasser stärker durch die Rohre drängt.
+
+Wird die Batterie über eine leitende Verbindung geschlossen, zeigt die
+rechte Teilskizze unten, was passiert: Die getrennten Ladungen können sich
+nun über den Stromkreis ausgleichen. Solange der Stromkreis geschlossen
+bleibt, erneuert die Batterie diese Ladungstrennung laufend nach. Das
+unterscheidet sie vom Faradayschen Käfig aus der letzten Doppellektion:
+Dort gleicht sich das influenzierte Feld einmalig aus und bleibt dann
+bestehen, während die Batterie den Ladungsausgleich ständig von Neuem
+antreibt.
+
+\Bild{9.5cm}{Bilder/batterie.png}
+
+So wird eine Batterie oft ganz vereinfacht dargestellt, mit einer roten
+Plusseite und einer blauen Minusseite:
+
+\Bild{2.2cm}{Bilder/images.png}
+
+Im Schaltplan verwendet man dafür ein eigenes Schaltzeichen: eine lange
+und eine kurze Linie für die beiden Pole.
+
+\begin{center}
+\begin{circuitikz}[scale=1.4]
+  \draw (0,0) to[battery1,l=$U$] (2.4,0);
+\end{circuitikz}
+\end{center}
+{\scriptsize Schaltzeichen einer Batterie.}
+\end{theoriebox}
+
+\needspace{6cm}
+\begin{questions}
+\begin{taskbox}[Kontrollfrage: Batterie und Spannung]
+\question[3] Erklären Sie mit den beiden Teilskizzen oben, warum an einer
+offenen, noch nicht angeschlossenen Batterie zwar eine Spannung besteht,
+aber noch kein Strom fliesst.
+\begin{answerbox}
+\vspace{2.4cm}
+\end{answerbox}
+\begin{solution}
+An der offenen Batterie sind die Ladungen an den beiden Polen zwar
+getrennt, das Potenzialgefälle (die Spannung) besteht also bereits. Es
+gibt aber noch keinen leitenden Weg, über den sich diese Ladungen
+ausgleichen könnten. Erst eine geschlossene, leitende Verbindung zwischen
+den beiden Polen ermöglicht einen Ladungsausgleich, also einen
+Stromfluss.
+\end{solution}
+\end{taskbox}
+\end{questions}
+
+\needspace{12cm}
+\begin{theoriebox}[Der Widerstand]
+Der elektrische \textbf{\emph{Widerstand}} $R$ beschreibt, wie stark ein
+Bauteil den Ladungsfluss erschwert. Die Skizze unten zeigt das Prinzip mit
+der Wasseranalogie: Fliessen die Ladungsträger durch eine breite
+Engstelle, kommen viele von ihnen pro Zeit hindurch, das entspricht einem
+geringen Widerstand. Ist die Engstelle eng, kommen in derselben Zeit
+deutlich weniger hindurch, das entspricht einem höheren Widerstand. Ein
+enges Rohr entspricht also einem hohen elektrischen Widerstand, ein weites
+Rohr einem geringen.
+
+\Bild{9cm}{Bilder/widerstand.jpg}
+
+Im Alltag begegnen Ihnen Widerstände meist als kleine, farbig geringelte
+Bauteile wie in der Fotografie unten. Die Farbringe verraten dabei ihren
+genauen Wert. Ein bekanntes Beispiel für ein Bauteil mit besonders hohem
+Widerstand ist ein Heizdraht: Er leitet deutlich schlechter als ein dickes
+Kupferkabel und wird deshalb im Betrieb warm.
+
+\Bild{7.5cm}{Bilder/resistor-static.jpg}
+
+Warum sich das Material dabei überhaupt erwärmt, zeigt der Blick auf die
+mikroskopische Ebene in der Skizze unten: Auf ihrem Weg durch den Leiter
+stossen die Elektronen laufend mit den festsitzenden Atomrümpfen des
+Materials zusammen (rote Kreise) und werden dabei in zufällige Richtungen
+abgelenkt (blaue Linien). Trotz dieser vielen Zusammenstösse ergibt sich
+im elektrischen Feld $\vec{E}$ eine kleine, gerichtete Nettobewegung der
+Elektronen: die \textbf{\emph{Driftgeschwindigkeit}} $v_d$, entgegen der
+eingezeichneten Feldrichtung und Stromrichtung. Bei jedem Zusammenstoss geben die
+Elektronen einen Teil ihrer Bewegungsenergie an die Atomrümpfe ab, wodurch
+diese stärker schwingen. Je mehr Zusammenstösse ein Elektron auf seinem
+Weg erleidet, das heisst je höher der Widerstand, desto stärker erwärmt
+sich das Material dabei.
+
+\Bild{8cm}{Bilder/drude-model-static.pdf}
+
+Im Schaltplan wird ein Widerstand als Rechteck dargestellt:
+
+\begin{center}
+\begin{circuitikz}[scale=1.4]
+  \draw (0,0) to[R,l=$R$] (2.4,0);
+\end{circuitikz}
+\end{center}
+{\scriptsize Schaltzeichen eines Widerstands.}
+\end{theoriebox}
+
+\needspace{6cm}
+\begin{questions}
+\begin{taskbox}[Kontrollfrage: Widerstand]
+\question[3] Beschreiben Sie anhand der Drude-Modell-Skizze oben (rote
+Kreise: Atomrümpfe, blaue Punkte/Linien: Elektronenbahnen), was auf
+mikroskopischer Ebene passiert, wenn Elektronen durch einen Leiter mit
+hohem Widerstand fliessen, und warum sich der Leiter dabei erwärmt.
+\begin{answerbox}
+\vspace{2.6cm}
+\end{answerbox}
+\begin{solution}
+Die Elektronen bewegen sich nicht geradlinig durch den Leiter, sondern
+stossen laufend mit den ortsfesten Atomrümpfen des Materials zusammen und
+werden dabei in zufällige Richtungen abgelenkt. Trotzdem ergibt sich im
+elektrischen Feld eine kleine, gerichtete Nettobewegung entgegen der
+Feldrichtung (Driftgeschwindigkeit $v_d$). Bei jedem Zusammenstoss geben
+die Elektronen einen Teil ihrer Bewegungsenergie an die Atomrümpfe ab, was
+diese stärker schwingen lässt: Das Material erwärmt sich. Je mehr
+Zusammenstösse (je höher der Widerstand), desto stärker die Erwärmung.
+\end{solution}
+\end{taskbox}
+\end{questions}
+
+\needspace{12cm}
+\begin{theoriebox}[Die LED als Verbraucher]
+Ein \textbf{\emph{Verbraucher}} ist das Bauteil im Stromkreis, das
+elektrische Energie in eine andere Energieform umwandelt, zum Beispiel in
+Licht. Eine \textbf{\emph{LED}} (Leuchtdiode) ist ein solcher Verbraucher,
+unterscheidet sich aber von einem einfachen Widerstand: Sie hat zwei
+unterschiedliche Anschlüsse, \textbf{\emph{Anode}} ($+$) und
+\textbf{\emph{Kathode}} ($-$), und lässt Strom nur in einer einzigen
+Richtung durch. Die Skizze unten zeigt den inneren Aufbau: Der eigentliche
+\textbf{\emph{LED-Chip}} sitzt in einer Reflektorwanne, ist über einen
+feinen Golddraht mit der Anode verbunden und wird von einer
+Epoxidharzlinse geschützt und gebündelt.
+
+Nur wenn die Anode zum Pluspol und die Kathode zum Minuspol der Batterie
+zeigt, kann der Strom durch den LED-Chip fliessen und Licht erzeugen. In
+der falschen Richtung angeschlossen bleibt die LED dunkel, ganz gleich wie
+gross die angelegte Spannung ist.
+
+\Bild{7cm}{Bilder/vattenfall-aufbau-led.jpg}
+
+Im Schaltplan erkennt man diese Einbahnrichtung am Dreieck des
+Schaltzeichens: Es zeigt in die Richtung, in die der Strom fliessen darf,
+mit zwei kleinen Pfeilen für das abgestrahlte Licht.
+
+\begin{center}
+\begin{circuitikz}[scale=1.4]
+  \draw (0,0) to[leD,l=LED] (2.4,0);
+\end{circuitikz}
+\end{center}
+{\scriptsize Schaltzeichen einer LED.}
+\end{theoriebox}
+
+\needspace{6cm}
+\begin{questions}
+\begin{taskbox}[Kontrollfrage: LED]
+\question[2] An welchen Pol der Batterie muss die Anode der LED
+angeschlossen werden, damit die LED leuchtet? Begründen Sie mit der
+technischen Stromrichtung.
+\begin{answerbox}
+\vspace{1.8cm}
+\end{answerbox}
+\begin{solution}
+Die Anode muss an den Pluspol der Batterie angeschlossen werden. Die
+technische Stromrichtung fliesst von $+$ nach $-$, also von der Anode
+durch den LED-Chip zur Kathode. Nur in dieser Richtung leuchtet die LED.
+\end{solution}
+\end{taskbox}
+\end{questions}
+
+\needspace{12cm}
+\begin{theoriebox}[Der Schalter und der elektrische Strom]
+Der \textbf{\emph{Schalter}} entscheidet, ob der Stromkreis geschlossen
+oder unterbrochen ist, genau wie ein Ventil im Wasserkreislauf den
+Wasserfluss freigibt oder blockiert. Ist er offen, ist der Stromkreis an
+dieser Stelle unterbrochen: Selbst bei voller Batteriespannung kann sich
+keine Ladung ausgleichen, es fliesst kein Strom. Erst wenn Sie den
+Schalter schliessen, entsteht ein durchgehend leitender Weg von einem Pol
+der Batterie über die restlichen Bauteile zum anderen Pol zurück, und die
+Ladungsträger beginnen zu fliessen.
+
+Genau in diesem Moment beginnt der elektrische \textbf{\emph{Strom}} $I$
+zu fliessen: die Ladung, die pro Zeiteinheit durch einen
+Leiterquerschnitt fliesst,
+\[
+  I = \frac{\Delta Q}{\Delta t}.
+\]
+Die Skizze unten zeigt einen Leiter im geschlossenen Stromkreis von innen:
+Die kleinen Kreise mit Minuszeichen sind die frei beweglichen Elektronen,
+die sich durch den Leiter bewegen. Man legte historisch fest, dass Strom
+von $+$ nach $-$ fliesst (\textbf{\emph{technische Stromrichtung}}), lange
+bevor man wusste, dass sich tatsächlich die negativ geladenen Elektronen
+bewegen, und zwar von $-$ nach $+$ (\textbf{\emph{physikalische
+Stromrichtung}}). Beide Pfeile in der Skizze beschreiben denselben Strom,
+nur aus unterschiedlicher Perspektive. Bis heute verwendet man in
+Schaltplänen meist die technische Stromrichtung.
+
+\Bild{12cm}{Bilder/electric-charge-and-electric-current-static.pdf}
+
+Im Schaltplan wird ein offener Schalter als unterbrochene Linie mit einem
+schrägen Kontakt dargestellt, der sich beim Schliessen absenkt:
+
+\begin{center}
+\begin{circuitikz}[scale=1.4]
+  \draw (0,0) to[switch,l=$S$] (2.4,0);
+\end{circuitikz}
+\end{center}
+{\scriptsize Schaltzeichen eines (offenen) Schalters.}
+\end{theoriebox}
+
+\needspace{6cm}
+\begin{questions}
+\begin{taskbox}[Kontrollfrage: Schalter und Strom]
+\question[3] Welche der beiden in der Skizze oben eingezeichneten
+Richtungen (technische oder physikalische Stromrichtung) entspricht der
+tatsächlichen Bewegungsrichtung der Elektronen? Warum verwendet man
+trotzdem bis heute meist die technische Stromrichtung?
+\begin{answerbox}
+\vspace{2.2cm}
+\end{answerbox}
+\begin{solution}
+Die physikalische Stromrichtung entspricht der tatsächlichen
+Bewegungsrichtung der Elektronen (von $-$ nach $+$). Die technische
+Stromrichtung wurde aber schon vor der Entdeckung des Elektrons
+festgelegt und blieb aus historischen Gründen und der Konsistenz halber
+in Gebrauch, obwohl sie der tatsächlichen Bewegung entgegengesetzt ist.
+\end{solution}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Vertiefungsaufgabe: Fehlersuche im Stromkreis
+% =============================================================================
+\needspace{11cm}
+\begin{questions}
+\begin{taskbox}[Vertiefungsaufgabe: Fehlersuche im Stromkreis]
+\question[6] Eine LED in einem einfachen Stromkreis leuchtet nicht. Erklären
+Sie für jede der folgenden drei möglichen Ursachen mit der
+Wasserkreislaufanalogie, warum die LED in diesem Fall nicht leuchtet.
+\begin{parts}
+  \part[2] Die Batterie ist leer.
+  \begin{answerbox}
+  \vspace{1.1cm}
+  \end{answerbox}
+  \begin{solution}
+  Wie eine Pumpe, die stehen geblieben ist: Ohne Antrieb entsteht kein
+  Höhenunterschied mehr, also fliesst kein Wasser. Ohne Spannung fliesst
+  kein Strom.
+  \end{solution}
+
+  \part[2] Ein Kabel ist unterbrochen.
+  \begin{answerbox}
+  \vspace{1.1cm}
+  \end{answerbox}
+  \begin{solution}
+  Wie ein durchtrenntes Rohr: Das Wasser kann die Lücke nicht überqueren,
+  der Kreislauf ist unterbrochen. Der Stromkreis ist offen, es fliesst
+  kein Strom.
+  \end{solution}
+
+  \part[2] Der Schalter ist offen.
+  \begin{answerbox}
+  \vspace{1.1cm}
+  \end{answerbox}
+  \begin{solution}
+  Wie ein geschlossenes Ventil: Es blockiert den Weg absichtlich. Der
+  Schalter unterbricht den Stromkreis, bis er wieder geschlossen wird.
+  \end{solution}
+\end{parts}
+\begin{hinweisbox}[Alltagsanker]
+Ein Handyladekabel lädt nicht mehr: Welche der drei Ursachen könnten
+dahinterstecken, und wie würden Sie das prüfen?
+\end{hinweisbox}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Ausblick: PhET-Simulation zum selbst Ausprobieren
+% =============================================================================
+\begin{beispielbox}[Selbst ausprobieren]
+\noindent
+\begin{minipage}[c]{1.8cm}
+  \href{https://phet.colorado.edu/sims/html/circuit-construction-kit-dc-virtual-lab/1.0.3/circuit-construction-kit-dc-virtual-lab_de.html}{%
+    \includegraphics[width=1.6cm]{Bilder/phet-logo-trademarked.png}}
+\end{minipage}%
+\begin{minipage}[c]{\dimexpr\linewidth-2cm\relax}
+Mit der Simulation
+\href{https://phet.colorado.edu/sims/html/circuit-construction-kit-dc-virtual-lab/1.0.3/circuit-construction-kit-dc-virtual-lab_de.html}{\glqq Stromkreislabor: Gleichstrom\grqq{}}
+können Sie selbst einen Stromkreis mit den heute gelernten Elementen
+(Batterie, Schalter, Verbraucher, Kabel) aufbauen und ausprobieren.
+\end{minipage}
+\end{beispielbox}
+
+\end{document}

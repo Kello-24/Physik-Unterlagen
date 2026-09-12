@@ -1,0 +1,418 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Lektionsplan (Diskussionsgrundlage, NICHT das Arbeitsblatt selbst)
+% Gewitter & Beginn Stromkreise -- UZH Praktikum I, Sara Romer Urban, KS im Lee, HS2026
+% Klasse: 1f
+% =============================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usepackage{array,booktabs,tabularx,xltabular}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\sisetup{per-mode=fraction,fraction-command=\frac}
+\usepackage{url}
+\Urlmuskip=0mu plus 1mu
+\def\UrlBreaks{\do\/\do-\do_}
+
+\definecolor{titleblue}{HTML}{183A6B}
+\definecolor{accentblue}{HTML}{2E6F9E}
+\definecolor{groupteal}{HTML}{1B7F72}
+\definecolor{darkgray}{HTML}{4A4A4A}
+\definecolor{warnred}{HTML}{9E2E2E}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+
+\newcommand{\Methode}[1]{{\small\color{groupteal}\textbf{#1}}}
+
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{titleblue}}{\thesection}{0.6em}{}
+\titlespacing*{\section}{0pt}{1.2em}{0.5em}
+
+\begin{document}
+\sloppy
+
+\begin{center}
+{\Huge\bfseries\color{titleblue}Lektionsplan: Gewitter \& Beginn Stromkreise}\\[0.4em]
+{\large Doppellektion (2$\times$45 Min.) -- Diskussionsgrundlage}
+\end{center}
+\vspace{0.5em}
+
+\noindent\textbf{Klasse:} 1f (09.09.2026)
+\noindent\textbf{Lehrperson:} Loris Keller
+
+\vspace{0.3em}
+\noindent\textcolor{darkgray}{Dieses Dokument ist \textbf{keine} Reinschrift des Arbeitsblatts, sondern die
+Planungsgrundlage dafür: Lernziele, Aufbau der Lektion und die gewählte
+Didaktik-Methode pro Phase (aus \texttt{Methodensammlung\_Physikunterricht.pdf}).
+Nach Absprache wird daraus das \texttt{.tex}-Arbeitsblatt/Aufgabenblatt lokal in
+VS Code erstellt. Der Aufbau folgt dem von Loris vorgeschlagenen Ablauf: erste
+Lektion Gewitter (Ladungsentstehung $\to$ elektrisches Feld, gemeinsam im
+Plenum besprochen $\to$ Faradayscher Käfig mit Elektroskop-Experiment $\to$
+Gruppenarbeit: SuS erstellen selbst eine Skizze und einen Erklärtext zu
+Ladungsverteilung, Influenz und elektrischem Feld $\to$ Plenumsbesprechung
+$\to$ Schrittspannung), zweite Lektion Beginn
+Stromkreise (kurze Einführung Wasserkreislauf-Analogie und Batterie als
+Ladungspumpe $\to$ \textbf{Gruppenpuzzle (D3)} zu Strom, Spannung und
+Widerstand, je qualitativ mit Wasseranalogie und Alltagsbeispiel $\to$
+gemeinsame Vertiefungsaufgabe). \textbf{Arbeitshypothese:} beide Hälften
+bilden zusammen die eine Doppellektion \texttt{e-feld-vertiefung} vom
+09.09.2026; das quantitative Ohm'sche Gesetz und die exakte Definition der
+Spannung ordne ich der folgenden, separaten Doppellektion \texttt{u-i-r}
+(16.09.2026) zu -- bitte kurz bestätigen oder korrigieren.}
+
+% =========================================================================
+\section*{1. Abgrenzung und Lernziele}
+
+\textbf{Im Fokus:} zwei Anwendungen des bereits bekannten elektrischen
+Feldes -- erstens Entstehung und Gefahr von Blitzen sowie der Schutz durch
+den Faradayschen Käfig (PhysikLibre 12.6.11, 12.4.5/12.4.6), zweitens der
+Einstieg in den Stromkreis über die Wasserkreislauf-Analogie (PhysikLibre
+12.8/12.8.1/12.8.2), gefolgt von einem Gruppenpuzzle, in dem die SuS Strom
+(PhysikLibre 12.6.1), Spannung und Widerstand je qualitativ mit
+Wasseranalogie und Alltagsbeispiel erarbeiten und sich gegenseitig
+erklären.
+
+\textbf{Bereits bekannt (nur Repetition, keine Neueinführung):} Ladung
+(gleichnamig/ungleichnamig), Coulombsche Fernwirkungskraft, elektrisches
+Feld und Feldlinienregeln, Influenz, homogenes vs. inhomogenes Feld,
+Feldbeispiele Punktladung/Dipol/Plattenkondensator (alle: letzte
+Doppellektion, \texttt{ladung-e-feld/}).
+
+\textbf{Bewusst nicht Teil dieser Einheit:} das Ohm'sche Gesetz und die
+quantitative Beziehung $R=U/I$ sowie die exakte physikalische Definition
+der Spannung als Verschiebearbeit pro Ladung ($U=W/Q$, PhysikLibre 12.5)
+-- eigene Lektion \texttt{u-i-r/} (1f, 16.09.2026, eine Woche später);
+Reihen-/Parallelschaltung -- eigene Lektion \texttt{schaltungen/} (1f,
+23.09.2026); die exakte Berechnung der Schrittspannung (keine Formel,
+Spannung/Widerstand hier noch nicht formal eingeführt -- rein
+konzeptionell als Sicherheitsaspekt). Spannung selbst wird in dieser
+Doppellektion bereits \textbf{qualitativ} eingeführt (Potenzialgefälle/
+treibende Kraft, analog zum Höhenunterschied im Wasserkreislauf) -- nur
+Formel und Rechnung folgen erst in \texttt{u-i-r/}. Auf Einheiten
+(Ampere, Volt) wird bewusst ganz verzichtet, ebenso auf Aufgaben, die
+mehr Vorwissen bräuchten, als die Klasse bisher hat.
+
+\begin{itemize}[leftmargin=1.3cm,itemsep=0.3em]
+  \item[LZ1] die Ladungstrennung in einer Gewitterwolke durch
+  Reibungselektrizität zwischen Eiskristallen und aufsteigender warmer Luft
+  erklären und beschreiben, wie daraus ein elektrisches Feld entsteht, das
+  bei Überschreiten einer kritischen Feldstärke zum lawinenartigen
+  Ladungsausgleich (Blitz) führt (PhysikLibre 12.6.11).
+  \item[LZ2] anhand eines Experiments (Elektroskop in einem Faradayschen
+  Käfig, geladener Stab von aussen angenähert) beobachten, dass sich im
+  Käfig-Inneren nichts ändert, und dies erklären: ein Leiter im
+  elektrostatischen Gleichgewicht ist innen feldfrei, weil Influenzladungen
+  das äussere Feld exakt kompensieren (PhysikLibre 12.4.5/12.4.6).
+  \item[LZ3] diese Käfig-Wirkung auf Auto und Haus übertragen und
+  begründen, warum ein Auto auch trotz isolierender Gummireifen als
+  Faradayscher Käfig schützt (der Blitz überspringt die Lücke zum Boden).
+  \item[LZ4] Schrittspannung als Gefahr bei einem Blitzeinschlag in der
+  Nähe qualitativ beschreiben (Potenzialgefälle entlang des Bodens um die
+  Einschlagstelle) und daraus Sicherheitsregeln bei Gewitter ableiten, ohne
+  Berechnung.
+  \item[LZ5] die Grundelemente eines Stromkreises (Batterie, Schalter,
+  Verbraucher) über die Wasserkreislauf-Analogie zuordnen (Pumpe
+  $\hat=$ Batterie, Ventil $\hat=$ Schalter, Wasserrad $\hat=$ Verbraucher,
+  z.\,B. eine LED, Wasser $\hat=$ frei bewegliche Ladungsträger, Rohre
+  $\hat=$ Kabel) und ein Bild einer Batterie interpretieren, die als
+  Ladungspumpe die Pole trennt und ein Potenzialgefälle erzeugt.
+  \item[LZ6] (Expertenthema Strom) elektrischen Strom als die pro
+  Zeiteinheit durch eine Fläche fliessende Ladung erklären
+  ($I=\Delta Q/\Delta t$, ohne Einheit/Zahlenwerte), mit
+  Wasseranalogie (Durchflussmenge) und Alltagsbeispiel, und dies der
+  eigenen Puzzle-Gruppe vortragen.
+  \item[LZ7] (Expertenthema Spannung) Spannung qualitativ als
+  Potenzialgefälle/treibende Kraft der Batterie erklären, mit
+  Wasseranalogie (Höhenunterschied/Druck der Pumpe) und Alltagsbeispiel
+  (volle vs. fast leere Batterie, ohne Volt-Zahlen), und dies der
+  eigenen Puzzle-Gruppe vortragen.
+  \item[LZ8] (Expertenthema Widerstand) den elektrischen Widerstand
+  qualitativ als das erklären, was den Ladungsfluss erschwert, mit
+  Wasseranalogie (enges Rohr $\hat=$ hoher Widerstand) und
+  Alltagsbeispiel, unter Bezug auf Leitung/Leiter, und dies der eigenen
+  Puzzle-Gruppe vortragen.
+  \item[LZ9] (Vertiefungsaufgabe) Strom, Spannung und Widerstand in
+  einer gemeinsamen Aufgabe richtig anwenden und voneinander abgrenzen.
+\end{itemize}
+
+% =========================================================================
+\section*{2. Aufbau der Doppellektion}
+
+\subsection*{Erste Lektion: Gewitter (ca. 44 Min.)}
+
+\begin{xltabular}{\textwidth}{@{}p{2.6cm}X p{1.2cm}@{}}
+\toprule
+\textbf{Phase} & \textbf{Inhalt \& Methode} & \textbf{Zeit} \\
+\midrule
+\endhead
+
+Repetition &
+\textbf{Ladung und elektrisches Feld.} Kurzer Rückblick auf die letzte
+Doppellektion: Feldlinienregeln, Influenz, homogenes/inhomogenes Feld.
+Plenumsgespräch. &
+4' \\[0.4em]
+
+Aktivierung &
+\textbf{Gewitterwolke -- Einstiegsbild.} Bild einer Gewitterwolke
+(\texttt{Gewitter\_Grafik\_Jung.jpg}). Frage: wie entstehen dort
+überhaupt Ladungen? Plenumsgespräch, Sammeln von Vermutungen. &
+3' \\[0.4em]
+
+Theorie &
+\textbf{Ladungstrennung und elektrisches Feld im Gewitter.}
+Reibungselektrizität zwischen Eiskristallen und aufsteigender warmer
+Luft, Oberseite der Wolke positiv, Unterseite negativ; Erde bildet bei
+Gewitter den positiven Pol (\texttt{atmospheric-electric-field-static.svg}).
+Bei kritischer Feldstärke: lawinenartiger Ladungsausgleich, der Blitz
+(LZ1). Gemeinsam im Plenum erarbeitet, von der Lehrperson moderiert. &
+6' \\[0.4em]
+
+Übergang &
+\textbf{Wie schützt man sich?} Überleitung: wenn Blitze durch ein
+elektrisches Feld entstehen -- wie kann man sich davor schützen? Plenum. &
+1' \\[0.4em]
+
+Experiment &
+\textbf{Elektroskop im Faradayschen Käfig.} Demonstration: ein Elektroskop
+befindet sich in einem Käfig (\texttt{Elektroskop.svg},
+\texttt{Faraday\_1.png}--\texttt{Faraday\_4.png}); ein geladener Stab wird
+von aussen angenähert -- das Elektroskop schlägt nicht aus. Reine
+Beobachtung ohne Vorhersage, da die Klasse noch keine Vorkenntnis hat, um
+das Ergebnis vorherzusagen (bewusst \textbf{kein} Predict-Observe-Explain/
+M4, das genau diese Vorkenntnis voraussetzen würde). Die Erklärung folgt
+nicht durch die Lehrperson, sondern in der nächsten Phase durch die SuS
+selbst. &
+8' \\[0.4em]
+
+Gruppenarbeit &
+\textbf{Skizze und Erklärtext.} Jede Gruppe erstellt eine eigene Skizze
+mit Ladungsverteilung, Influenz und elektrischem Feld sowie einen kurzen
+Text, der mit diesen drei Begriffen erklärt, weshalb das Elektroskop im
+Käfig nicht ausschlägt (LZ2). \Methode{M3 Whiteboarding} (angelehnt --
+hier auf Papier/Poster statt auf einem Whiteboard, sonst gleiche
+Struktur: Gruppenphase mit Skizze/Erklärung, danach Klassendiskussion).
+Gruppenarbeit. &
+11' \\[0.4em]
+
+Plenum &
+\textbf{Präsentation und Sicherung.} Gruppen zeigen und vergleichen ihre
+Skizzen/Texte; Lehrperson moderiert, fragt bei rein additiver
+Begriffsnennung gezielt nach dem Kausalzusammenhang nach (Influenz
+$\to$ Gegenfeld $\to$ Kompensation) und sichert die korrekte Erklärung.
+Anschliessend Übertragung auf Auto (\texttt{faraday-cage-car-static.jpg},
+\texttt{auto\_innenraum\_blitzschlag.png}) und Haus -- die Gummireifen
+spielen dabei keine Rolle, der Blitz überspringt die Lücke zum Boden
+(LZ2, LZ3). Klassendiskussion, Lehrperson moderiert. &
+7' \\[0.4em]
+
+Diskussion &
+\textbf{Schrittspannung.} Warum ist es bei einem nahen Blitzeinschlag
+gefährlich, mit gespreizten Beinen zu stehen oder zu rennen?
+(\texttt{schrittspannung.jpg}) \Methode{C3 Think-Pair-Share}, danach
+Ableitung der Sicherheitsregel (Beine zusammen, in die Hocke) im Plenum
+(LZ4). &
+4' \\
+
+\bottomrule
+\end{xltabular}
+
+\textcolor{darkgray}{\small Summe erste Lektion: 44 Min.}
+
+\vspace{0.6em}
+\subsection*{Zweite Lektion: Beginn Stromkreise (ca. 43 Min.)}
+
+\begin{xltabular}{\textwidth}{@{}p{2.6cm}X p{1.2cm}@{}}
+\toprule
+\textbf{Phase} & \textbf{Inhalt \& Methode} & \textbf{Zeit} \\
+\midrule
+\endhead
+
+Übergang &
+\textbf{Vom ungeordneten zum kontrollierten Ladungsfluss.} Kurze
+Überleitung: beim Blitz fliessen Ladungen unkontrolliert durch die Luft --
+in einem Stromkreis fliessen sie kontrolliert durch Kabel. Plenum. &
+2' \\[0.4em]
+
+Theorie &
+\textbf{Kurze Einführung: Wasserkreislauf-Analogie und Batterie.}
+Grundelemente: Pumpe $\hat=$ Batterie, Ventil $\hat=$ Schalter, Wasserrad
+$\hat=$ Verbraucher (z.\,B. eine LED), Wasser $\hat=$ frei bewegliche
+Ladungsträger, Rohre $\hat=$ Kabel (\texttt{water-circuit2-static.png},
+\texttt{water-current-circuits-static.jpg}, \texttt{batterie.png}),
+daneben ein einfaches Stromkreis-Schaltbild
+(\texttt{simple-circuit2-static.svg}): die Batterie trennt Ladungen und
+erzeugt so ein Potenzialgefälle, das den Ladungsfluss im Kreis antreibt
+(LZ5). Bewusst knapp gehalten, da Strom/Spannung/Widerstand gleich danach
+vertieft im Gruppenpuzzle erarbeitet werden. Lehrervortrag. &
+8' \\[0.4em]
+
+Übung &
+\textbf{Zuordnung Wasserkreislauf $\leftrightarrow$ Stromkreis.} SuS
+ordnen die Elemente aus dem Wasserkreislauf-Bild den entsprechenden
+Stromkreis-Bauteilen zu (LZ5). \Methode{C1 Sortieraufgabe},
+Plenumsabgleich. &
+6' \\[0.4em]
+
+Expertenphase &
+\textbf{Gruppenpuzzle: Strom, Spannung, Widerstand.} Stammgruppen zu
+dritt bilden sich, jedes Mitglied wird Expertin/Experte für eines der
+drei Themen (Karten je mit Definition, Wasseranalogie und
+Alltagsbeispiel, siehe Abschnitt 3) und bereitet sich vor, es den
+anderen zu erklären (LZ6, LZ7, LZ8). \Methode{D3 Partner-/
+Gruppenpuzzle} -- Expertenphase, alle SuS mit demselben Thema arbeiten
+zunächst zusammen. Gruppenarbeit. &
+10' \\[0.4em]
+
+Austausch &
+\textbf{Gruppenpuzzle: gegenseitiges Erklären.} Neue Dreiergruppen mit
+je einer Expertin/einem Experten pro Thema; reihum erklärt jede/r ihr
+Thema den anderen beiden (LZ6, LZ7, LZ8). \Methode{D3 Partner-/
+Gruppenpuzzle} -- Austauschphase. Gruppenarbeit. &
+9' \\[0.4em]
+
+Vertiefung &
+\textbf{Gemeinsame Aufgabe.} Die Puzzle-Gruppen lösen zusammen eine
+kurze, bewusst einfache Aufgabe, die Strom, Spannung und Widerstand
+gemeinsam braucht (LZ9) -- empfohlen: \glqq Fehlersuche im
+Stromkreis\grqq{} (eine LED leuchtet nicht -- Batterie leer? Kabel
+unterbrochen? Schalter offen? -- mit der Wasseranalogie erklärt), als
+Zeitreserve ein kurzes Alltagsrätsel (Taschenlampe leuchtet schwächer
+bei fast leerer Batterie). Zwei konkrete Varianten in Abschnitt 3, ohne
+Einheiten/Zahlenwerte und ohne Vorwissen, das über diese Lektion
+hinausgeht. Ausblick: die genaue Beziehung zwischen Strom, Spannung und
+Widerstand (Ohm'sches Gesetz) folgt in der nächsten Doppellektion
+(\texttt{u-i-r}, 16.09.2026). Gruppenarbeit, kurzer Plenumsabgleich. &
+6' \\[0.4em]
+
+Abschluss &
+\textbf{Zusammenfassung und Ausblick.} Kurze Zusammenfassung, Hinweis
+auf das separate Aufgabenblatt für weitere Übung. Plenum. &
+2' \\
+
+\bottomrule
+\end{xltabular}
+
+\textcolor{darkgray}{\small Summe: 44 + 43 = 87 Min. -- 3 Min. Puffer
+innerhalb der 90 Min. der Doppellektion.}
+
+% =========================================================================
+\section*{3. Expertenkarten Gruppenpuzzle (Kurzinhalt)}
+
+Für die Expertenphase braucht jedes der drei Themen eine kurze,
+möglichst einfach gehaltene Theoriekarte -- Definition, Wasseranalogie
+und ein Alltagsbeispiel, dazu Bezug zu bereits Bekanntem (Ladung,
+Influenz, elektrisches Feld, Leitung). Das eigentliche Kartendesign
+entsteht später im Arbeitsblatt; hier die inhaltliche Kurzfassung als
+Diskussionsgrundlage:
+
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.5em]
+  \item \textbf{Strom (LZ6):} Definition $I=\Delta Q/\Delta t$ (keine
+  Einheit, keine Zahlenwerte) (\texttt{electric-charge-and-electric-current-static.svg}).
+  Wasseranalogie: die Wassermenge, die pro Zeit durch das Rohr fliesst.
+  Alltagsbeispiel: ein dickeres Kabel \glqq verträgt\grqq{} mehr Strom,
+  so wie ein dickeres Rohr mehr Wasser durchlässt. Bezug zu Bekanntem:
+  die frei beweglichen Ladungsträger (Ladung), die durch den Leiter
+  fliessen.
+  \item \textbf{Spannung (LZ7):} qualitativ als Potenzialgefälle/
+  treibende Kraft, die die Batterie zwischen ihren Polen erzeugt
+  (\texttt{batterie.png}). Wasseranalogie: der Höhenunterschied bzw.
+  Druck, den die Pumpe erzeugt -- je grösser, desto stärker \glqq
+  drängt\grqq{} das Wasser durch die Rohre. Alltagsbeispiel: eine volle
+  Batterie treibt stärker an als eine fast leere (bewusst ohne
+  Volt-Zahlen). Bezug zu Bekanntem: das elektrische Feld, das die
+  Batterie im Stromkreis erzeugt und das die Ladungsträger antreibt --
+  anders als beim Faradayschen Käfig (erste Lektion) gleicht sich
+  dieses Feld nie aus, weil die Batterie es ständig erneuert, solange
+  der Kreis geschlossen ist.
+  \item \textbf{Widerstand (LZ8):} qualitativ als das, was den
+  Ladungsfluss erschwert (\texttt{resistor-static.jpg}). Wasseranalogie:
+  ein enges Rohr entspricht einem hohen Widerstand. Alltagsbeispiel: ein
+  Heizdraht leitet schlechter als ein dickes Kupferkabel und wird
+  deshalb warm. Bezug zu Bekanntem: Leitung/Leiter -- wie leicht das
+  Material die Ladungsträger hindurchlässt.
+  \texttt{drude-model-static.svg} als optionale Vertiefung zur
+  mikroskopischen Vorstellung, sonst für \texttt{u-i-r/} reservieren.
+\end{itemize}
+
+\textbf{Vertiefungsaufgabe (LZ9, nach dem Puzzle) -- zwei bewusst
+einfach gehaltene Varianten zur Auswahl, ohne Einheiten/Zahlenwerte und
+ohne Vorwissen, das über diese Lektion hinausgeht (die
+\glqq Was passiert, wenn\ldots{}\grqq{}-Variante und die
+Serie-/Parallelschaltung wurden deshalb gestrichen):}
+
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.4em]
+  \item \textbf{(a) Fehlersuche im Stromkreis (empfohlen):} eine LED
+  leuchtet nicht. Drei mögliche Ursachen -- Batterie leer, Kabel
+  unterbrochen, Schalter offen -- sollen mit der Wasseranalogie erklärt
+  werden (Pumpe liefert keinen Druck / Rohr unterbrochen / Ventil zu).
+  Alltagsanker: ein Handy-Ladekabel, das nicht mehr lädt.
+  \item \textbf{(b) Alltagsrätsel (Zeitreserve):} warum leuchtet eine
+  Taschenlampe schwächer, wenn die Batterien fast leer sind? Passt
+  direkt zum Alltagsbeispiel der Spannungskarte (volle vs. fast leere
+  Batterie).
+\end{itemize}
+
+% =========================================================================
+\section*{4. Offene Punkte zur Besprechung}
+
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.4em]
+  \item \textbf{Aufteilung auf zwei Lektionen:} Ich gehe davon aus, dass
+  \glqq erste Lektion\grqq{} und \glqq zweite Lektion\grqq{} die beiden
+  45-Minuten-Hälften dieser einen Doppellektion \texttt{e-feld-vertiefung}
+  (09.09.2026) sind, und dass das quantitative Ohm'sche Gesetz erst in
+  \texttt{u-i-r} (16.09.2026) folgt. Bitte bestätigen oder korrigieren,
+  falls die zweite Lektion (Stromkreise) inhaltlich bereits zu
+  \texttt{u-i-r} gehören soll.
+  \item \textbf{Spannung bereits qualitativ hier?} Bisher war Spannung
+  komplett auf \texttt{u-i-r} verschoben; für das Gruppenpuzzle führe ich
+  sie nun schon hier -- rein qualitativ, ohne Formel -- ein, da sie sich
+  sonst nicht sinnvoll von Strom und Widerstand abgrenzen liesse. Bitte
+  kurz bestätigen, dass das keine unerwünschte Vorwegnahme von
+  \texttt{u-i-r} ist.
+  \item \textbf{Schrittspannung ohne Formel:} Da Spannung und Widerstand
+  an dieser Stelle noch nicht formal eingeführt sind, wird Schrittspannung
+  hier rein qualitativ (Sicherheitsaspekt) behandelt. Falls stattdessen
+  doch eine einfache quantitative Herangehensweise gewünscht ist, bitte
+  Rücksprache -- das würde eine Vorwegnahme von Inhalten aus
+  \texttt{u-i-r} bedeuten.
+  \item \textbf{Elektroskop-Experiment:} Ich gehe von einem
+  Demonstrationsexperiment der Lehrperson aus (nicht von SuS selbst
+  durchgeführt), gefolgt von der Gruppenarbeit mit Skizze und Erklärtext.
+  Bitte kurz bestätigen, ob das dem geplanten Aufbau entspricht.
+  \item \textbf{Skizze/Text -- Papier oder Poster?} Ich habe die
+  Gruppenarbeit an \Methode{M3 Whiteboarding} angelehnt, aber mit
+  Papier/Poster statt Whiteboard, da mir kein Hinweis auf Whiteboards im
+  Schulzimmer vorliegt. Falls tatsächlich Whiteboards zur Verfügung
+  stehen, kann die Methode unverändert als M3 durchgeführt werden
+  (Boards hochhalten statt Poster vorzeigen).
+  \item \textbf{Gruppengrösse Gruppenpuzzle:} Das Puzzle setzt
+  Dreiergruppen voraus (ein Thema pro Person). Falls die Klassengrösse
+  nicht durch drei teilbar ist, braucht es einzelne Vierergruppen (ein
+  Thema doppelt) oder eine kleine Gruppe mit nur zwei Themen -- bitte
+  kurz Rücksprache, wie gross die Klasse 1f aktuell ist.
+  \item \textbf{Zeitbudget:} Sowohl die Gruppenarbeit in der ersten
+  Lektion (11') als auch Expertenphase (10') und Austauschphase (9') in
+  der zweiten sind eher knapp bemessen. Falls das erfahrungsgemäss mehr
+  Zeit braucht, ist die Übung \glqq Zuordnung Wasserkreislauf
+  $\leftrightarrow$ Stromkreis\grqq{} (6', zweite Lektion) der Kandidat
+  zum Kürzen oder Streichen, da dieselbe Zuordnung im Aufgabenblatt
+  vertieft werden kann.
+\end{itemize}
+
+% =========================================================================
+\section*{5. Anschlussdokument: Aufgabenblatt}
+
+Wie bei den vorherigen Themen entsteht zusätzlich ein separates
+Aufgabenblatt mit weiteren Übungsaufgaben zu Gewitter/Faradayschem Käfig
+und zu den Grundelementen des Stromkreises, inklusive weiterer
+Zuordnungs- und Verständnisaufgaben zur Wasserkreislauf-Analogie.
+
+\end{document}

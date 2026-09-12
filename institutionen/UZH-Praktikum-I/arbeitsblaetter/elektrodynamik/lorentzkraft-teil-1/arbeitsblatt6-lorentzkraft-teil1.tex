@@ -1,0 +1,867 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Arbeitsblatt: Lorentzkraft Teil 1 -- Magnetische Kraft auf stromdurchflossene
+% Leiter
+% UZH Praktikum I -- Sara Romer Urban, Kantonsschule im Lee, HS2026
+% Klassen: 4fh (15.09.2026) + 4cdeg (18.09.2026) -- gemeinsames Material
+%
+% Enthaelt die drei Experimente der Doppellektion (Leiterschaukel,
+% zwei parallele Leiter, Fadenstrahlrohr) UND alle Aufgaben dazu -- Stand
+% nach Loris' zweiter Ueberarbeitung: das separate Experimente-Dokument
+% (experimente_lorentzkraft_teil1.tex) ist KEIN Protokoll-/Aufgaben-Dokument
+% mehr, sondern eine fertige Zusammenfassung der drei Experimente und ihrer
+% Kernerkenntnisse zur Pruefungsvorbereitung -- Experimente und Aufgaben
+% gehoeren stattdessen hierher, ins Arbeitsblatt.
+%
+% Zwei parallele Leiter: wird von der Lehrperson im Plenum gezeigt
+% (Lehrer-Demonstration, keine Partnerarbeit) -- direkt gefolgt von der
+% Formel-Repetition, dem historischen Ampere-Exkurs und der Herleitungs-
+% aufgabe. Leiterschaukel und Fadenstrahlrohr bleiben Partnerarbeit bzw.
+% Predict-Observe-Explain wie urspruenglich geplant.
+%
+% Quellen: lernziele.md, lorentzkraft-teil1-lektionsplan.tex (dieser Ordner),
+% literatur/ (PhysikLibre Kap. 13.5 "Leiter in Magnetfeldern": F=Il x B,
+% Herleitung F=IlB aus F=qvB ueber Q=It, v=l/t, Kraft zwischen zwei
+% parallelen Leitern; LEIFIphysik "LORENTZ-Kraft": Drei-Finger-Regel
+% rechts/links, F=q v x B; "Fadenstrahlrohr": Aufbau). Direkte Fortsetzung
+% von Magnetfelder (arbeitsblatt5-magnetfelder.tex) -- Feldformel des
+% geraden Leiters wird hier als bekannt vorausgesetzt, nicht neu
+% hergeleitet.
+%
+% Boxen-Layout, Sie-Form, Nummerierung: siehe institutionen/UZH-Praktikum-I/
+% CLAUDE.md. Allgemeiner Winkel-Fall (F=IlB*sin(alpha)) wird bei beiden
+% Kraeften direkt mit angegeben (Kreuzprodukt + Spezialfall rechtwinklig),
+% keine Hinweisboxen, keine "Bereits bekannt"-Repetitionsbox (Stand von
+% Loris' erster Ueberarbeitung, weiterhin gueltig).
+%
+% Herleitung der Lorentzkraft->magnetische Kraft: wird gemeinsam im Plenum
+% entwickelt, deshalb in der SuS-Version nur Platz (\Antwortraum), die volle
+% Herleitung erscheint nur in der Loesungsversion (\ifprintanswers).
+%
+% Bilder: siehe Bilder/*.pdf (SVG->PDF via Inkscape, PhysikLibre-Stil) und
+% Bilder/*.jpg (Polarlicht, Fadenstrahlrohr-Foto).
+% =============================================================================
+\documentclass[addpoints,11pt,a4paper]{exam}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.2cm,headheight=14pt]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{siunitx}
+% Hausstil: zusammengesetzte Einheiten immer als echter Bruch (\frac), nicht
+% als Inline-Schrägstrich oder \tfrac -- gilt global für jedes \si/\SI.
+\sisetup{per-mode=fraction,fraction-command=\frac}
+\usepackage{array,booktabs,tabularx,multirow}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{circuitikz}
+\usepackage[most]{tcolorbox}
+\usepackage{lastpage}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\usetikzlibrary{arrows.meta,calc,angles,quotes,decorations.markings,decorations.pathmorphing}
+
+\usepackage{setspace}
+\usepackage{needspace}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+\setstretch{1.08}
+\setlist[itemize]{itemsep=0.4em}
+
+% -----------------------------
+% Farben (Corporate-Farbschema Physik KFR)
+% -----------------------------
+\definecolor{titleblue}{HTML}{183A6B}
+\definecolor{accentblue}{HTML}{2E6F9E}
+\definecolor{lightblue}{HTML}{EAF4FB}
+\definecolor{verylightblue}{HTML}{F7FBFE}
+\definecolor{lightgray}{HTML}{F4F6F8}
+\definecolor{darkgray}{HTML}{4A4A4A}
+\definecolor{accentorange}{HTML}{D9720C}
+\definecolor{accentpurple}{HTML}{7B2D8E}
+\definecolor{theorygreen}{HTML}{2E7D4F}
+\definecolor{lighttheorygreen}{HTML}{EAF7EF}
+\definecolor{groupteal}{HTML}{1B7F72}
+\definecolor{lightgroupteal}{HTML}{E8F5F3}
+\definecolor{lightorange}{HTML}{FCEEE0}
+\definecolor{lightpurple}{HTML}{F3EAF7}
+
+\hypersetup{
+  colorlinks=true,
+  urlcolor=accentblue,
+  linkcolor=accentblue,
+  pdftitle={Arbeitsblatt 6: Lorentzkraft (Teil 1)},
+  pdfauthor={Loris Keller}
+}
+
+% -----------------------------
+% Spaltentypen
+% -----------------------------
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% -----------------------------
+% Boxen (Praktikum I: Lernziele/Einleitung/Theorie/Aufgaben NICHT mehr farbig
+% gerahmt -- nur Formel-, Hinweis- und Antwortbox bleiben Boxen, siehe
+% institutionen/UZH-Praktikum-I/CLAUDE.md, Abschnitt "Boxen-Layout".)
+% -----------------------------
+\tcbset{before skip=10pt, after skip=10pt}
+\newtcolorbox{titlebox}{
+  enhanced,
+  colback=titleblue,
+  colframe=titleblue,
+  boxrule=0pt,
+  arc=3mm,
+  left=3mm,right=3mm,top=3mm,bottom=3mm
+}
+
+\newlength{\aufgabenindent}
+\settowidth{\aufgabenindent}{10.\hskip\labelsep}
+
+\newenvironment{infobox}{%
+  \par\addvspace{10pt}\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+\newenvironment{theoriebox}[1][Theorie]{%
+  \par\addvspace{10pt}\noindent\textbf{#1}\par\smallskip\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+\newtcolorbox{taskbox}[1][]{
+  enhanced, breakable,
+  colback=white, colframe=white, boxrule=0pt,
+  left=0mm,right=0mm,top=0mm,bottom=0mm,
+  before skip=10pt, after skip=10pt,
+  before upper={%
+    \def\tmpboxtitle{#1}%
+    \ifx\tmpboxtitle\empty\else\noindent\textbf{#1}\par\smallskip\fi
+  }
+}
+
+\newtcolorbox{groupbox}[1][Gruppenarbeit]{
+  enhanced, breakable,
+  colback=white, colframe=white, boxrule=0pt,
+  left=0mm,right=0mm,top=0mm,bottom=0mm,
+  before skip=10pt, after skip=10pt,
+  before upper={\noindent\textbf{#1}\par\smallskip}
+}
+
+\newenvironment{beispielbox}[1][Beispiel]{%
+  \par\addvspace{10pt}\noindent\textbf{#1}\par\smallskip\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+\newtcolorbox{hinweisbox}[1][Hinweis]{
+  enhanced,
+  breakable,
+  colback=lightorange,
+  colframe=accentorange,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+\newtcolorbox{formelbox}[1][Formel]{
+  enhanced,
+  breakable,
+  colback=lightpurple,
+  colframe=accentpurple,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.9pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+\newtcolorbox{answerbox}{
+  breakable,
+  colback=white,
+  colframe=gray!55,
+  boxrule=0.5pt,
+  arc=1.5mm,
+  left=2mm,right=2mm,top=2mm,bottom=2mm
+}
+
+\newenvironment{teilkopf}{%
+  \par\addvspace{8pt}\noindent\bfseries\sffamily
+}{%
+  \par\addvspace{6pt}
+}
+
+\newtcbox{\Marke}[1][accentpurple]{
+  nobeforeafter,
+  colback=#1,
+  colframe=#1,
+  coltext=white,
+  boxrule=0pt,
+  arc=2pt,
+  left=5pt,right=5pt,top=2pt,bottom=2pt,
+  fontupper=\bfseries\sffamily\small
+}
+
+% --- Lösungen ein-/ausblenden -----------------------------------------------
+%\noprintanswers
+\printanswers
+
+\pointformat{}
+\renewcommand{\solutiontitle}{\noindent\color{titleblue}\textbf{Lösung:}\enspace}
+
+\pagestyle{headandfoot}
+\cfoot{\textcolor{darkgray}{Seite \thepage\ von \pageref{LastPage}}}
+
+\newcommand{\Kopfzeile}[4]{%
+  \begin{titlebox}
+    {\color{white}\sffamily\bfseries\Large #4}
+  \end{titlebox}
+  \vspace{0.5em}
+  \noindent\textbf{Klasse:}~#1 \hfill \textbf{Datum:}~#2 \hfill \textbf{Thema:}~#3
+    \hfill \textbf{Lehrperson:}~Loris Keller
+  \vspace{0.8em}
+  \lhead{\textcolor{darkgray}{#3}}
+  \rhead{\textcolor{darkgray}{#4}}
+}
+
+\newlength{\antwortraumlen}
+\newcommand{\Antwortraum}[1]{%
+  \pgfmathsetlength{\antwortraumlen}{#1*2.5cm}%
+  \begin{answerbox}
+    \rule{0pt}{\antwortraumlen}%
+  \end{answerbox}%
+}
+
+% Werte für Kopfzeile zentral setzen
+\newcommand{\Klasse}{4fh / 4cdeg (SP4)}
+\newcommand{\Datum}{15.09.2026 (4fh) / 18.09.2026 (4cdeg)}
+\newcommand{\Thema}{Lorentzkraft (Teil 1)}
+\newcommand{\ArbeitsblattTitel}{Arbeitsblatt 6: Lorentzkraft (Teil 1)}
+
+\begin{document}
+
+\Kopfzeile{\Klasse}{\Datum}{\Thema}{\ArbeitsblattTitel}
+
+% =============================================================================
+% Einleitung: Advance Organizer
+% =============================================================================
+\begin{beispielbox}[Einleitung: Wenn eine bewegte Ladung selbst im Feld steckt]
+Bei Magnetfelder haben Sie gelernt: bewegte Ladungen (Ströme) erzeugen ein
+Magnetfeld. Diese Lektion dreht die Frage um: Was passiert, wenn eine bewegte
+Ladung sich selbst in einem \textbf{\emph{externen}} Magnetfeld befindet,
+also in einem Feld, das \emph{nicht} von der Ladung selbst stammt, sondern
+von aussen kommt (z.\,B. von einem Magneten oder einem anderen Leiter)?
+
+Zwei Beispiele, die genau darauf beruhen: In jedem \textbf{Lautsprecher}
+oder \textbf{Elektromotor} sitzt eine stromdurchflossene Spule in einem
+starken Magnetfeld: Fliesst Strom, bewegt sich die Spule.
+\begin{center}
+\begin{minipage}[t]{7.2cm}\centering
+  \includegraphics[width=6.8cm]{Bilder/lautsprecher-01.png}\\
+  {\scriptsize Lautsprecher: Spule im Feld eines Ringmagneten.}
+\end{minipage}\hfill
+\begin{minipage}[t]{6.2cm}\centering
+  \includegraphics[width=4.3cm]{Bilder/elektromotor.png}\\
+  {\scriptsize Elektromotor: Leiterschlaufe im Feld, $F_L$ dreht sie.}
+\end{minipage}
+\end{center}
+Beim \textbf{Polarlicht} treffen geladene Teilchen aus dem Sonnenwind auf
+das Erdmagnetfeld und werden auf gekrümmte Bahnen zu den Polen abgelenkt.
+Beide Phänomene beruhen auf derselben Kraft: einmal wirkt sie auf einen
+ganzen Leiter (die \textbf{\emph{magnetische Kraft}}), einmal auf eine
+einzelne freie Ladung (die \textbf{\emph{Lorentzkraft}}). Genau diese
+beiden Kräfte untersuchen Sie jetzt -- an drei Experimenten.
+\begin{center}
+\begin{minipage}[t]{6.5cm}\centering
+  \includegraphics[width=6.5cm]{Bilder/aurora-borealis.jpg}\\
+  {\scriptsize Polarlicht (Aurora borealis).}
+\end{minipage}\hfill
+\begin{minipage}[t]{5.5cm}\centering
+  \includegraphics[width=4cm]{Bilder/polarlicht_illustration_flugbahn.png}\\
+  {\scriptsize Geladene Teilchen spiralen entlang der Feldlinien zum
+  magnetischen Pol.}
+\end{minipage}
+\end{center}
+\end{beispielbox}
+
+% =============================================================================
+% Experiment 1: Leiterschaukel (Partnerarbeit, LZ1)
+% =============================================================================
+\begin{questions}
+\begin{groupbox}[Experiment 1 -- Partnerarbeit: Leiterschaukel]
+\question[3] Sie erhalten einen Aufbau mit einem Hufeisenmagneten und einem
+lose aufgehängten, schaukelförmigen Leiter, der sich zwischen den Polen
+befindet. Der Stromkreis lässt sich einschalten und umpolen.
+\begin{center}
+  \includegraphics[width=6.5cm]{Bilder/leiterschaukel-experiment-preview.pdf}
+\end{center}
+{\scriptsize Leiterschaukel im Feld eines Hufeisenmagneten: Stromrichtung
+$I$, Feldrichtung $B$, resultierende Kraft $F$ auf den Leiter.}
+Schalten Sie den Strom ein und beobachten Sie, in welche Richtung sich die
+Schaukel bewegt. Polen Sie anschliessend zuerst nur den Strom, dann zusätzlich
+noch den Magneten um. Notieren Sie für alle drei Fälle, was Sie beobachten
+(\textbf{noch ohne Erklärung}, nur die reine Beobachtung).
+\Antwortraum{3}
+\begin{solution}
+Bei der ersten Polung schlägt die Schaukel in eine bestimmte Richtung aus.
+Polen Sie \emph{nur} den Strom um, schlägt sie in die \emph{entgegengesetzte}
+Richtung aus. Polen Sie zusätzlich auch noch den Magneten um (also beide
+Male), schlägt sie wieder in die \emph{ursprüngliche} Richtung aus wie beim
+ersten Versuch: Die Auslenkungsrichtung hängt also von \emph{beiden}
+Polungen zusammen ab, nicht von einer allein.
+\end{solution}
+\end{groupbox}
+\end{questions}
+
+% =============================================================================
+% Theorie: Magnetische Kraft F=IlB (allgemein + Spezialfall) und
+% Drei-Finger-Regel (LZ2, LZ3)
+% =============================================================================
+\begin{theoriebox}[Die magnetische Kraft auf einen Leiter]
+Ein stromdurchflossener Leiter (Länge $l$, Strom $I$) kann sich in einem
+\textbf{\emph{externen}} Magnetfeld $B$ befinden -- also einem Feld, das
+\emph{nicht} vom Strom im Leiter selbst erzeugt wird, sondern von aussen
+kommt (z.\,B. von einem Permanentmagneten oder einem anderen Leiter). Ein
+solcher Leiter erfährt dann die \textbf{\emph{magnetische Kraft}}:
+\begin{formelbox}[Magnetische Kraft]
+\[
+  \vec F = I\,\vec l\times\vec B, \qquad F = I\cdot l\cdot B\cdot\sin\alpha
+\]
+Einheit von $F$: $\si{\newton}$. $\alpha$ ist der Winkel zwischen der
+Stromrichtung $\vec l$ und der Feldrichtung $\vec B$ (mit dem aus der
+Mathematik bereits bekannten Kreuzprodukt).
+
+\textbf{Spezialfall (senkrechtes Feld):} Steht der Leiter senkrecht zum
+Feld ($\vec I\perp\vec B$, also $\alpha=90^\circ$), gilt $\sin\alpha=1$ und
+damit einfach
+\[
+  F = I\cdot l\cdot B
+\]
+\end{formelbox}
+\begin{center}
+  \includegraphics[width=6cm]{Bilder/magnetic-force-wire.pdf}
+\end{center}
+{\scriptsize Stromdurchflossenes Leiterstück der Länge $l$ im Feld $B$:
+die magnetische Kraft $F$ steht senkrecht zu beiden.}
+\begin{center}
+  \includegraphics[width=7cm]{Bilder/magnetic-force-on-particle.png}
+\end{center}
+{\scriptsize Der allgemeine Winkel-Fall: Stromrichtung (rot) und Feldrichtung
+(grün) schliessen einen Winkel $\alpha$ ein; die resultierende Kraft (blau)
+hängt über $\sin\alpha$ von diesem Winkel ab.}
+
+Die \textbf{\emph{Richtung}} dieser Kraft bestimmen Sie mit der
+\textbf{\emph{Drei-Finger-Regel der rechten Hand}}: Daumen, Zeigefinger und
+Mittelfinger stehen dabei paarweise senkrecht aufeinander.
+\begin{center}
+  \includegraphics[width=5.5cm]{Bilder/uvw-regel-strom.pdf}
+\end{center}
+{\scriptsize Daumen = Stromrichtung $I$ (Ursache), Zeigefinger =
+Feldrichtung $B$ (Vermittler), Mittelfinger = Kraftrichtung $F$ (Wirkung).
+Rechte Hand, da $I$ per Konvention die Bewegungsrichtung positiver
+Ladungsträger angibt.}
+\end{theoriebox}
+
+% =============================================================================
+% Rückkehr: Leiterschaukel selbst erklären (LZ4)
+% =============================================================================
+\begin{questions}
+\begin{taskbox}[Rückkehr: Erklären Sie Ihre eigene Beobachtung]
+\question[4] Bearbeiten Sie diese Aufgabe zuerst \textbf{allein}, vergleichen
+Sie danach \textbf{zu zweit} Ihre Antwort.
+
+Erklären Sie mithilfe der magnetischen Kraft $F=IlB$ und der
+Drei-Finger-Regel Ihre eigene Beobachtung an der Leiterschaukel von oben:
+Warum lenkt der Strom die Schaukel überhaupt aus, und warum kehrt sich die
+Richtung um, wenn Sie nur den Strom \emph{oder} nur den Magneten umpolen,
+aber wieder zur ursprünglichen Richtung zurückkehrt, wenn Sie \emph{beide}
+umpolen?
+\Antwortraum{4}
+\begin{solution}
+Der stromdurchflossene Leiter befindet sich im Feld des Hufeisenmagneten und
+erfährt deshalb die magnetische Kraft $F=IlB$ senkrecht zu $I$ und $B$.
+Genau das lenkt die Schaukel aus. Die Richtung dieser Kraft liefert die
+Drei-Finger-Regel: Kehrt man \emph{nur} $I$ oder \emph{nur} $B$ um, dreht sich
+nach der Drei-Finger-Regel auch die Kraftrichtung $F$ um. Kehrt man
+\emph{beide} um, zeigen Daumen und Zeigefinger zwar beide in die
+entgegengesetzte Richtung wie zu Beginn, ihre relative Anordnung
+zueinander bleibt aber gleich. Die Drei-Finger-Regel liefert deshalb
+wieder dieselbe Kraftrichtung wie im allerersten Fall.
+\end{solution}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Experiment 2: Zwei parallele Leiter (Lehrer-Demonstration, LZ1)
+% =============================================================================
+\begin{taskbox}[Experiment 2 -- Lehrer-Demonstration: Zwei parallele Leiter]
+Die Lehrperson zeigt im Plenum zwei parallel hängende, stromdurchflossene
+Drähte, deren Stromrichtung sich unabhängig voneinander umpolen lässt: Bei
+\textbf{gleichgerichteten} Strömen ziehen sich die Drähte an, bei
+\textbf{entgegengesetzt} gerichteten Strömen stossen sie sich ab.
+\begin{center}
+  \includegraphics[width=8.5cm]{Bilder/antiparallel-and-parallel-wires.pdf}
+\end{center}
+{\scriptsize Links (a): entgegengesetzte Ströme, Abstossung. Rechts (b):
+gleichgerichtete Ströme, Anziehung.}
+\end{taskbox}
+
+\begin{beispielbox}[Bereits bekannt -- und ein Stück Geschichte]
+Sie kennen aus der Magnetfelder-Doppellektion bereits das Feld eines
+geraden, stromdurchflossenen Leiters:
+\[
+  B = \frac{\mu_0}{2\pi}\cdot\frac{I}{r}
+\]
+Genau dieser Aufbau -- zwei parallele, stromdurchflossene Leiter -- diente
+vor der SI-Neudefinition 2019 direkt zur \textbf{\emph{Definition}} der
+Einheit Ampere: Über die gemessene Kraft zwischen zwei Leitern mit
+bekanntem Abstand liess sich die Stromstärke festlegen, für die diese Kraft
+gerade einen bestimmten Wert annimmt.
+\end{beispielbox}
+
+% =============================================================================
+% Aufgabe: Ampere'sches Kraftgesetz herleiten + Anziehung/Abstossung (LZ7, LZ8)
+% =============================================================================
+\begin{questions}
+\begin{taskbox}[Aufgabe: Kraft zwischen den beiden Leitern]
+\question Kombinieren Sie Ihr Wissen über das Feld des geraden Leiters
+($B=\frac{\mu_0}{2\pi}\cdot\frac{I}{r}$) mit der magnetischen Kraft
+$F=I\cdot l\cdot B$ von oben, um die Kraft zwischen den beiden Leitern von
+oben herzuleiten und ihre Richtung zu begründen.
+\begin{center}
+  \includegraphics[width=7cm]{Bilder/amperes-force-law.pdf}
+\end{center}
+{\scriptsize Das Feld $B_1$ des unteren Leiters wirkt am Ort des oberen
+Leiters und erzeugt dort die Kraft $F_2$ auf ein Leiterstück der Länge $l$.
+Der Abstand $d$ im Bild entspricht dem $r$ unten.}
+\begin{parts}
+  \part[3] Leiten Sie eine Formel für die Kraft \emph{pro Leiterlänge}
+  $\frac{F}{l}$ zwischen zwei parallelen Leitern (Ströme $I_1$, $I_2$,
+  Abstand $r$) her.
+  \Antwortraum{4}
+  \begin{solution}
+  Das Feld des einen Leiters am Ort des anderen (Abstand $r$) ist
+  \[
+    B_1(r) = \frac{\mu_0}{2\pi}\cdot\frac{I_1}{r}
+  \]
+  Dieses Feld $B_1$ übt auf den zweiten Leiter (Strom $I_2$, Länge $l$) die
+  magnetische Kraft aus:
+  \[
+    F = I_2\cdot l\cdot B_1
+  \]
+  Setzen wir $B_1(r)$ ein:
+  \[
+    F = I_2\cdot l\cdot\frac{\mu_0}{2\pi}\cdot\frac{I_1}{r}
+  \]
+  Umgestellt nach der Kraft \emph{pro Leiterlänge} $\frac{F}{l}$ ergibt sich
+  das \textbf{\emph{Ampère'sche Kraftgesetz}}:
+  \[
+    \frac{F}{l} = \frac{\mu_0}{2\pi}\cdot\frac{I_1\cdot I_2}{r}, \qquad
+    \text{Einheit von }\frac{F}{l}\colon\ \si{\newton\per\meter}
+  \]
+  \end{solution}
+  \part[3] Erklären Sie mithilfe der Drei-Finger-Regel, weshalb sich die
+  Leiter bei \textbf{gleichgerichteten} Strömen anziehen.
+  \Antwortraum{3}
+  \begin{solution}
+  Für die Richtung betrachten Sie eine einzelne (positive) bewegte Ladung im
+  einen Leiter, die sich im Feld des anderen Leiters befindet, und bestimmen
+  die Kraft auf sie mit der Drei-Finger-Regel (rechte Hand, konventionelle
+  Stromrichtung).
+  \begin{center}
+    \includegraphics[width=5.5cm]{Bilder/anti-parallel-currents-magnetic-force.pdf}
+  \end{center}
+  {\scriptsize Eine einzelne (positive) Ladung im rechten Leiter, bewegt im
+  Feld $B$ des linken Leiters -- die Drei-Finger-Regel liefert die Kraft
+  $F$.}
+  Fliessen $I_1$ und $I_2$ in dieselbe Richtung, zeigt die Drei-Finger-Regel
+  eine Kraft zum jeweils anderen Leiter hin: Die Leiter ziehen sich an.
+  Dieselbe Kraft wirkt (actio = reactio) in umgekehrter Richtung auf den
+  anderen Leiter.
+  \end{solution}
+  \part[2] Erklären Sie entsprechend, weshalb sich die Leiter bei
+  \textbf{entgegengesetzt gerichteten} Strömen abstossen.
+  \Antwortraum{2}
+  \begin{solution}
+  Jetzt zeigt der Daumen (Bewegungsrichtung der Ladung) in die
+  entgegengesetzte Richtung wie zuvor, während die Feldrichtung unverändert
+  bleibt. Die Drei-Finger-Regel liefert deshalb eine Kraft vom jeweils
+  anderen Leiter weg: Die Leiter stossen sich ab. Achtung, Verwechslungsgefahr
+  mit Polen/Ladungen: Dort gilt \glqq gleich stösst ab\grqq{} -- bei
+  parallelen Strömen gilt das Gegenteil.
+
+  \textbf{Alternative Erklärung (Feldlinien-Modell):} Man kann sich die
+  Feldlinien beider Leiter auch als gespannte \glqq Gummifäden\grqq{}
+  vorstellen -- die Kraft zeigt dann in Richtung abnehmender
+  Feldliniendichte.
+  \begin{center}
+  \begin{minipage}[t]{7.5cm}\centering
+    \includegraphics[width=7cm]{Bilder/wires-antiparallel-field.pdf}\\
+    {\scriptsize Entgegengesetzte Ströme: Feldlinien verdichten sich
+    dazwischen (hohe Dichte) $\Rightarrow$ Kraft nach aussen,
+    Abstossung.}
+  \end{minipage}\hfill
+  \begin{minipage}[t]{7.5cm}\centering
+    \includegraphics[width=7cm]{Bilder/wires-parallel-field.pdf}\\
+    {\scriptsize Gleichgerichtete Ströme: Feldlinien verschmelzen zu
+    einer gemeinsamen Schlaufe (dazwischen schwächer)
+    $\Rightarrow$ Kraft nach innen, Anziehung.}
+  \end{minipage}
+  \end{center}
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Theorie: Lorentzkraft (allgemeine Formel, Spezialfall, Herleitung im Plenum)
+% =============================================================================
+\begin{theoriebox}[Die Lorentzkraft auf eine einzelne Ladung]
+Ein Strom ist eine Bewegung vieler einzelner Ladungsträger. Jeder einzelne
+dieser bewegten Ladungsträger befindet sich ebenfalls im Magnetfeld $B$ und
+erfährt deshalb -- unabhängig davon, ob er sich gerade in einem Leiter
+befindet oder frei ist -- eine eigene Kraft auf eine \textbf{einzelne}
+Ladung $q$ mit Geschwindigkeit $v$: die \textbf{\emph{Lorentzkraft}}.
+\begin{center}
+  \includegraphics[width=6cm]{Bilder/magnetic-force-on-wire-with-electrons.pdf}
+\end{center}
+{\scriptsize Die einzelnen Ladungsträger im Leiter bewegen sich mit der
+Driftgeschwindigkeit $v$ durch das Feld $B$ und erfahren je für sich eine
+Kraft.}
+
+Zeigen wir nun gemeinsam im Plenum, dass die Summe dieser vielen
+Einzelkräfte wieder genau die magnetische Kraft $F=IlB$ von oben ergibt --
+die magnetische Kraft ist damit nichts anderes als die Summe der
+Lorentzkraft über alle Ladungsträger in einem Leiterstück, \emph{nicht}
+eine zweite, unabhängige Kraft.
+
+\ifprintanswers
+\textbf{Herleitung:} Betrachten Sie ein Leiterstück der Länge $l$: Die darin
+enthaltenen Ladungsträger bewegen sich mit der (mittleren)
+Driftgeschwindigkeit $v$ und benötigen deshalb die Zeit
+\[
+  t = \frac{l}{v}
+\]
+um das Leiterstück zu durchqueren. Nach der Definition der Stromstärke gilt
+$I=\frac{Q}{t}$, also
+\[
+  Q = I\cdot t
+\]
+Setzen wir $t=\frac{l}{v}$ ein, erhalten wir für die Gesamtladung $Q$ im
+betrachteten Leiterstück
+\[
+  Q = I\cdot\frac{l}{v}
+\]
+Da alle diese Ladungsträger dieselbe Geschwindigkeit $v$ im selben Feld $B$
+haben, ist die \textbf{gesamte} Kraft auf sie zusammen $F=Q\cdot v\cdot B$
+(Summe der Einzelkräfte $q\cdot v\cdot B$ über alle Ladungsträger). Setzen
+wir die gerade gefundene Ladung $Q$ ein:
+\[
+  F = Q\cdot v\cdot B = I\cdot\frac{l}{v}\cdot v\cdot B
+\]
+Kürzen von $v$ ergibt
+\[
+  F = I\cdot l\cdot B
+\]
+also wieder genau die magnetische Kraft von oben.
+\else
+\textbf{Platz für die gemeinsame Herleitung im Plenum:}
+\Antwortraum{7}
+\fi
+
+Aus dieser Herleitung folgt die Formel für die Lorentzkraft selbst:
+\begin{formelbox}[Lorentzkraft]
+\[
+  \vec F = q\,\vec v\times\vec B, \qquad F = q\cdot v\cdot B\cdot\sin\alpha
+\]
+Einheit von $F$: $\si{\newton}$. $\alpha$ ist der Winkel zwischen der
+Geschwindigkeit $\vec v$ und der Feldrichtung $\vec B$.
+
+\textbf{Spezialfall (senkrechtes Feld):} Bei $\vec v\perp\vec B$ (also
+$\alpha=90^\circ$) gilt wieder einfach
+\[
+  F = q\cdot v\cdot B
+\]
+
+Für die \textbf{Richtung} gilt weiterhin die Drei-Finger-Regel, jetzt mit
+dem Daumen in Richtung der Ladungsgeschwindigkeit $v$ statt der
+Stromrichtung: \textbf{rechte Hand} für \textbf{positive} Ladungen,
+\textbf{linke Hand} für \textbf{negative} Ladungen (dieselbe Regel, aber
+mit vertauschter Hand, kein zusätzlicher Umkehrschritt nötig).
+\begin{center}
+  \includegraphics[width=8cm]{Bilder/uvw-regel-ladungen.pdf}
+\end{center}
+{\scriptsize Links: negative Ladung, linke Hand. Rechts: positive Ladung,
+rechte Hand -- Daumen jeweils in Richtung $v$.}
+\end{formelbox}
+
+Da die Lorentzkraft $F_L$ immer senkrecht zur Geschwindigkeit $v$ steht,
+lenkt sie eine freie Ladung ständig zur Seite ab, ohne ihren Betrag zu
+ändern. Was das für die Bewegung einer frei beweglichen Ladung bedeutet,
+untersuchen Sie im Fadenstrahlrohr-Experiment.
+\end{theoriebox}
+
+% =============================================================================
+% Experiment 3: Fadenstrahlrohr (Aufbau, ohne Kreisbahn vorwegzunehmen)
+% =============================================================================
+\begin{theoriebox}[Experiment 3 -- Aufbau: Fadenstrahlrohr]
+Die Lorentzkraft wirkt nicht nur auf Ladungen \emph{im} Leiter, sondern auch
+auf eine \textbf{\emph{freie}} bewegte Ladung. Das \textbf{Fadenstrahlrohr}
+macht genau das sichtbar. Die Elektronen selbst sind unsichtbar; ihre Bahn
+wird erst durch das verdünnte Neongas im Glaskolben als leuchtende Spur
+sichtbar gemacht, sobald sie mit den Gasteilchen zusammenstossen.
+\begin{center}
+  \includegraphics[width=6.5cm]{Bilder/fadenstrahlrohr.png}
+\end{center}
+{\scriptsize Aufbau: Elektronenkanone (Heizspannung $U_H$,
+Beschleunigungsspannung $U_B$), Glaskolben mit Neongasfüllung und
+Skala, Helmholtzspulen (Spulenstrom $I_\text{Spulen}$).}
+
+\textbf{\emph{Wie entsteht das Licht -- und woher kommt seine Farbe?}}
+Trifft ein schnelles Elektron aus dem Strahl auf ein Neon-Atom im
+Restgas, kann es einen Teil seiner Bewegungsenergie auf ein gebundenes
+Elektron dieses Atoms übertragen. Dieses gebundene Elektron springt
+dadurch auf ein höheres Energieniveau (\textbf{\emph{Anregung}}) -- ein
+instabiler Zustand. Nach kurzer Zeit fällt es von selbst wieder auf ein
+tieferes Niveau zurück (\textbf{\emph{Abregung}}) und gibt die dabei frei
+werdende Energie als Lichtteilchen (Photon) ab.
+\begin{center}
+\begin{tikzpicture}[>=Latex,scale=0.85]
+  % --- Teilbild 1: Anregung durch Stoss ---
+  \begin{scope}
+    \node[align=center,font=\bfseries\small] at (0,2.7) {1. Anregung durch Stoss};
+    \draw[thick] (0,0) circle (1.0);
+    \draw[thick] (0,0) circle (1.9);
+    \filldraw[fill=gray!40] (0,0) circle (0.25) node[font=\scriptsize] {Ne};
+    \node[font=\scriptsize] at (0,-1.25) {$E_1$ (Grundzustand)};
+    \node[font=\scriptsize] at (0,-2.2) {$E_2$ (angeregt)};
+    \filldraw[blue] (1.0,0) circle (0.07);
+    \draw[thick,-{Latex[length=2.2mm]},blue,dashed] (1.0,0.15) to[bend left=45] (1.85,0.3);
+    \node[blue,font=\scriptsize] at (1.65,0.85) {Anregung};
+    \draw[thick,-{Latex[length=2.5mm]},red] (-3.1,1.6) -- (-1.05,0.35);
+    \node[red,font=\scriptsize,align=center] at (-2.6,1.05) {schnelles $e^-$\\(Strahl)};
+  \end{scope}
+  % --- Teilbild 2: Abregung durch Lichtemission ---
+  \begin{scope}[xshift=7.3cm]
+    \node[align=center,font=\bfseries\small] at (0,2.7) {2. Abregung durch Lichtemission};
+    \draw[thick] (0,0) circle (1.0);
+    \draw[thick] (0,0) circle (1.9);
+    \filldraw[fill=gray!40] (0,0) circle (0.25) node[font=\scriptsize] {Ne};
+    \node[font=\scriptsize] at (0,-1.25) {$E_1$ (Grundzustand)};
+    \node[font=\scriptsize] at (0,-2.2) {$E_2$ (angeregt)};
+    \filldraw[blue] (1.85,0.3) circle (0.07);
+    \draw[thick,-{Latex[length=2.2mm]},blue,dashed] (1.85,0.3) to[bend left=45] (1.0,0.15);
+    \node[blue,font=\scriptsize] at (1.65,0.85) {Abregung};
+    \draw[thick,orange,decorate,decoration={zigzag,amplitude=1.3pt,segment length=3.5pt}] (1.0,-0.3) -- (2.9,-0.3);
+    \draw[thick,-{Latex[length=2.5mm]},orange] (2.9,-0.3) -- (3.25,-0.3);
+    \node[orange,font=\scriptsize] at (2.05,-0.65) {Photon, $h\cdot f=E_2-E_1$};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+{\scriptsize Vereinfachtes Bohr-Modell eines Neon-Atoms: Stossanregung
+durch ein Strahlelektron, gefolgt von Lichtemission beim Rücksprung auf
+den Grundzustand.}
+
+Jedes Element besitzt nur ganz bestimmte, diskrete Energieniveaus. Die
+Photonenenergie entspricht deshalb immer genau der Differenz $\Delta
+E=E_2-E_1=h\cdot f$ zwischen zwei solchen Niveaus, und diese Energie legt
+über $f=\frac{c}{\lambda}$ die Wellenlänge -- also die \textbf{Farbe} --
+des Lichts fest. Da das Fadenstrahlrohr mit Neongas gefüllt ist, leuchtet
+die Elektronenspur deshalb in dem für Neon charakteristischen
+Rötlich-Orange, wie man es auch von Neonröhren-Reklamen kennt: Ein
+anderes Füllgas würde eine andere Farbe ergeben, weil seine Atome andere
+Energieniveaus besitzen.
+
+\textbf{\emph{Die Elektronenkanone}} besteht aus drei Teilen: Die
+\textbf{\emph{Glühkathode}} wird durch die Heizspannung $U_H$ erhitzt und
+gibt dadurch freie Elektronen ab (glühelektrischer Effekt). Der
+\textbf{\emph{Wehneltzylinder}} liegt leicht negativ und bündelt diese
+Elektronen zu einem schmalen Strahl. Die \textbf{\emph{Anode}} liegt
+positiv gegenüber der Kathode -- die dazwischen anliegende
+Beschleunigungsspannung $U_B$ beschleunigt die Elektronen auf ihre
+Geschwindigkeit $v$.
+\begin{center}
+  \includegraphics[width=7cm]{Bilder/Wehneltzylinder.png}
+\end{center}
+{\scriptsize Elektronenkanone: Glühkathode, Wehneltzylinder und Anode.}
+
+\textbf{\emph{Die Helmholtzspulen}} sind zwei parallele, gleich
+durchflossene Spulen im selben Abstand wie ihr Radius -- genau diese
+Anordnung erzeugt dazwischen ein besonders \textbf{\emph{homogenes}}
+Magnetfeld $B$. In dieses homogene Feld, senkrecht zu $v$, treten die
+beschleunigten Elektronen ein.
+\begin{center}
+  \includegraphics[width=8cm]{Bilder/Helmholtzspulen.png}
+\end{center}
+{\scriptsize Zwei Helmholtzspulen mit Stromfluss $I$ erzeugen zwischen
+sich ein homogenes Magnetfeld $B$.}
+
+Von oben betrachtet steht dieses Feld senkrecht zur Zeichenebene und zeigt
+aus dem Blatt heraus (Symbol $\odot$). Was mit den Elektronen nach dem
+Eintritt geschieht, untersuchen Sie in der folgenden Aufgabe.
+\end{theoriebox}
+
+% =============================================================================
+% POE: Fadenstrahlrohr (LZ6)
+% =============================================================================
+\begin{questions}
+\begin{taskbox}[Predict-Observe-Explain: Fadenstrahlrohr]
+\question Die Lehrperson führt jetzt das Fadenstrahlrohr vor.
+\begin{parts}
+  \part[2] \textbf{Predict.} Die Elektronen treten mit der Geschwindigkeit
+  $v$ waagrecht in das Magnetfeld $B$ ein (Skizze unten). Die Lorentzkraft
+  $F=qvB$ steht dabei (wie Sie oben hergeleitet haben) immer senkrecht zu
+  $v$. Überlegen Sie: Was bedeutet eine Kraft, die immer senkrecht zur
+  momentanen Bewegungsrichtung steht, für die Bahn eines Teilchens?
+  Zeichnen Sie die von Ihnen erwartete Elektronenbahn direkt ins Bild ein.
+  \begin{center}
+  \begin{tikzpicture}[>=Latex,scale=1.15]
+    \begin{scope}
+      \clip (0,0) circle (2.3);
+      \foreach \x in {-2.1,-1.4,-0.7,0,0.7,1.4,2.1}{
+        \foreach \y in {-2.1,-1.4,-0.7,0,0.7,1.4,2.1}{
+          \node[font=\small,gray!65] at (\x,\y) {$\odot$};
+        }
+      }
+    \end{scope}
+    \draw[thick] (0,0) circle (2.3);
+    % Elektronenkanone im UNTEREN Teil des Rohrs (wie im echten Aufbau),
+    % Strahl tangential (waagrecht) nach rechts -- nicht radial auf den
+    % Mittelpunkt gerichtet. Mit B aus dem Blatt heraus (⊙) und Strahl
+    % nach rechts wirkt die Lorentzkraft auf das Elektron nach oben/innen
+    % (linke Hand: Daumen v nach rechts, Zeigefinger B aus dem Blatt heraus
+    % -> Mittelfinger nach oben) -- von unten gestartet zeigt "nach oben"
+    % ins Rohrinnere, also nach innen.
+    \filldraw[black] (-0.3,-1.8) circle (0.08);
+    \draw[thick,-{Latex[length=3mm]}] (-0.3,-1.8) -- (1.1,-1.8);
+    \node[align=center] at (-0.3,-2.65) {\scriptsize Elektronenkanone};
+    \node[align=left] at (1.25,-1.65) {\scriptsize $e^-$, $v$};
+  \end{tikzpicture}
+  \end{center}
+  {\scriptsize Draufsicht auf das Rohr: $\odot$ = Magnetfeld $B$ der
+  Helmholtzspulen (aus dem Blatt heraus). Die Elektronenkanone schiesst
+  den Strahl tangential (waagrecht) nach rechts ins Feld.}
+  \Antwortraum{2}
+  \begin{solution}
+  Eine Kraft, die immer senkrecht zur momentanen Geschwindigkeit steht und
+  deren Betrag konstant bleibt (da $q$, $v$ und $B$ konstant sind), ändert
+  nur die \emph{Richtung} von $v$, nie ihren \emph{Betrag}. Genau das ist
+  die Bedingung für eine \textbf{Zentripetalkraft} aus der Mechanik. Zu
+  erwarten ist deshalb eine \textbf{Kreisbahn}.
+  \end{solution}
+  \part[1] \textbf{Observe.} Beschreiben Sie kurz, was Sie am
+  eingeschalteten Fadenstrahlrohr tatsächlich beobachten.
+  \Antwortraum{1}
+  \begin{solution}
+  Die leuchtende Elektronenspur bildet tatsächlich eine geschlossene
+  Kreisbahn.
+  \end{solution}
+  \part[3] \textbf{Explain.} Erklären Sie die beobachtete Kreisbahn
+  physikalisch: Wirkt die Lorentzkraft hier als Zentripetalkraft? Bestimmen
+  Sie ausserdem mit der \textbf{richtigen} Variante der Drei-Finger-Regel
+  (Elektronen sind negativ geladen!) die Richtung, in die sich die
+  Kreisbahn krümmt.
+  \Antwortraum{3}
+  \begin{solution}
+  Ja: Die Lorentzkraft steht stets senkrecht zu $v$, ändert also nur die
+  Bewegungsrichtung, nie den Geschwindigkeitsbetrag. Das entspricht genau
+  der Definition der Zentripetalkraft, die die Elektronen auf ihrer
+  Kreisbahn hält.
+
+  Da Elektronen negativ geladen sind, verwenden Sie die \textbf{linke
+  Hand}: Daumen in Richtung $v$, Zeigefinger in Richtung $B$ (aus dem
+  Blatt heraus, $\odot$). Der Mittelfinger zeigt dann anfangs zum
+  Kreismittelpunkt der Bahn -- die Lorentzkraft lenkt die Elektronen
+  entsprechend zur Seite ab. So sieht die Bahn tatsächlich aus, mit
+  Schaltung, Radius $r$ und Zentripetalkraft $F_Z=F_L$ beschriftet:
+  \begin{center}
+  \begin{minipage}[t]{6.2cm}\centering
+    \includegraphics[width=6cm]{Bilder/beam-of-electrons.jpg}\\
+    {\scriptsize Echtes Fadenstrahlrohr: die leuchtende Elektronenspur.}
+  \end{minipage}\hfill
+  \begin{minipage}[t]{6.5cm}\centering
+    \includegraphics[width=6.2cm]{Bilder/Fadenstraglrohr_illustration.pdf}\\
+    {\scriptsize $U$/$U_B$: Beschleunigungsspannung, $U_H$: Heizspannung,
+    $r$: Bahnradius.}
+  \end{minipage}
+  \end{center}
+  Dasselbe Prinzip gilt allgemein für jede frei bewegliche Ladung in einem
+  homogenen Magnetfeld, nicht nur für Elektronen im Fadenstrahlrohr:
+  \begin{center}
+    \includegraphics[width=5.5cm]{Bilder/proton-in-homogeneous-magnetic-field.pdf}
+  \end{center}
+  {\scriptsize Eine positive Ladung im homogenen Feld $B$ (ins Blatt
+  hinein): die Lorentzkraft $F_L$ zeigt stets zum Kreismittelpunkt.}
+  \end{solution}
+  \part[4] \textbf{Der Bahndurchmesser.} Im Fadenstrahlrohr wirkt die
+  Lorentzkraft als Zentripetalkraft
+  \[
+    F_Z = \frac{m\cdot v^2}{r}
+  \]
+  auf die Elektronen (Masse $m$, Ladung $q$). Leiten Sie daraus einen
+  Ausdruck für den \textbf{Durchmesser} $d$ der Kreisbahn her -- genau
+  diesen Durchmesser können Sie am Fadenstrahlrohr direkt an der Skala im
+  Glaskolben ablesen (siehe Bild oben).
+  \Antwortraum{4}
+  \begin{solution}
+  Die Lorentzkraft wirkt hier als Zentripetalkraft, also gilt $F_L=F_Z$:
+  \[
+    q\cdot v\cdot B = \frac{m\cdot v^2}{r}
+  \]
+  Beide Seiten durch $v$ teilen:
+  \[
+    q\cdot B = \frac{m\cdot v}{r}
+  \]
+  Nach $r$ auflösen (mit $r$ multiplizieren, durch $q\cdot B$ teilen):
+  \[
+    r = \frac{m\cdot v}{q\cdot B}
+  \]
+  Der Durchmesser ist doppelt so gross wie der Radius:
+  \[
+    d = 2\cdot r = \frac{2\cdot m\cdot v}{q\cdot B}
+  \]
+  \end{solution}
+  \part[3] \textbf{Simulation erkunden.} Nutzen Sie die interaktive
+  Simulation unter
+  \url{https://www.leifiphysik.de/elektrizitaetslehre/bewegte-ladungen-feldern/versuche/fadenstrahlrohr},
+  um herauszufinden, was sich an der Elektronenbahn verändert, wenn Sie
+  die folgenden Grössen \textbf{einzeln} erhöhen. Beschreiben Sie Ihre
+  Beobachtung in je einem Satz.
+  \begin{itemize}
+    \item Heizspannung $U_H$
+    \item Beschleunigungsspannung $U_B$
+    \item Spulenstrom $I_\text{Spulen}$
+  \end{itemize}
+  \Antwortraum{3}
+  \begin{solution}
+  \textbf{Heizspannung $U_H$:} Mehr Elektronen werden aus der Glühkathode
+  freigesetzt -- die Spur wird \textbf{heller}, ihr Radius bleibt aber
+  (näherungsweise) unverändert, da $U_H$ nicht die Geschwindigkeit der
+  einzelnen Elektronen bestimmt.
+
+  \textbf{Beschleunigungsspannung $U_B$:} Die Elektronen werden auf eine
+  höhere Geschwindigkeit $v$ beschleunigt -- der Bahnradius wird
+  \textbf{grösser}.
+
+  \textbf{Spulenstrom $I_\text{Spulen}$:} Das Magnetfeld $B$ wird stärker
+  -- der Bahnradius wird \textbf{kleiner}.
+
+  Beides passt genau zur oben hergeleiteten Formel $r=\frac{m\cdot
+  v}{q\cdot B}$: Ein grösseres $v$ (im Zähler) vergrössert $r$, ein
+  grösseres $B$ (im Nenner) verkleinert $r$.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\end{document}

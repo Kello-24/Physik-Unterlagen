@@ -1,0 +1,452 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Arbeitsblatt 4: Normalkraft
+% UZH Praktikum I -- Sara Romer Urban, Kantonsschule im Lee, HS2026
+% Klasse: 2e (09.09.2026)
+%
+% Folgt dem in normalkraft-lektionsplan.tex festgelegten Ablauf: Repetition
+% (Feder-Gleichgewicht) -> Tisch/kognitiver Konflikt (Bilder/Normalkraft_Tisch.png)
+% -> elastische Unterlage als sichtbarer Beleg (Bilder/Normalkraft_elastische_
+% oberflaeche.png) -> Definition Normalkraft, mit Tisch-Bild erneut zur
+% Generalisierung (auch scheinbar starre Oberflaechen federn mikroskopisch) und
+% mikroskopischer Ursache (Bilder/atoms-repelling-normal-force.jpg) -> Klotz-
+% Sortieraufgabe (LZ2, Bilder/Normalkraft_klotz(.png/_loesung.png)) -> schiefe
+% Ebene mit der Bergziege bei drei Winkeln (LZ3/LZ4,
+% Bilder/schiefe_ebene_1.png, Loesungen schiefe_ebene_1_loesung_
+% kraeftezerlegung.png/_normalkraft.png) -> Anwendungsaufgabe Endgeschwindigkeit
+% (LZ5, Werte aus lernziele.md: m=80kg, s=10m, F_HA~390N, a~4.9m/s^2, v~9.9m/s).
+%
+% Bewusst nicht erwaehnt (siehe lernziele.md "Bewusst nicht Teil"): Aktio-Reaktio/
+% drittes Newtonsches Gesetz, das Koerper-auf-Unterlage-Gegenstueck. Die Bilder
+% Normalkraft_Tisch.png/_elastische_oberflaeche.png zeigen zwar auch eine
+% -F_N-Beschriftung auf der Unterlagenseite, der Fliesstext hier benennt aber
+% ausschliesslich F_N auf den Koerper -- die Wechselwirkungs-Lektion (16.09.2026)
+% bleibt fuer die Interaktionspaar-Perspektive zustaendig.
+%
+% Praktikum I: Sie-Form, keine farbigen Boxen ausser Formel-/Hinweis-/Antwortbox,
+% Textmenge knapp (Sara Romers Feedback ab Kondensatoren). Boxen-Definitionen aus
+% arbeitsblatt3-kraefte-addieren-zerlegen.tex uebernommen.
+%
+% Quellen: lernziele.md, normalkraft-lektionsplan.tex (dieser Ordner),
+% Bilder/Normalkraft_Tisch.png, Bilder/Normalkraft_elastische_oberflaeche.png,
+% Bilder/atoms-repelling-normal-force.jpg, Bilder/Normalkraft_klotz(.png/
+% _loesung.png), Bilder/schiefe_ebene_1.png, Bilder/schiefe_ebene_1_loesung_
+% kraeftezerlegung.png, Bilder/schiefe_ebene_1_loesung_normalkraft.png.
+% =============================================================================
+\documentclass[addpoints,11pt,a4paper]{exam}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.2cm,headheight=14pt]{geometry}
+\usepackage{amsmath}
+\usepackage{siunitx}
+% Hausstil: zusammengesetzte Einheiten immer als echter Bruch (\frac), nicht
+% als Inline-Schraegstrich oder \tfrac -- gilt global fuer jedes \si/\SI.
+\sisetup{per-mode=fraction,fraction-command=\frac}
+\usepackage{array,booktabs,tabularx,multirow}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage[most]{tcolorbox}
+\usepackage{lastpage}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\usetikzlibrary{arrows.meta,calc,angles,quotes,decorations.pathmorphing}
+
+\usepackage{setspace}
+\usepackage{needspace}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+\setstretch{1.08}
+\setlist[itemize]{itemsep=0.4em}
+
+% -----------------------------
+% Farben (Corporate-Farbschema Physik KFR)
+% -----------------------------
+\definecolor{titleblue}{HTML}{183A6B}
+\definecolor{accentblue}{HTML}{2E6F9E}
+\definecolor{lightblue}{HTML}{EAF4FB}
+\definecolor{lightgray}{HTML}{F4F6F8}
+\definecolor{darkgray}{HTML}{4A4A4A}
+\definecolor{accentorange}{HTML}{D9720C}
+\definecolor{accentpurple}{HTML}{7B2D8E}
+% Hinweisbox: Orange (accentorange), fuer wichtige Klarstellungen.
+\definecolor{lightorange}{HTML}{FCEEE0}
+% Formelbox: Violett (accentpurple), fuer die zentralen Merksaetze.
+\definecolor{lightpurple}{HTML}{F3EAF7}
+
+% Links (hyperref): farblich ans Corporate-Farbschema angeglichen.
+\hypersetup{
+  colorlinks=true,
+  urlcolor=accentblue,
+  linkcolor=accentblue,
+  pdftitle={Arbeitsblatt 4: Normalkraft},
+  pdfauthor={Loris Keller}
+}
+
+% -----------------------------
+% Spaltentypen
+% -----------------------------
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% -----------------------------
+% Boxen
+% -----------------------------
+\tcbset{before skip=10pt, after skip=10pt}
+\newtcolorbox{titlebox}{
+  enhanced,
+  colback=titleblue,
+  colframe=titleblue,
+  boxrule=0pt,
+  arc=3mm,
+  left=3mm,right=3mm,top=3mm,bottom=3mm
+}
+
+\newlength{\aufgabenindent}
+\settowidth{\aufgabenindent}{10.\hskip\labelsep}
+
+% Praktikum I: Lernziele/Einleitung/Theorie/Aufgaben werden NICHT mehr
+% farbig gerahmt (nur Formel-, Hinweis- und Antwortbox bleiben Boxen) --
+% siehe institutionen/UZH-Praktikum-I/CLAUDE.md, Abschnitt "Boxen-Layout".
+\newenvironment{infobox}{%
+  \par\addvspace{10pt}\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+\newenvironment{theoriebox}[1][Theorie]{%
+  \par\addvspace{10pt}\noindent\textbf{#1}\par\smallskip\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+% taskbox/groupbox stehen in questions VOR dem ersten \question (Bilder,
+% Fliesstext) -- exam.cls' questions-Liste braucht dafuer eine echte,
+% eigenstaendige Box (sonst "Something's wrong--perhaps a missing \item",
+% weil z.B. ein \begin{center} vor dem ersten \item der Aussenliste steht).
+% Deshalb bleiben es tcolorboxen, nur unsichtbar gemacht (keine Farbe/Rahmen,
+% kein Padding) statt sie durch reine Absaetze zu ersetzen.
+\newtcolorbox{taskbox}[1][]{
+  enhanced, breakable,
+  colback=white, colframe=white, boxrule=0pt,
+  left=0mm,right=0mm,top=0mm,bottom=0mm,
+  before skip=10pt, after skip=10pt,
+  before upper={%
+    \def\tmpboxtitle{#1}%
+    \ifx\tmpboxtitle\empty\else\noindent\textbf{#1}\par\smallskip\fi
+  }
+}
+
+\newtcolorbox{groupbox}[1][Gruppenarbeit]{
+  enhanced, breakable,
+  colback=white, colframe=white, boxrule=0pt,
+  left=0mm,right=0mm,top=0mm,bottom=0mm,
+  before skip=10pt, after skip=10pt,
+  before upper={\noindent\textbf{#1}\par\smallskip}
+}
+
+% beispielbox: fuer die Einleitung -- wie die anderen Inhaltsboxen ungerahmt.
+\newenvironment{beispielbox}[1][Beispiel]{%
+  \par\addvspace{10pt}\noindent\textbf{#1}\par\smallskip\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+% hinweisbox: Orange, fuer wichtige Klarstellungen/Verwechslungswarnungen.
+\newtcolorbox{hinweisbox}[1][Hinweis]{
+  enhanced,
+  breakable,
+  colback=lightorange,
+  colframe=accentorange,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+% formelbox: Violett, um die zentralen Merksaetze dieser Einheit hervorzuheben.
+\newtcolorbox{formelbox}[1][Merksatz]{
+  enhanced,
+  breakable,
+  colback=lightpurple,
+  colframe=accentpurple,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.9pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+\newtcolorbox{answerbox}{
+  breakable,
+  colback=white,
+  colframe=gray!55,
+  boxrule=0.5pt,
+  arc=1.5mm,
+  left=2mm,right=2mm,top=2mm,bottom=2mm
+}
+
+% Marke: kleines farbiges Inline-Label fuer Teilschritte/Ergebnis-Callouts.
+\newtcbox{\Marke}[1][accentpurple]{
+  nobeforeafter,
+  colback=#1,
+  colframe=#1,
+  coltext=white,
+  boxrule=0pt,
+  arc=2pt,
+  left=5pt,right=5pt,top=2pt,bottom=2pt,
+  fontupper=\bfseries\sffamily\small
+}
+
+% Bild-Helfer: zentriertes Bild mit spuerbarem Abstand zum umgebenden Text
+% (statt nur des normalen Absatzabstands). #1 = optionale includegraphics-
+% Optionen (z. B. trim/clip, siehe schiefe_ebene_1*-Bilder unten), #2 =
+% Breite, #3 = Dateipfad.
+\newcommand{\Bild}[3][]{%
+  \par\vspace{0.6cm}
+  \begin{center}
+    \includegraphics[#1,width=#2]{#3}
+  \end{center}
+  \vspace{0.6cm}
+}
+
+% --- Loesungen ein-/ausblenden -----------------------------------------------
+%\noprintanswers
+\printanswers
+
+\pointformat{}
+\renewcommand{\solutiontitle}{\noindent\color{titleblue}\textbf{L\"osung:}\enspace}
+
+\pagestyle{headandfoot}
+\cfoot{\textcolor{darkgray}{Seite \thepage\ von \pageref{LastPage}}}
+
+\newcommand{\Kopfzeile}[4]{%
+  \begin{titlebox}
+    {\color{white}\sffamily\bfseries\Large #4}
+  \end{titlebox}
+  \vspace{0.5em}
+  \noindent\textbf{Klasse:}~#1 \hfill \textbf{Datum:}~#2 \hfill \textbf{Thema:}~#3
+    \hfill \textbf{Lehrperson:}~Loris Keller
+  \vspace{0.8em}
+  \lhead{\textcolor{darkgray}{#3}}
+  \rhead{\textcolor{darkgray}{#4}}
+}
+
+\newlength{\antwortraumlen}
+\newcommand{\Antwortraum}[1]{%
+  \pgfmathsetlength{\antwortraumlen}{#1*2.5cm}%
+  \begin{answerbox}
+    \rule{0pt}{\antwortraumlen}%
+  \end{answerbox}%
+}
+
+% Werte fuer Kopfzeile zentral setzen
+\newcommand{\Klasse}{2e}
+\newcommand{\Datum}{09.09.2026}
+\newcommand{\Thema}{Normalkraft}
+\newcommand{\ArbeitsblattTitel}{Arbeitsblatt 4: Normalkraft}
+
+\begin{document}
+
+\Kopfzeile{\Klasse}{\Datum}{\Thema}{\ArbeitsblattTitel}
+
+% =============================================================================
+% Repetition: Kraeftegleichgewicht Feder-Masse
+% =============================================================================
+\textbf{Repetition}
+
+\begin{center}
+\begin{tikzpicture}[>=Latex,scale=1.3]
+  \draw[very thick] (-1,3) -- (1,3);
+  \foreach \x in {-0.8,-0.4,...,0.8} { \draw (\x,3) -- (\x-0.25,3.3); }
+  \draw[decorate,decoration={coil,aspect=0.3,segment length=3.2pt,amplitude=3pt}] (0,3) -- (0,1.8);
+  \draw[fill=lightgray!60] (-0.4,1.3) rectangle (0.4,1.8);
+  \node at (0,1.55) {$m$};
+  \fill (0,1.55) circle (0.5pt);
+  \draw[->,ultra thick,titleblue] (0,1.55) -- ++(0,1.1) node[midway,right]{$\vec F$};
+  \draw[->,ultra thick,accentorange] (0,1.55) -- ++(0,-1.1) node[midway,right]{$\vec F_G$};
+\end{tikzpicture}
+\end{center}
+
+Eine Federwaage hält eine Masse $m$ in Ruhe: Federkraft und
+Gewichtskraft befinden sich im Kräftegleichgewicht,
+$\vec F+\vec F_G=\vec 0$.
+
+% =============================================================================
+% Theorie: Definition Normalkraft (Tisch + elastische Unterlage als Belege)
+% =============================================================================
+\begin{theoriebox}[Normalkraft]
+Legt man dieselbe Masse stattdessen auf einen Tisch, bewegt sie sich
+trotzdem nicht durch den Tisch hindurch, obwohl nur die Gewichtskraft
+$\vec F_G$ sichtbar nach unten zieht:
+
+\Bild{7cm}{Bilder/Normalkraft_Tisch.png}
+
+Der Tisch muss also eine zweite, unsichtbare Kraft ausüben. Auf einer
+weichen, nachgiebigen Unterlage sieht man diese Gegenkraft direkt: Die
+Unterlage verformt sich und drückt den Körper dadurch sichtbar nach
+oben zurück.
+
+\Bild{7cm}{Bilder/Normalkraft_elastische_oberfläche.png}
+
+Jede Oberfläche, auf der ein Körper aufliegt, übt als Reaktion darauf
+eine Gegenkraft aus: die \textbf{\emph{Normalkraft}} $F_N$ (Einheit:
+$\si{\newton}$). Sie ist eine \textbf{\emph{Reaktionskraft}} und zeigt
+immer in die Richtung \textbf{\emph{senkrecht zur Oberfläche}}. Sie
+verhindert, dass der Körper in die Oberfläche eindringt. Beim starren
+Tisch von vorhin gilt genau dasselbe Prinzip, nur verformt er sich dabei
+mikroskopisch wenig, für das Auge unsichtbar.
+
+\textbf{\emph{Mikroskopische Ursache:}} Oberflächen bestehen aus Atomen/
+Molekülen, die sich bei Annäherung elektrisch abstossen, wie an einem
+Federmodell sichtbar wird, wenn eine Hand auf ein Atomgitter drückt:
+
+\Bild{6cm}{Bilder/atoms-repelling-normal-force.jpg}
+\end{theoriebox}
+
+% =============================================================================
+% Uebung: Klotz-Sortieraufgabe (LZ2)
+% =============================================================================
+\needspace{6cm}
+\begin{questions}
+\begin{taskbox}[Aufgabe: Normalkraft oder Gewichtskraft: was ist grösser?]
+\question[4] Vier Situationen mit demselben Klotz (Gewichtskraft
+$\vec F_g$ immer gleich gross):
+
+\Bild{13cm}{Bilder/Normalkraft_klotz.png}
+
+Ordnen Sie für jede Situation $F_N$ und $F_g$ zueinander ein: kleiner,
+gleich gross oder grösser?
+
+\Antwortraum{1.5}
+
+\begin{solution}
+\Bild{13cm}{Bilder/Normalkraft_klotz_loesung.png}
+\end{solution}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Uebergang und Theorie: Schiefe Ebene
+% =============================================================================
+Wie in der letzten Lektion zerlegen wir Kräfte grafisch mit dem
+Kräfteparallelogramm, jetzt für eine geneigte Oberfläche.
+
+\begin{theoriebox}[Schiefe Ebene: Gewichtskraft in zwei Komponenten zerlegen]
+Auf einer geneigten Ebene zeigt die Gewichtskraft $\vec F_G$ weiterhin
+senkrecht nach unten, die Normalkraft $\vec F_N$ aber senkrecht zur
+\emph{geneigten} Ebene. Deshalb zerlegen wir $\vec F_G$ grafisch in zwei
+Komponenten:
+
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.2em]
+  \item die \textbf{\emph{parallele Komponente}} $F_{G\parallel}$
+  (Einheit: $\si{\newton}$), parallel zur Ebene,
+  \item die \textbf{\emph{senkrechte Komponente}} $F_{G\perp}$
+  (ebenfalls in $\si{\newton}$), senkrecht zur Ebene, wobei ihr die
+  Normalkraft $F_N$ exakt das Gleichgewicht hält.
+\end{itemize}
+
+Konstruktion: Hilfslinien parallel und senkrecht zur Ebene durch die
+Spitze von $\vec F_G$ ziehen. Weil diese Hilfslinien senkrecht
+aufeinander stehen, wird aus dem Kräfteparallelogramm ein Rechteck mit
+$\vec F_G$ als Diagonale. Beide Rechtecksseiten mit dem Kraftmassstab
+ausmessen.
+\end{theoriebox}
+
+% =============================================================================
+% Uebung: Konstruktion fuer drei Neigungswinkel (LZ3, LZ4)
+% =============================================================================
+\begin{questions}
+\begin{taskbox}[Aufgabe: Die Bergziege auf der vereisten Bergwand]
+\Bild{7cm}{Bilder/bergziege_damm.jpg}
+
+\question[9] Dieselbe Bergziege steht bei drei unterschiedlichen
+Neigungswinkeln $\alpha_1$, $\alpha_2$, $\alpha_3$:
+
+% trim/clip: schneidet einen fehlerhaften grauen Streifen oben in der
+% Bildquelle weg (Exportartefakt, alle drei schiefe_ebene_1*-Bilder
+% betroffen, Pixel y=0-169 von 2845 bei allen dreien identisch).
+\Bild[trim=0 0 0 50bp,clip]{\textwidth}{Bilder/schiefe_ebene_1.png}
+
+Konstruieren Sie für $\alpha_1$ gemeinsam mit der Lehrperson, für
+$\alpha_2$ und $\alpha_3$ selbständig direkt in der Skizze: die
+parallele Komponente $\vec F_{G\parallel}$, die senkrechte Komponente
+$\vec F_{G\perp}$ und die Normalkraft $\vec F_N$. Vergleichen Sie
+anschliessend, wie sich $F_{G\parallel}$ und $F_N$ mit zunehmender
+Steigung verändern.
+
+\begin{solution}
+\Bild[trim=0 0 0 50bp,clip]{\textwidth}{Bilder/schiefe_ebene_1_loesung_kräftezerlegung.png}
+\Bild[trim=0 0 0 50bp,clip]{\textwidth}{Bilder/schiefe_ebene_1_loesung_normalkraft.png}
+
+Je steiler die Ebene, desto grösser $F_{G\parallel}$ und desto kleiner
+$F_N$.
+\end{solution}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Anwendung: Endgeschwindigkeit (LZ5)
+% =============================================================================
+\begin{questions}
+\begin{taskbox}[Aufgabe: Die Bergziege rutscht ab]
+\question[6] Bei $\alpha_2$ verliert die Bergziege (Masse
+$m=\SI{80}{\kilogram}$) auf dem reibungsfreien Eis den Halt und rutscht
+aus der Ruhe eine Hanglänge von $s=\SI{10}{\meter}$ hinunter.
+
+\begin{parts}
+\part[3] Welche der beiden Kräfte aus Ihrer Konstruktion ist für die
+Beschleunigung entlang des Hangs verantwortlich? Nutzen Sie diese Kraft
+und das 2. Newtonsche Gesetz, um die Beschleunigung $a$ zu berechnen.
+
+\Antwortraum{2}
+
+\begin{solution}
+Verantwortlich ist die parallele Komponente $F_{G\parallel}$ der
+Gewichtskraft, nicht die volle Gewichtskraft $F_g$: Die Normalkraft
+$F_N$ hält bereits der senkrechten Komponente $F_{G\perp}$ das
+Gleichgewicht. Erwartungsgemäss $F_{G\parallel}\approx\SI{390}{\newton}$.
+Nach $a$ auflösen:
+\[
+F_{G\parallel}=m\cdot a \quad\Longrightarrow\quad a=\frac{F_{G\parallel}}{m}
+\]
+Werte einsetzen:
+\[
+a=\frac{\SI{390}{\newton}}{\SI{80}{\kilogram}}\approx\SI{4.9}{\meter\per\second\squared}
+\]
+\end{solution}
+
+\part[3] Bestimmen Sie mit $v^2=2\cdot a\cdot s$ die Endgeschwindigkeit
+$v$ der Bergziege am Ende des Hangs.
+
+\Antwortraum{2}
+
+\begin{solution}
+Nach $v$ auflösen:
+\[
+v^2=2\cdot a\cdot s \quad\Longrightarrow\quad v=\sqrt{2\cdot a\cdot s}
+\]
+Werte einsetzen:
+\[
+v=\sqrt{2\cdot\SI{4.9}{\meter\per\second\squared}\cdot\SI{10}{\meter}}
+  \approx\SI{9.9}{\meter\per\second}
+\]
+\end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Abschluss
+% =============================================================================
+Weitere Übungsaufgaben zur Normalkraft finden Sie im separaten
+Aufgabenblatt.
+
+\end{document}

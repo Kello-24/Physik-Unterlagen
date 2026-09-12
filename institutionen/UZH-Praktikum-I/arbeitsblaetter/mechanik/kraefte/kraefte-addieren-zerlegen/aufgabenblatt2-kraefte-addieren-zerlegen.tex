@@ -9,17 +9,29 @@
 % grafisch, kein einleitender Erklaerkasten. Bei allen bildbasierten
 % Aufgaben (Schiff, Seilbahn, Seilzug) zeichnen die SuS direkt in die
 % jeweilige Abbildung hinein -- kein separates Feinraster zum Uebertragen
-% mehr. Vier Aufgaben: Schiff (Addition zweier Schlepperkraefte), Seilbahn
-% (Zerlegung der Gewichtskraft im Gleichgewicht), Seilzug mit drei
+% mehr. Fuenf Aufgaben: Schiff (Addition zweier gegebener, konkreter
+% Schlepperkraefte 40 kN/40 kN bei selbst gewaehltem Kraftmassstab, danach
+% aus der grafisch bestimmten Resultierenden und der Schiffsmasse die
+% Beschleunigung berechnen), Seilbahn (Zerlegung der Gewichtskraft im
+% Gleichgewicht, rein graphisch ohne Kraftmassstab noetig), Seilzug mit drei
 % Gewichten (Addition zweier gegebener, konkreter Seilkraefte 180 N/380 N
 % bei selbst gewaehltem Kraftmassstab, um auf die Gewichtskraft des
 % mittleren, unbekannten Gewichts zu kommen -- das fruehere
 % Seilziehen-Beispiel steht jetzt stattdessen in der Vektor-Theorie von
-% arbeitsblatt3-kraefte-addieren-zerlegen.tex), sowie neu ein reines
+% arbeitsblatt3-kraefte-addieren-zerlegen.tex), ein reines
 % Gitter-Konstruktions-Beispiel (Aufgabe 4: drei vorgegebene Kraftpfeile,
 % Massstab gegeben, Kopf-an-Schwanz-Addition, Betrag der Resultierenden
-% ablesen). Die fruehere Hundeschlitten-Aufgabe wurde gestrichen. Theorie,
-% Lernziele und alles im Plenum Behandelte stehen in jenem Arbeitsblatt.
+% ablesen), sowie neu Aufgabe 5 (Lampe an durchhaengendem Seil: zwei exakt
+% per Trigonometrie konstruierte, bewusst gross skalierte TikZ-Skizzen mit
+% Durchhangwinkel 40°/20°, je rein grafische Kraftzerlegung mit selbst
+% gewaehltem Kraftmassstab -- Loesungen pruefen nur per
+% Kopf-an-Schwanz-Gleichgewicht, keine Sinus-Formel --, Vergleich der beiden
+% Seilspannkraefte, und als Grenzfall-Ueberlegung die rein geometrische
+% Frage, wie lang die Seilspannkraefte bei einem Winkel von ca. 0.1°
+% gezeichnet werden muessten: zeigt ueber die Parallelogramm-Konstruktion
+% (ohne Formel), warum ein Seil nie exakt waagrecht gespannt werden kann).
+% Die fruehere Hundeschlitten-Aufgabe wurde gestrichen. Theorie, Lernziele
+% und alles im Plenum Behandelte stehen in jenem Arbeitsblatt.
 %
 % Quellen: lernziele.md, kraefte-addieren-zerlegen-lektionsplan.tex (dieser
 % Ordner), Bilder/schiff_aufgabe(.png/_loesung.png),
@@ -263,18 +275,47 @@
 % =============================================================================
 \begin{questions}
 \begin{taskbox}[Aufgabe 1: Zwei Schlepper ziehen ein Schiff]
-\question[5] Ein Containerschiff wird gleichzeitig von zwei Schleppern mit
-den Kräften $\vec F_1$ und $\vec F_2$ gezogen:
-
-Zeichnen Sie direkt in die Skizze unten: Wählen Sie einen selbst gewählten
-Kraftmassstab, und konstruieren Sie grafisch die Resultierende $\vec F_R$,
-mit der sich das Schiff tatsächlich bewegt.
+\question[7] Ein Containerschiff wird gleichzeitig von zwei Schleppern mit
+den Kräften $\vec F_1=\SI{40}{\kilo\newton}$ und $\vec F_2=\SI{40}{\kilo\newton}$
+gezogen:
 
 \Bild{15.5cm}{Bilder/schiff_aufgabe.png}
 
+\begin{parts}
+\part[4] Zeichnen Sie direkt in die Skizze oben: Wählen Sie einen selbst
+gewählten Kraftmassstab, und zeichnen Sie $\vec F_1$ und $\vec F_2$ mit den
+entsprechenden Längen entlang der eingezeichneten Schlepprichtungen ein
+(Winkel mit dem Geodreieck von der Abbildung abmessen). Bestimmen Sie
+anschliessend grafisch (Kräfteparallelogramm) den Betrag der
+Resultierenden $\vec F_R=\vec F_1+\vec F_2$, mit der sich das Schiff
+tatsächlich bewegt.
+
 \begin{solution}
-\Bild{15cm}{Bilder/schiff_aufgabe_loesung.png}
+\Bild{14cm}{Bilder/schiff_aufgabe_loesung.png}
+Mit gleich grossen Kräften $F_1=F_2=\SI{40}{\kilo\newton}$ liegt die
+Resultierende genau auf der Schiffsachse; ihr Betrag ergibt sich (je nach
+gemessenem Winkel) zu ungefähr $F_R\approx\SI{69}{\kilo\newton}$.
 \end{solution}
+
+\part[3] Das Containerschiff hat eine Masse von $m=\SI{2000}{\tonne}$.
+Nutzen Sie Ihr Ergebnis aus (a), um die Beschleunigung $a$ zu berechnen,
+mit der das Schiff aus dem Stillstand heraus beschleunigt wird.
+
+\vspace{7.5cm}
+
+\begin{solution}
+Newtons zweites Gesetz nach $a$ auflösen:
+\[
+F_R = m\cdot a \quad\Longrightarrow\quad a = \frac{F_R}{m}
+\]
+Werte einsetzen (mit $F_R\approx\SI{69}{\kilo\newton}=\SI{69000}{\newton}$
+und $m=\SI{2000}{\tonne}=\SI{2000000}{\kilogram}$):
+\[
+a = \frac{\SI{69000}{\newton}}{\SI{2000000}{\kilogram}}
+  \approx \SI{0.035}{\meter\per\second\squared}
+\]
+\end{solution}
+\end{parts}
 \end{taskbox}
 \end{questions}
 
@@ -289,11 +330,12 @@ $\vec F_g$ der Gondel samt Passagieren muss deshalb vollständig von den
 beiden Seilabschnitten aufgenommen werden: Es gilt
 $\vec F_{S1}+\vec F_{S2}+\vec F_g=\vec F_{\text{res}}=\vec 0$.
 
-Zeichnen Sie direkt in die Skizze unten: Wählen Sie einen selbst gewählten
-Kraftmassstab für $\vec F_g$ (die eingezeichneten Seilrichtungen mit dem
-Geodreieck abmessen), und zerlegen Sie $\vec F_g$ grafisch in die beiden
-Seilkraftkomponenten $\vec F_{S1}$ und $\vec F_{S2}$.
+Zeichnen Sie direkt in die Skizze unten: Messen Sie die eingezeichneten
+Seilrichtungen mit dem Geodreieck ab, und zerlegen Sie $\vec F_g$ grafisch
+(ohne Kraftmassstab) in die beiden Seilkraftkomponenten $\vec F_{S1}$ und
+$\vec F_{S2}$.
 
+\vspace{2cm}
 \Bild{15.5cm}{Bilder/seilbahn_aufgabe.png}
 
 \begin{solution}
@@ -325,7 +367,7 @@ entspricht der Gewichtskraft des mittleren, unbekannten Gewichts.
 
 \begin{solution}
 Damit der Knoten in Ruhe bleibt, muss die Resultierende $\vec F_1+\vec F_2$
-senkrecht nach unten zeigen -- das ist eine gute Kontrolle für die eigene
+senkrecht nach unten zeigen. Das ist eine gute Kontrolle für die eigene
 Konstruktion. Ihr Betrag ergibt (je nach gemessenem Winkel) die gesuchte
 Gewichtskraft des mittleren Gewichts, ungefähr $\SI{390}{\newton}$.
 \end{solution}
@@ -374,6 +416,137 @@ den Betrag $F_{\text{ges}}$ in Newton.
 Die Resultierende ist $5$ Kästchen lang, also
 $F_{\text{ges}}=5\cdot\SI{4}{\newton}=\SI{20}{\newton}$.
 \end{solution}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Aufgabe 5: Lampe an durchhaengendem Seil (Grenzfall kleiner Winkel)
+% =============================================================================
+\newpage
+\begin{questions}
+\begin{taskbox}[Aufgabe 5: Eine Lampe am gespannten Seil]
+\question[7] Eine Lampe mit der Gewichtskraft $F_g=\SI{20}{\newton}$ hängt in
+der Mitte eines Seils, das zwischen zwei gegenüberliegenden Wänden gespannt
+ist. Durch das Gewicht der Lampe hängt das Seil auf beiden Seiten leicht
+durch und bildet dort mit der Horizontalen jeweils den Winkel $\alpha$:
+
+\begin{parts}
+\part[2] \textbf{Skizze 1:} Hier beträgt der Winkel $\alpha_1=\SI{40}{\degree}$.
+
+\vspace{1.5cm}
+\begin{center}
+\begin{tikzpicture}[>=Latex,scale=1.4]
+  \def\halfwidth{4}
+  \def\winkelgrad{40}
+  \pgfmathsetmacro{\h}{\halfwidth*tan(\winkelgrad)}
+  \coordinate (L) at (-\halfwidth,0);
+  \coordinate (R) at (\halfwidth,0);
+  \coordinate (P) at (0,-\h);
+  \draw[thick,darkgray] (L) -- (P) -- (R);
+  \fill[darkgray] (L) circle (2.5pt);
+  \fill[darkgray] (R) circle (2.5pt);
+  \fill[black] (P) circle (2.5pt);
+  \draw[->,thick,accentorange] (P) -- ++(0,-1.2) node[right]{$\vec F_g$};
+  \pic[draw=accentblue,angle radius=0.9cm] {angle=P--L--R};
+  \pic[draw=accentblue,angle radius=0.9cm] {angle=L--R--P};
+  \pgfmathsetmacro{\halfang}{\winkelgrad/2}
+  \node[accentblue] at ($(L)+({1.3*cos(\halfang)},{-1.3*sin(\halfang)})$) {$\alpha_1$};
+  \node[accentblue] at ($(R)+({-1.3*cos(\halfang)},{-1.3*sin(\halfang)})$) {$\alpha_1$};
+  \node[left] at (L) {Wand};
+  \node[right] at (R) {Wand};
+\end{tikzpicture}
+\end{center}
+
+Zeichnen Sie direkt in die Skizze: Wählen Sie einen selbst gewählten
+Kraftmassstab, zeichnen Sie $\vec F_g$ nach unten ein, und zerlegen Sie sie
+grafisch (Kräfteparallelogramm) in die beiden Seilspannkräfte entlang der
+eingezeichneten Seilrichtungen. Bestimmen Sie so den Betrag der
+Seilspannkraft $F_{S,1}$.
+
+\begin{solution}
+Als Kontrolle für die grafische Konstruktion: Weil die Skizze symmetrisch
+ist, sind die beiden Seilspannkräfte gleich lang. Addiert man sie zusammen
+mit $\vec F_g$ Kopf an Schwanz, muss sich exakt $\vec 0$ ergeben, denn die
+Lampe hängt in Ruhe (Kräftegleichgewicht).
+\end{solution}
+
+\part[2] \textbf{Skizze 2:} Dieselbe Lampe hängt nun straffer, sodass der
+Winkel nur noch halb so gross ist wie in Skizze 1: $\alpha_2=\SI{20}{\degree}$.
+
+\vspace{1.5cm}
+\begin{center}
+\begin{tikzpicture}[>=Latex,scale=1.4]
+  \def\halfwidth{4}
+  \def\winkelgrad{20}
+  \pgfmathsetmacro{\h}{\halfwidth*tan(\winkelgrad)}
+  \coordinate (L) at (-\halfwidth,0);
+  \coordinate (R) at (\halfwidth,0);
+  \coordinate (P) at (0,-\h);
+  \draw[thick,darkgray] (L) -- (P) -- (R);
+  \fill[darkgray] (L) circle (2.5pt);
+  \fill[darkgray] (R) circle (2.5pt);
+  \fill[black] (P) circle (2.5pt);
+  \draw[->,thick,accentorange] (P) -- ++(0,-1.2) node[right]{$\vec F_g$};
+  \pic[draw=accentblue,angle radius=0.9cm] {angle=P--L--R};
+  \pic[draw=accentblue,angle radius=0.9cm] {angle=L--R--P};
+  \pgfmathsetmacro{\halfang}{\winkelgrad/2}
+  \node[accentblue] at ($(L)+({1.3*cos(\halfang)},{-1.3*sin(\halfang)})$) {$\alpha_2$};
+  \node[accentblue] at ($(R)+({-1.3*cos(\halfang)},{-1.3*sin(\halfang)})$) {$\alpha_2$};
+  \node[left] at (L) {Wand};
+  \node[right] at (R) {Wand};
+\end{tikzpicture}
+\end{center}
+
+Wiederholen Sie die Konstruktion aus (a) für diese Skizze, und bestimmen Sie
+so den Betrag der Seilspannkraft $F_{S,2}$.
+
+\begin{solution}
+Als Kontrolle wie in (a): Auch hier sind die beiden Seilspannkräfte gleich
+lang, und zusammen mit $\vec F_g$ Kopf an Schwanz addiert muss sich wieder
+exakt $\vec 0$ ergeben.
+\end{solution}
+
+\part[1] Vergleichen Sie $F_{S,1}$ und $F_{S,2}$: Der Winkel in Skizze 2 ist
+nur halb so gross wie in Skizze 1. Was fällt Ihnen beim Vergleich der
+beiden Seilspannkräfte auf?
+
+\Antwortraum{1}
+
+\begin{solution}
+Obwohl der Winkel halbiert wurde, hat sich die gemessene Seilspannkraft
+nicht auch einfach verdoppelt: $F_{S,2}$ ist deutlich, aber nicht exakt
+doppelt so gross wie $F_{S,1}$. Der Zusammenhang zwischen Winkel und
+Seilspannkraft ist also nicht proportional. Je kleiner der Winkel, desto
+stärker wächst die Seilspannkraft an (siehe Teilaufgabe (d)).
+\end{solution}
+
+\part[2] Stellen Sie sich vor, Sie versuchen, die Konstruktion aus (a) und
+(b) mit einem winzigen Winkel von $\alpha\approx\SI{0.1}{\degree}$ zu
+wiederholen (das Seil hängt dann fast gar nicht mehr durch, es ist fast
+perfekt waagrecht). Überlegen Sie anhand des Kräfteparallelogramms: Wie
+lang müssten die beiden Seilspannkräfte in dieser Konstruktion werden?
+Erklären Sie damit, warum ein Seil nie exakt waagrecht gespannt werden
+kann.
+
+\Antwortraum{2}
+
+\begin{solution}
+Bei einem derart kleinen Winkel verlaufen beide Seilrichtungen praktisch
+waagrecht, also fast genau parallel zueinander. Um beim
+Kräfteparallelogramm von der Spitze bzw. vom Fusspunkt des kurzen Pfeils
+$\vec F_g$ aus Parallelen zu diesen beiden fast gleichen Richtungen zu
+ziehen, bis sie sich treffen, müsste man die beiden Seilspannkräfte extrem
+lang zeichnen, viel länger, als auf ein Blatt Papier passt. Je kleiner der
+Winkel wird, desto länger müssten diese Pfeile werden. Im Grenzfall eines
+exakt waagrechten Seils ($\alpha=\SI{0}{\degree}$) wären die beiden
+Seilrichtungen exakt parallel: Die Konstruktionslinien würden sich nie mehr
+treffen, die Seilspannkraft müsste unendlich gross sein. Ein reales Seil
+kann aber nur eine endliche Kraft aufbringen, bevor es reisst. Deshalb
+hängt jedes gespannte Seil, an dem ein Gewicht hängt, immer ein kleines
+bisschen durch; ein perfekt waagrecht gespanntes Seil ist physikalisch
+unmöglich.
+\end{solution}
+\end{parts}
 \end{taskbox}
 \end{questions}
 
