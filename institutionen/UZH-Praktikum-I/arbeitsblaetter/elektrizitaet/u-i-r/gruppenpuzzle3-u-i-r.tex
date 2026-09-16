@@ -1,0 +1,1001 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Gruppenpuzzle 3: Strom, Spannung und Widerstand
+% UZH Praktikum I -- Sara Romer Urban, Kantonsschule im Lee, HS2026
+% Klasse: 1f (16.09.2026), aus PLAN_Dokumentengenerierung.md.
+%
+% Umgebaut zum Gruppenpuzzle (D3 Partner-/Gruppenpuzzle, Methodensammlung
+% Fachdidaktik Physik I/II): vier gleichwertige Themen/Expertengruppen
+% (A Batterie, B Widerstand, C Verbraucher, D Schalter und Strom), am
+% Anfang eine Ablaufinstruktion (was ein Gruppenpuzzle ist, Stamm-/
+% Expertengruppen, die vier Phasen), am Schluss eine Vertiefungsphase mit
+% Aufgaben fuer die wieder vereinte Stammgruppe. Bewusst weiterhin ohne
+% Einheiten (Ampere/Volt) und ohne das quantitative Ohm'sche Gesetz -- das
+% war beim Verschieben aus arbeitsblatt2-e-feld-vertiefung.tex bereits so
+% angelegt (siehe e-feld-vertiefung/lernziele.md, Abschnitt "Abgrenzung")
+% und bleibt unveraendert.
+%
+% Aenderungen gegenueber der vorherigen Fassung (auf Wunsch):
+% - LED-Abschnitt entfernt (zu schwierig fuer ein Thema ohne jedes
+%   Vorwissen zu Stromkreisen): Gruppe C heisst jetzt "Der Verbraucher",
+%   allgemeiner Begriff mit ein paar Alltagsbeispielen (Gluehlampe, Motor,
+%   Lautsprecher) statt Anode/Kathode/Diodenphysik, mit dem generischen
+%   Gluehlampen-Schaltzeichen (circuitikz "lamp", Kreis mit Kreuz) statt
+%   des LED-Dreiecks. vattenfall-aufbau-led.jpg dadurch nicht mehr
+%   verwendet.
+% - Batterie-Einfuehrung (Gruppe A) vereinfacht: keine chemische Reaktion
+%   mehr im Fliesstext (kein Kathode/Anode/Elektrolyt/Kohle/Zink-
+%   Vokabular). batterie.png selbst zeigt diese Beschriftung zwar weiterhin
+%   (Bild nicht neu gezeichnet), der Fliesstext greift sie aber bewusst
+%   nicht mehr auf, sondern beschreibt nur noch getrennte Ladungen an den
+%   Polen/Potenzialgefaelle -- deckungsgleich mit der Bildunterschrift im
+%   Bild selbst.
+% - Wasserkreislaufanalogie: Stromkreis.jpg/Wasserkreislauf.jpg (neu, echte
+%   beschriftete Fotos: elektrische Quelle/Pumpe, Schalter/Ventil,
+%   Stromstaerkemessgeraet/Durchflusszaehler, Geraet/Geraet) ersetzen das
+%   bisherige Bildpaar und sind auf Wunsch jetzt die einzigen beiden Bilder
+%   in diesem Abschnitt. water-circuit2-static.png (Bruecke zum abstrakten
+%   Schaltplan) und water-current-circuits-static.jpg (Wasserpark-Foto)
+%   dafuer entfernt, ebenso weiterhin simple-circuit2-static.svg/.pdf
+%   (redundant zum Schaltplan in water-circuit2-static.png).
+% - Gruppe B (Widerstand): neuer Kurzabschnitt, wieso Stromkabel aus Kupfer
+%   bestehen (geringer Widerstand, gut verarbeitbar, guenstiger als
+%   Silber), direkt an die bestehende Kupferkabel-Erwaehnung angehaengt.
+% - Fehlersuche im Stromkreis (bisherige Vertiefungsaufgabe) entfernt.
+% - Vertiefungsphase (Stammgruppe wieder komplett) neu: eine Papieraufgabe,
+%   die alle vier Themen im Schaltplan zusammenfuehrt, und eine
+%   Gruppenaufgabe mit der PhET-Simulation "Stromkreislabor: Gleichstrom"
+%   mit vier genauen Teilauftraegen (kein freies Ausprobieren mehr). Dies
+%   ist bewusst eine Ausnahme von der sonst geltenden Regel in
+%   institutionen/UZH-Praktikum-I/CLAUDE.md, wonach eine Aufgabe, die eine
+%   PhET-Simulation braucht, ins Aufgabenblatt gehoert: auf Wunsch bleibt
+%   sie hier im Dokument, da dieses Dokument als Gruppenpuzzle-Ganzes
+%   behandelt wird statt als gewoehnliches Arbeitsblatt.
+%
+% Restliche Bilder unveraendert verwendet: batterie.png, images.png
+% (vereinfachtes Batterie-Schaltsymbol), resistor-static.jpg,
+% drude-model-static.svg/.pdf (mikroskopisches Modell, Vertiefung
+% Widerstand), widerstand.jpg (Wasseranalogie Engstelle),
+% electric-charge-and-electric-current-static.svg/.pdf (technische vs.
+% physikalische Stromrichtung), phet-logo-trademarked.png. Neu dazugekommen
+% (s.\ unten): glühlampe.jpg (Gruppe C), multimeter.jpg (Gruppe D),
+% batterie_reihenschaltung.png (Gruppe A, zeigt vier AAA-Batterien in
+% Serie mit ihrer addierten Gesamtspannung -- illustriert den Absatz zu
+% Batterien in Serie, mit konkreten Volt-Zahlen nur im Bild selbst, nicht
+% im Fliesstext, analog zu batterie.png weiter oben). Nicht (mehr)
+% verwendet: water-circuit2-static.png,
+% water-current-circuits-static.jpg (s.\ oben), schrittspannung.jpg
+% (gehoert thematisch zum Gewitter, elektrizitaet/e-feld-vertiefung/).
+%
+% -----------------------------------------------------------------------------
+% Klarstellung (16.09.2026, auf Wunsch): Dieses Dokument enthaelt nur noch das
+% Gruppenpuzzle selbst (Einfuehrung, die vier Expertengruppen A-D, die
+% Vertiefungsphase). Ein zwischenzeitlich hier ergaenzter quantitativer Teil
+% (Einheitenherleitung Ampere/Ohm, Ohmsches Gesetz, URI-Dreieck, Vorsaetze
+% Milli/Kilo, Rechenaufgaben) wurde wieder entfernt -- er gehoert gemaess
+% Loris' eigenem Kriterium (reine Theorie ohne Aufgaben = Arbeitsblatt,
+% Uebungsaufgaben dazu = Aufgabenblatt) in eigene Dokumente:
+% arbeitsblatt3-u-i-r-1.tex (Theorie, im selben Ordner, Stand: Entwurf, noch
+% nicht endgueltig benannt) und ein noch zu erstellendes
+% aufgabenblatt-u-i-r.tex fuer die zugehoerigen Uebungsaufgaben.
+%
+% -----------------------------------------------------------------------------
+% Ergaenzung (16.09.2026, auf Wunsch): In Gruppe C (Verbraucher) wird
+% Serie-/Parallelschaltung bereits als kurzes Beispiel erwaehnt (was es ist,
+% mit je einer schematischen circuitikz-Skizze), bewusst nur qualitativ und
+% ohne Ersatzwiderstands-Rechnung -- die volle Vertiefung bleibt der eigenen
+% Doppellektion schaltungen/ (23.09.2026) vorbehalten (s.\ oben). Die
+% Kontrollfrage der Gruppe C hat dazu einen zweiten Teil erhalten (Vorteil
+% einer Parallelschaltung, wenn eine der beiden Lampen durchbrennt). Ausserdem
+% hat die Ablauf-Aufzaehlung am Anfang jetzt eine Zeiteinteilung pro Phase
+% (5/8/14/18 Min., total ca.\ 45 Min. fuer das gesamte Gruppenpuzzle;
+% Expertenphase auf Wunsch kurz, Austauschphase laenger, Vertiefungsphase
+% als laengste Phase). Schaltzeichen des Schalters (Gruppe D-Theorie und
+% Vertiefungsphase-Loesung) ohne "$S$"-Beschriftung, wie im Schaltplan
+% ueblich.
+%
+% -----------------------------------------------------------------------------
+% Ergaenzung (16.09.2026, auf Wunsch, neue Fotos glühlampe.jpg/multimeter.jpg
+% in Bilder/): Gruppe C zeigt jetzt direkt nach der Verbraucher-Definition
+% ein echtes Foto (Gluehlampe) statt nur der schematischen Zeichnungen, dort
+% ausserdem der Serie-/Parallelschaltung-Teil vor das Schaltzeichen gezogen
+% (Konsistenz: Schaltzeichen steht jetzt wie bei A/B/D ganz am Schluss der
+% theoriebox). Gruppe D zeigt nach der Stromformel neu ein Multimeter-Foto
+% mit erklaerendem Satz (Amperemeter/Multimeter-Modus) -- vorher wurde das
+% in der Wasserkreislaufanalogie erwaehnte "Strommessgeraet" nirgends
+% tatsaechlich gezeigt. Die Kontrollfrage der Gruppe D hat neu einen
+% zweiten Teil (wieso kein Strom bei offenem Schalter trotz Spannung),
+% weiterhin als eine einzige \question, damit sich an den
+% \setcounter{question}{...}-Werten der nachfolgenden Aufgaben nichts
+% verschiebt.
+%
+% -----------------------------------------------------------------------------
+% Ergaenzung (16.09.2026, auf Wunsch): Gruppe D bespricht neu auch, was
+% Serie-/Parallelschaltung fuer den Strom selbst bedeutet (nicht nur fuer
+% den Verbraucher wie bei Gruppe C): in Serie ueberall derselbe Strom (nur
+% ein Weg), bei Parallelschaltung teilt sich der Strom auf die Zweige auf.
+% Bewusst nur qualitativ (kein Vergleich der Stromstaerke zwischen den
+% beiden Schaltungen, das braeuchte Ersatzwiderstand/Ohmsches Gesetz, siehe
+% oben). Die Kontrollfrage der Gruppe D hat dazu einen dritten Teil
+% erhalten (2 Punkte, \question jetzt [7] statt [5]), weiterhin als eine
+% einzige \question mit \part.
+%
+% -----------------------------------------------------------------------------
+% Ergaenzung (16.09.2026, auf Wunsch): Vier kleine Korrekturen/Ergaenzungen:
+% (1) Schaltzeichen des Schalters von "switch" (mit kleinem Pfeil/Haken am
+% Kontakt) auf "normal open switch" umgestellt (schlichte unterbrochene
+% Linie ohne Pfeil, wie im Schaltplan ueblich) -- betrifft Gruppe D und die
+% Loesung der Stammgruppenaufgabe "Der vollstaendige Stromkreis".
+% (2) Vergleich mit dem Faradayschen Kaefig bei Gruppe A (Batterie)
+% entfernt.
+% (3) Gruppe A dafuer ergaenzt (war zu kurz): neuer Absatz zu
+% unterschiedlichen Batterieformen (AA/AAA, Blockbatterie, Autobatterie)
+% und dass sich Spannungen mehrerer Batterien in Serie addieren --
+% bewusst weiterhin ohne konkrete Volt-Zahlen (Einheiten bleiben ausserhalb
+% des Gruppenpuzzles, s.\ oben) und passt zur spaeteren
+% Stammgruppenaufgabe (Simulation, zweite Batterie hinzufuegen).
+% (4) Die vier einzelnen Bauteil-Schaltzeichen (Batterie, Widerstand,
+% Verbraucher, Schalter, je das letzte Element ihrer theoriebox) stecken
+% jetzt in einer formelbox statt nur in einem \begin{center} mit
+% Bildunterschrift darunter -- einheitliche visuelle Hervorhebung als
+% Referenzsymbol, analog zur bereits bestehenden formelbox-Konvention.
+% Die groesseren Vergleichs-/Beispielschaltungen (Serie-/Parallelschaltung
+% bei Gruppe C, vollstaendiger Schaltplan in der Vertiefungsphase) bleiben
+% bewusst unboxed, da sie keine einzelnen Bauteil-Symbole sind.
+%
+% -----------------------------------------------------------------------------
+% Ergaenzung (16.09.2026, auf Wunsch): Die Kontrollfrage-Teilaufgabe zur
+% Serie-/Parallelschaltung des Stroms (Gruppe D, Teil c) hat jetzt dieselbe
+% Serie-/Parallelschaltung-Skizze wie Gruppe C (zwei Lampen an einer
+% Batterie, unbeschriftet) direkt bei der Fragestellung, statt nur
+% Fliesstext ohne Bild -- Ladungstraeger-Wege sind so leichter
+% nachzuvollziehen. Bewusst keine Strompfeile/-beschriftung in der Skizze,
+% um die Antwort nicht vorwegzunehmen.
+%
+% -----------------------------------------------------------------------------
+% Korrektur (16.09.2026, auf Wunsch): Stammgruppenaufgabe "Der vollstaendige
+% Stromkreis", Teil a) verlangte/zeigte bisher nur Batterie, Schalter und
+% Verbraucher -- der Widerstand (viertes Thema des Gruppenpuzzles) fehlte
+% sowohl im Aufgabentext als auch in der Loesungsskizze, obwohl die
+% Vertiefungsphase laut Einleitung "alle vier Themen miteinander
+% verknuepfen" soll. Beide jetzt ergaenzt: Aufgabentext nennt Widerstand
+% explizit, Loesungsschaltplan zeigt ihn als viertes Element der Schleife
+% (mit Stromstaerke $I$ jetzt an dieser Stelle beschriftet statt an einem
+% blossen Verbindungsdraht).
+%
+% -----------------------------------------------------------------------------
+% Ergaenzung (16.09.2026, auf Wunsch): Zwei weitere Stammgruppenaufgaben in
+% der Vertiefungsphase, gezielt so gewaehlt, dass sie kombiniertes Wissen
+% mehrerer Expertengruppen brauchen statt nur eines einzelnen Themas:
+% - "Helligkeit vorhersagen" (Widerstand + Verbraucher, ueber die
+%   gemeinsame Stromstaerke in einer Serieschaltung).
+% - "Zwei unabhaengig schaltbare Lampen" (Parallelschaltung/Verbraucher aus
+%   Gruppe C + Schalter-Platzierung aus Gruppe D + gemeinsame Batterie aus
+%   Gruppe A), als Design-/Konstruktionsaufgabe statt reiner
+%   Verstaendnisfrage.
+% Beide als eigene \begin{questions}-Bloecke mit fortlaufendem
+% \setcounter{question}{6} bzw. {7}, damit die Nummerierung nach den
+% bereits bestehenden fuenf Fragen nahtlos weitergeht.
+% =============================================================================
+\documentclass[addpoints,11pt,a4paper]{exam}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.2cm,headheight=14pt]{geometry}
+\usepackage{amsmath}
+\usepackage{siunitx}
+% Hausstil: zusammengesetzte Einheiten immer als echter Bruch (\frac), nicht
+% als Inline-Schraegstrich oder \tfrac -- gilt global fuer jedes \si/\SI.
+\sisetup{per-mode=fraction,fraction-command=\frac}
+\usepackage{array,booktabs,tabularx,multirow}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[european]{circuitikz}
+\usepackage{physics}
+\usepackage[most]{tcolorbox}
+\usepackage{lastpage}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\usetikzlibrary{arrows.meta,calc,angles,quotes}
+
+\usepackage{setspace}
+\usepackage{needspace}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+\setstretch{1.08}
+\setlist[itemize]{itemsep=0.4em}
+
+% -----------------------------
+% Farben (Corporate-Farbschema Physik KFR)
+% -----------------------------
+\definecolor{titleblue}{HTML}{183A6B}
+\definecolor{accentblue}{HTML}{2E6F9E}
+\definecolor{lightblue}{HTML}{EAF4FB}
+\definecolor{lightgray}{HTML}{F4F6F8}
+\definecolor{darkgray}{HTML}{4A4A4A}
+\definecolor{accentorange}{HTML}{D9720C}
+\definecolor{accentpurple}{HTML}{7B2D8E}
+\definecolor{lightorange}{HTML}{FCEEE0}
+\definecolor{lightpurple}{HTML}{F3EAF7}
+
+% Links (hyperref): farblich ans Corporate-Farbschema angeglichen.
+\hypersetup{
+  colorlinks=true,
+  urlcolor=accentblue,
+  linkcolor=accentblue,
+  pdftitle={Gruppenpuzzle 3: Strom, Spannung und Widerstand},
+  pdfauthor={Loris Keller}
+}
+
+% -----------------------------
+% Spaltentypen
+% -----------------------------
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% -----------------------------
+% Boxen
+% -----------------------------
+\tcbset{before skip=10pt, after skip=10pt}
+\newtcolorbox{titlebox}{
+  enhanced,
+  colback=titleblue,
+  colframe=titleblue,
+  boxrule=0pt,
+  arc=3mm,
+  left=3mm,right=3mm,top=3mm,bottom=3mm
+}
+
+\newlength{\aufgabenindent}
+\settowidth{\aufgabenindent}{10.\hskip\labelsep}
+
+% Praktikum I: Lernziele/Einleitung/Theorie/Aufgaben werden NICHT farbig
+% gerahmt (nur Formel-, Hinweis- und Antwortbox bleiben Boxen) -- siehe
+% institutionen/UZH-Praktikum-I/CLAUDE.md, Abschnitt "Boxen-Layout".
+\newenvironment{infobox}{%
+  \par\addvspace{10pt}\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+% Titel von Theorie-/Aufgaben-/Gruppenarbeit-Abschnitten: groesser, farbig
+% und mit duenner Trennlinie statt schlichtem Fettdruck -- macht die
+% Gliederung auf einen Blick lesbar, ohne die Boxen selbst farbig zu
+% rahmen (weiterhin nur Text, keine Fuellung/kein Rahmen; siehe oben).
+\newcommand{\Teiltitel}[2]{%
+  \noindent{\Large\bfseries\color{#1}#2}\par
+  \vspace{1pt}\noindent{\color{#1}\rule{\linewidth}{0.8pt}}\par\smallskip\noindent
+}
+
+\newenvironment{theoriebox}[1][Theorie]{%
+  \par\addvspace{12pt}\Teiltitel{titleblue}{#1}
+}{%
+  \par\addvspace{10pt}
+}
+
+\newtcolorbox{taskbox}[1][]{
+  enhanced, breakable,
+  colback=white, colframe=white, boxrule=0pt,
+  left=0mm,right=0mm,top=0mm,bottom=0mm,
+  before skip=12pt, after skip=10pt,
+  before upper={%
+    \def\tmpboxtitle{#1}%
+    \ifx\tmpboxtitle\empty\else\Teiltitel{accentblue}{#1}\fi
+  }
+}
+
+\newtcolorbox{groupbox}[1][Gruppenarbeit]{
+  enhanced, breakable,
+  colback=white, colframe=white, boxrule=0pt,
+  left=0mm,right=0mm,top=0mm,bottom=0mm,
+  before skip=12pt, after skip=10pt,
+  before upper={\Teiltitel{accentorange}{#1}}
+}
+
+\newenvironment{beispielbox}[1][Beispiel]{%
+  \par\addvspace{10pt}\noindent\textbf{#1}\par\smallskip\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+\newtcolorbox{hinweisbox}[1][Hinweis]{
+  enhanced,
+  breakable,
+  colback=lightorange,
+  colframe=accentorange,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+\newtcolorbox{formelbox}[1][Formel]{
+  enhanced,
+  breakable,
+  colback=lightpurple,
+  colframe=accentpurple,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.9pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+\newtcolorbox{answerbox}{
+  breakable,
+  colback=white,
+  colframe=gray!55,
+  boxrule=0.5pt,
+  arc=1.5mm,
+  left=2mm,right=2mm,top=2mm,bottom=2mm
+}
+
+% Bild-Helfer: zentriertes Bild mit spuerbarem Abstand zum umgebenden Text.
+% #1 = Breite, #2 = Dateipfad.
+\newcommand{\Bild}[2]{%
+  \par\vspace{0.6cm}
+  \begin{center}
+    \includegraphics[width=#1]{#2}
+  \end{center}
+  \vspace{0.6cm}
+}
+
+% --- Loesungen ein-/ausblenden -----------------------------------------------
+%\noprintanswers
+\printanswers
+
+\pointformat{}
+\renewcommand{\solutiontitle}{\noindent\color{titleblue}\textbf{L\"osung:}\enspace}
+
+\pagestyle{headandfoot}
+\cfoot{\textcolor{darkgray}{Seite \thepage\ von \pageref{LastPage}}}
+
+\newcommand{\Kopfzeile}[4]{%
+  \begin{titlebox}
+    {\color{white}\sffamily\bfseries\Large #4}
+  \end{titlebox}
+  \vspace{0.5em}
+  \noindent\textbf{Klasse:}~#1 \hfill \textbf{Datum:}~#2 \hfill \textbf{Thema:}~#3
+    \hfill \textbf{Lehrperson:}~Loris Keller
+  \vspace{0.8em}
+  \lhead{\textcolor{darkgray}{#3}}
+  \rhead{\textcolor{darkgray}{#4}}
+}
+
+\newlength{\antwortraumlen}
+\newcommand{\Antwortraum}[1]{%
+  \pgfmathsetlength{\antwortraumlen}{#1*2.5cm}%
+  \begin{answerbox}
+    \rule{0pt}{\antwortraumlen}%
+  \end{answerbox}%
+}
+
+% Werte fuer Kopfzeile zentral setzen
+\newcommand{\Klasse}{1f}
+\newcommand{\Datum}{16.09.2026}
+\newcommand{\Thema}{Gruppenpuzzle: Stromkreis}
+\newcommand{\ArbeitsblattTitel}{Gruppenpuzzle 3: Strom, Spannung und Widerstand}
+
+\begin{document}
+
+\Kopfzeile{\Klasse}{\Datum}{\Thema}{\ArbeitsblattTitel}
+
+% =============================================================================
+% Einfuehrung: Was ist ein Gruppenpuzzle, Ablauf
+% =============================================================================
+\textbf{Gruppenpuzzle: Stromkreis}
+
+Dieses Arbeitsblatt bearbeiten Sie nicht allein, sondern als
+\textbf{\emph{Gruppenpuzzle}} (auch Jigsaw genannt): Der Stoff wird in vier
+gleichwertige Themen aufgeteilt. Zuerst wird jede und jeder von Ihnen
+Expertin oder Experte für genau eines dieser vier Themen, danach bringen
+Sie Ihr Wissen in eine neue Gruppe ein, in der alle vier Themen
+zusammenkommen.
+
+\textbf{Ablauf:}
+{\sloppy
+\begin{enumerate}[leftmargin=1.2cm,itemsep=0.3em]
+  \item \textbf{\emph{Einteilung}} (ca.\ 5 Min.): Sie arbeiten in
+  Vierergruppen, den \textbf{\emph{Stammgruppen}}. Jedes Mitglied Ihrer
+  Stammgruppe erhält eines der vier Themen unten: Gruppe A (Batterie),
+  Gruppe B (Widerstand), Gruppe C (Verbraucher) oder Gruppe D (Schalter
+  und Strom).
+  \item \textbf{\emph{Expertenphase}} (ca.\ 8 Min.): Alle mit demselben
+  Thema setzen sich zusammen (\textbf{\emph{Expertengruppe}}) und lesen
+  gemeinsam ihren Abschnitt. Lösen Sie darin auch die Kontrollfrage Ihrer
+  Gruppe.
+  \item \textbf{\emph{Austauschphase}} (ca.\ 14 Min.): Sie kehren in Ihre
+  Stammgruppe zurück. Reihum erklärt jede und jeder ihr/sein Thema den
+  anderen drei Gruppenmitgliedern, bis alle vier Themen einmal erklärt
+  wurden.
+  \item \textbf{\emph{Vertiefungsphase}} (ca.\ 18 Min.): Am Schluss löst
+  Ihre komplette Stammgruppe gemeinsam die beiden Aufgaben ganz am Ende
+  dieses Arbeitsblatts, die alle vier Themen miteinander verknüpfen.
+\end{enumerate}
+\par}
+{\small Total: ca.\ 45 Minuten für das gesamte Gruppenpuzzle.}
+
+% =============================================================================
+% Theorie: Wasserkreislaufanalogie
+% =============================================================================
+In einem \textbf{\emph{Stromkreis}} fliessen Ladungen kontrolliert durch
+Kabel, angetrieben von einer Batterie.
+
+\begin{theoriebox}[Die Wasserkreislaufanalogie]
+Eine \textbf{\emph{Batterie}} treibt den Ladungsfluss an, genau wie eine
+\textbf{\emph{Pumpe}} den Wasserfluss in einem Wasserkreislauf antreibt.
+Die folgenden zwei Bilder zeigen sich entsprechende Bauteile eines echten
+Wasserkreislaufs und eines echten Stromkreises:
+
+\Bild{7.5cm}{Bilder/Wasserkreislauf.jpg}
+\Bild{7.5cm}{Bilder/Stromkreis.jpg}
+
+Die elektrische Quelle entspricht der Pumpe, der Schalter dem Ventil, das
+Strommessgerät dem Durchflusszähler, und das angeschlossene Gerät (hier
+eine Lampe) dem Gerät im Wasserkreislauf.
+\end{theoriebox}
+
+% =============================================================================
+% Die vier Gruppenthemen: Batterie, Widerstand, Verbraucher, Schalter
+% =============================================================================
+Ein Stromkreis besteht aus einzelnen Bauteilen, die jeweils ein eigenes
+\textbf{\emph{Schaltzeichen}} haben, mit dem man sie in einem Schaltplan
+darstellt. Die folgenden vier Abschnitte gehören zu den vier Themen Ihres
+Gruppenpuzzles: Gruppe A (Batterie), Gruppe B (Widerstand), Gruppe C
+(Verbraucher) und Gruppe D (Schalter und Strom). \textbf{Bearbeiten Sie in
+der Expertenphase nur den Abschnitt Ihrer eigenen Gruppe.}
+
+\needspace{10cm}
+\begin{theoriebox}[Gruppe A: Die Batterie]
+Die \textbf{\emph{Batterie}} ist die Antriebsquelle des Stromkreises. In
+ihrem Inneren trennt sie fortlaufend positive und negative Ladungen und
+hält sie an ihren beiden Polen getrennt. Diese Ladungstrennung erzeugt
+zwischen den beiden Polen ein Potenzialgefälle, die \textbf{\emph{Spannung}}
+$U$. Sie entspricht dem Höhenunterschied, den eine Pumpe im
+Wasserkreislauf erzeugt: Je grösser die Spannung, desto stärker treibt sie
+die Ladungsträger durch den Stromkreis, genau wie ein grösserer
+Höhenunterschied das Wasser stärker durch die Rohre drängt.
+
+Wird die Batterie über eine leitende Verbindung geschlossen, können sich
+die getrennten Ladungen über den Stromkreis ausgleichen. Solange der
+Stromkreis geschlossen bleibt, erneuert die Batterie diese Ladungstrennung
+laufend nach.
+
+\Bild{9.5cm}{Bilder/batterie.png}
+
+So wird eine Batterie oft ganz vereinfacht dargestellt, mit einer roten
+Plusseite und einer blauen Minusseite:
+
+\Bild{2.2cm}{Bilder/images.png}
+
+Batterien gibt es in ganz unterschiedlichen Formen und Grössen: als
+kleine AA- oder AAA-Batterien für Fernbedienungen, als grössere
+Blockbatterie oder als Autobatterie. Je nach Bauart liefern sie eine
+unterschiedlich hohe Spannung. Schliesst man mehrere Batterien in Serie
+hintereinander, addieren sich ihre Spannungen: Genau wie mehrere Pumpen
+hintereinander im Wasserkreislauf den gesamten Höhenunterschied
+vergrössern, erhöht jede zusätzliche Batterie die gesamte Spannung im
+Stromkreis.
+
+\Bild{8cm}{Bilder/batterie_reihenschaltung.png}
+{\scriptsize Vier Batterien in Serie: Ihre Spannungen addieren sich zur
+gesamten Spannung.}
+
+Im Schaltplan verwendet man dafür ein eigenes Schaltzeichen: eine lange
+und eine kurze Linie für die beiden Pole.
+
+\begin{formelbox}[Schaltzeichen: Batterie]
+\begin{center}
+\begin{circuitikz}[scale=1.4]
+  \draw (0,0) to[battery1,l=$U$] (2.4,0);
+\end{circuitikz}
+\end{center}
+\end{formelbox}
+\end{theoriebox}
+
+\begin{questions}
+\needspace{6cm}
+\begin{taskbox}[Kontrollfrage: Batterie und Spannung]
+\question[3] Erklären Sie mit der Skizze oben, warum an einer offenen,
+noch nicht angeschlossenen Batterie zwar eine Spannung besteht, aber noch
+kein Strom fliesst.
+\begin{answerbox}
+\vspace{2.4cm}
+\end{answerbox}
+\begin{solution}
+An der offenen Batterie sind die Ladungen an den beiden Polen zwar
+getrennt, das Potenzialgefälle (die Spannung) besteht also bereits. Es
+gibt aber noch keinen leitenden Weg, über den sich diese Ladungen
+ausgleichen könnten. Erst eine geschlossene, leitende Verbindung zwischen
+den beiden Polen ermöglicht einen Ladungsausgleich, also einen
+Stromfluss.
+\end{solution}
+\end{taskbox}
+\end{questions}
+
+\needspace{12cm}
+\begin{theoriebox}[Gruppe B: Der Widerstand]
+Der elektrische \textbf{\emph{Widerstand}} $R$ beschreibt, wie stark ein
+Bauteil den Ladungsfluss erschwert. Die Skizze unten zeigt das Prinzip mit
+der Wasseranalogie: Fliessen die Ladungsträger durch eine breite
+Engstelle, kommen viele von ihnen pro Zeit hindurch, das entspricht einem
+geringen Widerstand. Ist die Engstelle eng, kommen in derselben Zeit
+deutlich weniger hindurch, das entspricht einem höheren Widerstand. Ein
+enges Rohr entspricht also einem hohen elektrischen Widerstand, ein weites
+Rohr einem geringen.
+
+\Bild{9cm}{Bilder/widerstand.jpg}
+
+Im Alltag begegnen Ihnen Widerstände meist als kleine, farbig geringelte
+Bauteile wie in der Fotografie unten. Die Farbringe verraten dabei ihren
+genauen Wert. Ein bekanntes Beispiel für ein Bauteil mit besonders hohem
+Widerstand ist ein Heizdraht: Er leitet deutlich schlechter als ein dickes
+Kupferkabel und wird deshalb im Betrieb warm.
+
+\Bild{7.5cm}{Bilder/resistor-static.jpg}
+
+Genau umgekehrt möchte man es bei einem gewöhnlichen Stromkabel: Es soll
+den Strom möglichst ungehindert leiten, ohne selbst Energie zu
+verbrauchen. Deshalb bestehen Stromkabel fast immer aus
+\textbf{\emph{Kupfer}}: Kupfer hat einen besonders geringen Widerstand,
+lässt sich gut zu dünnen Drähten verarbeiten und ist deutlich günstiger
+als Silber, das einen noch etwas geringeren Widerstand hätte.
+
+Warum sich ein Material bei hohem Widerstand überhaupt erwärmt, zeigt der
+Blick auf die mikroskopische Ebene in der Skizze unten: Auf ihrem Weg
+durch den Leiter stossen die Elektronen laufend mit den festsitzenden
+Atomrümpfen des Materials zusammen (rote Kreise) und werden dabei in
+zufällige Richtungen abgelenkt (blaue Linien). Trotz dieser vielen
+Zusammenstösse ergibt sich im elektrischen Feld $\vec{E}$ eine kleine,
+gerichtete Nettobewegung der Elektronen: die
+\textbf{\emph{Driftgeschwindigkeit}} $v_d$, entgegen der eingezeichneten
+Feldrichtung und Stromrichtung. Bei jedem Zusammenstoss geben die
+Elektronen einen Teil ihrer Bewegungsenergie an die Atomrümpfe ab, wodurch
+diese stärker schwingen. Je mehr Zusammenstösse ein Elektron auf seinem
+Weg erleidet, das heisst je höher der Widerstand, desto stärker erwärmt
+sich das Material dabei.
+
+\Bild{8cm}{Bilder/drude-model-static.pdf}
+
+Im Schaltplan wird ein Widerstand als Rechteck dargestellt:
+
+\begin{formelbox}[Schaltzeichen: Widerstand]
+\begin{center}
+\begin{circuitikz}[scale=1.4]
+  \draw (0,0) to[R,l=$R$] (2.4,0);
+\end{circuitikz}
+\end{center}
+\end{formelbox}
+\end{theoriebox}
+
+\needspace{6cm}
+\begin{questions}
+\setcounter{question}{1}
+\begin{taskbox}[Kontrollfrage: Widerstand]
+\question[3] Beschreiben Sie anhand der Drude-Modell-Skizze oben (rote
+Kreise: Atomrümpfe, blaue Punkte/Linien: Elektronenbahnen), was auf
+mikroskopischer Ebene passiert, wenn Elektronen durch einen Leiter mit
+hohem Widerstand fliessen, und warum sich der Leiter dabei erwärmt.
+\begin{answerbox}
+\vspace{2.6cm}
+\end{answerbox}
+\begin{solution}
+Die Elektronen bewegen sich nicht geradlinig durch den Leiter, sondern
+stossen laufend mit den ortsfesten Atomrümpfen des Materials zusammen und
+werden dabei in zufällige Richtungen abgelenkt. Trotzdem ergibt sich im
+elektrischen Feld eine kleine, gerichtete Nettobewegung entgegen der
+Feldrichtung (Driftgeschwindigkeit $v_d$). Bei jedem Zusammenstoss geben
+die Elektronen einen Teil ihrer Bewegungsenergie an die Atomrümpfe ab, was
+diese stärker schwingen lässt: Das Material erwärmt sich. Je mehr
+Zusammenstösse (je höher der Widerstand), desto stärker die Erwärmung.
+\end{solution}
+\end{taskbox}
+\end{questions}
+
+\needspace{9cm}
+\begin{theoriebox}[Gruppe C: Der Verbraucher]
+Ein \textbf{\emph{Verbraucher}} ist das Bauteil im Stromkreis, das
+elektrische Energie in eine andere Energieform umwandelt. Eine Glühlampe
+wandelt elektrische Energie in Licht (und etwas Wärme) um, ein
+Elektromotor in Bewegung, ein Lautsprecher in Schall, ein Heizdraht (siehe
+Gruppe B) in Wärme. So unterschiedlich diese Geräte auch sind: Für den
+Stromkreis zählt nur, dass sie elektrische Energie \glqq verbrauchen\grqq{}
+und in etwas anderes umwandeln.
+
+\Bild{3cm}{Bilder/glühlampe.jpg}
+{\scriptsize Eine gewöhnliche Glühlampe: ein klassisches Beispiel für
+einen Verbraucher.}
+
+Oft sind mehrere Verbraucher gleichzeitig im selben Stromkreis verbaut.
+Dabei unterscheidet man zwei Grundschaltungen: Bei einer
+\textbf{\emph{Serieschaltung}} liegen die Verbraucher hintereinander in
+derselben Schleife, der Strom fliesst durch beide nacheinander. Bei einer
+\textbf{\emph{Parallelschaltung}} liegen sie nebeneinander, jeder
+Verbraucher hat seinen eigenen Zweig zwischen denselben zwei Punkten.
+
+\begin{center}
+\begin{tabular}{cc}
+\begin{circuitikz}[scale=0.85]
+  \draw (0,0) to[battery1,l=$U$] (0,3.4) -- (4,3.4)
+              to[lamp] (4,2.1)
+              -- (4,1.3)
+              to[lamp] (4,0)
+              -- (0,0);
+\end{circuitikz}
+&
+\begin{circuitikz}[scale=0.85]
+  \draw (0,0) to[battery1,l=$U$] (0,3);
+  \draw (0,3) -- (4,3);
+  \draw (0,0) -- (4,0);
+  \draw (2,3) to[lamp] (2,0);
+  \draw (4,3) to[lamp] (4,0);
+\end{circuitikz}
+\\
+{\scriptsize Serieschaltung} & {\scriptsize Parallelschaltung}
+\end{tabular}
+\end{center}
+
+Im Schaltplan wird ein allgemeiner Verbraucher oft einheitlich als Kreis
+mit einem Kreuz dargestellt (Schaltzeichen einer Glühlampe), unabhängig
+davon, welche Energieform am Ende tatsächlich entsteht:
+
+\begin{formelbox}[Schaltzeichen: Verbraucher]
+\begin{center}
+\begin{circuitikz}[scale=1.4]
+  \draw (0,0) to[lamp,l=Verbraucher] (2.4,0);
+\end{circuitikz}
+\end{center}
+\end{formelbox}
+\end{theoriebox}
+
+\needspace{7cm}
+\begin{questions}
+\setcounter{question}{2}
+\begin{taskbox}[Kontrollfrage: Verbraucher]
+\question[4]
+\begin{parts}
+  \part[2] Nennen Sie zwei Beispiele für Verbraucher aus Ihrem Alltag und
+  je die Energieform, in die sie elektrische Energie umwandeln.
+  \begin{answerbox}
+  \vspace{1.6cm}
+  \end{answerbox}
+  \begin{solution}
+  Zum Beispiel: Eine Glühlampe wandelt elektrische Energie in Licht (und
+  Wärme) um, ein Lautsprecher in Schall, ein Elektromotor in Bewegung, ein
+  Toaster in Wärme. (Andere sinnvolle Beispiele sind ebenfalls gültig.)
+  \end{solution}
+
+  \part[2] Zwei Lampen sind parallel geschaltet. Eine davon brennt durch.
+  Was ist der Vorteil dieser Parallelschaltung gegenüber einer
+  Serieschaltung in diesem Fall?
+  \begin{answerbox}
+  \vspace{1.6cm}
+  \end{answerbox}
+  \begin{solution}
+  Bei der Parallelschaltung hat jede Lampe ihren eigenen Zweig zwischen
+  den beiden Anschlusspunkten der Batterie. Fällt eine Lampe aus, bleibt
+  der Zweig der anderen Lampe trotzdem geschlossen, sie leuchtet weiter.
+  Bei einer Serieschaltung dagegen liegen beide Lampen in derselben
+  einzigen Schleife: Fällt eine aus, ist die ganze Schleife unterbrochen,
+  und auch die andere Lampe erlischt.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\needspace{12cm}
+\begin{theoriebox}[Gruppe D: Der Schalter und der elektrische Strom]
+Der \textbf{\emph{Schalter}} entscheidet, ob der Stromkreis geschlossen
+oder unterbrochen ist, genau wie ein Ventil im Wasserkreislauf den
+Wasserfluss freigibt oder blockiert. Ist er offen, ist der Stromkreis an
+dieser Stelle unterbrochen: Selbst bei voller Batteriespannung kann sich
+keine Ladung ausgleichen, es fliesst kein Strom. Erst wenn Sie den
+Schalter schliessen, entsteht ein durchgehend leitender Weg von einem Pol
+der Batterie über die restlichen Bauteile zum anderen Pol zurück, und die
+Ladungsträger beginnen zu fliessen.
+
+Genau in diesem Moment beginnt der elektrische \textbf{\emph{Strom}} $I$
+zu fliessen: die Ladung, die pro Zeiteinheit durch einen
+Leiterquerschnitt fliesst,
+\[
+  I = \frac{\Delta Q}{\Delta t}.
+\]
+Gemessen wird die Stromstärke mit einem \textbf{\emph{Amperemeter}}, meist
+als ein Modus eines \textbf{\emph{Multimeters}}, das je nach Einstellung
+auch Spannung oder Widerstand messen kann.
+
+\Bild{7cm}{Bilder/multimeter.jpg}
+{\scriptsize Ein Multimeter: Damit lässt sich unter anderem die
+Stromstärke $I$ messen.}
+
+Die Skizze unten zeigt einen Leiter im geschlossenen Stromkreis von innen:
+Die kleinen Kreise mit Minuszeichen sind die frei beweglichen Elektronen,
+die sich durch den Leiter bewegen. Man legte historisch fest, dass Strom
+von $+$ nach $-$ fliesst (\textbf{\emph{technische Stromrichtung}}), lange
+bevor man wusste, dass sich tatsächlich die negativ geladenen Elektronen
+bewegen, und zwar von $-$ nach $+$ (\textbf{\emph{physikalische
+Stromrichtung}}). Beide Pfeile in der Skizze beschreiben denselben Strom,
+nur aus unterschiedlicher Perspektive. Bis heute verwendet man in
+Schaltplänen meist die technische Stromrichtung.
+
+\Bild{12cm}{Bilder/electric-charge-and-electric-current-static.pdf}
+
+Auch für den Strom macht es einen Unterschied, ob mehrere Bauteile in
+Serie oder parallel geschaltet sind (siehe Serie-/Parallelschaltung,
+Gruppe C): Bei einer \textbf{\emph{Serieschaltung}} gibt es nur einen
+einzigen Weg für die Ladungsträger, der Strom $I$ ist deshalb an jeder
+Stelle der Schleife gleich gross. Bei einer
+\textbf{\emph{Parallelschaltung}} dagegen teilt sich der Strom an jeder
+Verzweigung auf die einzelnen Zweige auf: Durch jeden Zweig fliesst nur
+ein Teil des gesamten Stroms, der aus der Batterie kommt.
+
+Im Schaltplan wird ein offener Schalter als unterbrochene Linie mit einem
+schrägen Kontakt dargestellt, der sich beim Schliessen absenkt:
+
+\begin{formelbox}[Schaltzeichen: Schalter]
+\begin{center}
+\begin{circuitikz}[scale=1.4]
+  \draw (0,0) to[normal open switch] (2.4,0);
+\end{circuitikz}
+\end{center}
+\end{formelbox}
+\end{theoriebox}
+
+\needspace{6cm}
+\begin{questions}
+\setcounter{question}{3}
+\begin{taskbox}[Kontrollfrage: Schalter und Strom]
+\question[7]
+\begin{parts}
+  \part[3] Welche der beiden in der Skizze oben eingezeichneten
+  Richtungen (technische oder physikalische Stromrichtung) entspricht der
+  tatsächlichen Bewegungsrichtung der Elektronen? Warum verwendet man
+  trotzdem bis heute meist die technische Stromrichtung?
+  \begin{answerbox}
+  \vspace{2.2cm}
+  \end{answerbox}
+  \begin{solution}
+  Die physikalische Stromrichtung entspricht der tatsächlichen
+  Bewegungsrichtung der Elektronen (von $-$ nach $+$). Die technische
+  Stromrichtung wurde aber schon vor der Entdeckung des Elektrons
+  festgelegt und blieb aus historischen Gründen und der Konsistenz halber
+  in Gebrauch, obwohl sie der tatsächlichen Bewegung entgegengesetzt ist.
+  \end{solution}
+
+  \part[2] Warum fliesst bei einem offenen Schalter kein Strom, obwohl die
+  Batterie weiterhin eine Spannung liefert?
+  \begin{answerbox}
+  \vspace{1.6cm}
+  \end{answerbox}
+  \begin{solution}
+  Die Spannung (das Potenzialgefälle zwischen den Polen der Batterie)
+  besteht unabhängig vom Schalter weiter. Ein offener Schalter unterbricht
+  aber den leitenden Weg zwischen den beiden Polen: Ohne durchgehende
+  Verbindung können sich die Ladungen nicht ausgleichen, es fliesst also
+  kein Strom, auch wenn die Spannung vorhanden ist.
+  \end{solution}
+
+  \part[2] Zwei Lampen sind einmal in Serie, einmal parallel an dieselbe
+  Batterie angeschlossen. Ist der Strom durch die beiden Lampen bei der
+  Serieschaltung gleich gross oder unterschiedlich? Und bei der
+  Parallelschaltung: Ist der Strom in einem Zweig gleich gross wie der
+  gesamte Strom, der aus der Batterie fliesst?
+  \begin{center}
+  \begin{tabular}{cc}
+  \begin{circuitikz}[scale=0.85]
+    \draw (0,0) to[battery1,l=$U$] (0,3.4) -- (4,3.4)
+                to[lamp] (4,2.1)
+                -- (4,1.3)
+                to[lamp] (4,0)
+                -- (0,0);
+  \end{circuitikz}
+  &
+  \begin{circuitikz}[scale=0.85]
+    \draw (0,0) to[battery1,l=$U$] (0,3);
+    \draw (0,3) -- (4,3);
+    \draw (0,0) -- (4,0);
+    \draw (2,3) to[lamp] (2,0);
+    \draw (4,3) to[lamp] (4,0);
+  \end{circuitikz}
+  \\
+  {\scriptsize Serieschaltung} & {\scriptsize Parallelschaltung}
+  \end{tabular}
+  \end{center}
+  \begin{answerbox}
+  \vspace{1.8cm}
+  \end{answerbox}
+  \begin{solution}
+  Bei der Serieschaltung ist der Strom durch beide Lampen gleich gross, da
+  es nur einen einzigen Weg gibt, den alle Ladungsträger nehmen müssen.
+  Bei der Parallelschaltung dagegen teilt sich der Gesamtstrom an der
+  Verzweigung auf die beiden Zweige auf: Der Strom in einem einzelnen
+  Zweig ist deshalb kleiner als der gesamte Strom, der aus der Batterie
+  kommt.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Vertiefungsphase: Stammgruppe wieder komplett
+% =============================================================================
+\textbf{Vertiefungsphase: Ihre Stammgruppe ist wieder komplett}
+
+Nachdem alle vier Themen in Ihrer Stammgruppe einmal erklärt wurden,
+lösen Sie die folgenden zwei Aufgaben gemeinsam zu viert.
+
+\needspace{11cm}
+\begin{questions}
+\setcounter{question}{4}
+\begin{groupbox}[Stammgruppenaufgabe: Der vollständige Stromkreis]
+\question[4]
+\begin{parts}
+  \part[2] Zeichnen Sie gemeinsam einen vollständigen Schaltplan mit
+  Batterie, Widerstand, Schalter und einem Verbraucher Ihrer Wahl, alle in
+  Serie verbunden. Verwenden Sie die richtigen Schaltzeichen und
+  beschriften Sie Spannung $U$ und Strom $I$.
+  \begin{answerbox}
+  \vspace{3.5cm}
+  \end{answerbox}
+  \begin{solution}
+  \begin{center}
+  \begin{circuitikz}[scale=1.3]
+    \draw (0,0) to[battery1,l=$U$] (3,0)
+                to[normal open switch] (3,-2)
+                to[lamp,l=Verbraucher] (0,-2)
+                to[R,l=$R$,i=$I$] (0,0);
+  \end{circuitikz}
+  \end{center}
+  \end{solution}
+
+  \part[2] Erklären Sie mit der Wasserkreislaufanalogie, was in Ihrem
+  Schaltplan passiert, wenn der Schalter geöffnet wird.
+  \begin{answerbox}
+  \vspace{1.4cm}
+  \end{answerbox}
+  \begin{solution}
+  Ein geöffneter Schalter entspricht einem geschlossenen Ventil: Der Weg
+  ist unterbrochen. Genau wie dann kein Wasser mehr fliesst, kann sich in
+  der Batterie kein Ladungsausgleich mehr einstellen, es fliesst kein
+  Strom mehr, und der Verbraucher bleibt ohne Funktion (z.\,B. eine
+  Glühlampe bleibt dunkel).
+  \end{solution}
+\end{parts}
+\end{groupbox}
+\end{questions}
+
+\needspace{11cm}
+\begin{questions}
+\setcounter{question}{5}
+\begin{groupbox}[Stammgruppenaufgabe: Simulation \glqq Stromkreislabor: Gleichstrom\grqq]
+\question[5] Öffnen Sie zu viert die Simulation
+\href{https://phet.colorado.edu/sims/html/circuit-construction-kit-dc-virtual-lab/1.0.3/circuit-construction-kit-dc-virtual-lab_de.html}{%
+\includegraphics[width=0.9cm]{Bilder/phet-logo-trademarked.png}~\glqq
+Stromkreislabor: Gleichstrom\grqq} und bearbeiten Sie gemeinsam die
+folgenden Aufträge. Halten Sie Ihre Beobachtungen jeweils kurz schriftlich
+fest.
+\begin{parts}
+  \part[1] Bauen Sie einen Stromkreis mit einer Batterie, einem Schalter
+  und einer Glühbirne in Serie auf. Öffnen und schliessen Sie den
+  Schalter. Was beobachten Sie, und warum?
+  \begin{answerbox}
+  \vspace{1.1cm}
+  \end{answerbox}
+  \begin{solution}
+  Bei offenem Schalter bleibt die Glühbirne dunkel, der Stromkreis ist
+  unterbrochen. Bei geschlossenem Schalter leuchtet sie, weil nun ein
+  durchgehend leitender Weg besteht und Strom fliessen kann.
+  \end{solution}
+
+  \part[2] Fügen Sie eine zweite Batterie in derselben Ausrichtung hinzu.
+  Was verändert sich an der Glühbirne? Erklären Sie mit der
+  Wasserkreislaufanalogie.
+  \begin{answerbox}
+  \vspace{1.3cm}
+  \end{answerbox}
+  \begin{solution}
+  Die Glühbirne leuchtet heller. Zwei Batterien in Serie erzeugen eine
+  grössere Spannung, also einen grösseren Höhenunterschied. Wie eine
+  stärkere Pumpe treibt dieser die Ladungsträger stärker durch den
+  Stromkreis.
+  \end{solution}
+
+  \part[1] Ersetzen Sie die Glühbirne durch einen Widerstand und
+  verändern Sie dessen Wert mit dem Regler. Was beobachten Sie an der
+  Stromstärkeanzeige, wenn Sie den Widerstand erhöhen?
+  \begin{answerbox}
+  \vspace{1.1cm}
+  \end{answerbox}
+  \begin{solution}
+  Je grösser der Widerstand, desto kleiner die Stromstärke: Ein höherer
+  Widerstand erschwert den Ladungsfluss stärker, wie eine engere Stelle im
+  Wasserkreislauf.
+  \end{solution}
+
+  \part[1] Entfernen Sie ein Kabel aus dem Stromkreis. Was passiert, und
+  wie erklären Sie es mit der Wasserkreislaufanalogie?
+  \begin{answerbox}
+  \vspace{1.1cm}
+  \end{answerbox}
+  \begin{solution}
+  Die Glühbirne erlischt sofort, der Stromkreis ist unterbrochen. Wie bei
+  einem durchtrennten Rohr im Wasserkreislauf kann die Ladung die Lücke
+  nicht überqueren, es fliesst kein Strom mehr.
+  \end{solution}
+\end{parts}
+\end{groupbox}
+\end{questions}
+
+\needspace{11cm}
+\begin{questions}
+\setcounter{question}{6}
+\begin{groupbox}[Stammgruppenaufgabe: Helligkeit vorhersagen]
+\question[3] In einem Stromkreis liegen eine Batterie, ein Widerstand und
+ein Verbraucher (z.\,B. eine Glühlampe) in Serie. Was passiert mit der
+Helligkeit des Verbrauchers, wenn Sie den Widerstand durch einen mit
+deutlich höherem Wert ersetzen? Begründen Sie mit der
+Wasserkreislaufanalogie, wie Widerstand und Verbraucher dabei
+zusammenspielen.
+\begin{answerbox}
+\vspace{2.6cm}
+\end{answerbox}
+\begin{solution}
+Die Helligkeit nimmt ab. Ein grösserer Widerstand erschwert den
+Ladungsfluss stärker, wie eine engere Stelle im Wasserkreislauf: Pro
+Zeiteinheit kommt weniger durch. Da Widerstand und Verbraucher in Serie
+liegen, fliesst durch beide dieselbe, jetzt kleinere Stromstärke $I$. Der
+Verbraucher setzt dadurch pro Zeiteinheit weniger elektrische Energie um
+und leuchtet schwächer.
+\end{solution}
+\end{groupbox}
+\end{questions}
+
+\needspace{14cm}
+\begin{questions}
+\setcounter{question}{7}
+\begin{groupbox}[Stammgruppenaufgabe: Zwei unabhängig schaltbare Lampen]
+\question[4]
+\begin{parts}
+  \part[3] Zeichnen Sie einen Schaltplan mit einer Batterie und zwei
+  Lampen, sodass jede Lampe mit einem eigenen Schalter unabhängig ein-
+  und ausgeschaltet werden kann (die andere Lampe soll dabei
+  weiterleuchten). Verwenden Sie die richtigen Schaltzeichen.
+  \begin{answerbox}
+  \vspace{3.8cm}
+  \end{answerbox}
+  \begin{solution}
+  \begin{center}
+  \begin{circuitikz}[scale=0.9]
+    \draw (0,0) to[battery1,l=$U$] (0,3);
+    \draw (0,3) -- (5,3);
+    \draw (0,0) -- (5,0);
+    \draw (2,3) to[normal open switch] (2,1.5) to[lamp] (2,0);
+    \draw (5,3) to[normal open switch] (5,1.5) to[lamp] (5,0);
+  \end{circuitikz}
+  \end{center}
+  \end{solution}
+
+  \part[1] Erklären Sie kurz, welche Schaltungsart (Serie oder Parallel)
+  dafür nötig ist und warum eine Serieschaltung hier nicht funktionieren
+  würde.
+  \begin{answerbox}
+  \vspace{1.6cm}
+  \end{answerbox}
+  \begin{solution}
+  Parallelschaltung: Jede Lampe braucht ihren eigenen Zweig mit eigenem
+  Schalter, sodass sich die beiden Zweige gegenseitig nicht beeinflussen.
+  Bei einer Serieschaltung liegen beide Lampen dagegen in derselben
+  einzigen Schleife: Ein offener Schalter würde diese ganze Schleife
+  unterbrechen und damit immer beide Lampen gleichzeitig ausschalten.
+  \end{solution}
+\end{parts}
+\end{groupbox}
+\end{questions}
+
+\end{document}

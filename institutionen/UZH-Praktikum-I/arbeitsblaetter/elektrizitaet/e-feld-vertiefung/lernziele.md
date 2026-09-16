@@ -12,7 +12,7 @@ Stromkreise). Das wurde inzwischen entschieden: Der Stromkreis-Teil
 (LZ5-LZ9 unten, Wasserkreislauf-Analogie und Gruppenpuzzle zu Strom/
 Spannung/Widerstand) gehört inhaltlich zur Doppellektion `u-i-r/`
 (16.09.2026) und wurde dorthin verschoben (siehe
-`../u-i-r/arbeitsblatt3-u-i-r.tex`). Diese `lernziele.md` sowie
+`../u-i-r/gruppenpuzzle3-u-i-r.tex`). Diese `lernziele.md` sowie
 `arbeitsblatt2-e-feld-vertiefung.tex` decken entsprechend nur noch LZ1-LZ4
 (Gewitter/Faradayscher Käfig/Schrittspannung) ab; LZ5-LZ9 unten sind nur
 noch als historischer Ausgangspunkt für `u-i-r/`s eigene, noch zu

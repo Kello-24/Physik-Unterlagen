@@ -1,0 +1,100 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Ablaufplan (stark gekuerzte Tabellenfassung des Lektionsplans)
+% Lorentzkraft Teil 1 -- fuer den Unterrichtseinsatz selbst (Spickzettel),
+% NICHT die Diskussionsgrundlage -- siehe lorentzkraft-teil1-lektionsplan.tex
+% (dieser Ordner) fuer Lernziele, Methodenbegruendung und offene Punkte.
+% UZH Praktikum I -- Sara Romer Urban, Kantonsschule im Lee, HS2026
+% Klassen: 4fh (15.09.2026) + 4cdeg (18.09.2026)
+% =============================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=1.5cm]{geometry}
+\usepackage{array,booktabs,tabularx}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\sisetup{per-mode=fraction,fraction-command=\frac}
+
+\definecolor{titleblue}{HTML}{183A6B}
+\definecolor{accentblue}{HTML}{2E6F9E}
+\definecolor{lightblue}{HTML}{EAF4FB}
+\definecolor{darkgray}{HTML}{4A4A4A}
+
+\setlength{\parindent}{0pt}
+\renewcommand{\arraystretch}{1.1}
+\pagestyle{empty}
+
+\newcolumntype{P}{>{\raggedright\arraybackslash}X}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{titleblue}Ablaufplan: Lorentzkraft Teil 1}\\[0.2em]
+{\normalsize Doppellektion (2$\times$45\,Min.) -- Kurzfassung für den Unterricht}
+\end{center}
+\vspace{0.15em}
+
+\noindent\textbf{Klassen:} 4fh (15.09.2026) / 4cdeg (18.09.2026)
+\hfill
+\textbf{Lehrperson:} Loris Keller
+\vspace{0.3em}
+
+\begin{tabularx}{\textwidth}{@{}p{1.9cm}p{3.4cm}Pp{2.6cm}p{0.8cm}@{}}
+\toprule
+\rowcolor{lightblue}
+\textbf{Phase} & \textbf{Inhalt} & \textbf{Kurzbeschrieb} & \textbf{Methode} & \textbf{Zeit}\\
+\midrule
+
+\multicolumn{5}{@{}l}{\cellcolor{accentblue}\textcolor{white}{\textbf{Lektion 1 (45 Min.)}}}\\[0.1em]
+
+\multicolumn{5}{@{}l}{\cellcolor{titleblue!85}\textcolor{white}{\textbf{Block 0 -- Repetition}}}\\
+Einstieg & Socrative-Quiz Magnetfelder & Feldlinien, Rechte-Hand-Regeln, $B=\frac{\mu_0}{2\pi}\frac{I}{r}$ & Individuell & 5'\\
+\midrule
+
+\multicolumn{5}{@{}l}{\cellcolor{titleblue!85}\textcolor{white}{\textbf{Block A -- Arbeitsblatt 6 (Teil 1)}}}\\
+Einstieg & Advance Organizer & Elektromotor/MHD, Polarlicht/LHC, Roadmap & Lehrervortrag & 3'\\
+Aktivierung & Exp.\,1: Leiterschaukel & Beobachtung, noch ohne Erklärung & Partnerarbeit & 5'\\
+Theorie & Magnetische Kraft & $F=IlB$, Drei-Finger-Regel (rechte Hand) & Lehrervortrag & 8'\\
+Rückkehr & Leiterschaukel erklären & Beide Stromrichtungen + Magnet umpolen & Think-Pair-Share & 6'\\
+Aktivierung & Exp.\,2: Rollstab auf Schiene & Rollrichtung mit Drei-Finger-Regel bestätigen & Lehrer-Demo & 5'\\
+Aktivierung & Exp.\,3: Zwei parallele Leiter & Anziehung/Abstossung + Ampere-Exkurs & Lehrer-Demo & 3'\\
+Theorie & Kraft zwischen Leitern & Herleitung + Richtung an Skizze & OneNote/Partner & 10'\\
+\midrule
+
+\multicolumn{5}{@{}l}{\cellcolor{accentblue}\textcolor{white}{\textbf{Lektion 2 (45 Min.)}}}\\[0.1em]
+
+\multicolumn{5}{@{}l}{\cellcolor{titleblue!85}\textcolor{white}{\textbf{Block A -- Arbeitsblatt 6 (Teil 2)}}}\\
+Vertiefung & Herleitung Lorentzkraft & $F=IlB\to F_N=qvB$, techn. Stromrichtung & Plenum & 10'\\
+\midrule
+
+\multicolumn{5}{@{}l}{\cellcolor{titleblue!85}\textcolor{white}{\textbf{Block B -- Fadenstrahlrohr (mind.\ 20')}}}\\
+Theorie & Aufbau Fadenstrahlrohr & Elektronenkanone, Helmholtzspulen, Licht & Lehrervortrag & 5'\\
+Übung & Geschwindigkeit Elektronen & $eU_B=\frac{1}{2}mv^2$ & Individuell & 4'\\
+POE & Predict-Observe-Explain & Kreisbahn vorhersagen, beobachten, erklären + $d=\frac{2mv}{qB}$ & Lehrer-Demo & 9'\\
+Vertiefung & Die drei Messgrössen & Falls Zeit reicht, sonst entfällt & Individuell & 4'\\
+\midrule
+
+\multicolumn{5}{@{}l}{\cellcolor{titleblue!85}\textcolor{white}{\textbf{Block C -- Aufgabenblatt 5}}}\\
+Abschluss & Aufgabenblatt starten & Überblick + Aufgabe 1 gemeinsam, Rest freiwillig & Plenum & 13'\\
+
+\bottomrule
+\end{tabularx}
+
+\vspace{0.4em}
+\noindent\textcolor{darkgray}{\textbf{Summe: 90 Min.} = 2\,$\times$\,45 Min.,
+Grenze nach der Theorie \glqq Kraft zwischen Leitern\grqq{} -- kein Puffer.
+Streichkandidaten: Ampere-Exkurs kürzen;
+\glqq Die drei Messgrössen\grqq{} weglassen (keine Hausaufgaben).
+Plenum-Skizzen: OneNote mit Stift, nicht Tafel.}
+
+\vspace{0.2em}
+\noindent\textcolor{darkgray}{\small Vollständige Fassung:
+\texttt{lorentzkraft-teil1-lektionsplan.tex} (dieser Ordner).}
+
+\end{document}

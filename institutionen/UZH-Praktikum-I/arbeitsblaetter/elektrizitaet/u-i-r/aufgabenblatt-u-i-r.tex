@@ -1,0 +1,253 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Aufgabenblatt: Ohmsches Gesetz (Strom, Spannung, Widerstand)
+% UZH Praktikum I -- Sara Romer Urban, Kantonsschule im Lee, HS2026
+% Klasse: 1f (16.09.2026), aus PLAN_Dokumentengenerierung.md.
+%
+% ENTWURF, NOCH NICHT INS REPO KOPIERT (auf Wunsch von Loris).
+%
+% Gehoert zusammen mit arbeitsblatt3-u-i-r.tex im selben Ordner: dort steht
+% die gesamte Theorie (Einheiten, Ohmsches Gesetz, Umformen, Vorsaetze),
+% hier ausschliesslich die Uebungsaufgaben dazu -- Aufteilung nach Loris'
+% eigenem Kriterium (Arbeitsblatt = Plenum, Aufgabenblatt = Aufgaben), nicht
+% nach dem generischen Werkzeug-Kriterium aus institutionen/
+% UZH-Praktikum-I/CLAUDE.md. Deshalb bewusst OHNE einleitende Erklaerbox,
+% beginnt direkt mit der ersten Aufgabe.
+%
+% Reihenfolge: drei einfache Anwendungen des Ohmschen Gesetzes (je einmal
+% nach I, R, U aufgeloest), danach reine Vorsatz-Umrechnung (mA/A, kOhm/Ohm,
+% mV/V), zum Schluss eine Aufgabe, die Ohmsches Gesetz und Vorsatz-
+% Umrechnung kombiniert. Kein Bezug auf ein U-I-Diagramm.
+%
+% Numerierung (Aufgabenblatt-Zaehlung nach institutionen/UZH-Praktikum-I/
+% CLAUDE.md) noch offen -- Dateiname bewusst ohne Zahl, bis die naechste
+% freie Nummer bekannt ist (siehe dortiger Abschnitt "Nummerierung und
+% Dateibenennung").
+%
+% -----------------------------------------------------------------------------
+% Korrektur (16.09.2026, Abgleich mit den zwei anderen Blaettern zum
+% selben Thema, gruppenpuzzle3-u-i-r.tex und arbeitsblatt3-u-i-r.tex):
+% Inhaltlich/terminologisch passt dieses Aufgabenblatt bereits zum
+% Vorwissen aus den beiden anderen Dokumenten (Verbraucher-Begriff,
+% Widerstand/Spannung/Strom-Notation, nur Milli/Kilo als Vorsaetze, keine
+% Serie-/Parallelschaltung-Rechnung, da Ersatzwiderstand dort bewusst noch
+% nicht eingefuehrt wird) -- keine Aenderung noetig. Behoben wurde aber
+% derselbe technische Fehler, der in beiden anderen Dokumenten bereits
+% aufgefallen und dort per \setcounter{question}{...} korrigiert war: Die
+% drei separaten \begin{questions}-Bloecke (Übung 1-3) liessen den
+% exam-Klassen-Fragezaehler bei jedem Block neu bei 1 beginnen (Warnung
+% "Label question@1 multiply defined" im Log), statt fortlaufend 1-5 zu
+% zaehlen. Jetzt mit \setcounter{question}{3} bzw. {4} vor Übung 2/3 auf
+% durchgehende Nummerierung 1-5 korrigiert, analog zu den anderen beiden
+% Dokumenten.
+% =============================================================================
+\documentclass[addpoints,11pt,a4paper]{exam}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.2cm,headheight=14pt]{geometry}
+\usepackage{amsmath}
+\usepackage{siunitx}
+% Hausstil: zusammengesetzte Einheiten immer als echter Bruch (\frac), nicht
+% als Inline-Schraegstrich oder \tfrac -- gilt global fuer jedes \si/\SI.
+\sisetup{per-mode=fraction,fraction-command=\frac}
+\usepackage{array,booktabs,tabularx,multirow}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage[most]{tcolorbox}
+\usepackage{lastpage}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\usepackage{setspace}
+\usepackage{needspace}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+\setstretch{1.08}
+\setlist[itemize]{itemsep=0.4em}
+
+% -----------------------------
+% Farben (Corporate-Farbschema Physik KFR)
+% -----------------------------
+\definecolor{titleblue}{HTML}{183A6B}
+\definecolor{accentblue}{HTML}{2E6F9E}
+\definecolor{darkgray}{HTML}{4A4A4A}
+
+% Links (hyperref): farblich ans Corporate-Farbschema angeglichen.
+\hypersetup{
+  colorlinks=true,
+  urlcolor=accentblue,
+  linkcolor=accentblue,
+  pdftitle={Aufgabenblatt: Ohmsches Gesetz},
+  pdfauthor={Loris Keller}
+}
+
+% -----------------------------
+% Boxen
+% -----------------------------
+\tcbset{before skip=10pt, after skip=10pt}
+\newtcolorbox{titlebox}{
+  enhanced,
+  colback=titleblue,
+  colframe=titleblue,
+  boxrule=0pt,
+  arc=3mm,
+  left=3mm,right=3mm,top=3mm,bottom=3mm
+}
+
+\newlength{\aufgabenindent}
+\settowidth{\aufgabenindent}{10.\hskip\labelsep}
+
+\newtcolorbox{taskbox}[1][]{
+  enhanced, breakable,
+  colback=white, colframe=white, boxrule=0pt,
+  left=0mm,right=0mm,top=0mm,bottom=0mm,
+  before skip=10pt, after skip=10pt,
+  before upper={%
+    \def\tmpboxtitle{#1}%
+    \ifx\tmpboxtitle\empty\else\noindent\textbf{#1}\par\smallskip\fi
+  }
+}
+
+\newtcolorbox{answerbox}{
+  breakable,
+  colback=white,
+  colframe=gray!55,
+  boxrule=0.5pt,
+  arc=1.5mm,
+  left=2mm,right=2mm,top=2mm,bottom=2mm
+}
+
+% --- Loesungen ein-/ausblenden -----------------------------------------------
+%\noprintanswers
+\printanswers
+
+\pointformat{}
+\renewcommand{\solutiontitle}{\noindent\color{titleblue}\textbf{L\"osung:}\enspace}
+
+\pagestyle{headandfoot}
+\cfoot{\textcolor{darkgray}{Seite \thepage\ von \pageref{LastPage}}}
+
+\newcommand{\Kopfzeile}[4]{%
+  \begin{titlebox}
+    {\color{white}\sffamily\bfseries\Large #4}
+  \end{titlebox}
+  \vspace{0.5em}
+  \noindent\textbf{Klasse:}~#1 \hfill \textbf{Datum:}~#2 \hfill \textbf{Thema:}~#3
+    \hfill \textbf{Lehrperson:}~Loris Keller
+  \vspace{0.8em}
+  \lhead{\textcolor{darkgray}{#3}}
+  \rhead{\textcolor{darkgray}{#4}}
+}
+
+\newlength{\antwortraumlen}
+\newcommand{\Antwortraum}[1]{%
+  \pgfmathsetlength{\antwortraumlen}{#1*2.5cm}%
+  \begin{answerbox}
+    \rule{0pt}{\antwortraumlen}%
+  \end{answerbox}%
+}
+
+% Werte fuer Kopfzeile zentral setzen
+\newcommand{\Klasse}{1f}
+\newcommand{\Datum}{16.09.2026}
+\newcommand{\Thema}{Ohmsches Gesetz}
+\newcommand{\ArbeitsblattTitel}{Aufgabenblatt: Ohmsches Gesetz}
+
+\begin{document}
+
+\Kopfzeile{\Klasse}{\Datum}{\Thema}{\ArbeitsblattTitel}
+
+% =============================================================================
+% Übung 1: Das Ohmsche Gesetz anwenden
+% =============================================================================
+\begin{questions}
+\begin{taskbox}[Übung: Das Ohmsche Gesetz anwenden]
+\question[2] An einem Widerstand von $R=\SI{100}{\ohm}$ liegt eine Spannung
+von $U=\SI{6}{\volt}$ an. Wie gross ist der Strom $I$, der durch ihn
+fliesst?
+\Antwortraum{2}
+\begin{solution}
+\[
+  I = \frac{U}{R} = \frac{\SI{6}{\volt}}{\SI{100}{\ohm}} = \SI{0.06}{\ampere}.
+\]
+\end{solution}
+
+\question[2] Durch eine Lampe fliesst ein Strom von $I=\SI{0.5}{\ampere}$,
+an ihr liegt eine Spannung von $U=\SI{12}{\volt}$ an. Welchen Widerstand
+hat die Lampe?
+\Antwortraum{2}
+\begin{solution}
+\[
+  R = \frac{U}{I} = \frac{\SI{12}{\volt}}{\SI{0.5}{\ampere}} = \SI{24}{\ohm}.
+\]
+\end{solution}
+
+\question[2] Ein Widerstand von $R=\SI{470}{\ohm}$ wird von einem Strom
+von $I=\SI{0.02}{\ampere}$ durchflossen. Welche Spannung fällt über ihm
+ab?
+\Antwortraum{2}
+\begin{solution}
+\[
+  U = R\cdot I = \SI{470}{\ohm}\cdot\SI{0.02}{\ampere} = \SI{9.4}{\volt}.
+\]
+\end{solution}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Übung 2: Vorsätze umrechnen
+% =============================================================================
+\begin{questions}
+\setcounter{question}{3}
+\begin{taskbox}[Übung: Vorsätze umrechnen]
+\question[4] Rechnen Sie um.
+\begin{parts}
+  \part[1] $\SI{25}{\milli\ampere} = \underline{\hspace{2.5cm}}\ \si{\ampere}$
+  \begin{solution} $\SI{0.025}{\ampere}$ \end{solution}
+  \part[1] $\SI{0.008}{\ampere} = \underline{\hspace{2.5cm}}\ \si{\milli\ampere}$
+  \begin{solution} $\SI{8}{\milli\ampere}$ \end{solution}
+  \part[1] $\SI{3.3}{\kilo\ohm} = \underline{\hspace{2.5cm}}\ \si{\ohm}$
+  \begin{solution} $\SI{3300}{\ohm}$ \end{solution}
+  \part[1] $\SI{150}{\milli\volt} = \underline{\hspace{2.5cm}}\ \si{\volt}$
+  \begin{solution} $\SI{0.15}{\volt}$ \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Übung 3: Ohmsches Gesetz und Vorsätze kombiniert
+% =============================================================================
+\begin{questions}
+\setcounter{question}{4}
+\begin{taskbox}[Übung: Ohmsches Gesetz und Vorsätze kombiniert]
+\question[4] In einer Schaltung liegt ein Widerstand von $R=\SI{470}{\ohm}$
+in Serie mit einem Verbraucher. Durch den Widerstand fliesst dabei ein
+Strom von $I=\SI{15}{\milli\ampere}$.
+\begin{parts}
+  \part[3] Berechnen Sie die Spannung, die über dem Widerstand abfällt.
+  Geben Sie das Ergebnis sowohl in Volt als auch in Millivolt an.
+  \Antwortraum{3}
+  \begin{solution}
+  \[
+    U = R\cdot I = \SI{470}{\ohm}\cdot\SI{0.015}{\ampere} = \SI{7.05}{\volt} = \SI{7050}{\milli\volt}.
+  \]
+  \end{solution}
+  \part[1] Eine 9-V-Batterie liegt an diesem Widerstand an (statt der
+  Spannung aus Teilaufgabe a). Ist der Strom durch den Widerstand dann
+  grösser oder kleiner als $\SI{15}{\milli\ampere}$? Begründen Sie kurz,
+  ohne zu rechnen.
+  \Antwortraum{1}
+  \begin{solution}
+  Grösser: $\SI{9}{\volt}$ ist mehr als die $\SI{7.05}{\volt}$ aus
+  Teilaufgabe a. Da $R$ gleich bleibt, muss nach $I=U/R$ auch $I$
+  zunehmen, wenn $U$ zunimmt.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\end{document}

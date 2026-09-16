@@ -9,25 +9,44 @@
 % bei diesem Thema, siehe institutionen/UZH-Praktikum-I/CLAUDE.md -- die
 % Zuordnung Arbeitsblatt/Aufgabenblatt folgt hier trotzdem dem Muster
 % "Aufgaben ohne Experimentbezug wandern ins Aufgabenblatt", analog zu
-% Kondensatoren/Magnetfelder):
-%   - Aufgabe 1 stammt aus arbeitsblatt6-lorentzkraft-teil1.tex (dort als
-%     "Uebung: Magnetische Kraft berechnen" entworfen, unveraendert hierher
-%     verschoben, damit das Arbeitsblatt bei den drei Experimenten bleibt).
-%   - Aufgabe 2 und 3 stammen aus literatur/ (LEIFIphysik-PDFs, siehe
-%     Kommentar direkt ueber jeder Aufgabe fuer Quelle/Abbildung -- Zahlen
-%     und Aufgabentext von dort uebernommen, Loesungswege selbst
-%     nachvollzogen und vollstaendig ausformuliert). Bewusst NICHT
-%     aufgenommen: alles zu den sechs Teil-2-Gruppenpuzzle-Anwendungen
-%     (Massenspektrograph, Geschwindigkeitsfilter/Wien-Filter, Zyklotron,
-%     Hall-Effekt, MHD-Antrieb, Erdmagnetfeld/Magnetosphaere) sowie das
-%     LEIFIphysik-"Richtungsregel-Training" (sechsteilige Bildaufgabe) --
-%     dessen Teilaufgaben ueberschneiden sich zu stark mit der bereits im
-%     Arbeitsblatt vorhandenen Drei-Finger-Regel-Uebung und waeren ohne
-%     zweifelsfrei rekonstruierbare Vektorgeometrie aus der Quelle nur mit
-%     Raten loesbar gewesen -- deshalb ausgelassen statt geraten.
+% Kondensatoren/Magnetfelder).
 %
-% Bilder: noch keine eingebunden (Stand dieser Fassung) -- Loris ergaenzt sie
-% in Bilder/, siehe Bildquellen-Kommentar ueber Aufgabe 2 und 3.
+% Alle Aufgaben stammen aus literatur/ (LEIFIphysik-PDFs), Quelle und
+% Bildherkunft jeweils im Kommentar direkt ueber der betreffenden Aufgabe.
+% Aufgabentext und Zahlen von dort uebernommen, Loesungswege selbst
+% nachvollzogen und per Rueckprobe verifiziert -- dabei zwei Fehler in den
+% LEIFIphysik-Musterloesungen gefunden und korrigiert (siehe Kommentar bei
+% Aufgabe 3 und 4). Eine urspruengliche "Magnetische Kraft berechnen"-
+% Aufgabe (aus arbeitsblatt6-lorentzkraft-teil1.tex) und eine ergaenzte
+% Fadenstrahlrohr-Vergleichsaufgabe wurden wieder entfernt: Erstere war zu
+% aehnlich zu Aufgabe 2 (Leiterrahmen, siehe dort), Letztere redundant mit
+% dem eigenstaendigen Fadenstrahlrohr-Dokument.
+%
+% Bewusst NICHT aufgenommen: alles zu den sechs Teil-2-Gruppenpuzzle-
+% Anwendungen (Massenspektrograph, Geschwindigkeitsfilter/Wien-Filter,
+% Zyklotron, Hall-Effekt, MHD-Antrieb, Erdmagnetfeld/Magnetosphaere), das
+% LEIFIphysik-"Richtungsregel-Training" (Vektorgeometrie aus der Quelle
+% nicht zweifelsfrei rekonstruierbar, ausserdem zu redundant mit der
+% Drei-Finger-Regel-Uebung im Arbeitsblatt), "Kraft zwischen geraden
+% Leitern" und "Kraft auf Spule" (zu redundant mit Aufgabe 1/2), sowie die
+% Teilaufgaben b/c von "Elektronenablenkung in der Vakuumroehre" (nutzen
+% r=mv/qB, Teil-2-Stoff).
+%
+% Redundanz-/Giveaway-Check (Stand dieser Fassung): Aufgabe 2/5 nutzen
+% zwar beide F=IlB, testen aber unterschiedliche Fallstricke (Aufhebung
+% durch Feldgrenze in einer Leiterschleife bzw. Stromkreis-Topologie --
+% nur das Stueck zwischen den Schienen fuehrt ueberhaupt Strom). Aufgabe 2
+% fragt jetzt explizit nach der Kraftrichtung auf beide seitlichen Kanten,
+% statt die Aufhebung schon in der Fragestellung vorwegzunehmen. Aufgabe 5
+% (vormals 6a) und Aufgabe 6 (vormals 7b) hatten je einen Hinweis im
+% Aufgabentext, der die Loesung direkt vorwegnahm -- beide durch offene
+% Denkanregungen ersetzt bzw. in die Loesung verschoben.
+%
+% Bilder: siehe Bildquellen-Kommentar ueber jeder Aufgabe. Aufgabe 5
+% (Beschleunigung eines Leiters) verwendet ein echtes Bild
+% (Bilder/Beschleunigung_eines_Leiters.png, Screenshot der Quelle). Fuer
+% Aufgabe 2 und 6 gab es kein passendes Bild im Bilder/-Ordner -- dort
+% wurden eigene TikZ-Skizzen erstellt.
 % =============================================================================
 \documentclass[addpoints,11pt,a4paper]{exam}
 
@@ -211,80 +230,43 @@
   F_{\text{mag}} &= I\cdot l\cdot B\cdot\sin\alpha
     &&\text{magnetische Kraft, allgemein}\\
   F_{\text{mag}} &= I\cdot l\cdot B &&\text{Spezialfall } \alpha=90^\circ\\
+  F_L &= q\cdot v\cdot B\cdot\sin\alpha &&\text{Lorentzkraft, allgemein}\\
+  F_L &= q\cdot v\cdot B &&\text{Spezialfall } \alpha=90^\circ\\
   B &= \frac{\mu_0}{2\pi}\cdot\frac{I}{r} &&\text{Feld eines geraden Leiters, Abstand } r
 \end{align*}
 $\mu_0=4\pi\cdot10^{-7}\,\si{\newton\per\ampere\squared}=1{,}26\cdot10^{-6}\,\si{\newton\per\ampere\squared}$;
-$I$ in \si{\ampere}; $l,\,r$ in \si{\meter}; $B$ in \si{\tesla}; $\alpha$ =
-Winkel zwischen Leiter und Feldlinien.
+$I$ in \si{\ampere}; $l,\,r$ in \si{\meter}; $B$ in \si{\tesla}; $q$ in
+\si{\coulomb}; $v$ in \si{\meter\per\second}; $\alpha$ = Winkel zwischen
+Leiter/Geschwindigkeit und Feldlinien.
 \end{formelbox}
 
 % =============================================================================
-% Aufgabe 1: Magnetische Kraft berechnen (verschoben aus dem Arbeitsblatt)
-% =============================================================================
-\begin{questions}
-\begin{taskbox}[Aufgabe 1: Magnetische Kraft berechnen]
-\Schwierigkeit{leicht}
-\question Am selben Hufeisenmagnetaufbau wie bei der Leiterschaukel
-befindet sich ein einfaches, $\SI{5}{\centi\meter}$ langes, gerades
-Leiterstück senkrecht zu den Feldlinien. Der Magnet liefert
-$B=\SI{0.3}{\tesla}$, durch den Leiter fliesst ein Strom von
-$I=\SI{2}{\ampere}$.
-\begin{center}
-  \includegraphics[width=8cm]{Bilder/magnetic-force-measurement-device.pdf}
-\end{center}
-{\scriptsize So lässt sich die magnetische Kraft auf ein Leiterstück in
-der Praxis tatsächlich messen: Ein Federkraftmesser hält den Leiterrahmen,
-die Anzeige ändert sich, sobald Strom fliesst.}
-\begin{parts}
-  \part[2] Berechnen Sie die magnetische Kraft auf das Leiterstück.
-  \Antwortraum{2}
-  \begin{solution}
-  \[
-    F = I\cdot l\cdot B = \SI{2}{\ampere}\cdot\SI{0.05}{\meter}\cdot\SI{0.3}{\tesla} = \SI{0.03}{\newton} = \SI{30}{\milli\newton}
-  \]
-  \end{solution}
-  \part[2] Skizzieren Sie $I$, $B$ und $F$ als drei paarweise senkrechte
-  Pfeile (analog zur Drei-Finger-Regel) für eine Stromrichtung Ihrer
-  Wahl.
-  \Antwortraum{2}
-  \begin{solution}
-  Jede Skizze ist richtig, bei der $I$, $B$ und $F$ paarweise senkrecht
-  aufeinander stehen und $F$ tatsächlich der Drei-Finger-Regel (Daumen $I$,
-  Zeigefinger $B$, Mittelfinger $F$) für die gewählte Stromrichtung
-  entspricht.
-  \end{solution}
-\end{parts}
-\end{taskbox}
-\end{questions}
-
-% =============================================================================
-% Aufgabe 2: Kraft zwischen den Leitungen einer Gleichspannungs-Freileitung
+% Aufgabe 1: Kraft zwischen den Leitungen einer Gleichspannungs-Freileitung
 % Quelle: literatur/Kraft zwischen den Leitungen einer
 %   Gleichspannungs-Freileitung _ LEIFIphysik.pdf (Schwierigkeitsgrad dort:
 %   leichte Aufgabe). BILD: Abb. 1 dieser Quelle (Foto der FennoSkan-HGÜ-
 %   Freileitung, Rauma/Finnland) -- rein motivierend/dekorativ, für die
-%   Lösung nicht nötig (alle Werte stehen im Aufgabentext).
+%   Lösung nicht nötig (alle Werte stehen im Aufgabentext). Gegenüber der
+%   Quelle angepasst: Die Quelle berechnet den Strom zunächst aus
+%   Leistung/Spannung ($I=P/U$) -- diese Formel ist nicht Teil des hier
+%   behandelten Stoffs, daher wird $I$ direkt gegeben (Wert unverändert
+%   übernommen). Die abschliessende Frage "Anziehung oder Abstossung?" der
+%   Quelle wurde weggelassen, da das bereits in Experiment 2/3 des
+%   Arbeitsblatts an genau diesem Fall (entgegengesetzte Ströme) behandelt
+%   wurde und hier nur wiederholen, nicht ergänzen würde.
 % =============================================================================
 \begin{questions}
-\begin{taskbox}[Aufgabe 2: Kraft zwischen den Leitungen einer Gleichspannungsfreileitung]
+\begin{taskbox}[Aufgabe 1: Kraft zwischen den Leitungen einer Gleichspannungsfreileitung]
 \Schwierigkeit{leicht}
-\question Eine Hochspannungs-Gleichstrom-Freileitung überträgt eine
-Leistung von $P=\SI{600}{\mega\watt}$ bei einer Spannung von
-$U=\SI{1150}{\kilo\volt}$. Auf einem $l=\SI{100}{\meter}$ langen
-Abschnitt verlaufen zwei ihrer Leitungen im Abstand $r=\SI{0.80}{\meter}$
-parallel zueinander, wobei der Strom in den beiden Leitungen in
+\question Eine Hochspannungs-Gleichstrom-Freileitung führt einen Strom
+von $I=\SI{522}{\ampere}$. Auf einem $l=\SI{100}{\meter}$ langen Abschnitt
+verlaufen zwei ihrer Leitungen im Abstand $r=\SI{0.80}{\meter}$ parallel
+zueinander, wobei der Strom in den beiden Leitungen in
 \textbf{entgegengesetzte} Richtungen fliesst.
 \begin{center}
   % BILD: Bilder/hguue-freileitung.jpg (o.ä.) -- siehe Kommentar oben.
 \end{center}
 \begin{parts}
-  \part[1] Berechnen Sie den Strom $I$ in den Leitungen.
-  \Antwortraum{1}
-  \begin{solution}
-  \[
-    I = \frac{P}{U} = \frac{\SI{600e6}{\watt}}{\SI{1150e3}{\volt}} \approx \SI{522}{\ampere}
-  \]
-  \end{solution}
   \part[1] Berechnen Sie die magnetische Flussdichte $B$, die eine der
   beiden Leitungen am Ort der jeweils anderen erzeugt.
   \Antwortraum{1}
@@ -308,28 +290,25 @@ parallel zueinander, wobei der Strom in den beiden Leitungen in
     F_{\text{mag}} = I\cdot l\cdot B = \SI{522}{\ampere}\cdot\SI{100}{\meter}\cdot\SI{1.3e-4}{\tesla} \approx \SI{6.8}{\newton}
   \]
   \end{solution}
-  \part[1] Ziehen sich die beiden Leitungen an oder stossen sie sich ab?
-  Begründen Sie mit der Drei-Finger-Regel.
-  \Antwortraum{2}
-  \begin{solution}
-  Bei \textbf{entgegengesetzt} gerichteten Strömen stossen sich zwei
-  parallele Leiter ab (vgl. Experiment 2 im Arbeitsblatt). Die beiden
-  Leitungen der Freileitung stossen sich also mit $F_{\text{mag}}\approx\SI{6.8}{\newton}$ ab.
-  \end{solution}
 \end{parts}
 \end{taskbox}
 \end{questions}
 
 % =============================================================================
-% Aufgabe 3: Kraft auf einen Leiterrahmen
-% Quelle: literatur/Kraft auf Leiterrahmen _ LEIFIphysik.pdf. BILD: Abb. 1
-%   dieser Quelle (Draufsicht, zwei Fälle: Rahmen mit Breite l1 = 10 cm
-%   teilweise im Feld, Rahmen mit Breite l2 = 20 cm vollständig im Feld) --
-%   für diese Aufgabe hilfreich, da sie die Feldgrenze visuell zeigt, wird
-%   im Aufgabentext unten aber vollständig in Worten beschrieben.
+% Aufgabe 2: Kraft auf einen Leiterrahmen
+% Quelle: literatur/Kraft auf Leiterrahmen _ LEIFIphysik.pdf. BILD: kein
+%   passendes Bild im Bilder/-Ordner gefunden -- eigene TikZ-Skizze
+%   erstellt (Feldgrenze gestrichelt, Feld ⊙ = aus der Zeichenebene
+%   heraus, wie im Aufgabentext) statt der urspruenglich als Platzhalter
+%   vorgesehenen Bilder/leiterrahmen-im-feld.svg. Teilaufgabe a) gegenüber
+%   der Quelle umformuliert: Die Quelle (und eine erste Fassung hier)
+%   fragte "Begründen Sie, warum sich die Kräfte aufheben" -- das setzt
+%   die Aufhebung bereits als Tatsache in der Fragestellung voraus, statt
+%   sie die SuS selbst herleiten zu lassen. Jetzt wird zuerst nach der
+%   Kraftrichtung auf beide Kanten gefragt.
 % =============================================================================
 \begin{questions}
-\begin{taskbox}[Aufgabe 3: Kraft auf einen Leiterrahmen]
+\begin{taskbox}[Aufgabe 2: Kraft auf einen Leiterrahmen]
 \Schwierigkeit{mittelschwer}
 \question Ein rechteckiger Leiterrahmen trägt einen Strom von
 $I=\SI{5.0}{\ampere}$. Er hängt teilweise in einem begrenzten homogenen
@@ -337,23 +316,57 @@ Magnetfeld $B=\SI{0.20}{\tesla}$, das senkrecht aus der Zeichenebene
 herauszeigt (Draufsicht). Die Feldgrenze verläuft waagrecht; der Rahmen
 taucht von oben senkrecht in das Feld ein.
 \begin{center}
-  % BILD: Bilder/leiterrahmen-im-feld.svg (o.ä.) -- siehe Kommentar oben.
+\begin{minipage}[t]{6.5cm}\centering
+\begin{tikzpicture}[>=Latex,scale=0.55]
+  \draw[dashed,thick] (-2.3,0) -- (2.3,0);
+  \node[font=\scriptsize] at (0,0.4) {Feldgrenze};
+  \foreach \x in {-1.8,-0.9,0,0.9,1.8}{
+    \foreach \y in {-0.7,-1.5,-2.3}{
+      \node[font=\small,gray] at (\x,\y) {$\odot$};
+    }
+  }
+  \draw[very thick] (-1,1.6) -- (-1,-1.9) -- (1,-1.9) -- (1,1.6);
+  \draw[thick,-{Latex[length=2.5mm]}] (0.3,-1.9) -- (-0.3,-1.9);
+  \node[font=\scriptsize] at (0,-2.6) {$l_1$};
+\end{tikzpicture}\\
+{\scriptsize (a) teilweise eingetaucht}
+\end{minipage}\hfill
+\begin{minipage}[t]{6.5cm}\centering
+\begin{tikzpicture}[>=Latex,scale=0.55]
+  \draw[dashed,thick] (-2.3,1.7) -- (2.3,1.7);
+  \node[font=\scriptsize] at (0,2.1) {Feldgrenze};
+  \foreach \x in {-1.8,-0.9,0,0.9,1.8}{
+    \foreach \y in {1.0,0.2,-0.6,-1.4,-2.2}{
+      \node[font=\small,gray] at (\x,\y) {$\odot$};
+    }
+  }
+  \draw[very thick] (-1.4,1.2) -- (-1.4,-1.9) -- (1.4,-1.9) -- (1.4,1.2) -- cycle;
+  \draw[thick,-{Latex[length=2.5mm]}] (0.3,-1.9) -- (-0.3,-1.9);
+  \node[font=\scriptsize] at (0,-2.6) {$l_2$};
+\end{tikzpicture}\\
+{\scriptsize (b) vollständig eingetaucht}
+\end{minipage}
 \end{center}
+{\scriptsize $\odot$ = Magnetfeld aus der Zeichenebene heraus (Draufsicht).
+Der Pfeil an der unteren Kante zeigt die dortige Stromrichtung.}
 \begin{parts}
   \part[2] In einer ersten Situation taucht der Rahmen so weit ein, dass
   nur seine untere, waagrechte Kante der Breite $l_1=\SI{10}{\centi\meter}$
   vollständig im Feld liegt; die beiden seitlichen (senkrechten) Kanten
-  ragen mit gleich langen Stücken ins Feld hinein. Begründen Sie, warum
-  sich die Kräfte auf die beiden seitlichen Kanten gegenseitig aufheben,
-  und berechnen Sie die resultierende Kraft auf den Rahmen.
+  ragen mit gleich langen Stücken ins Feld hinein. Bestimmen Sie mit der
+  Drei-Finger-Regel die Kraftrichtung auf jede der beiden seitlichen
+  Kanten. Was bedeutet das für ihre gemeinsame Wirkung auf den Rahmen?
+  Berechnen Sie anschliessend die resultierende Kraft auf den gesamten
+  Rahmen.
   \Antwortraum{2}
   \begin{solution}
   In den beiden seitlichen Kanten fliesst der Strom in \textbf{entgegen\-gesetzte}
   Richtungen (der Rahmen ist geschlossen), aber beide gleich langen
   Teilstücke liegen im selben Feld $B$. Nach der Drei-Finger-Regel zeigen
-  die beiden Kräfte deshalb in entgegengesetzte Richtungen und sind
-  gleich gross, sie heben sich also auf. Nur die untere Kante trägt
-  netto bei:
+  die beiden Kräfte deshalb in entgegengesetzte Richtungen. Da Feld und
+  Länge des eingetauchten Stücks bei beiden Kanten gleich sind, sind auch
+  die Kräfte gleich gross. Sie heben sich also gegenseitig auf. Nur die
+  untere Kante trägt netto bei:
   \[
     F_{\text{mag}} = I\cdot l_1\cdot B = \SI{5.0}{\ampere}\cdot\SI{0.10}{\meter}\cdot\SI{0.20}{\tesla} = \SI{0.10}{\newton}
   \]
@@ -376,6 +389,220 @@ taucht von oben senkrecht in das Feld ein.
   Ein vollständig in einem homogenen Feld liegender, stromdurchflossener
   Rahmen erfährt keine resultierende Kraft, sondern höchstens ein
   Drehmoment (falls er nicht parallel zum Feld ausgerichtet ist).
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Aufgabe 3: Bestimmung der magnetischen Kraft (Formelumstellung)
+% Quelle: literatur/Bestimmung der magnetischen Kraft - Formelumstellung _
+%   LEIFIphysik.pdf (Schwierigkeitsgrad dort: leichte Aufgabe). Die Quelle
+%   hat fuenf Teilaufgaben (a-e, je eine Groesse gesucht); davon bewusst
+%   nur zwei uebernommen (a: F direkt berechnen: b: hier ist die
+%   Quell-Teilaufgabe e, nach dem Winkel alpha aufloesen/arcsin), um
+%   Wiederholung zu vermeiden -- die drei ausgelassenen Teilaufgaben (nach
+%   I, l bzw. B aufloesen) trainieren dieselbe Umstellung nur mit anderen
+%   Variablen. Aufgabentext und Zahlen von dort uebernommen, Loesungswege
+%   selbst nachvollzogen.
+% =============================================================================
+\begin{questions}
+\begin{taskbox}[Aufgabe 3: Bestimmung der magnetischen Kraft (Formelumstellung)]
+\Schwierigkeit{leicht}
+\question Lösen Sie die Formel $F_{\text{mag}}=I\cdot l\cdot B\cdot\sin\alpha$
+jeweils nach der gesuchten Grösse auf und berechnen Sie diese.
+\begin{parts}
+  \part[2] Ein $l=\SI{5.0}{\centi\meter}$ langer Leiter, der von einem
+  Strom der Stärke $I=\SI{1.5}{\ampere}$ durchflossen wird, liegt in einem
+  Winkel der Weite $\alpha=45^\circ$ zu einem homogenen Magnetfeld mit
+  einer Flussdichte von $B=\SI{0.10}{\tesla}$. Berechnen Sie den Betrag
+  der magnetischen Kraft auf den Leiter.
+  \Antwortraum{2}
+  \begin{solution}
+  \[
+    F_{\text{mag}} = I\cdot l\cdot B\cdot\sin\alpha
+      = \SI{1.5}{\ampere}\cdot\SI{5.0e-2}{\meter}\cdot\SI{0.10}{\tesla}\cdot\sin(45^\circ)
+      \approx \SI{5.3e-3}{\newton} = \SI{5.3}{\milli\newton}
+  \]
+  \end{solution}
+  \part[2] Ein gerader Leiter hat die Länge $l=\SI{10}{\centi\meter}$ und
+  wird von einem Strom der Stärke $I=\SI{2.5}{\ampere}$ durchflossen. Der
+  Leiter befindet sich in einem homogenen Magnetfeld der Flussdichte
+  $B=\SI{55}{\milli\tesla}$; es wirkt auf ihn eine magnetische Kraft mit
+  dem Betrag $F_{\text{mag}}=\SI{9.72}{\milli\newton}$. Berechnen Sie die
+  Weite des Winkels, den Leiter und magnetische Feldlinien einschliessen.
+  \Antwortraum{2}
+  \begin{solution}
+  \[
+    \sin\alpha = \frac{F_{\text{mag}}}{I\cdot l\cdot B}
+      = \frac{\SI{9.72e-3}{\newton}}{\SI{2.5}{\ampere}\cdot\SI{0.10}{\meter}\cdot\SI{55e-3}{\tesla}}
+      \approx 0.707
+  \]
+  \[
+    \alpha = \arcsin(0.707) \approx 45^\circ
+  \]
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Aufgabe 4: Bestimmung der Lorentzkraft (Formelumstellung)
+% Quelle: literatur/Bestimmung der LORENTZ-Kraft - Formelumstellung _
+%   LEIFIphysik.pdf (Schwierigkeitsgrad dort: leichte Aufgabe). Die Quelle
+%   hat fuenf Teilaufgaben (a-e, je eine Groesse gesucht); davon bewusst
+%   nur zwei uebernommen (a: F direkt berechnen; b: hier ist die
+%   Quell-Teilaufgabe e, nach dem Winkel alpha aufloesen/arcsin), um
+%   Wiederholung zu vermeiden -- analog zu Aufgabe 3. Aufgabentext und
+%   Zahlen von dort uebernommen, Loesungswege selbst nachvollzogen. Die
+%   ausgelassene Quell-Teilaufgabe c) enthielt uebrigens einen Fehler in
+%   der dortigen Musterloesung (genannt: v=2,26e6 m/s; mit den dort selbst
+%   angegebenen Werten F=7,30e-16 N, q=1,6e-19 C, B=2,40e-3 T, alpha=45°
+%   korrekt: v=2,69e6 m/s) -- da diese Teilaufgabe hier ohnehin nicht
+%   uebernommen wurde, wirkt sich das nicht aus.
+% =============================================================================
+\begin{questions}
+\begin{taskbox}[Aufgabe 4: Bestimmung der Lorentzkraft (Formelumstellung)]
+\Schwierigkeit{leicht}
+\question Lösen Sie die Formel $F_L=q\cdot v\cdot B\cdot\sin\alpha$ jeweils
+nach der gesuchten Grösse auf und berechnen Sie diese.
+\begin{parts}
+  \part[2] Ein Elektron fliegt mit der Geschwindigkeit
+  $v=\SI{1.0e5}{\meter\per\second}$ durch ein homogenes Magnetfeld mit
+  der magnetischen Flussdichte $B=\SI{1.2e-2}{\tesla}$. Die Weite des von
+  Geschwindigkeits- und Feldvektor eingeschlossenen Winkels beträgt
+  $35^\circ$. Berechnen Sie den Betrag der auf das Elektron wirkenden
+  Lorentzkraft.
+  \Antwortraum{2}
+  \begin{solution}
+  \[
+    F_L = q\cdot v\cdot B\cdot\sin\alpha
+      = \SI{1.6e-19}{\coulomb}\cdot\SI{1.0e5}{\meter\per\second}\cdot\SI{1.2e-2}{\tesla}\cdot\sin(35^\circ)
+      \approx \SI{1.1e-16}{\newton}
+  \]
+  \end{solution}
+  \part[2] Ein Elektron fliegt durch ein Magnetfeld mit der magnetischen
+  Flussdichte $B=\SI{2.15e-4}{\tesla}$ und der Geschwindigkeit
+  $v=\SI{4.22e6}{\meter\per\second}$. Auf das Elektron wirkt die
+  Lorentzkraft vom Betrag $F_L=\SI{1.26e-16}{\newton}$. Berechnen Sie die
+  Weite des von Geschwindigkeits- und Feldvektor eingeschlossenen Winkels.
+  \Antwortraum{2}
+  \begin{solution}
+  \[
+    \sin\alpha = \frac{F_L}{q\cdot v\cdot B}
+      = \frac{\SI{1.26e-16}{\newton}}{\SI{1.6e-19}{\coulomb}\cdot\SI{4.22e6}{\meter\per\second}\cdot\SI{2.15e-4}{\tesla}}
+      \approx 0.870
+  \]
+  \[
+    \alpha = \arcsin(0.870) \approx 60.2^\circ \quad\text{oder}\quad \alpha = 180^\circ-60.2^\circ \approx 119.8^\circ
+  \]
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Aufgabe 5: Beschleunigung eines Leiters
+% Quelle: literatur/Beschleunigung eines Leiters _ LEIFIphysik.pdf
+%   (Schwierigkeitsgrad dort: leichte Aufgabe). BILD: Abb. 2 dieser Quelle
+%   (Schienenpaar mit festen Leitern im Abstand d, beweglicher Leiter der
+%   Länge l liegt schräg darauf) -- liegt bereits als
+%   Bilder/Beschleunigung_eines_Leiters.png vor und wird hier eingebunden.
+% =============================================================================
+\begin{questions}
+\begin{taskbox}[Aufgabe 5: Beschleunigung eines Leiters]
+\Schwierigkeit{leicht}
+\question Zwei feste Leiter mit dem Abstand $d=\SI{5.0}{\centi\meter}$
+bilden eine Metallschiene, auf der ein beweglicher Leiter der Länge
+$l=\SI{7.0}{\centi\meter}$ und Masse $m=\SI{100}{\gram}$ liegt.
+\begin{center}
+  \includegraphics[width=8cm]{Bilder/Beschleunigung_eines_Leiters.png}
+\end{center}
+{\scriptsize Der bewegliche Leiter liegt schräg auf den beiden festen
+Schienen (Abstand $d$) und ragt beidseitig darüber hinaus (Länge $l$).}
+\begin{parts}
+  \part[2] Berechnen Sie die magnetische Kraft auf den beweglichen
+  Leiter, wenn durch den geschlossenen Kreis der Strom $I=\SI{20}{\ampere}$
+  fliesst und die magnetische Flussdichte $B=\SI{1.5}{\tesla}$ beträgt.
+  Überlegen Sie zuerst genau, durch welchen Teil des beweglichen Leiters
+  überhaupt Strom fliesst.
+  \Antwortraum{2}
+  \begin{solution}
+  Der geschlossene Stromkreis hat zwischen den Schienen die Breite $d$,
+  nicht die volle Leiterlänge $l$. Der Leiter liegt schräg auf der
+  Schiene und ragt beidseitig darüber hinaus, aber nur das Stück der
+  Länge $d$ trägt effektiv Strom zwischen den beiden Schienen:
+  \[
+    F_{\text{mag}} = I\cdot d\cdot B = \SI{20}{\ampere}\cdot\SI{0.050}{\meter}\cdot\SI{1.5}{\tesla} = \SI{1.5}{\newton}
+  \]
+  \end{solution}
+  \part[2] Berechnen Sie die Beschleunigung, die der bewegliche Leiter
+  dadurch erfährt.
+  \Antwortraum{2}
+  \begin{solution}
+  Mit dem 2.\ NEWTONschen Gesetz $F=m\cdot a$:
+  \[
+    a = \frac{F_{\text{mag}}}{m} = \frac{\SI{1.5}{\newton}}{\SI{0.100}{\kilo\gram}} = \SI{15}{\meter\per\second\squared}
+  \]
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Aufgabe 6: Flug parallel zum Draht
+% Quelle: literatur/Flug parallel zum Draht _ LEIFIphysik.pdf
+%   (Schwierigkeitsgrad dort: mittelschwere Aufgabe). Kombiniert das schon
+%   aus Magnetfelder bekannte Feld eines geraden Leiters mit der neuen
+%   Lorentzkraft, analog zum Vorgehen bei Experiment 2/LZ7 im Arbeitsblatt.
+%   BILD: kein passendes Bild im Bilder/-Ordner gefunden -- eigene
+%   TikZ-Skizze erstellt (Draht mit Feldlinien, Elektron im Abstand r).
+% =============================================================================
+\begin{questions}
+\begin{taskbox}[Aufgabe 6: Flug parallel zum Draht]
+\Schwierigkeit{mittelschwer}
+\question Ein Elektron bewegt sich mit einer Geschwindigkeit
+$v=\SI{5.45e6}{\meter\per\second}$ im Abstand von $r=\SI{8.00}{\centi\meter}$
+parallel zu einem langen geraden Draht, der von einem Strom der Stärke
+$I=\SI{25.0}{\ampere}$ durchflossen wird.
+\begin{center}
+\begin{tikzpicture}[>=Latex,scale=0.9]
+  \draw[very thick] (0,-1.8) -- (0,2.0);
+  \draw[thick,-{Latex[length=3mm]}] (0,-1.5) -- (0,-0.7) node[midway,left,font=\scriptsize]{$I$};
+  \node[font=\scriptsize] at (0,2.3) {Draht};
+  \draw[dashed,gray] (0,0) circle (0.9);
+  \draw[dashed,gray] (0,0) circle (1.6);
+  \draw[<->] (0,0) -- (2.3,0) node[midway,above,font=\scriptsize]{$r$};
+  \filldraw[blue] (2.3,0) circle (0.06);
+  \node[font=\scriptsize,blue] at (2.3,-0.35) {$e^-$};
+  \draw[thick,-{Latex[length=3mm]},blue] (2.3,0.2) -- (2.3,1.0) node[midway,right,font=\scriptsize,black]{$v$};
+\end{tikzpicture}
+\end{center}
+{\scriptsize Das Elektron fliegt im Abstand $r$ parallel zum Draht; die
+gestrichelten Kreise deuten die (kreisförmigen) Feldlinien des Drahts an.}
+\begin{parts}
+  \part[2] Berechnen Sie die magnetische Flussdichte $B$, die aufgrund
+  des Stroms im Draht an der Flugbahn des Elektrons herrscht.
+  \Antwortraum{2}
+  \begin{solution}
+  \[
+    B = \frac{\mu_0}{2\pi}\cdot\frac{I}{r}
+      = \SI{2e-7}{\newton\per\ampere\squared}\cdot\frac{\SI{25.0}{\ampere}}{\SI{8.00e-2}{\meter}}
+      \approx \SI{6.27e-5}{\tesla}
+  \]
+  \end{solution}
+  \part[3] Berechnen Sie den Betrag der Kraft auf das Elektron. Überlegen
+  Sie zuerst, welchen Winkel $\alpha$ die Geschwindigkeit des Elektrons
+  mit den (kreisförmigen) Feldlinien des Drahts einschliesst.
+  \Antwortraum{3}
+  \begin{solution}
+  Das Elektron bewegt sich \emph{parallel} zum Draht, seine Geschwindigkeit
+  steht deshalb senkrecht zu den (kreisförmigen) Feldlinien des Drahts:
+  $\alpha=90^\circ$.
+  \[
+    F_L = q\cdot v\cdot B = \SI{1.60e-19}{\coulomb}\cdot\SI{5.45e6}{\meter\per\second}\cdot\SI{6.27e-5}{\tesla}
+      \approx \SI{5.47e-17}{\newton}
+  \]
   \end{solution}
 \end{parts}
 \end{taskbox}

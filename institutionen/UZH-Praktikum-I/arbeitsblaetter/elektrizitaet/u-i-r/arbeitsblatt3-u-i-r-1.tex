@@ -28,55 +28,7 @@
 % enthalten: ein U-I-Diagramm bzw. eine experimentelle/grafische
 % Bestimmung von R (auf Wunsch fuer eine spaetere Gelegenheit reserviert).
 %
-% Bilder: Bilder/ohms-law-triangle-static.pdf (aus Loris' eigenem
-% ohms-law-triangle-static.svg im Repo konvertiert, per cairosvg) -- zeigt
-% das URI-Dreieck dreimal, mit einer Hand, die je eine der drei Groessen
-% abdeckt; ersetzt das alte 01_Ohmsches-Gesetz-URI-Dreieck-1024x576.jpg
-% (wird nicht mehr verwendet). Das Ohmsche-Gesetz-Box (unten) verwendet eine
-% eigene Umgebung "gesetzbox" (Blau) statt "formelbox" (Violett), damit sich
-% das zentrale Gesetz optisch von den drei Groessen-Boxen abhebt. Zusaetzlich
-% Bilder/URI_illustration_clean.jpg (aus Loris' URI_illustration.jpg im
-% Repo, Zerrbild R=U/I mit drei Figuren) in der Widerstand-R-Box -- eigene
-% retuschierte Kopie OHNE das Firmenlogo "JOKARI original" oben rechts (auf
-% Wunsch von Loris weggeschnitten/uebermalt, da Marketing-Grafik einer
-% Fremdfirma); das Original bleibt unveraendert im Repo, nur diese bereinigte
-% Kopie wird im Arbeitsblatt eingebunden.
-%
-% -----------------------------------------------------------------------------
-% Korrektur (16.09.2026, auf Wunsch): URI_illustration_clean.jpg zeigt alle
-% drei Groessen gemeinsam (U zieht, I wird geschleift, R bremst) -- gehoert
-% deshalb als Gesamtuebersicht in die einleitende Theoriebox "Die Einheiten
-% von Strom, Spannung und Widerstand", nicht in die einzelne "Widerstand
-% R"-Box (dort stand es fachlich falsch einsortiert, da es kein reines
-% Widerstands-Bild ist). Verschoben, Bildunterschrift unveraendert.
-% Ausserdem: Grössenordnungen-Abschnitt ueberarbeitet -- Faktoren jetzt
-% ausgeschrieben (10^-3 = 0.001, 10^3 = 1000 statt nur der Zehnerpotenz)
-% und Milli/Kilo je in einem eigenen, ausfuehrlicheren Absatz erklaert
-% (Bedeutung, Umrechnungsrichtung/Kommaverschiebung, Beispiel, typischer
-% Anwendungsfall) statt nur einem gemeinsamen Kurzabsatz danach.
-%
-% -----------------------------------------------------------------------------
-% Korrektur (16.09.2026, auf Wunsch): Spannungs-Box zeigt jetzt dieselbe
-% "$[X] = 1\ \si{...}$"-Schreibweise wie die Strom- und die Widerstand-Box
-% (vorher stand dort nur Fliesstext ohne die eckige-Klammer-Notation).
-% Da Volt hier bewusst als bereits bekannte Einheit eingefuehrt wird statt
-% hergeleitet (siehe oben, Abschnitt "Inhalt"), zeigt die Formel nur
-% $[U]=1\,\si{\volt}$ ohne Herleitungskette davor, im Unterschied zu Strom
-% ($[I]=1\,\si{\coulomb\per\second}=:1\,\text{Ampere}$) und Widerstand
-% ($[R]=1\,\si{\volt\per\ampere}=:1\,\text{Ohm}$). Der bisherige
-% Gedankenstrich in diesem Absatz ("... gemessen -- diese Einheit...")
-% dabei gleich zu einem Doppelpunkt umformuliert (Hausstil, root-CLAUDE.md).
-%
-% -----------------------------------------------------------------------------
-% Korrektur (16.09.2026, auf Wunsch): Die abgeleiteten Einheiten (Ampere/
-% Volt/Ohm, je in der formelbox) und das Ohmsche Gesetz selbst (gesetzbox)
-% sind jetzt keine vorgedruckten Endergebnisse mehr, sondern Luecken
-% (\FormelLuecke, gesteuert ueber \ifprintanswers/\noprintanswers wie sonst
-% im Repo ueblich fuer \solution) -- die SuS tragen Formel und Einheit erst
-% waehrend der gemeinsamen Herleitung im Unterricht von Hand ein. Betrifft
-% NICHT die Umformen-Hinweisbox (bereits vollstaendiger Schritt-fuer-Schritt-
-% Vorgang, siehe root-CLAUDE.md) und NICHT die Vorsaetze-Tabelle (Milli/
-% Kilo) -- beide bleiben vollstaendig ausgefuellt.
+% Bilder: nur 01_Ohmsches-Gesetz-URI-Dreieck-1024x576.jpg wird gebraucht.
 % =============================================================================
 \documentclass[addpoints,11pt,a4paper]{exam}
 
@@ -184,21 +136,6 @@
   left=5mm,right=5mm,top=2mm,bottom=2mm
 }
 
-% gesetzbox: eigene Farbe (Blau statt Violett), damit sich das zentrale
-% Ohmsche Gesetz optisch von den drei einzelnen Groessen-Boxen (Strom/
-% Spannung/Widerstand, formelbox/violett) abhebt.
-\newtcolorbox{gesetzbox}[1][Gesetz]{
-  enhanced,
-  breakable,
-  colback=lightblue,
-  colframe=accentblue,
-  title={#1},
-  fonttitle=\bfseries,
-  boxrule=0.9pt,
-  arc=2mm,
-  left=5mm,right=5mm,top=2mm,bottom=2mm
-}
-
 % Bild-Helfer: zentriertes Bild mit spuerbarem Abstand zum umgebenden Text.
 % #1 = Breite, #2 = Dateipfad.
 \newcommand{\Bild}[2]{%
@@ -208,30 +145,6 @@
   \end{center}
   \vspace{0.6cm}
 }
-
-% Einheitliche Abschlusszeile fuer jede Groessen-Box (Strom/Spannung/
-% Widerstand): immer Formelzeichen UND Einheit angeben, in gleichem Format.
-% #1 = Formelzeichen (z.B. $I$), #2 = Einheit mit Symbol (z.B. Ampere ($\si{\ampere}$)).
-\newcommand{\Groesseninfo}[2]{%
-  \par\vspace{0.3cm}\noindent
-  \textbf{Formelzeichen:}~#1 \hfill \textbf{Einheit:}~#2%
-}
-
-% --- Formeln/Einheiten in den Boxen ein-/ausblenden --------------------------
-% Die abgeleiteten Einheiten (Ampere/Volt/Ohm) und das Ohmsche Gesetz selbst
-% werden im Unterricht gemeinsam hergeleitet und von den SuS von Hand in die
-% Boxen eingetragen -- deshalb hier als Luecke, nicht vorgedruckt.
-% \printanswers zeigt die vollstaendigen Formeln/Einheiten (Lehrperson-/
-% Referenzexemplar), \noprintanswers (Standard) blendet sie zu Luecken aus
-% (Schueler-Exemplar). Nutzt denselben \ifprintanswers-Mechanismus wie die
-% \solution-Umgebung im Rest des Repos, hier direkt auf Formeln angewendet,
-% da dieses Arbeitsblatt reine Theorie ohne \question/\solution ist.
-\noprintanswers
-%\printanswers
-
-\newcommand{\Luecke}[1][2.5cm]{\underline{\hspace{#1}}}
-% #1 = Breite der Luecke (optional), #2 = vollstaendige Formel/Einheit.
-\newcommand{\FormelLuecke}[2][2.5cm]{\ifprintanswers #2\else\Luecke[#1]\fi}
 
 \pagestyle{headandfoot}
 \cfoot{\textcolor{darkgray}{Seite \thepage\ von \pageref{LastPage}}}
@@ -266,7 +179,7 @@
 Am Ende dieser Doppellektion kann ich \dots
 \begin{itemize}[leftmargin=1.2cm,itemsep=0.3em]
   \item die Einheiten Ampere, Volt und Ohm nennen und die Einheiten von Strom und Widerstand aus bereits Bekanntem herleiten. (LZ1)
-  \item den Zusammenhang zwischen Spannung, Widerstand und Strom (Ohmsches Gesetz) anwenden und nach $R$ bzw. nach $I$ umformen. (LZ2)
+  \item das Ohmsche Gesetz $U=R\cdot I$ anwenden und nach $R$ bzw. nach $I$ umformen. (LZ2)
   \item mit den Vorsätzen Milli und Kilo zwischen verschiedenen Grössenordnungen umrechnen. (LZ3)
 \end{itemize}
 \end{infobox}
@@ -279,13 +192,6 @@ Am Ende dieser Doppellektion kann ich \dots
 Bisher haben Sie Strom, Spannung und Widerstand nur qualitativ
 kennengelernt. Jetzt lernen Sie, wie man alle drei Grössen tatsächlich
 misst und berechnet.
-
-\Bild{6cm}{Bilder/URI_illustration_clean.jpg}
-{\scriptsize Zur Anschauung: Der Widerstand $R$ (grau) bremst wie ein
-Schleifgewicht. Die Spannung $U$ (blau) zieht daran, der Strom $I$ (gelb)
-wird dabei mitgeschleift. Je stärker $R$ bremst, desto mehr Spannung $U$
-braucht es, um denselben Strom $I$ zu erreichen: genau das sagt
-$R=U/I$ aus.}
 \end{theoriebox}
 
 \needspace{7cm}
@@ -294,32 +200,25 @@ Sie kennen bereits $I=\dfrac{\Delta Q}{\Delta t}$ (Ladung pro Zeit). Die
 Ladung $Q$ wird in Coulomb $\si{\coulomb}$ gemessen, die Zeit $t$ in
 Sekunden $\si{\second}$. Daraus ergibt sich die Einheit des Stroms:
 \[
-  [I] = \FormelLuecke[7cm]{1\ \si{\coulomb\per\second} =: 1\ \text{Ampere} = 1\ \si{\ampere}}.
+  [I] = 1\ \si{\coulomb\per\second} =: 1\ \text{Ampere} = 1\ \si{\ampere}.
 \]
-\Groesseninfo{$I$}{\FormelLuecke[3cm]{Ampere ($\si{\ampere}$)}}
 \end{formelbox}
 
-\needspace{6cm}
+\needspace{5cm}
 \begin{formelbox}[Spannung $U$]
-Die Spannung wird in Volt gemessen:
-\[
-  [U] = \FormelLuecke[3cm]{1\ \si{\volt}}.
-\]
-Diese Einheit kennen Sie vermutlich bereits von Batterien
-($\SI{1.5}{\volt}$, $\SI{9}{\volt}$) oder von der Steckdose
-($\SI{230}{\volt}$).
-\Groesseninfo{$U$}{\FormelLuecke[3cm]{Volt ($\si{\volt}$)}}
+Die Spannung wird in Volt $\si{\volt}$ gemessen — diese Einheit kennen
+Sie vermutlich bereits von Batterien ($\SI{1.5}{\volt}$, $\SI{9}{\volt}$)
+oder von der Steckdose ($\SI{230}{\volt}$).
 \end{formelbox}
 
-\needspace{15cm}
+\needspace{7cm}
 \begin{formelbox}[Widerstand $R$]
 Der Widerstand ist definiert als das Verhältnis von Spannung zu Strom,
 $R:=\dfrac{U}{I}$ (siehe Ohmsches Gesetz unten). Daraus ergibt sich seine
 Einheit:
 \[
-  [R] = \FormelLuecke[7cm]{1\ \frac{\si{\volt}}{\si{\ampere}} =: 1\ \text{Ohm} = 1\ \si{\ohm}}.
+  [R] = 1\ \frac{\si{\volt}}{\si{\ampere}} =: 1\ \text{Ohm} = 1\ \si{\ohm}.
 \]
-\Groesseninfo{$R$}{\FormelLuecke[3cm]{Ohm ($\si{\ohm}$)}}
 \end{formelbox}
 
 \needspace{8cm}
@@ -328,17 +227,16 @@ Bei vielen Bauteilen (z.\,B. bei einem handelsüblichen Widerstand) gilt
 zwischen Spannung, Widerstand und Strom folgender Zusammenhang, das
 \textbf{\emph{Ohmsche Gesetz}}:
 
-\begin{gesetzbox}[Ohmsches Gesetz]
+\begin{formelbox}[Ohmsches Gesetz]
 \[
-  \FormelLuecke[4cm]{U = R\cdot I}
+  U = R\cdot I
 \]
-$U$: Spannung (\FormelLuecke[1.5cm]{$\si{\volt}$}); $R$: Widerstand
-(\FormelLuecke[1.5cm]{$\si{\ohm}$}); $I$: Strom
-(\FormelLuecke[1.5cm]{$\si{\ampere}$}).
-\end{gesetzbox}
+$U$: Spannung ($\si{\volt}$); $R$: Widerstand ($\si{\ohm}$); $I$: Strom
+($\si{\ampere}$).
+\end{formelbox}
 
 Je grösser der Widerstand bei gleichem Strom, desto grösser die Spannung,
-die über ihm abfällt, genau wie ein engeres Rohr bei gleichem
+die über ihm abfällt — genau wie ein engeres Rohr bei gleichem
 Durchfluss einen grösseren Druckunterschied braucht.
 \end{theoriebox}
 
@@ -346,16 +244,10 @@ Durchfluss einen grösseren Druckunterschied braucht.
 % Umformen
 % =============================================================================
 \needspace{14cm}
-\begin{hinweisbox}[Umformen: nach $U$, $R$ oder $I$ auflösen]
-Je nachdem, was gesucht ist, brauchen Sie die Formel $U=R\cdot I$ in einer
-von drei Formen. Zum Umformen führen Sie auf \emph{beiden} Seiten der
-Gleichung dieselbe Rechenoperation aus:
-
-\textbf{Nach $U$ auflösen:} Das ist genau die Ausgangsform, keine
-Umformung nötig:
-\[
-  U = R\cdot I.
-\]
+\begin{hinweisbox}[Umformen: nach $R$ oder nach $I$ auflösen]
+Oft ist nicht $U$, sondern $R$ oder $I$ gesucht. Dazu formen Sie die
+Formel $U=R\cdot I$ um, indem Sie auf \emph{beiden} Seiten der Gleichung
+dieselbe Rechenoperation ausführen:
 
 \textbf{Nach $R$ auflösen:} Beide Seiten durch $I$ teilen:
 \[
@@ -367,17 +259,12 @@ Umformung nötig:
   \frac{U}{R} = \frac{R\cdot I}{R} = I \qquad\Longrightarrow\qquad I=\frac{U}{R}.
 \]
 
-\Bild{13cm}{Bilder/ohms-law-triangle-static.pdf}
-{\scriptsize Das \glqq URI-Dreieck\grqq{} als Kontrolle, für alle drei
-Fälle: Sie decken mit dem Finger genau die Grösse ab, die Sie suchen.
-Übrig bleiben die beiden anderen, so wie sie im Dreieck zueinander
-stehen. Links: $I$ abgedeckt, übrig bleiben $U$ \emph{über} $R$, also
-$I=U/R$. Mitte: $R$ abgedeckt, übrig bleiben $U$ \emph{über} $I$, also
-$R=U/I$. Rechts: $U$ abgedeckt, übrig bleiben $R$ und $I$
-\emph{nebeneinander}, also $U=R\cdot I$. Stehen die beiden übrigen
-Grössen nebeneinander, werden sie multipliziert; steht eine über der
-anderen, wird dividiert. Das ersetzt das Umformen von Hand nicht (siehe
-oben), hilft aber beim schnellen Nachprüfen des Ergebnisses.}
+\Bild{7cm}{Bilder/01_Ohmsches-Gesetz-URI-Dreieck-1024x576.jpg}
+{\scriptsize Das \glqq URI-Dreieck\grqq{} als Kontrolle: Decken Sie die
+gesuchte Grösse ab. Stehen die beiden übrigen Grössen \emph{nebeneinander},
+werden sie multipliziert; steht eine \emph{über} der anderen, wird
+dividiert. Das ersetzt das Umformen von Hand nicht, hilft aber beim
+Nachprüfen.}
 \end{hinweisbox}
 
 % =============================================================================
@@ -397,28 +284,18 @@ multiplizieren:
 \toprule
 Vorsatz & Symbol & Faktor & Beispiel \\
 \midrule
-Milli & m & $10^{-3} = 0.001$ & $\SI{5}{\milli\ampere} = \SI{0.005}{\ampere}$ \\
-(Basiseinheit) & -- & $10^{0} = 1$ & $\SI{1}{\ampere}$, $\SI{1}{\volt}$, $\SI{1}{\ohm}$ \\
-Kilo & k & $10^{3} = 1000$ & $\SI{2.2}{\kilo\ohm} = \SI{2200}{\ohm}$ \\
+Milli & m & $10^{-3}$ & $\SI{5}{\milli\ampere} = \SI{0.005}{\ampere}$ \\
+(Basiseinheit) & -- & $10^{0}$ & $\SI{1}{\ampere}$, $\SI{1}{\volt}$, $\SI{1}{\ohm}$ \\
+Kilo & k & $10^{3}$ & $\SI{2.2}{\kilo\ohm} = \SI{2200}{\ohm}$ \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\textbf{\emph{Milli}} bedeutet ein Tausendstel der Basiseinheit: Ein
-Milliampere ist also der tausendste Teil eines Amperes,
-$\SI{1}{\milli\ampere} = \SI{0.001}{\ampere}$. Um von Milliampere in
-Ampere umzurechnen, teilen Sie durch $1000$: Das verschiebt das Komma um
-drei Stellen nach links, zum Beispiel
-$\SI{25}{\milli\ampere} = \SI{0.025}{\ampere}$. Am häufigsten begegnen
-Ihnen Milli bei kleinen Strömen ($\si{\milli\ampere}$, mA) und kleinen
-Spannungen ($\si{\milli\volt}$, mV).
-
-\textbf{\emph{Kilo}} bedeutet das Tausendfache der Basiseinheit: Ein
-Kiloohm sind also $1000$ Ohm, $\SI{1}{\kilo\ohm} = \SI{1000}{\ohm}$. Um
-von Kiloohm in Ohm umzurechnen, multiplizieren Sie mit $1000$: Das
-verschiebt das Komma um drei Stellen nach rechts, zum Beispiel
-$\SI{3.3}{\kilo\ohm} = \SI{3300}{\ohm}$. Am häufigsten begegnet Ihnen
-Kilo bei grösseren Widerständen ($\si{\kilo\ohm}$, k$\Omega$).
+Am häufigsten begegnen Ihnen $\si{\milli\ampere}$ (mA, kleine Ströme) und
+$\si{\milli\volt}$ (mV, kleine Spannungen) sowie $\si{\kilo\ohm}$
+(k$\Omega$, für grössere Widerstände). Um zwischen den Einheiten
+umzurechnen, multiplizieren oder dividieren Sie mit dem entsprechenden
+Faktor 1000.
 \end{theoriebox}
 
 \end{document}

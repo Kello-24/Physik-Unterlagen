@@ -5,41 +5,49 @@
 % UZH Praktikum I -- Sara Romer Urban, Kantonsschule im Lee, HS2026
 % Klassen: 4fh (15.09.2026) + 4cdeg (18.09.2026) -- gemeinsames Material
 %
-% Enthaelt die drei Experimente der Doppellektion (Leiterschaukel,
-% zwei parallele Leiter, Fadenstrahlrohr) UND alle Aufgaben dazu -- Stand
-% nach Loris' zweiter Ueberarbeitung: das separate Experimente-Dokument
-% (experimente_lorentzkraft_teil1.tex) ist KEIN Protokoll-/Aufgaben-Dokument
-% mehr, sondern eine fertige Zusammenfassung der drei Experimente und ihrer
-% Kernerkenntnisse zur Pruefungsvorbereitung -- Experimente und Aufgaben
-% gehoeren stattdessen hierher, ins Arbeitsblatt.
+% Enthaelt drei Experimente der Doppellektion (Leiterschaukel, rollender
+% Leiterstab auf der Schiene, zwei parallele Leiter) UND alle Aufgaben dazu.
+% Das Fadenstrahlrohr-Experiment (viertes Experiment der Doppellektion) ist
+% NICHT mehr Teil dieses Dokuments -- es lebt jetzt in einem eigenen
+% Dokument, fadenstrahlrohr-lorentzkraft-teil1.tex (dieser Ordner), damit es
+% als eigenständige Station/Handout zu genau diesem einen Versuch verwendet
+% werden kann. Das separate Zusammenfassungsdokument
+% (experimente_lorentzkraft_teil1.tex) deckt bislang nur die drei
+% ursprünglichen Experimente ab und müsste bei Bedarf um den rollenden
+% Leiterstab und eine aktualisierte Fadenstrahlrohr-Verweisung ergänzt
+% werden -- hier nicht mitgemacht (ausserhalb des ursprünglichen Auftrags).
 %
-% Zwei parallele Leiter: wird von der Lehrperson im Plenum gezeigt
-% (Lehrer-Demonstration, keine Partnerarbeit) -- direkt gefolgt von der
-% Formel-Repetition, dem historischen Ampere-Exkurs und der Herleitungs-
-% aufgabe. Leiterschaukel und Fadenstrahlrohr bleiben Partnerarbeit bzw.
-% Predict-Observe-Explain wie urspruenglich geplant.
+% Rollender Leiterstab und Zwei parallele Leiter: werden von der
+% Lehrperson im Plenum gezeigt (Lehrer-Demonstration, keine Partnerarbeit).
+% Zwei parallele Leiter ist direkt gefolgt von der Formel-Repetition, dem
+% historischen Ampere-Exkurs und der Herleitungsaufgabe. Leiterschaukel
+% bleibt Partnerarbeit wie urspruenglich geplant.
 %
 % Quellen: lernziele.md, lorentzkraft-teil1-lektionsplan.tex (dieser Ordner),
 % literatur/ (PhysikLibre Kap. 13.5 "Leiter in Magnetfeldern": F=Il x B,
-% Herleitung F=IlB aus F=qvB ueber Q=It, v=l/t, Kraft zwischen zwei
-% parallelen Leitern; LEIFIphysik "LORENTZ-Kraft": Drei-Finger-Regel
-% rechts/links, F=q v x B; "Fadenstrahlrohr": Aufbau). Direkte Fortsetzung
+% Herleitung F=qvB aus F=IlB ueber I=Q/t, t=l/v, Kraft zwischen zwei
+% parallelen Leitern; LEIFIphysik "LORENTZ-Kraft": Drei-Finger-Regel,
+% technische Stromrichtung fuer negative Ladungen). Direkte Fortsetzung
 % von Magnetfelder (arbeitsblatt5-magnetfelder.tex) -- Feldformel des
 % geraden Leiters wird hier als bekannt vorausgesetzt, nicht neu
 % hergeleitet.
 %
 % Boxen-Layout, Sie-Form, Nummerierung: siehe institutionen/UZH-Praktikum-I/
 % CLAUDE.md. Allgemeiner Winkel-Fall (F=IlB*sin(alpha)) wird bei beiden
-% Kraeften direkt mit angegeben (Kreuzprodukt + Spezialfall rechtwinklig),
-% keine Hinweisboxen, keine "Bereits bekannt"-Repetitionsbox (Stand von
-% Loris' erster Ueberarbeitung, weiterhin gueltig).
+% Kraeften direkt mit angegeben (Kreuzprodukt + Spezialfall rechtwinklig).
+% Hand-Konvention: durchgehend rechte Hand + technische Stromrichtung, auch
+% fuer negative Ladungen (kein Wechsel auf die linke Hand mehr) -- siehe
+% Lorentzkraft-Formelbox.
 %
-% Herleitung der Lorentzkraft->magnetische Kraft: wird gemeinsam im Plenum
-% entwickelt, deshalb in der SuS-Version nur Platz (\Antwortraum), die volle
-% Herleitung erscheint nur in der Loesungsversion (\ifprintanswers).
+% Herleitung der magnetischen Kraft->Lorentzkraft (Richtung umgedreht
+% gegenueber der ersten Fassung, siehe institutionen/UZH-Praktikum-I/
+% CLAUDE.md): wird gemeinsam im Plenum entwickelt, deshalb in der
+% SuS-Version nur Platz (\Antwortraum), die volle Herleitung erscheint nur
+% in der Loesungsversion (\ifprintanswers).
 %
 % Bilder: siehe Bilder/*.pdf (SVG->PDF via Inkscape, PhysikLibre-Stil) und
-% Bilder/*.jpg (Polarlicht, Fadenstrahlrohr-Foto).
+% Bilder/*.jpg (Polarlicht, Fadenstrahlrohr-Foto -- Letzteres jetzt im
+% Fadenstrahlrohr-Dokument verwendet).
 % =============================================================================
 \documentclass[addpoints,11pt,a4paper]{exam}
 
@@ -213,8 +221,8 @@
 }
 
 % --- Lösungen ein-/ausblenden -----------------------------------------------
-%\noprintanswers
-\printanswers
+\noprintanswers
+%\printanswers
 
 \pointformat{}
 \renewcommand{\solutiontitle}{\noindent\color{titleblue}\textbf{Lösung:}\enspace}
@@ -262,17 +270,20 @@ Ladung sich selbst in einem \textbf{\emph{externen}} Magnetfeld befindet,
 also in einem Feld, das \emph{nicht} von der Ladung selbst stammt, sondern
 von aussen kommt (z.\,B. von einem Magneten oder einem anderen Leiter)?
 
-Zwei Beispiele, die genau darauf beruhen: In jedem \textbf{Lautsprecher}
-oder \textbf{Elektromotor} sitzt eine stromdurchflossene Spule in einem
-starken Magnetfeld: Fliesst Strom, bewegt sich die Spule.
+In jedem \textbf{Elektromotor} sitzt eine stromdurchflossene Spule in
+einem starken Magnetfeld: Fliesst Strom, dreht sich die Spule. Dieselbe
+Kraft treibt sogar ganze Schiffe an: Beim \textbf{MHD-Antrieb} ersetzt das
+leitfähige Meerwasser selbst die stromdurchflossene Spule, ganz ohne
+Propeller.
 \begin{center}
-\begin{minipage}[t]{7.2cm}\centering
-  \includegraphics[width=6.8cm]{Bilder/lautsprecher-01.png}\\
-  {\scriptsize Lautsprecher: Spule im Feld eines Ringmagneten.}
-\end{minipage}\hfill
-\begin{minipage}[t]{6.2cm}\centering
+\begin{minipage}[t]{5cm}\centering
   \includegraphics[width=4.3cm]{Bilder/elektromotor.png}\\
-  {\scriptsize Elektromotor: Leiterschlaufe im Feld, $F_L$ dreht sie.}
+  {\scriptsize Elektromotor: Leiterschlaufe im Feld, $F$ dreht sie.}
+\end{minipage}\hfill
+\begin{minipage}[t]{7.5cm}\centering
+  \includegraphics[width=7cm]{Bilder/mhd-ship-yamato-1.jpg}\\
+  {\scriptsize MHD-Antrieb: die Yamato~1, angetrieben durch magnetische
+  Kraft auf das leitfähige Meerwasser.}
 \end{minipage}
 \end{center}
 Beim \textbf{Polarlicht} treffen geladene Teilchen aus dem Sonnenwind auf
@@ -280,16 +291,19 @@ das Erdmagnetfeld und werden auf gekrümmte Bahnen zu den Polen abgelenkt.
 Beide Phänomene beruhen auf derselben Kraft: einmal wirkt sie auf einen
 ganzen Leiter (die \textbf{\emph{magnetische Kraft}}), einmal auf eine
 einzelne freie Ladung (die \textbf{\emph{Lorentzkraft}}). Genau diese
-beiden Kräfte untersuchen Sie jetzt -- an drei Experimenten.
+gekrümmte Bahn einzelner Ladungen nutzen Forscher auch gezielt: Im
+\textbf{LHC} am CERN halten riesige Magnete Protonen auf einer 27\,km
+langen Kreisbahn. Genau diese beiden Kräfte untersuchen Sie jetzt an drei
+Experimenten.
 \begin{center}
-\begin{minipage}[t]{6.5cm}\centering
-  \includegraphics[width=6.5cm]{Bilder/aurora-borealis.jpg}\\
+\begin{minipage}[t]{6cm}\centering
+  \includegraphics[width=6cm]{Bilder/aurora-borealis.jpg}\\
   {\scriptsize Polarlicht (Aurora borealis).}
 \end{minipage}\hfill
-\begin{minipage}[t]{5.5cm}\centering
-  \includegraphics[width=4cm]{Bilder/polarlicht_illustration_flugbahn.png}\\
-  {\scriptsize Geladene Teilchen spiralen entlang der Feldlinien zum
-  magnetischen Pol.}
+\begin{minipage}[t]{7cm}\centering
+  \includegraphics[width=7cm]{Bilder/LHC.png}\\
+  {\scriptsize Der LHC-Ring (27\,km) bei Genf, mit seinen vier grossen
+  Detektoren.}
 \end{minipage}
 \end{center}
 \end{beispielbox}
@@ -298,7 +312,7 @@ beiden Kräfte untersuchen Sie jetzt -- an drei Experimenten.
 % Experiment 1: Leiterschaukel (Partnerarbeit, LZ1)
 % =============================================================================
 \begin{questions}
-\begin{groupbox}[Experiment 1 -- Partnerarbeit: Leiterschaukel]
+\begin{groupbox}[Experiment 1 (Partnerarbeit): Leiterschaukel]
 \question[3] Sie erhalten einen Aufbau mit einem Hufeisenmagneten und einem
 lose aufgehängten, schaukelförmigen Leiter, der sich zwischen den Polen
 befindet. Der Stromkreis lässt sich einschalten und umpolen.
@@ -329,7 +343,7 @@ Polungen zusammen ab, nicht von einer allein.
 % =============================================================================
 \begin{theoriebox}[Die magnetische Kraft auf einen Leiter]
 Ein stromdurchflossener Leiter (Länge $l$, Strom $I$) kann sich in einem
-\textbf{\emph{externen}} Magnetfeld $B$ befinden -- also einem Feld, das
+\textbf{\emph{externen}} Magnetfeld $B$ befinden, also einem Feld, das
 \emph{nicht} vom Strom im Leiter selbst erzeugt wird, sondern von aussen
 kommt (z.\,B. von einem Permanentmagneten oder einem anderen Leiter). Ein
 solcher Leiter erfährt dann die \textbf{\emph{magnetische Kraft}}:
@@ -353,12 +367,6 @@ damit einfach
 \end{center}
 {\scriptsize Stromdurchflossenes Leiterstück der Länge $l$ im Feld $B$:
 die magnetische Kraft $F$ steht senkrecht zu beiden.}
-\begin{center}
-  \includegraphics[width=7cm]{Bilder/magnetic-force-on-particle.png}
-\end{center}
-{\scriptsize Der allgemeine Winkel-Fall: Stromrichtung (rot) und Feldrichtung
-(grün) schliessen einen Winkel $\alpha$ ein; die resultierende Kraft (blau)
-hängt über $\sin\alpha$ von diesem Winkel ab.}
 
 Die \textbf{\emph{Richtung}} dieser Kraft bestimmen Sie mit der
 \textbf{\emph{Drei-Finger-Regel der rechten Hand}}: Daumen, Zeigefinger und
@@ -377,52 +385,198 @@ Ladungsträger angibt.}
 % =============================================================================
 \begin{questions}
 \begin{taskbox}[Rückkehr: Erklären Sie Ihre eigene Beobachtung]
-\question[4] Bearbeiten Sie diese Aufgabe zuerst \textbf{allein}, vergleichen
+\question[8] Bearbeiten Sie diese Aufgabe zuerst \textbf{allein}, vergleichen
 Sie danach \textbf{zu zweit} Ihre Antwort.
 
-Erklären Sie mithilfe der magnetischen Kraft $F=IlB$ und der
-Drei-Finger-Regel Ihre eigene Beobachtung an der Leiterschaukel von oben:
-Warum lenkt der Strom die Schaukel überhaupt aus, und warum kehrt sich die
-Richtung um, wenn Sie nur den Strom \emph{oder} nur den Magneten umpolen,
-aber wieder zur ursprünglichen Richtung zurückkehrt, wenn Sie \emph{beide}
-umpolen?
-\Antwortraum{4}
-\begin{solution}
-Der stromdurchflossene Leiter befindet sich im Feld des Hufeisenmagneten und
-erfährt deshalb die magnetische Kraft $F=IlB$ senkrecht zu $I$ und $B$.
-Genau das lenkt die Schaukel aus. Die Richtung dieser Kraft liefert die
-Drei-Finger-Regel: Kehrt man \emph{nur} $I$ oder \emph{nur} $B$ um, dreht sich
-nach der Drei-Finger-Regel auch die Kraftrichtung $F$ um. Kehrt man
-\emph{beide} um, zeigen Daumen und Zeigefinger zwar beide in die
-entgegengesetzte Richtung wie zu Beginn, ihre relative Anordnung
-zueinander bleibt aber gleich. Die Drei-Finger-Regel liefert deshalb
-wieder dieselbe Kraftrichtung wie im allerersten Fall.
-\end{solution}
+Bei Vektoren, die senkrecht zur Zeichenebene stehen, gilt folgende
+Konvention: $\odot$ bedeutet, der Vektor zeigt aus der Ebene heraus, auf
+Sie zu (wie die Spitze eines Pfeils, der Ihnen entgegenfliegt); $\otimes$
+bedeutet, er zeigt in die Ebene hinein, von Ihnen weg (wie die Federn
+eines Pfeils, der sich von Ihnen entfernt).
+
+Die Skizze unten zeigt Ihren Aufbau von der Seite, entlang des
+Leiterstabs geschaut: Der Nordpol liegt \textbf{unten}, der Südpol
+\textbf{oben} (wie beim Foto in Experiment 1), der Leiterstab hängt im
+Luftspalt zwischen den beiden Polen. Bei der ersten Polung aus Ihrer
+Beobachtung von oben schwingt die Schaukel \textbf{nach rechts}.
+\begin{parts}
+  \part[4] Zeichnen Sie \textbf{alle drei} Vektoren direkt in die Skizze
+  ein: die Feldrichtung $B$ (aus der Polbezeichnung), die Kraftrichtung
+  $F$ (als Pfeil nach links oder rechts, passend zur obigen Beobachtung)
+  und (mithilfe der Drei-Finger-Regel) die Stromrichtung $I$ im
+  Leiterstab (mit dem passenden Symbol $\odot$/$\otimes$, da der
+  Leiterstab hier im Querschnitt zu sehen ist).
+  \begin{center}
+  \begin{tikzpicture}[>=Latex,scale=1.1]
+    \filldraw[fill=gray!25,draw=black,thick] (-1.3,0.9) rectangle (1.3,1.7);
+    \node[font=\bfseries\Large] at (0,1.3) {S};
+    \filldraw[fill=gray!25,draw=black,thick] (-1.3,-1.7) rectangle (1.3,-0.9);
+    \node[font=\bfseries\Large] at (0,-1.3) {N};
+    \draw[thick] (0,0) circle (0.18);
+    \node[align=center,font=\scriptsize] at (0,-2.2) {Leiterstab\\(Querschnitt)};
+  \end{tikzpicture}
+  \end{center}
+  \begin{solution}
+  Die Feldrichtung $B$ zeigt vom Nordpol zum Südpol, hier also von unten
+  nach oben. Die Beobachtung (Schaukel schwingt nach rechts) entspricht
+  $F$ nach \textbf{rechts}. Mit der Drei-Finger-Regel (Daumen $I$,
+  Zeigefinger $B$, Mittelfinger $F$) muss der Daumen dafür \textbf{in die
+  Ebene hinein} zeigen: Der Strom fliesst im Leiterstab also \textbf{von
+  Ihnen weg}, $I=\otimes$.
+  \begin{center}
+  \begin{tikzpicture}[>=Latex,scale=1.1]
+    \filldraw[fill=gray!25,draw=black,thick] (-1.3,0.9) rectangle (1.3,1.7);
+    \node[font=\bfseries\Large] at (0,1.3) {S};
+    \filldraw[fill=gray!25,draw=black,thick] (-1.3,-1.7) rectangle (1.3,-0.9);
+    \node[font=\bfseries\Large] at (0,-1.3) {N};
+    \draw[thick,-{Latex[length=3mm]},blue] (-0.5,-0.7) -- (-0.5,0.7) node[pos=0.15,left,font=\scriptsize,black]{$B$};
+    \node[font=\Large] at (0,0) {$\otimes$};
+    \draw[thick,-{Latex[length=3mm]},red] (0.35,0) -- (1.5,0) node[midway,above,font=\scriptsize,black]{$F$};
+    \node[align=center,font=\scriptsize] at (0,-2.2) {Leiterstab\\(Querschnitt)};
+  \end{tikzpicture}
+  \end{center}
+  \end{solution}
+  \part[2] Was ändert sich, wenn Sie \textbf{nur} den Strom umpolen (die
+  Stromrichtung im Leiterstab kehrt sich also um), das Magnetfeld aber
+  unverändert bleibt? Zeichnen Sie die neue Stromrichtung und die daraus
+  resultierende Kraftrichtung in die zweite Skizze ein und geben Sie an,
+  wohin die Schaukel jetzt schwingt.
+  \begin{center}
+  \begin{tikzpicture}[>=Latex,scale=1.1]
+    \filldraw[fill=gray!25,draw=black,thick] (-1.3,0.9) rectangle (1.3,1.7);
+    \node[font=\bfseries\Large] at (0,1.3) {S};
+    \filldraw[fill=gray!25,draw=black,thick] (-1.3,-1.7) rectangle (1.3,-0.9);
+    \node[font=\bfseries\Large] at (0,-1.3) {N};
+    \draw[thick] (0,0) circle (0.18);
+    \node[align=center,font=\scriptsize] at (0,-2.2) {Leiterstab\\(Querschnitt)};
+  \end{tikzpicture}
+  \end{center}
+  \begin{solution}
+  Die Feldrichtung $B$ bleibt unverändert (unten nach oben), der Strom
+  fliesst jetzt aber umgekehrt, also \textbf{aus der Ebene heraus},
+  $I=\odot$. Mit der Drei-Finger-Regel (Daumen $I$, Zeigefinger $B$,
+  Mittelfinger $F$) zeigt der Mittelfinger jetzt \textbf{nach links}: Die
+  Schaukel schwingt jetzt \textbf{nach links}, statt nach rechts.
+  \begin{center}
+  \begin{tikzpicture}[>=Latex,scale=1.1]
+    \filldraw[fill=gray!25,draw=black,thick] (-1.3,0.9) rectangle (1.3,1.7);
+    \node[font=\bfseries\Large] at (0,1.3) {S};
+    \filldraw[fill=gray!25,draw=black,thick] (-1.3,-1.7) rectangle (1.3,-0.9);
+    \node[font=\bfseries\Large] at (0,-1.3) {N};
+    \draw[thick,-{Latex[length=3mm]},blue] (0.5,-0.7) -- (0.5,0.7) node[pos=0.15,right,font=\scriptsize,black]{$B$};
+    \node[font=\Large] at (0,0) {$\odot$};
+    \draw[thick,-{Latex[length=3mm]},red] (-0.35,0) -- (-1.5,0) node[midway,above,font=\scriptsize,black]{$F$};
+    \node[align=center,font=\scriptsize] at (0,-2.2) {Leiterstab\\(Querschnitt)};
+  \end{tikzpicture}
+  \end{center}
+  \end{solution}
+  \part[2] Was ändert sich, wenn Sie stattdessen (ausgehend von der
+  ursprünglichen Stromrichtung aus (a), also $I=\otimes$) \textbf{nur} den
+  Magneten umdrehen (Nord- und Südpol vertauschen sich also), der Strom
+  aber unverändert in dieselbe Richtung fliesst wie in (a)? Begründen Sie
+  Ihre Antwort mit der Drei-Finger-Regel.
+  \Antwortraum{2}
+  \begin{solution}
+  Jetzt zeigt $B$ von oben nach unten, während $I$ unverändert in die
+  Ebene hinein zeigt ($I=\otimes$, wie in (a)). Die Drei-Finger-Regel
+  liefert damit die entgegengesetzte Kraftrichtung: Die Schaukel schwingt
+  jetzt \textbf{nach links}, statt nach rechts, genau wie bereits am
+  Aufbau selbst
+  beobachtet.
+  \end{solution}
+\end{parts}
 \end{taskbox}
 \end{questions}
 
 % =============================================================================
-% Experiment 2: Zwei parallele Leiter (Lehrer-Demonstration, LZ1)
+% Experiment 2 (neu): Rollender Leiterstab auf der Schiene (Lehrer-Demo, LZ1)
 % =============================================================================
-\begin{taskbox}[Experiment 2 -- Lehrer-Demonstration: Zwei parallele Leiter]
+\begin{questions}
+\begin{taskbox}[Experiment 2 (Lehrerdemonstration): Rollender Leiterstab auf der Schiene]
+\question[4] Die Lehrperson zeigt einen Leiterstab, der quer über zwei
+parallele Schienen zwischen den Polen eines Magneten liegt und frei rollen
+kann. Die Schienen sind an eine Stromquelle angeschlossen; die Skizze
+zeigt den Aufbau von oben, mit der bekannten Stromrichtung $I$ im Stab und
+der Feldrichtung $B$ des Magneten (Symbole wie oben: $\odot$/$\otimes$ =
+senkrecht zur Zeichenebene).
+\begin{center}
+\begin{tikzpicture}[>=Latex,scale=1.0]
+  \draw[very thick] (-3.5,1) -- (3,1);
+  \draw[very thick] (-3.5,-1) -- (3,-1);
+  \draw[thick] (-3.5,1) -- (-3.5,0.3);
+  \draw[thick] (-3.5,-1) -- (-3.5,-0.3);
+  \draw[thick] (-3.7,0.3) -- (-3.3,0.3);
+  \draw[thick] (-3.6,-0.3) -- (-3.4,-0.3);
+  \node[font=\scriptsize] at (-4.3,0) {Batterie};
+  \draw[dashed,gray] (-1.5,-1.4) rectangle (1.5,1.4);
+  \foreach \x in {-1,-0.3,0.4,1.1}{
+    \foreach \y in {-0.9,-0.2,0.5}{
+      \node[font=\small,gray] at (\x,\y) {$\otimes$};
+    }
+  }
+  \node[font=\scriptsize,align=center] at (0,1.8) {Magnetfeld $B$\\(in die Tischebene hinein)};
+  \draw[very thick,red] (0,1) -- (0,-1);
+  \draw[thick,-{Latex[length=3mm]},red] (0,0.7) -- (0,0.1);
+  \node[font=\scriptsize,black] at (0.35,0.85) {$I$};
+  \node[align=center,font=\scriptsize] at (0,-1.9) {Leiterstab (Draufsicht,\\rollt auf den Schienen)};
+\end{tikzpicture}
+\end{center}
+Sobald der Strom eingeschaltet wird, rollt der Stab die Schiene entlang
+nach vorne (in der Skizze also nach rechts).
+\begin{parts}
+  \part[3] Zeichnen Sie mit der Drei-Finger-Regel die Kraftrichtung $F$
+  auf den Stab direkt in die Skizze ein und bestätigen Sie damit, dass der
+  Stab tatsächlich nach rechts rollen muss.
+  \Antwortraum{3}
+  \begin{solution}
+  Daumen $I$ nach unten, Zeigefinger $B$ in die Ebene hinein: Der
+  Mittelfinger $F$ zeigt dann nach rechts, in Richtung der Schienen. Das
+  bestätigt die beobachtete Rollrichtung.
+  \begin{center}
+  \begin{tikzpicture}[>=Latex,scale=1.0]
+    \draw[very thick] (-3.5,1) -- (3,1);
+    \draw[very thick] (-3.5,-1) -- (3,-1);
+    \draw[dashed,gray] (-1.5,-1.4) rectangle (1.5,1.4);
+    \foreach \x in {-1,-0.3,0.4,1.1}{
+      \foreach \y in {-0.9,-0.2,0.5}{
+        \node[font=\small,gray] at (\x,\y) {$\otimes$};
+      }
+    }
+    \draw[very thick,red] (0,1) -- (0,-1);
+    \draw[thick,-{Latex[length=3mm]},red] (0,0.7) -- (0,0.1);
+    \node[font=\scriptsize,black] at (0.35,0.85) {$I$};
+    \draw[thick,-{Latex[length=3mm]},blue] (0,0) -- (1.8,0) node[midway,above,font=\scriptsize,black]{$F$};
+  \end{tikzpicture}
+  \end{center}
+  \end{solution}
+  \part[1] Nennen Sie ein alltägliches Gerät, das auf genau demselben
+  Prinzip beruht.
+  \Antwortraum{1}
+  \begin{solution}
+  Genau dieses Prinzip (Kraft auf einen stromdurchflossenen Leiter im
+  Magnetfeld) treibt jeden \textbf{Elektromotor} an (siehe Einleitung).
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Experiment 3: Zwei parallele Leiter (Lehrer-Demonstration, LZ1)
+% =============================================================================
+\begin{taskbox}[Experiment 3 (Lehrerdemonstration): Zwei parallele Leiter]
 Die Lehrperson zeigt im Plenum zwei parallel hängende, stromdurchflossene
 Drähte, deren Stromrichtung sich unabhängig voneinander umpolen lässt: Bei
 \textbf{gleichgerichteten} Strömen ziehen sich die Drähte an, bei
 \textbf{entgegengesetzt} gerichteten Strömen stossen sie sich ab.
-\begin{center}
-  \includegraphics[width=8.5cm]{Bilder/antiparallel-and-parallel-wires.pdf}
-\end{center}
-{\scriptsize Links (a): entgegengesetzte Ströme, Abstossung. Rechts (b):
-gleichgerichtete Ströme, Anziehung.}
 \end{taskbox}
 
-\begin{beispielbox}[Bereits bekannt -- und ein Stück Geschichte]
-Sie kennen aus der Magnetfelder-Doppellektion bereits das Feld eines
+\begin{beispielbox}[Bereits bekannt und ein Stück Geschichte]
+Sie kennen aus der Doppellektion zu Magnetfeldern bereits das Feld eines
 geraden, stromdurchflossenen Leiters:
 \[
   B = \frac{\mu_0}{2\pi}\cdot\frac{I}{r}
 \]
-Genau dieser Aufbau -- zwei parallele, stromdurchflossene Leiter -- diente
+Genau dieser Aufbau (zwei parallele, stromdurchflossene Leiter) diente
 vor der SI-Neudefinition 2019 direkt zur \textbf{\emph{Definition}} der
 Einheit Ampere: Über die gemessene Kraft zwischen zwei Leitern mit
 bekanntem Abstand liess sich die Stromstärke festlegen, für die diese Kraft
@@ -438,12 +592,6 @@ gerade einen bestimmten Wert annimmt.
 ($B=\frac{\mu_0}{2\pi}\cdot\frac{I}{r}$) mit der magnetischen Kraft
 $F=I\cdot l\cdot B$ von oben, um die Kraft zwischen den beiden Leitern von
 oben herzuleiten und ihre Richtung zu begründen.
-\begin{center}
-  \includegraphics[width=7cm]{Bilder/amperes-force-law.pdf}
-\end{center}
-{\scriptsize Das Feld $B_1$ des unteren Leiters wirkt am Ort des oberen
-Leiters und erzeugt dort die Kraft $F_2$ auf ein Leiterstück der Länge $l$.
-Der Abstand $d$ im Bild entspricht dem $r$ unten.}
 \begin{parts}
   \part[3] Leiten Sie eine Formel für die Kraft \emph{pro Leiterlänge}
   $\frac{F}{l}$ zwischen zwei parallelen Leitern (Ströme $I_1$, $I_2$,
@@ -470,67 +618,104 @@ Der Abstand $d$ im Bild entspricht dem $r$ unten.}
     \text{Einheit von }\frac{F}{l}\colon\ \si{\newton\per\meter}
   \]
   \end{solution}
-  \part[3] Erklären Sie mithilfe der Drei-Finger-Regel, weshalb sich die
-  Leiter bei \textbf{gleichgerichteten} Strömen anziehen.
-  \Antwortraum{3}
-  \begin{solution}
-  Für die Richtung betrachten Sie eine einzelne (positive) bewegte Ladung im
-  einen Leiter, die sich im Feld des anderen Leiters befindet, und bestimmen
-  die Kraft auf sie mit der Drei-Finger-Regel (rechte Hand, konventionelle
-  Stromrichtung).
+  \part[5] Für die \textbf{Richtung} betrachten Sie das Feld $B_1$, das der
+  untere Leiter am Ort des oberen erzeugt: Zeichnen Sie dafür zuerst mit
+  der \textbf{rechten Handregel} (Daumen in Stromrichtung, gekrümmte
+  Finger zeigen die Feldrichtung) den Vektor $B_1$ am Ort des oberen
+  Leiters in die beiden Skizzen unten ein. Bestimmen Sie anschliessend mit
+  der \textbf{Drei-Finger-Regel} die Kraft $F_2$, die dieses Feld auf den
+  oberen (stromdurchflossenen) Leiter ausübt, und zwar für \textbf{beide} Fälle.
+  Erklären Sie damit, weshalb sich die Leiter bei gleichgerichteten
+  Strömen anziehen und bei entgegengesetzten abstossen.
   \begin{center}
-    \includegraphics[width=5.5cm]{Bilder/anti-parallel-currents-magnetic-force.pdf}
-  \end{center}
-  {\scriptsize Eine einzelne (positive) Ladung im rechten Leiter, bewegt im
-  Feld $B$ des linken Leiters -- die Drei-Finger-Regel liefert die Kraft
-  $F$.}
-  Fliessen $I_1$ und $I_2$ in dieselbe Richtung, zeigt die Drei-Finger-Regel
-  eine Kraft zum jeweils anderen Leiter hin: Die Leiter ziehen sich an.
-  Dieselbe Kraft wirkt (actio = reactio) in umgekehrter Richtung auf den
-  anderen Leiter.
-  \end{solution}
-  \part[2] Erklären Sie entsprechend, weshalb sich die Leiter bei
-  \textbf{entgegengesetzt gerichteten} Strömen abstossen.
-  \Antwortraum{2}
-  \begin{solution}
-  Jetzt zeigt der Daumen (Bewegungsrichtung der Ladung) in die
-  entgegengesetzte Richtung wie zuvor, während die Feldrichtung unverändert
-  bleibt. Die Drei-Finger-Regel liefert deshalb eine Kraft vom jeweils
-  anderen Leiter weg: Die Leiter stossen sich ab. Achtung, Verwechslungsgefahr
-  mit Polen/Ladungen: Dort gilt \glqq gleich stösst ab\grqq{} -- bei
-  parallelen Strömen gilt das Gegenteil.
-
-  \textbf{Alternative Erklärung (Feldlinien-Modell):} Man kann sich die
-  Feldlinien beider Leiter auch als gespannte \glqq Gummifäden\grqq{}
-  vorstellen -- die Kraft zeigt dann in Richtung abnehmender
-  Feldliniendichte.
-  \begin{center}
-  \begin{minipage}[t]{7.5cm}\centering
-    \includegraphics[width=7cm]{Bilder/wires-antiparallel-field.pdf}\\
-    {\scriptsize Entgegengesetzte Ströme: Feldlinien verdichten sich
-    dazwischen (hohe Dichte) $\Rightarrow$ Kraft nach aussen,
-    Abstossung.}
+  \begin{minipage}[t]{7cm}\centering
+    \begin{tikzpicture}[>=Latex,scale=1.2]
+      \node[font=\Large] at (0,0) {$\odot$};
+      \node[below=1pt,font=\scriptsize] at (0,-0.4) {$I_1$};
+      \node[font=\Large] at (0,2.4) {$\otimes$};
+      \node[above=1pt,font=\scriptsize] at (0,2.8) {$I_2$};
+      \draw[<->] (0.9,0) -- (0.9,2.4) node[midway,right,font=\scriptsize]{$r$};
+    \end{tikzpicture}\\
+    {\scriptsize (a) entgegengesetzte Ströme}
   \end{minipage}\hfill
-  \begin{minipage}[t]{7.5cm}\centering
-    \includegraphics[width=7cm]{Bilder/wires-parallel-field.pdf}\\
-    {\scriptsize Gleichgerichtete Ströme: Feldlinien verschmelzen zu
-    einer gemeinsamen Schlaufe (dazwischen schwächer)
-    $\Rightarrow$ Kraft nach innen, Anziehung.}
+  \begin{minipage}[t]{7cm}\centering
+    \begin{tikzpicture}[>=Latex,scale=1.2]
+      \node[font=\Large] at (0,0) {$\odot$};
+      \node[below=1pt,font=\scriptsize] at (0,-0.4) {$I_1$};
+      \node[font=\Large] at (0,2.4) {$\odot$};
+      \node[above=1pt,font=\scriptsize] at (0,2.8) {$I_2$};
+      \draw[<->] (0.9,0) -- (0.9,2.4) node[midway,right,font=\scriptsize]{$r$};
+    \end{tikzpicture}\\
+    {\scriptsize (b) gleichgerichtete Ströme}
   \end{minipage}
   \end{center}
+  {\scriptsize Symbole wie oben: $\odot$ = Strom aus der Ebene heraus, auf
+  Sie zu; $\otimes$ = Strom in die Ebene hinein, von Ihnen weg.}
+  \Antwortraum{5}
+  \begin{solution}
+  In beiden Fällen fliesst $I_1$ aus der Ebene heraus. Nach der rechten
+  Handregel (Daumen aus der Ebene heraus, Finger krümmen sich gegen den
+  Uhrzeigersinn) zeigt $B_1$ am Ort des oberen Leiters (direkt über
+  $I_1$) deshalb in \textbf{beiden} Fällen nach \textbf{links}. Nach
+  demselben Muster liefert $B_2$ (das Feld von $I_2$ am Ort des unteren
+  Leiters) die Feldrichtung dort. So lassen sich Feld \textbf{und} Kraft
+  für \textbf{beide} Leiter bestimmen, nicht nur für den oberen:
+  \begin{center}
+  \begin{minipage}[t]{7cm}\centering
+    \begin{tikzpicture}[>=Latex,scale=1.2]
+      \node[font=\Large] at (0,0) {$\odot$};
+      \node[below=1pt,font=\scriptsize] at (0,-0.4) {$I_1$};
+      \node[font=\Large] at (0,2.4) {$\otimes$};
+      \node[above=1pt,font=\scriptsize] at (0,2.8) {$I_2$};
+      \draw[thick,-{Latex[length=3mm]},blue] (-0.4,2.4) -- (-1.8,2.4) node[midway,above,font=\scriptsize,black]{$B_1$};
+      \draw[thick,-{Latex[length=3mm]},red] (0.3,2.4) -- (0.3,3.6) node[midway,right,font=\scriptsize,black]{$F_2$};
+      \draw[thick,-{Latex[length=3mm]},blue] (-0.4,0) -- (-1.8,0) node[midway,above,font=\scriptsize,black]{$B_2$};
+      \draw[thick,-{Latex[length=3mm]},red] (0.3,0) -- (0.3,-1.2) node[midway,right,font=\scriptsize,black]{$F_1$};
+    \end{tikzpicture}\\
+    {\scriptsize (a) $F_1$ und $F_2$ zeigen jeweils vom anderen Leiter
+    weg: Abstossung.}
+  \end{minipage}\hfill
+  \begin{minipage}[t]{7cm}\centering
+    \begin{tikzpicture}[>=Latex,scale=1.2]
+      \node[font=\Large] at (0,0) {$\odot$};
+      \node[below=1pt,font=\scriptsize] at (0,-0.4) {$I_1$};
+      \node[font=\Large] at (0,2.4) {$\odot$};
+      \node[above=1pt,font=\scriptsize] at (0,2.8) {$I_2$};
+      \draw[thick,-{Latex[length=3mm]},blue] (-0.4,2.4) -- (-1.8,2.4) node[midway,above,font=\scriptsize,black]{$B_1$};
+      \draw[thick,-{Latex[length=3mm]},red] (0.3,2.4) -- (0.3,1.2) node[midway,right,font=\scriptsize,black]{$F_2$};
+      \draw[thick,-{Latex[length=3mm]},blue] (0.4,0) -- (1.8,0) node[midway,above,font=\scriptsize,black]{$B_2$};
+      \draw[thick,-{Latex[length=3mm]},red] (-0.3,0) -- (-0.3,1.2) node[midway,left,font=\scriptsize,black]{$F_1$};
+    \end{tikzpicture}\\
+    {\scriptsize (b) $F_1$ und $F_2$ zeigen jeweils zum anderen Leiter
+    hin: Anziehung.}
+  \end{minipage}
+  \end{center}
+  Fall (a), entgegengesetzte Ströme: Daumen $I_2$ in die Ebene hinein,
+  Zeigefinger $B_1$ nach links. Der Mittelfinger $F_2$ zeigt nach oben,
+  \textbf{vom} unteren Leiter weg: \textbf{Abstossung}. Am unteren Leiter
+  liefert dieselbe Überlegung mit $I_1$ und $B_2$ eine Kraft $F_1$ nach
+  unten, ebenfalls \textbf{vom} oberen Leiter weg: auch hier
+  \textbf{Abstossung}, wie es das Wechselwirkungsprinzip (actio =
+  reactio) verlangt. Fall (b), gleichgerichtete Ströme: analog zeigt
+  $F_2$ nach unten (\textbf{zum} unteren Leiter hin) und $F_1$ nach oben
+  (\textbf{zum} oberen Leiter hin): beidseitig \textbf{Anziehung}.
+  Achtung, Verwechslungsgefahr mit Polen/Ladungen: Dort gilt \glqq gleich
+  stösst ab\grqq{}. Bei parallelen Strömen gilt das Gegenteil.
   \end{solution}
 \end{parts}
 \end{taskbox}
 \end{questions}
 
 % =============================================================================
-% Theorie: Lorentzkraft (allgemeine Formel, Spezialfall, Herleitung im Plenum)
+% Theorie: Lorentzkraft (aus der bereits bekannten magnetischen Kraft
+% hergeleitet -- siehe institutionen/UZH-Praktikum-I: Herleitungsrichtung
+% wurde umgedreht, sodass man von F=IlB zur Lorentzkraft F=qvB kommt)
 % =============================================================================
 \begin{theoriebox}[Die Lorentzkraft auf eine einzelne Ladung]
 Ein Strom ist eine Bewegung vieler einzelner Ladungsträger. Jeder einzelne
 dieser bewegten Ladungsträger befindet sich ebenfalls im Magnetfeld $B$ und
-erfährt deshalb -- unabhängig davon, ob er sich gerade in einem Leiter
-befindet oder frei ist -- eine eigene Kraft auf eine \textbf{einzelne}
+erfährt deshalb (unabhängig davon, ob er sich gerade in einem Leiter
+befindet oder frei ist) eine eigene Kraft auf eine \textbf{einzelne}
 Ladung $q$ mit Geschwindigkeit $v$: die \textbf{\emph{Lorentzkraft}}.
 \begin{center}
   \includegraphics[width=6cm]{Bilder/magnetic-force-on-wire-with-electrons.pdf}
@@ -539,47 +724,56 @@ Ladung $q$ mit Geschwindigkeit $v$: die \textbf{\emph{Lorentzkraft}}.
 Driftgeschwindigkeit $v$ durch das Feld $B$ und erfahren je für sich eine
 Kraft.}
 
-Zeigen wir nun gemeinsam im Plenum, dass die Summe dieser vielen
-Einzelkräfte wieder genau die magnetische Kraft $F=IlB$ von oben ergibt --
-die magnetische Kraft ist damit nichts anderes als die Summe der
-Lorentzkraft über alle Ladungsträger in einem Leiterstück, \emph{nicht}
-eine zweite, unabhängige Kraft.
+Zeigen wir nun gemeinsam im Plenum, ausgehend von der bereits bekannten
+magnetischen Kraft $F=IlB$ auf das ganze Leiterstück, welche Kraft davon
+auf einen \textbf{einzelnen} Ladungsträger entfällt: die magnetische
+Kraft ist nämlich nichts anderes als die Summe dieser Einzelkräfte über
+alle Ladungsträger in einem Leiterstück, \emph{nicht} eine zweite,
+unabhängige Kraft.
 
 \ifprintanswers
-\textbf{Herleitung:} Betrachten Sie ein Leiterstück der Länge $l$: Die darin
-enthaltenen Ladungsträger bewegen sich mit der (mittleren)
-Driftgeschwindigkeit $v$ und benötigen deshalb die Zeit
-\[
-  t = \frac{l}{v}
-\]
-um das Leiterstück zu durchqueren. Nach der Definition der Stromstärke gilt
-$I=\frac{Q}{t}$, also
-\[
-  Q = I\cdot t
-\]
-Setzen wir $t=\frac{l}{v}$ ein, erhalten wir für die Gesamtladung $Q$ im
-betrachteten Leiterstück
-\[
-  Q = I\cdot\frac{l}{v}
-\]
-Da alle diese Ladungsträger dieselbe Geschwindigkeit $v$ im selben Feld $B$
-haben, ist die \textbf{gesamte} Kraft auf sie zusammen $F=Q\cdot v\cdot B$
-(Summe der Einzelkräfte $q\cdot v\cdot B$ über alle Ladungsträger). Setzen
-wir die gerade gefundene Ladung $Q$ ein:
-\[
-  F = Q\cdot v\cdot B = I\cdot\frac{l}{v}\cdot v\cdot B
-\]
-Kürzen von $v$ ergibt
+\textbf{Herleitung:} Wir kennen bereits die magnetische Kraft auf ein
+Leiterstück der Länge $l$:
 \[
   F = I\cdot l\cdot B
 \]
-also wieder genau die magnetische Kraft von oben.
+Nach der Definition der Stromstärke gilt $I=\frac{Q}{t}$, wobei $Q$ die
+gesamte im Leiterstück enthaltene Ladung ist und $t$ die Zeit, die diese
+Ladungsträger brauchen, um das Leiterstück zu durchqueren. Setzen wir
+$I=\frac{Q}{t}$ direkt in die magnetische Kraft ein:
+\[
+  F = \frac{Q}{t}\cdot l\cdot B
+\]
+Umgestellt (den Bruch $\frac{Q}{t}$ mit $l$ zusammengefasst):
+\[
+  F = Q\cdot\frac{l}{t}\cdot B
+\]
+Die Ladungsträger bewegen sich mit der (mittleren) Driftgeschwindigkeit
+$v$ durch das Leiterstück der Länge $l$ und benötigen dafür genau die
+Zeit $t$, das heisst $\frac{l}{t}=v$. Setzen wir das ein:
+\[
+  F = Q\cdot v\cdot B
+\]
+Diese Kraft $F=QvB$ ist die \textbf{gesamte} Kraft auf \textbf{alle} $N$
+Ladungsträger im Leiterstück zusammen, mit $Q=N\cdot q$ (jeder
+Ladungsträger trägt dieselbe Ladung $q$). Da alle diese Ladungsträger
+dieselbe Geschwindigkeit $v$ im selben Feld $B$ haben, entfällt auf
+\textbf{jeden einzelnen} von ihnen der gleiche Anteil, den wir $F_N$
+nennen (die Kraft auf eine von $N$ Ladungen):
+\[
+  F_N = \frac{F}{N} = \frac{Q\cdot v\cdot B}{N} = \frac{N\cdot q\cdot v\cdot B}{N}
+\]
+Kürzen von $N$ ergibt die Kraft auf eine einzelne Ladung:
+\[
+  F_N = q\cdot v\cdot B
+\]
+also genau die Lorentzkraft.
 \else
 \textbf{Platz für die gemeinsame Herleitung im Plenum:}
 \Antwortraum{7}
 \fi
 
-Aus dieser Herleitung folgt die Formel für die Lorentzkraft selbst:
+Ausgeschrieben als Vektorgleichung lautet die Lorentzkraft:
 \begin{formelbox}[Lorentzkraft]
 \[
   \vec F = q\,\vec v\times\vec B, \qquad F = q\cdot v\cdot B\cdot\sin\alpha
@@ -593,275 +787,29 @@ $\alpha=90^\circ$) gilt wieder einfach
   F = q\cdot v\cdot B
 \]
 
-Für die \textbf{Richtung} gilt weiterhin die Drei-Finger-Regel, jetzt mit
-dem Daumen in Richtung der Ladungsgeschwindigkeit $v$ statt der
-Stromrichtung: \textbf{rechte Hand} für \textbf{positive} Ladungen,
-\textbf{linke Hand} für \textbf{negative} Ladungen (dieselbe Regel, aber
-mit vertauschter Hand, kein zusätzlicher Umkehrschritt nötig).
+Für die \textbf{Richtung} gilt weiterhin die Drei-Finger-Regel der
+\textbf{rechten Hand}, jetzt mit dem Daumen in Richtung der
+Ladungsgeschwindigkeit $v$ statt der Stromrichtung. Bei einer
+\textbf{negativen} Ladung (z.\,B. einem Elektron) verwenden Sie
+stattdessen die \textbf{\emph{technische Stromrichtung}}: Der Daumen
+zeigt dann entgegen der tatsächlichen Bewegungsrichtung der Ladung, so
+als würde sich eine positive Ladung in die Gegenrichtung bewegen. Sie
+bleiben also immer bei der rechten Hand, ohne die Hand wechseln zu
+müssen.
 \begin{center}
   \includegraphics[width=8cm]{Bilder/uvw-regel-ladungen.pdf}
 \end{center}
-{\scriptsize Links: negative Ladung, linke Hand. Rechts: positive Ladung,
-rechte Hand -- Daumen jeweils in Richtung $v$.}
+{\scriptsize Rechts: positive Ladung, rechte Hand, Daumen in Richtung
+$v$. Links: einer negativen Ladung entspricht dieselbe rechte Hand, aber
+mit dem Daumen in der technischen Stromrichtung (entgegen $v$). Genau
+diese Variante verwenden wir immer, ohne auf die linke Hand zu wechseln.}
 \end{formelbox}
 
 Da die Lorentzkraft $F_L$ immer senkrecht zur Geschwindigkeit $v$ steht,
 lenkt sie eine freie Ladung ständig zur Seite ab, ohne ihren Betrag zu
 ändern. Was das für die Bewegung einer frei beweglichen Ladung bedeutet,
-untersuchen Sie im Fadenstrahlrohr-Experiment.
+untersuchen Sie im separaten Fadenstrahlrohrdokument zu dieser
+Doppellektion.
 \end{theoriebox}
-
-% =============================================================================
-% Experiment 3: Fadenstrahlrohr (Aufbau, ohne Kreisbahn vorwegzunehmen)
-% =============================================================================
-\begin{theoriebox}[Experiment 3 -- Aufbau: Fadenstrahlrohr]
-Die Lorentzkraft wirkt nicht nur auf Ladungen \emph{im} Leiter, sondern auch
-auf eine \textbf{\emph{freie}} bewegte Ladung. Das \textbf{Fadenstrahlrohr}
-macht genau das sichtbar. Die Elektronen selbst sind unsichtbar; ihre Bahn
-wird erst durch das verdünnte Neongas im Glaskolben als leuchtende Spur
-sichtbar gemacht, sobald sie mit den Gasteilchen zusammenstossen.
-\begin{center}
-  \includegraphics[width=6.5cm]{Bilder/fadenstrahlrohr.png}
-\end{center}
-{\scriptsize Aufbau: Elektronenkanone (Heizspannung $U_H$,
-Beschleunigungsspannung $U_B$), Glaskolben mit Neongasfüllung und
-Skala, Helmholtzspulen (Spulenstrom $I_\text{Spulen}$).}
-
-\textbf{\emph{Wie entsteht das Licht -- und woher kommt seine Farbe?}}
-Trifft ein schnelles Elektron aus dem Strahl auf ein Neon-Atom im
-Restgas, kann es einen Teil seiner Bewegungsenergie auf ein gebundenes
-Elektron dieses Atoms übertragen. Dieses gebundene Elektron springt
-dadurch auf ein höheres Energieniveau (\textbf{\emph{Anregung}}) -- ein
-instabiler Zustand. Nach kurzer Zeit fällt es von selbst wieder auf ein
-tieferes Niveau zurück (\textbf{\emph{Abregung}}) und gibt die dabei frei
-werdende Energie als Lichtteilchen (Photon) ab.
-\begin{center}
-\begin{tikzpicture}[>=Latex,scale=0.85]
-  % --- Teilbild 1: Anregung durch Stoss ---
-  \begin{scope}
-    \node[align=center,font=\bfseries\small] at (0,2.7) {1. Anregung durch Stoss};
-    \draw[thick] (0,0) circle (1.0);
-    \draw[thick] (0,0) circle (1.9);
-    \filldraw[fill=gray!40] (0,0) circle (0.25) node[font=\scriptsize] {Ne};
-    \node[font=\scriptsize] at (0,-1.25) {$E_1$ (Grundzustand)};
-    \node[font=\scriptsize] at (0,-2.2) {$E_2$ (angeregt)};
-    \filldraw[blue] (1.0,0) circle (0.07);
-    \draw[thick,-{Latex[length=2.2mm]},blue,dashed] (1.0,0.15) to[bend left=45] (1.85,0.3);
-    \node[blue,font=\scriptsize] at (1.65,0.85) {Anregung};
-    \draw[thick,-{Latex[length=2.5mm]},red] (-3.1,1.6) -- (-1.05,0.35);
-    \node[red,font=\scriptsize,align=center] at (-2.6,1.05) {schnelles $e^-$\\(Strahl)};
-  \end{scope}
-  % --- Teilbild 2: Abregung durch Lichtemission ---
-  \begin{scope}[xshift=7.3cm]
-    \node[align=center,font=\bfseries\small] at (0,2.7) {2. Abregung durch Lichtemission};
-    \draw[thick] (0,0) circle (1.0);
-    \draw[thick] (0,0) circle (1.9);
-    \filldraw[fill=gray!40] (0,0) circle (0.25) node[font=\scriptsize] {Ne};
-    \node[font=\scriptsize] at (0,-1.25) {$E_1$ (Grundzustand)};
-    \node[font=\scriptsize] at (0,-2.2) {$E_2$ (angeregt)};
-    \filldraw[blue] (1.85,0.3) circle (0.07);
-    \draw[thick,-{Latex[length=2.2mm]},blue,dashed] (1.85,0.3) to[bend left=45] (1.0,0.15);
-    \node[blue,font=\scriptsize] at (1.65,0.85) {Abregung};
-    \draw[thick,orange,decorate,decoration={zigzag,amplitude=1.3pt,segment length=3.5pt}] (1.0,-0.3) -- (2.9,-0.3);
-    \draw[thick,-{Latex[length=2.5mm]},orange] (2.9,-0.3) -- (3.25,-0.3);
-    \node[orange,font=\scriptsize] at (2.05,-0.65) {Photon, $h\cdot f=E_2-E_1$};
-  \end{scope}
-\end{tikzpicture}
-\end{center}
-{\scriptsize Vereinfachtes Bohr-Modell eines Neon-Atoms: Stossanregung
-durch ein Strahlelektron, gefolgt von Lichtemission beim Rücksprung auf
-den Grundzustand.}
-
-Jedes Element besitzt nur ganz bestimmte, diskrete Energieniveaus. Die
-Photonenenergie entspricht deshalb immer genau der Differenz $\Delta
-E=E_2-E_1=h\cdot f$ zwischen zwei solchen Niveaus, und diese Energie legt
-über $f=\frac{c}{\lambda}$ die Wellenlänge -- also die \textbf{Farbe} --
-des Lichts fest. Da das Fadenstrahlrohr mit Neongas gefüllt ist, leuchtet
-die Elektronenspur deshalb in dem für Neon charakteristischen
-Rötlich-Orange, wie man es auch von Neonröhren-Reklamen kennt: Ein
-anderes Füllgas würde eine andere Farbe ergeben, weil seine Atome andere
-Energieniveaus besitzen.
-
-\textbf{\emph{Die Elektronenkanone}} besteht aus drei Teilen: Die
-\textbf{\emph{Glühkathode}} wird durch die Heizspannung $U_H$ erhitzt und
-gibt dadurch freie Elektronen ab (glühelektrischer Effekt). Der
-\textbf{\emph{Wehneltzylinder}} liegt leicht negativ und bündelt diese
-Elektronen zu einem schmalen Strahl. Die \textbf{\emph{Anode}} liegt
-positiv gegenüber der Kathode -- die dazwischen anliegende
-Beschleunigungsspannung $U_B$ beschleunigt die Elektronen auf ihre
-Geschwindigkeit $v$.
-\begin{center}
-  \includegraphics[width=7cm]{Bilder/Wehneltzylinder.png}
-\end{center}
-{\scriptsize Elektronenkanone: Glühkathode, Wehneltzylinder und Anode.}
-
-\textbf{\emph{Die Helmholtzspulen}} sind zwei parallele, gleich
-durchflossene Spulen im selben Abstand wie ihr Radius -- genau diese
-Anordnung erzeugt dazwischen ein besonders \textbf{\emph{homogenes}}
-Magnetfeld $B$. In dieses homogene Feld, senkrecht zu $v$, treten die
-beschleunigten Elektronen ein.
-\begin{center}
-  \includegraphics[width=8cm]{Bilder/Helmholtzspulen.png}
-\end{center}
-{\scriptsize Zwei Helmholtzspulen mit Stromfluss $I$ erzeugen zwischen
-sich ein homogenes Magnetfeld $B$.}
-
-Von oben betrachtet steht dieses Feld senkrecht zur Zeichenebene und zeigt
-aus dem Blatt heraus (Symbol $\odot$). Was mit den Elektronen nach dem
-Eintritt geschieht, untersuchen Sie in der folgenden Aufgabe.
-\end{theoriebox}
-
-% =============================================================================
-% POE: Fadenstrahlrohr (LZ6)
-% =============================================================================
-\begin{questions}
-\begin{taskbox}[Predict-Observe-Explain: Fadenstrahlrohr]
-\question Die Lehrperson führt jetzt das Fadenstrahlrohr vor.
-\begin{parts}
-  \part[2] \textbf{Predict.} Die Elektronen treten mit der Geschwindigkeit
-  $v$ waagrecht in das Magnetfeld $B$ ein (Skizze unten). Die Lorentzkraft
-  $F=qvB$ steht dabei (wie Sie oben hergeleitet haben) immer senkrecht zu
-  $v$. Überlegen Sie: Was bedeutet eine Kraft, die immer senkrecht zur
-  momentanen Bewegungsrichtung steht, für die Bahn eines Teilchens?
-  Zeichnen Sie die von Ihnen erwartete Elektronenbahn direkt ins Bild ein.
-  \begin{center}
-  \begin{tikzpicture}[>=Latex,scale=1.15]
-    \begin{scope}
-      \clip (0,0) circle (2.3);
-      \foreach \x in {-2.1,-1.4,-0.7,0,0.7,1.4,2.1}{
-        \foreach \y in {-2.1,-1.4,-0.7,0,0.7,1.4,2.1}{
-          \node[font=\small,gray!65] at (\x,\y) {$\odot$};
-        }
-      }
-    \end{scope}
-    \draw[thick] (0,0) circle (2.3);
-    % Elektronenkanone im UNTEREN Teil des Rohrs (wie im echten Aufbau),
-    % Strahl tangential (waagrecht) nach rechts -- nicht radial auf den
-    % Mittelpunkt gerichtet. Mit B aus dem Blatt heraus (⊙) und Strahl
-    % nach rechts wirkt die Lorentzkraft auf das Elektron nach oben/innen
-    % (linke Hand: Daumen v nach rechts, Zeigefinger B aus dem Blatt heraus
-    % -> Mittelfinger nach oben) -- von unten gestartet zeigt "nach oben"
-    % ins Rohrinnere, also nach innen.
-    \filldraw[black] (-0.3,-1.8) circle (0.08);
-    \draw[thick,-{Latex[length=3mm]}] (-0.3,-1.8) -- (1.1,-1.8);
-    \node[align=center] at (-0.3,-2.65) {\scriptsize Elektronenkanone};
-    \node[align=left] at (1.25,-1.65) {\scriptsize $e^-$, $v$};
-  \end{tikzpicture}
-  \end{center}
-  {\scriptsize Draufsicht auf das Rohr: $\odot$ = Magnetfeld $B$ der
-  Helmholtzspulen (aus dem Blatt heraus). Die Elektronenkanone schiesst
-  den Strahl tangential (waagrecht) nach rechts ins Feld.}
-  \Antwortraum{2}
-  \begin{solution}
-  Eine Kraft, die immer senkrecht zur momentanen Geschwindigkeit steht und
-  deren Betrag konstant bleibt (da $q$, $v$ und $B$ konstant sind), ändert
-  nur die \emph{Richtung} von $v$, nie ihren \emph{Betrag}. Genau das ist
-  die Bedingung für eine \textbf{Zentripetalkraft} aus der Mechanik. Zu
-  erwarten ist deshalb eine \textbf{Kreisbahn}.
-  \end{solution}
-  \part[1] \textbf{Observe.} Beschreiben Sie kurz, was Sie am
-  eingeschalteten Fadenstrahlrohr tatsächlich beobachten.
-  \Antwortraum{1}
-  \begin{solution}
-  Die leuchtende Elektronenspur bildet tatsächlich eine geschlossene
-  Kreisbahn.
-  \end{solution}
-  \part[3] \textbf{Explain.} Erklären Sie die beobachtete Kreisbahn
-  physikalisch: Wirkt die Lorentzkraft hier als Zentripetalkraft? Bestimmen
-  Sie ausserdem mit der \textbf{richtigen} Variante der Drei-Finger-Regel
-  (Elektronen sind negativ geladen!) die Richtung, in die sich die
-  Kreisbahn krümmt.
-  \Antwortraum{3}
-  \begin{solution}
-  Ja: Die Lorentzkraft steht stets senkrecht zu $v$, ändert also nur die
-  Bewegungsrichtung, nie den Geschwindigkeitsbetrag. Das entspricht genau
-  der Definition der Zentripetalkraft, die die Elektronen auf ihrer
-  Kreisbahn hält.
-
-  Da Elektronen negativ geladen sind, verwenden Sie die \textbf{linke
-  Hand}: Daumen in Richtung $v$, Zeigefinger in Richtung $B$ (aus dem
-  Blatt heraus, $\odot$). Der Mittelfinger zeigt dann anfangs zum
-  Kreismittelpunkt der Bahn -- die Lorentzkraft lenkt die Elektronen
-  entsprechend zur Seite ab. So sieht die Bahn tatsächlich aus, mit
-  Schaltung, Radius $r$ und Zentripetalkraft $F_Z=F_L$ beschriftet:
-  \begin{center}
-  \begin{minipage}[t]{6.2cm}\centering
-    \includegraphics[width=6cm]{Bilder/beam-of-electrons.jpg}\\
-    {\scriptsize Echtes Fadenstrahlrohr: die leuchtende Elektronenspur.}
-  \end{minipage}\hfill
-  \begin{minipage}[t]{6.5cm}\centering
-    \includegraphics[width=6.2cm]{Bilder/Fadenstraglrohr_illustration.pdf}\\
-    {\scriptsize $U$/$U_B$: Beschleunigungsspannung, $U_H$: Heizspannung,
-    $r$: Bahnradius.}
-  \end{minipage}
-  \end{center}
-  Dasselbe Prinzip gilt allgemein für jede frei bewegliche Ladung in einem
-  homogenen Magnetfeld, nicht nur für Elektronen im Fadenstrahlrohr:
-  \begin{center}
-    \includegraphics[width=5.5cm]{Bilder/proton-in-homogeneous-magnetic-field.pdf}
-  \end{center}
-  {\scriptsize Eine positive Ladung im homogenen Feld $B$ (ins Blatt
-  hinein): die Lorentzkraft $F_L$ zeigt stets zum Kreismittelpunkt.}
-  \end{solution}
-  \part[4] \textbf{Der Bahndurchmesser.} Im Fadenstrahlrohr wirkt die
-  Lorentzkraft als Zentripetalkraft
-  \[
-    F_Z = \frac{m\cdot v^2}{r}
-  \]
-  auf die Elektronen (Masse $m$, Ladung $q$). Leiten Sie daraus einen
-  Ausdruck für den \textbf{Durchmesser} $d$ der Kreisbahn her -- genau
-  diesen Durchmesser können Sie am Fadenstrahlrohr direkt an der Skala im
-  Glaskolben ablesen (siehe Bild oben).
-  \Antwortraum{4}
-  \begin{solution}
-  Die Lorentzkraft wirkt hier als Zentripetalkraft, also gilt $F_L=F_Z$:
-  \[
-    q\cdot v\cdot B = \frac{m\cdot v^2}{r}
-  \]
-  Beide Seiten durch $v$ teilen:
-  \[
-    q\cdot B = \frac{m\cdot v}{r}
-  \]
-  Nach $r$ auflösen (mit $r$ multiplizieren, durch $q\cdot B$ teilen):
-  \[
-    r = \frac{m\cdot v}{q\cdot B}
-  \]
-  Der Durchmesser ist doppelt so gross wie der Radius:
-  \[
-    d = 2\cdot r = \frac{2\cdot m\cdot v}{q\cdot B}
-  \]
-  \end{solution}
-  \part[3] \textbf{Simulation erkunden.} Nutzen Sie die interaktive
-  Simulation unter
-  \url{https://www.leifiphysik.de/elektrizitaetslehre/bewegte-ladungen-feldern/versuche/fadenstrahlrohr},
-  um herauszufinden, was sich an der Elektronenbahn verändert, wenn Sie
-  die folgenden Grössen \textbf{einzeln} erhöhen. Beschreiben Sie Ihre
-  Beobachtung in je einem Satz.
-  \begin{itemize}
-    \item Heizspannung $U_H$
-    \item Beschleunigungsspannung $U_B$
-    \item Spulenstrom $I_\text{Spulen}$
-  \end{itemize}
-  \Antwortraum{3}
-  \begin{solution}
-  \textbf{Heizspannung $U_H$:} Mehr Elektronen werden aus der Glühkathode
-  freigesetzt -- die Spur wird \textbf{heller}, ihr Radius bleibt aber
-  (näherungsweise) unverändert, da $U_H$ nicht die Geschwindigkeit der
-  einzelnen Elektronen bestimmt.
-
-  \textbf{Beschleunigungsspannung $U_B$:} Die Elektronen werden auf eine
-  höhere Geschwindigkeit $v$ beschleunigt -- der Bahnradius wird
-  \textbf{grösser}.
-
-  \textbf{Spulenstrom $I_\text{Spulen}$:} Das Magnetfeld $B$ wird stärker
-  -- der Bahnradius wird \textbf{kleiner}.
-
-  Beides passt genau zur oben hergeleiteten Formel $r=\frac{m\cdot
-  v}{q\cdot B}$: Ein grösseres $v$ (im Zähler) vergrössert $r$, ein
-  grösseres $B$ (im Nenner) verkleinert $r$.
-  \end{solution}
-\end{parts}
-\end{taskbox}
-\end{questions}
 
 \end{document}

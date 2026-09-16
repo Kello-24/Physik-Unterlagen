@@ -1,0 +1,464 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Aufgabenblatt 4: Wechselwirkung
+% UZH Praktikum I -- Sara Romer Urban, Kantonsschule im Lee, HS2026
+% Klasse: 2e (16.09.2026)
+%
+% Reine Uebungsaufgaben zur Wechselwirkung, kein einleitender Erklaerkasten
+% (siehe institutionen/UZH-Praktikum-I/CLAUDE.md). Folgt lernziele.md,
+% Abschnitt "Aufteilung Arbeitsblatt/Aufgabenblatt": (1) Zeichenaufgabe 2 --
+% Objekt auf einer Oberflaeche, strukturell identisch zur Federwaage-Aufgabe
+% im Arbeitsblatt, jetzt selbstaendig und als eigene TikZ-Skizze statt
+% wiederverwendeter Normalkraft-Bilder (LZ2, zweiter Teil) -- (2) die
+% restlichen zwei Rueckstossprinzip-Beispiele: Flugzeug, Person die einen
+% Stein aus einem Boot wirft (LZ6) -- (3) Log-Rolling als Reflexionsfrage,
+% weshalb das Kraeftepaar hier weniger klar isolierbar ist (LZ6) -- (4)
+% optionaler Hinweis auf PhET "Forces and Motion: Basics" (Tauziehen-Screen,
+% LZ4) zur Selbstkontrolle -- (5) optionale Zusatzaufgabe: Federwaage-
+% Massen-Experiment mit anderen Werten (LZ3, produktives Ueben).
+%
+% Sprinter und Ruderboot (urspruenglich Teil von (2)) wurden gestrichen:
+% beide stellten denselben kognitiven Schritt wie Flugzeug/Stein-aus-Boot
+% ohne zusaetzliche Tiefe dar (reine "Wechselwirkungspaar benennen"-
+% Wiederholung), Sprinter zudem strikt flacher als die bereits im
+% Arbeitsblatt behandelte Skateboard-Variante 3 (Wand), die dieselbe
+% Push-off-Situation schon mit Begruendung ueber die effektive Masse
+% vertieft (siehe redundanz-tiefe-reviewer).
+%
+% Quellen: lernziele.md (dieser Ordner).
+% =============================================================================
+\documentclass[addpoints,11pt,a4paper]{exam}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.2cm,headheight=14pt]{geometry}
+\usepackage{amsmath}
+\usepackage{siunitx}
+% Hausstil: zusammengesetzte Einheiten immer als echter Bruch (\frac), nicht
+% als Inline-Schraegstrich oder \tfrac -- gilt global fuer jedes \si/\SI.
+\sisetup{per-mode=fraction,fraction-command=\frac}
+\usepackage{array,booktabs,tabularx,multirow}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage[most]{tcolorbox}
+\usepackage{lastpage}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\usetikzlibrary{arrows.meta,calc,angles,quotes,decorations.pathmorphing}
+
+\usepackage{setspace}
+\usepackage{needspace}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+\setstretch{1.08}
+\setlist[itemize]{itemsep=0.4em}
+
+% -----------------------------
+% Farben (Corporate-Farbschema Physik KFR)
+% -----------------------------
+\definecolor{titleblue}{HTML}{183A6B}
+\definecolor{accentblue}{HTML}{2E6F9E}
+\definecolor{lightblue}{HTML}{EAF4FB}
+\definecolor{lightgray}{HTML}{F4F6F8}
+\definecolor{darkgray}{HTML}{4A4A4A}
+\definecolor{accentorange}{HTML}{D9720C}
+\definecolor{accentpurple}{HTML}{7B2D8E}
+% Hinweisbox: Orange (accentorange), fuer wichtige Klarstellungen.
+\definecolor{lightorange}{HTML}{FCEEE0}
+% Formelbox: Violett (accentpurple), fuer die zentralen Merksaetze.
+\definecolor{lightpurple}{HTML}{F3EAF7}
+
+% Links (hyperref): farblich ans Corporate-Farbschema angeglichen.
+\hypersetup{
+  colorlinks=true,
+  urlcolor=accentblue,
+  linkcolor=accentblue,
+  pdftitle={Aufgabenblatt 4: Wechselwirkung},
+  pdfauthor={Loris Keller}
+}
+
+% -----------------------------
+% Spaltentypen
+% -----------------------------
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% -----------------------------
+% Boxen
+% -----------------------------
+\tcbset{before skip=10pt, after skip=10pt}
+\newtcolorbox{titlebox}{
+  enhanced,
+  colback=titleblue,
+  colframe=titleblue,
+  boxrule=0pt,
+  arc=3mm,
+  left=3mm,right=3mm,top=3mm,bottom=3mm
+}
+
+\newlength{\aufgabenindent}
+\settowidth{\aufgabenindent}{10.\hskip\labelsep}
+
+% Praktikum I: Lernziele/Einleitung/Theorie/Aufgaben werden NICHT mehr
+% farbig gerahmt (nur Formel-, Hinweis- und Antwortbox bleiben Boxen) --
+% siehe institutionen/UZH-Praktikum-I/CLAUDE.md, Abschnitt "Boxen-Layout".
+\newenvironment{infobox}{%
+  \par\addvspace{10pt}\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+\newenvironment{theoriebox}[1][Theorie]{%
+  \par\addvspace{10pt}\noindent\textbf{#1}\par\smallskip\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+% taskbox/groupbox stehen in questions VOR dem ersten \question (Bilder,
+% Fliesstext) -- exam.cls' questions-Liste braucht dafuer eine echte,
+% eigenstaendige Box (sonst "Something's wrong--perhaps a missing \item",
+% weil z.B. ein \begin{center} vor dem ersten \item der Aussenliste steht).
+% Deshalb bleiben es tcolorboxen, nur unsichtbar gemacht (keine Farbe/Rahmen,
+% kein Padding) statt sie durch reine Absaetze zu ersetzen.
+\newtcolorbox{taskbox}[1][]{
+  enhanced, breakable,
+  colback=white, colframe=white, boxrule=0pt,
+  left=0mm,right=0mm,top=0mm,bottom=0mm,
+  before skip=10pt, after skip=10pt,
+  before upper={%
+    \def\tmpboxtitle{#1}%
+    \ifx\tmpboxtitle\empty\else\noindent\textbf{#1}\par\smallskip\fi
+  }
+}
+
+\newtcolorbox{groupbox}[1][Gruppenarbeit]{
+  enhanced, breakable,
+  colback=white, colframe=white, boxrule=0pt,
+  left=0mm,right=0mm,top=0mm,bottom=0mm,
+  before skip=10pt, after skip=10pt,
+  before upper={\noindent\textbf{#1}\par\smallskip}
+}
+
+% beispielbox: fuer die Einleitung -- wie die anderen Inhaltsboxen ungerahmt.
+\newenvironment{beispielbox}[1][Beispiel]{%
+  \par\addvspace{10pt}\noindent\textbf{#1}\par\smallskip\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+% hinweisbox: Orange, fuer wichtige Klarstellungen/Verwechslungswarnungen.
+\newtcolorbox{hinweisbox}[1][Hinweis]{
+  enhanced,
+  breakable,
+  colback=lightorange,
+  colframe=accentorange,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+% formelbox: Violett, um die zentralen Merksaetze dieser Einheit hervorzuheben.
+\newtcolorbox{formelbox}[1][Merksatz]{
+  enhanced,
+  breakable,
+  colback=lightpurple,
+  colframe=accentpurple,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.9pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+\newtcolorbox{answerbox}{
+  breakable,
+  colback=white,
+  colframe=gray!55,
+  boxrule=0.5pt,
+  arc=1.5mm,
+  left=2mm,right=2mm,top=2mm,bottom=2mm
+}
+
+% Marke: kleines farbiges Inline-Label fuer Teilschritte/Ergebnis-Callouts.
+\newtcbox{\Marke}[1][accentpurple]{
+  nobeforeafter,
+  colback=#1,
+  colframe=#1,
+  coltext=white,
+  boxrule=0pt,
+  arc=2pt,
+  left=5pt,right=5pt,top=2pt,bottom=2pt,
+  fontupper=\bfseries\sffamily\small
+}
+
+% Bild-Helfer: zentriertes Bild mit spuerbarem Abstand zum umgebenden Text
+% (statt nur des normalen Absatzabstands). #1 = Breite, #2 = Dateipfad.
+\newcommand{\Bild}[2]{%
+  \par\vspace{0.6cm}
+  \begin{center}
+    \includegraphics[width=#1]{#2}
+  \end{center}
+  \vspace{0.6cm}
+}
+
+% Objekt-auf-Oberflaeche-Skizze fuer die Zeichenaufgabe (LZ2, zweiter Teil):
+% Klotz auf einer schraffierten Unterlage, #1 = zusaetzlicher TikZ-Code
+% (Kraftpfeile), leer fuer die Aufgabenstellung, gefuellt fuer die Loesung.
+\newcommand{\ObjektSkizze}[1]{%
+\begin{center}
+\begin{tikzpicture}[>=Latex,scale=1.6]
+  \draw[thick,darkgray] (-2,0) -- (2,0);
+  \foreach \x in {-1.8,-1.4,...,1.8} { \draw[darkgray] (\x,0) -- (\x-0.25,-0.3); }
+  \draw[fill=lightgray!60] (-0.5,0) rectangle (0.5,0.7);
+  \node at (-0.22,0.35) {$m$};
+  #1
+\end{tikzpicture}
+\end{center}
+}
+
+% --- Loesungen ein-/ausblenden -----------------------------------------------
+\noprintanswers
+%\printanswers
+
+\pointformat{}
+\renewcommand{\solutiontitle}{\noindent\color{titleblue}\textbf{L\"osung:}\enspace}
+
+\pagestyle{headandfoot}
+\cfoot{\textcolor{darkgray}{Seite \thepage\ von \pageref{LastPage}}}
+
+\newcommand{\Kopfzeile}[4]{%
+  \begin{titlebox}
+    {\color{white}\sffamily\bfseries\Large #4}
+  \end{titlebox}
+  \vspace{0.5em}
+  \noindent\textbf{Klasse:}~#1 \hfill \textbf{Datum:}~#2 \hfill \textbf{Thema:}~#3
+    \hfill \textbf{Lehrperson:}~Loris Keller
+  \vspace{0.8em}
+  \lhead{\textcolor{darkgray}{#3}}
+  \rhead{\textcolor{darkgray}{#4}}
+}
+
+\newlength{\antwortraumlen}
+\newcommand{\Antwortraum}[1]{%
+  \pgfmathsetlength{\antwortraumlen}{#1*2.5cm}%
+  \begin{answerbox}
+    \rule{0pt}{\antwortraumlen}%
+  \end{answerbox}%
+}
+
+% Werte fuer Kopfzeile zentral setzen
+\newcommand{\Klasse}{2e}
+\newcommand{\Datum}{16.09.2026}
+\newcommand{\Thema}{Wechselwirkung}
+\newcommand{\ArbeitsblattTitel}{Aufgabenblatt 4: Wechselwirkung}
+
+\begin{document}
+
+\Kopfzeile{\Klasse}{\Datum}{\Thema}{\ArbeitsblattTitel}
+
+% =============================================================================
+% Aufgabe 1: Zeichenaufgabe 2 -- Objekt auf einer Oberflaeche (LZ2, 2. Teil)
+% =============================================================================
+\begin{questions}
+\begin{taskbox}[Aufgabe 1: Ein Objekt auf einer Oberfläche]
+\question[7] Ein Objekt der Masse $m$ liegt auf einer Oberfläche:
+
+\ObjektSkizze{}
+
+\begin{parts}
+\part[2] Zeichnen Sie in die Skizze die Kräfte ein, die sich am Objekt
+im Gleichgewicht befinden.
+
+\begin{solution}
+\ObjektSkizze{
+  \draw[->,ultra thick,titleblue] (0,0.35) -- ++(0,1.1) node[midway,right,xshift=2pt]{$\vec F_N$};
+  \draw[->,ultra thick,accentorange] (0,0.35) -- ++(0,-1.1) node[midway,right,xshift=2pt]{$\vec F_G$};
+}
+Gewichtskraft $\vec F_G$ und Normalkraft $\vec F_N$ halten sich am
+Objekt exakt die Waage.
+\end{solution}
+
+\part[2] Zeichnen Sie stattdessen in eine zweite, identische Skizze das
+Wechselwirkungspaar Objekt$\leftrightarrow$Oberfläche ein (an zwei
+verschiedenen Körpern: Objekt und Oberfläche).
+
+\ObjektSkizze{}
+
+\begin{solution}
+\ObjektSkizze{
+  \draw[->,ultra thick,accentpurple] (0,0) -- ++(0,0.9) node[midway,right,xshift=2pt]{$\vec F_N$ (auf Objekt)};
+  \draw[->,ultra thick,accentpurple] (0,0) -- ++(0,-0.9) node[midway,right,xshift=2pt]{$-\vec F_N$ (auf Oberfläche)};
+}
+An der Kontaktstelle drückt die Oberfläche mit $\vec F_N$ nach oben auf
+das Objekt, das Objekt drückt nach dem Wechselwirkungsgesetz mit
+$-\vec F_N$ gleich stark nach unten auf die Oberfläche.
+\end{solution}
+
+\part[3] Das zweite Wechselwirkungspaar dieser Situation ist
+Objekt$\leftrightarrow$Erde (zur Gewichtskraft). Beschreiben Sie in
+Worten, welche Kraft die Erde dabei erfährt, und wieso sich diese Kraft
+in der Praxis nicht bemerkbar macht.
+
+\Antwortraum{2}
+
+\begin{solution}
+Nach dem Wechselwirkungsgesetz zieht nicht nur die Erde das Objekt mit
+$\vec F_G$ an, sondern das Objekt zieht auch die Erde mit einer exakt
+gleich grossen, entgegengesetzten Kraft $-\vec F_G$ an. Weil die Masse
+der Erde extrem viel grösser ist als die Masse des Objekts, ist die
+dadurch verursachte Beschleunigung der Erde ($a=F/m$ mit riesigem $m$)
+völlig unmerklich, genau wie bei der Wand im Skateboardversuch.
+\end{solution}
+\end{parts}
+\end{taskbox}
+
+% =============================================================================
+% Aufgabe 2: Zwei weitere Rueckstossprinzip-Beispiele (LZ6)
+% =============================================================================
+\newpage
+\begin{taskbox}[Aufgabe 2: Rückstossprinzip in zwei weiteren Beispielen]
+\question[7] Benennen Sie für jedes der folgenden Beispiele das
+Wechselwirkungspaar.
+
+\begin{parts}
+\part[2] Startendes Flugzeug:
+
+\Bild{5.5cm}{Bilder/flugzeug.jpg}
+
+\Antwortraum{1.5}
+
+\begin{solution}
+Die Triebwerke stossen Luft und Abgase nach hinten aus. Luft und Abgase
+üben eine gleich grosse Gegenkraft aus, die das Flugzeug nach vorne
+beschleunigt.
+\end{solution}
+
+\part[2] Eine Person in einem Boot wirft einen Stein:
+
+\Bild{5.5cm}{Bilder/stein_boot.png}
+
+\Antwortraum{1.5}
+
+\begin{solution}
+Die Person stösst den Stein nach vorne (in Wurfrichtung). Der Stein übt
+dabei eine gleich grosse Gegenkraft auf die Person (und damit das Boot)
+aus, wodurch beide in die entgegengesetzte Richtung zurückgestossen
+werden.
+\end{solution}
+
+\part[3] Vergleichen Sie das Flugzeug-Beispiel mit dem Beispiel
+\glqq Person wirft einen Stein aus dem Boot\grqq: In welchem der beiden
+Fälle ist der Massenunterschied zwischen den beiden
+Wechselwirkungspartnern (Fahrzeug bzw. Person$+$Boot einerseits, die
+ausgestossene Masse andererseits) grösser? Was bedeutet das nach
+$a=F/m$ für die Rückstossbewegung des jeweils grösseren Partners?
+
+\Antwortraum{2}
+
+\begin{solution}
+Beim Flugzeug ist der Massenunterschied zwischen dem Flugzeug selbst und
+den ausgestossenen Abgasen extrem gross, die Rückstossbeschleunigung des
+Flugzeugs ist deshalb winzig und für das Auge nicht wahrnehmbar
+($a=F/m$ mit sehr grossem $m$). Bei Person und Boot ist der
+Massenunterschied zum geworfenen Stein viel kleiner, deshalb bewegen
+sich Boot und Person merklich zurück. Die Kraft ist in beiden Fällen ein
+Wechselwirkungspaar mit gleich grossen Kräften, nur die Grösse der
+jeweiligen Masse entscheidet über die Grösse der sichtbaren
+Rückstossbewegung.
+\end{solution}
+\end{parts}
+\end{taskbox}
+
+% =============================================================================
+% Aufgabe 3: Log-Rolling -- Reflexionsfrage (LZ6)
+% =============================================================================
+\newpage
+\begin{taskbox}[Aufgabe 3: Log-Rolling]
+\question[3] Zwei Personen versuchen, sich gegenseitig von einem im
+Wasser schwimmenden Baumstamm zu stossen:
+
+\Bild{7cm}{Bilder/logrollingt.jpg}
+
+Auch hier wirken Wechselwirkungspaare zwischen den beiden Personen (über
+den Kontakt zwischen Fuss und Stamm und direktes Gegeneinanderdrücken).
+Wieso ist das
+einzelne Kräftepaar hier deutlich schwerer zu isolieren als bei den
+bisherigen Beispielen dieses Themas?
+
+\Antwortraum{2.5}
+
+\begin{solution}
+Anders als etwa beim Skateboardversuch oder der Rakete gibt es hier
+nicht nur eine einzelne Kontaktstelle mit einem eindeutigen
+Kräftepaar. Beide Personen stehen gleichzeitig in mehrfachem Kontakt (mit
+dem Stamm und teils direkt miteinander), balancieren dabei fortlaufend
+nach, und der Stamm selbst dreht sich unter ihren Füssen mit. Dadurch
+wirken mehrere, sich ständig ändernde Kräftepaare gleichzeitig, statt
+eines einzigen, klar abgrenzbaren Wechselwirkungspaares wie in den
+anderen Beispielen.
+\end{solution}
+\end{taskbox}
+
+% =============================================================================
+% Optional: PhET-Selbstkontrolle (LZ4)
+% =============================================================================
+\begin{hinweisbox}[Optional: Selbstkontrolle]
+Die PhET-Simulation \glqq Forces and Motion: Basics\grqq{}
+(Tauziehen-Screen) eignet sich, um die Erklärung aus dem
+Skateboardversuch (Kraft vs. Masse vs. Beschleunigung) selbständig noch
+einmal zu überprüfen.
+\end{hinweisbox}
+
+% =============================================================================
+% Zusatzaufgabe (freiwillig): Federwaage-Experiment mit anderen Werten (LZ3)
+% =============================================================================
+\begin{taskbox}[Zusatzaufgabe (freiwillig): Federwaage mit anderen Massen]
+\question[4] Betrachten Sie erneut den Versuchsaufbau mit der Federwaage
+zwischen zwei Umlenkrollen aus dem Arbeitsblatt.
+
+\begin{parts}
+\part[2] Stellen Sie sich vor, $m_1$ wäre stattdessen
+$\SI{300}{\gram}$ (statt $\SI{200}{\gram}$) und hängt weiterhin allein
+auf einer Seite, die andere Seite bleibt am Stativ fixiert. Welche
+Anzeige erwarten Sie (mit $g\approx\SI{10}{\newton\per\kilogram}$)?
+
+\Antwortraum{1.5}
+
+\begin{solution}
+\[
+F_G = m\cdot g = \SI{0.3}{\kilogram}\cdot\SI{10}{\newton\per\kilogram}
+    = \SI{3}{\newton}
+\]
+Die Anzeige beträgt $\SI{3}{\newton}$.
+\end{solution}
+
+\part[2] Was würde passieren, wenn Sie stattdessen zwei
+\emph{unterschiedlich} schwere Massen (z.\,B. $\SI{150}{\gram}$ und
+$\SI{50}{\gram}$) an den beiden Rollen hängen liessen, statt wie im
+Arbeitsblatt zwei gleich schwere?
+
+\Antwortraum{2}
+
+\begin{solution}
+In diesem Fall befindet sich das System nicht mehr im Kräftegleichgewicht:
+Die schwerere Masse zieht stärker an ihrem Ende der Federwaage als die
+leichtere an ihrem, das System setzt sich in Bewegung, statt in Ruhe zu
+bleiben. Die Anzeige der Federwaage entspricht dann nicht mehr einfach der
+Gewichtskraft einer einzelnen Masse, sondern stellt sich auf einen Wert
+zwischen den beiden Gewichtskräften ein. Das ursprüngliche Experiment
+funktioniert nur deshalb so einfach, weil beide Massen exakt gleich schwer
+sind.
+\end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\end{document}
