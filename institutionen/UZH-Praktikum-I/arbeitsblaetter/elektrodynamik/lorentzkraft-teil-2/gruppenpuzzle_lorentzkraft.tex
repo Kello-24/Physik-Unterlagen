@@ -1,0 +1,965 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Gruppenpuzzle: Anwendungen der Lorentzkraft
+% UZH Praktikum I -- Kantonsschule im Lee, HS2026
+% Klassen: 4fh + 4cdeg (SP4), gemeinsames Material -- Termin noch offen
+% (spaetere Doppellektion nach Teil 1, siehe lorentzkraft-teil2-lektionsplan.tex).
+%
+% Inhaltliche Grundlage: gruppenpuzzle-lorentzkraft-teil2-plan.md (dieser
+% Ordner) -- fuenf gleichwertige Themen (nicht sechs, siehe Begruendung dort):
+% Gruppe A Massenspektrograph (Bainbridge, inkl. Wien-Filter als erste
+% Stufe), Gruppe B Kreisbeschleuniger (Zyklotron + Synchrotron gemeinsam),
+% Gruppe C MHD-Antrieb, Gruppe D Polarlichter, Gruppe E Hall-Effekt.
+% Stammgruppe = ein Mitglied pro Thema (5 Personen), Expertengruppe = ein
+% Mitglied pro Stammgruppe -- Anzahl Stammgruppen haengt von der
+% Klassengroesse ab und ist bewusst nicht fest codiert (auf Wunsch
+% verallgemeinert, urspruenglich fuer 15 SuS/3 Stammgruppen entworfen).
+%
+% Findet NACH dem (zweifachen) Fadenstrahlrohr-Experiment statt (Teil 1 und
+% Einstieg von Teil 2). F=qvB, F=IlB, die Drei-Finger-Regel, r=mv/qB, die
+% e/m_e-Bestimmung und die Schraubenbahn sind deshalb bereits bekannt und
+% werden in den fuenf Themenboxen nur zitiert, nicht neu hergeleitet (siehe
+% Plan-Datei, Abschnitt "Vorausgesetztes Vorwissen"). Neu ist in den
+% Themenboxen jeweils nur das Kraeftegleichgewicht bei gekreuzten Feldern
+% (Wien-Filter/Hall-Effekt), die Umlauffrequenz f=qB/(2 pi m) (Kreis-
+% beschleuniger), die Antriebskraft F=BIL ueber den Strom (MHD-Antrieb) und
+% der Spiegeleffekt/Verlustkegel (Polarlichter). Diese neuen Formeln werden
+% jeweils direkt im Fliesstext der Themenbox hergeleitet (Skript-Stil:
+% erklaerender Text mit eingebetteten Gleichungen, bewusst NICHT in einer
+% separaten reinen Formel-Box -- auf Wunsch). Jede Themenbox hat ausserdem
+% einen Link zur passenden LEIFIphysik-Simulation zum Ausprobieren (Quelle:
+% Unterricht Lorentzkraft Teil 2.docx, dieser Ordner). Jede Kontrollfrage
+% hat neben der Verstaendnisfrage auch eine Rechenaufgabe bzw.\ Herleitung.
+%
+% Boxen-Stil, Makros (theoriebox, taskbox, groupbox, answerbox, \Bild,
+% \Kopfzeile) 1:1 uebernommen aus gruppenpuzzle3-u-i-r.tex
+% (elektrizitaet/u-i-r/), inkl. Loesungen sichtbar (\printanswers) fuer die
+% Selbstkontrolle der Expertengruppen.
+%
+% Bilder: siehe Bilder/-Ordner (wien-filter.pdf, mass-spectrograph.pdf,
+% cyclotron-function-static.pdf, cyclotron_PSI.png,
+% Particles-synchrotron-diagram-alternating-gradient-ring-energies-accelerator.png
+% (aus Literatur/...jpg mit Inkscape konvertiert -- Original war ein als
+% .jpg benanntes GIF, das pdflatex nicht direkt einbinden kann),
+% mhd-ship-yamato-1.jpg, Nordlichter-Beitragsbild.jpg,
+% charge-helix-trajectory-static.pdf,
+% csm_20231218_Polarlicht_iStockWdP_6d45db0da8.png, hall-voltage.pdf,
+% blut_messung.png). Auf Wunsch NICHT mehr verwendet: magnetosphere.jpg,
+% magnetic-mirror-static.pdf, aurora-borealis.jpg (Polarlichter-Thema, drei
+% der bisherigen fuenf Bilder ersetzt/entfernt), sowie mhd-accelerator.pdf
+% und mhd_skizze.png (MHD-Antrieb: Skizzen entfernt, nur noch das
+% Yamato-1-Foto -- die SuS zeichnen die Skizze stattdessen selbst in der
+% Kontrollfrage). Linearbeschleuniger-Thema
+% (Kontrastfrage, linac.png) auf Wunsch entfernt -- die Aufgabe bleibt nur
+% eine Vertiefungsaufgabe (Massenspektrograph+Hall-Effekt) plus die
+% Synthesetabelle.
+% =============================================================================
+\documentclass[addpoints,11pt,a4paper]{exam}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.2cm,headheight=14pt]{geometry}
+\usepackage{amsmath}
+\usepackage{siunitx}
+% Hausstil: zusammengesetzte Einheiten immer als echter Bruch (\frac), nicht
+% als Inline-Schraegstrich oder \tfrac -- gilt global fuer jedes \si/\SI.
+\sisetup{per-mode=fraction,fraction-command=\frac}
+\usepackage{array,booktabs,tabularx,multirow}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage[most]{tcolorbox}
+\usepackage{lastpage}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\usetikzlibrary{arrows.meta,calc,angles,quotes}
+
+\usepackage{setspace}
+\usepackage{needspace}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+\setstretch{1.08}
+\setlist[itemize]{itemsep=0.4em}
+
+% -----------------------------
+% Farben (Corporate-Farbschema Physik KFR)
+% -----------------------------
+\definecolor{titleblue}{HTML}{183A6B}
+\definecolor{accentblue}{HTML}{2E6F9E}
+\definecolor{lightblue}{HTML}{EAF4FB}
+\definecolor{lightgray}{HTML}{F4F6F8}
+\definecolor{darkgray}{HTML}{4A4A4A}
+\definecolor{accentorange}{HTML}{D9720C}
+\definecolor{accentpurple}{HTML}{7B2D8E}
+\definecolor{lightorange}{HTML}{FCEEE0}
+\definecolor{lightpurple}{HTML}{F3EAF7}
+
+\hypersetup{
+  colorlinks=true,
+  urlcolor=accentblue,
+  linkcolor=accentblue,
+  pdftitle={Gruppenpuzzle: Anwendungen der Lorentzkraft},
+  pdfauthor={Loris Keller}
+}
+
+% -----------------------------
+% Spaltentypen
+% -----------------------------
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% -----------------------------
+% Boxen
+% -----------------------------
+\tcbset{before skip=10pt, after skip=10pt}
+\newtcolorbox{titlebox}{
+  enhanced,
+  colback=titleblue,
+  colframe=titleblue,
+  boxrule=0pt,
+  arc=3mm,
+  left=3mm,right=3mm,top=3mm,bottom=3mm
+}
+
+% Praktikum I: Lernziele/Einleitung/Theorie/Aufgaben werden NICHT farbig
+% gerahmt (nur Formel-, Hinweis- und Antwortbox bleiben Boxen) -- siehe
+% institutionen/UZH-Praktikum-I/CLAUDE.md, Abschnitt "Boxen-Layout".
+\newenvironment{infobox}{%
+  \par\addvspace{10pt}\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+% Titel von Theorie-/Aufgaben-/Gruppenarbeit-Abschnitten: groesser, farbig
+% und mit duenner Trennlinie statt schlichtem Fettdruck.
+\newcommand{\Teiltitel}[2]{%
+  \noindent{\Large\bfseries\color{#1}#2}\par
+  \vspace{1pt}\noindent{\color{#1}\rule{\linewidth}{0.8pt}}\par\smallskip\noindent
+}
+
+\newenvironment{theoriebox}[1][Theorie]{%
+  \par\addvspace{12pt}\Teiltitel{titleblue}{#1}
+}{%
+  \par\addvspace{10pt}
+}
+
+\newtcolorbox{taskbox}[1][]{
+  enhanced, breakable,
+  colback=white, colframe=white, boxrule=0pt,
+  left=0mm,right=0mm,top=0mm,bottom=0mm,
+  before skip=12pt, after skip=10pt,
+  before upper={%
+    \def\tmpboxtitle{#1}%
+    \ifx\tmpboxtitle\empty\else\Teiltitel{accentblue}{#1}\fi
+  }
+}
+
+\newtcolorbox{groupbox}[1][Gruppenarbeit]{
+  enhanced, breakable,
+  colback=white, colframe=white, boxrule=0pt,
+  left=0mm,right=0mm,top=0mm,bottom=0mm,
+  before skip=12pt, after skip=10pt,
+  before upper={\Teiltitel{accentorange}{#1}}
+}
+
+\newenvironment{beispielbox}[1][Beispiel]{%
+  \par\addvspace{10pt}\noindent\textbf{#1}\par\smallskip\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+\newtcolorbox{hinweisbox}[1][Hinweis]{
+  enhanced,
+  breakable,
+  colback=lightorange,
+  colframe=accentorange,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+\newtcolorbox{formelbox}[1][Formel]{
+  enhanced,
+  breakable,
+  colback=lightpurple,
+  colframe=accentpurple,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.9pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+\newtcolorbox{answerbox}{
+  breakable,
+  colback=white,
+  colframe=gray!55,
+  boxrule=0.5pt,
+  arc=1.5mm,
+  left=2mm,right=2mm,top=2mm,bottom=2mm
+}
+
+% Bild-Helfer: zentriertes Bild mit spuerbarem Abstand zum umgebenden Text.
+% #1 = Breite, #2 = Dateipfad.
+\newcommand{\Bild}[2]{%
+  \par\vspace{0.6cm}
+  \begin{center}
+    \includegraphics[width=#1]{#2}
+  \end{center}
+  \vspace{0.6cm}
+}
+
+% --- Loesungen ein-/ausblenden -----------------------------------------------
+%\noprintanswers
+\printanswers
+
+\pointformat{}
+\renewcommand{\solutiontitle}{\noindent\color{titleblue}\textbf{L\"osung:}\enspace}
+
+\pagestyle{headandfoot}
+\cfoot{\textcolor{darkgray}{Seite \thepage\ von \pageref{LastPage}}}
+
+\newcommand{\Kopfzeile}[4]{%
+  \begin{titlebox}
+    {\color{white}\sffamily\bfseries\Large #4}
+  \end{titlebox}
+  \vspace{0.5em}
+  \noindent\textbf{Klasse:}~#1 \hfill \textbf{Datum:}~#2 \hfill \textbf{Thema:}~#3
+    \hfill \textbf{Lehrperson:}~Loris Keller
+  \vspace{0.8em}
+  \lhead{\textcolor{darkgray}{#3}}
+  \rhead{\textcolor{darkgray}{#4}}
+}
+
+\newlength{\antwortraumlen}
+\newcommand{\Antwortraum}[1]{%
+  \pgfmathsetlength{\antwortraumlen}{#1*2.5cm}%
+  \begin{answerbox}
+    \rule{0pt}{\antwortraumlen}%
+  \end{answerbox}%
+}
+
+% Werte fuer Kopfzeile zentral setzen
+\newcommand{\Klasse}{4fh / 4cdeg (SP4)}
+\newcommand{\Datum}{Termin noch offen (nach Teil 2)}
+\newcommand{\Thema}{Lorentzkraft (Teil 2): Gruppenpuzzle}
+\newcommand{\ArbeitsblattTitel}{Gruppenpuzzle: Anwendungen der Lorentzkraft}
+
+\begin{document}
+
+\Kopfzeile{\Klasse}{\Datum}{\Thema}{\ArbeitsblattTitel}
+
+% =============================================================================
+% Einfuehrung: Was ist ein Gruppenpuzzle, Ablauf
+% =============================================================================
+\textbf{Gruppenpuzzle: Anwendungen der Lorentzkraft}
+
+Dieses Arbeitsblatt bearbeiten Sie nicht allein, sondern als
+\textbf{\emph{Gruppenpuzzle}} (auch Jigsaw genannt): Der Stoff wird in fünf
+gleichwertige Themen aufgeteilt. Zuerst wird jede und jeder von Ihnen
+Expertin oder Experte für genau eines dieser fünf Themen, danach bringen Sie
+Ihr Wissen in eine neue Gruppe ein, in der alle fünf Themen zusammenkommen.
+
+\textbf{Ablauf:}
+{\sloppy
+\begin{enumerate}[leftmargin=1.2cm,itemsep=0.3em]
+  \item \textbf{\emph{Einteilung}} (ca.\ 3 Min.): Sie arbeiten in
+  Fünfergruppen, den \textbf{\emph{Stammgruppen}}. Jedes Mitglied Ihrer
+  Stammgruppe erhält eines der fünf Themen unten: Gruppe A
+  (Massenspektrograph), Gruppe B (Kreisbeschleuniger), Gruppe C
+  (MHD-Antrieb), Gruppe D (Polarlichter) oder Gruppe E (Hall-Effekt).
+  \item \textbf{\emph{Erarbeitung (Expertenphase)}} (ca.\ 14 Min.): Alle mit
+  demselben Buchstaben (derselben Gruppe A--E) setzen sich zusammen
+  (\textbf{\emph{Expertengruppe}}) und lesen gemeinsam ihren Abschnitt.
+  Lösen Sie darin auch die Kontrollfrage Ihrer Gruppe.
+  \item \textbf{\emph{Vermittlung (Austauschphase)}} (ca.\ 14 Min.): Sie
+  kehren in Ihre Stammgruppe zurück. Reihum erklärt jede und jeder ihr/sein
+  Thema den anderen vier Gruppenmitgliedern, bis alle fünf Themen einmal
+  erklärt wurden.
+  \item \textbf{\emph{Vertiefungsphase}}: Am Schluss löst Ihre komplette
+  Stammgruppe gemeinsam die drei Aufgaben ganz am Ende dieses
+  Arbeitsblatts, die mehrere der fünf Themen miteinander verknüpfen.
+\end{enumerate}
+\par}
+
+Alle fünf Themen bauen auf der Lorentzkraft $F=qvB$ auf, die Sie am
+Fadenstrahlrohr bereits kennengelernt haben. \textbf{Bearbeiten Sie in der
+Expertenphase nur den Abschnitt Ihrer eigenen Gruppe.}
+
+% =============================================================================
+% Gruppe A: Massenspektrograph (Bainbridge)
+% =============================================================================
+\needspace{14cm}
+\begin{theoriebox}[Gruppe A: Massenspektrograph (Bainbridge)]
+Der \textbf{\emph{Bainbridge-Massenspektrograph}} bestimmt die Masse $m$
+geladener Ionen (bekannte Ladung $q$) in zwei Stufen.
+
+\textbf{Stufe 1 -- Geschwindigkeitsfilter (Wien-Filter):} Die Ionen
+durchqueren zunächst ein Gebiet mit gekreuzten $E$- und $B_1$-Feldern (beide
+senkrecht zueinander und senkrecht zur Bewegungsrichtung $v$). Die bereits
+bekannte Lorentzkraft $qvB_1$ wirkt hier einer elektrischen Kraft $qE$
+\emph{gleichzeitig und entgegengesetzt} entgegen -- neu ist dieses
+\textbf{\emph{Kräftegleichgewicht}} selbst. Nur Ionen, bei denen sich beide
+Kräfte exakt aufheben, fliegen geradeaus durch die Lochblende; schnellere
+oder langsamere Ionen werden seitlich abgelenkt und damit ausgefiltert. Im
+Gleichgewicht gilt
+\[
+  F_{el}=F_L \quad\Longrightarrow\quad qE=qv_0B_1.
+\]
+Die Ladung $q$ steht auf beiden Seiten und kürzt sich heraus, sodass die
+selektierte Geschwindigkeit nur noch von den beiden Feldern abhängt:
+\[
+  v_0=\frac{E}{B_1}.
+\]
+Alle den Filter verlassenden Ionen haben also exakt dieselbe, aus $E$ und
+$B_1$ bekannte Geschwindigkeit $v_0$, unabhängig von ihrer Masse.
+
+\Bild{7.5cm}{Bilder/wien-filter.pdf}
+
+\textbf{Stufe 2 -- Massentrennung im Magnetfeld:} Diese
+geschwindigkeitsselektierten Ionen treten anschliessend in ein zweites,
+reines Magnetfeld $B_2$ ein, wo wieder die bereits bekannte Formel
+$r=\frac{mv_0}{qB_2}$ gilt, wie am Fadenstrahlrohr bereits gezeigt. Löst
+man diese Gleichung nach der gesuchten Masse auf, multipliziert man zuerst
+beide Seiten mit $qB_2$ und teilt anschliessend durch $v_0$:
+\[
+  r=\frac{mv_0}{qB_2}
+  \quad\Longrightarrow\quad
+  rqB_2=mv_0
+  \quad\Longrightarrow\quad
+  m=\frac{qB_2r}{v_0}.
+\]
+Schwerere Ionen laufen auf grösserem Radius und treffen weiter vom
+Eintrittspunkt entfernt auf den Schirm auf; aus dem gemessenen Abstand
+lässt sich bei bekanntem $v_0$, $B_2$, $q$ die Masse $m$ bestimmen --
+historisch die Methode, mit der \textbf{\emph{Isotope}} (Atome desselben
+Elements mit unterschiedlicher Masse) entdeckt und getrennt wurden. Ohne
+die Geschwindigkeitsfilter-Stufe wäre die Massentrennung ungenau, weil $r$
+sowohl von $m$ als auch von $v$ abhängt -- erst ein für alle Ionen
+identisches $v_0$ macht $r$ zu einem eindeutigen Mass für $m$.
+
+\Bild{7.5cm}{Bilder/mass-spectrograph.pdf}
+
+\textbf{Zum Ausprobieren:} die
+\href{https://www.leifiphysik.de/elektrizitaetslehre/bewegte-ladungen-feldern/downloads/wienscher-geschwindigkeitsfilter-grundwissen-simulation}{Simulation
+Wienscher Geschwindigkeitsfilter} für Stufe 1 im Detail, ergänzend der
+interaktive
+\href{https://www.leifiphysik.de/elektrizitaetslehre/bewegte-ladungen-feldern/versuche/bainbridge-massenspektrometer}{Versuch
+Bainbridge-Massenspektrometer} (zeigt den vollständigen Aufbau, beide
+Stufen).
+\end{theoriebox}
+
+\begin{questions}
+\begin{taskbox}[Kontrollfrage: Massenspektrograph (Gruppe A)]
+\question[5]
+\begin{parts}
+  \part[3] Wozu braucht der Bainbridge-Massenspektrograph den
+  Geschwindigkeitsfilter (Stufe 1) überhaupt, wenn für die eigentliche
+  Massenbestimmung in Stufe 2 ohnehin nur $r=mv/qB_2$ verwendet wird? Was
+  ginge schief, wenn die Ionen mit unterschiedlichen Geschwindigkeiten in
+  Stufe 2 einträten?
+  \begin{answerbox}
+  \vspace{2.6cm}
+  \end{answerbox}
+  \begin{solution}
+  Ohne den Geschwindigkeitsfilter hätten die Ionen beim Eintritt in Stufe 2
+  unterschiedliche Geschwindigkeiten $v$. Da $r=mv/qB_2$ sowohl von $m$ als
+  auch von $v$ abhängt, könnte ein grosser gemessener Radius entweder von
+  einer grossen Masse oder von einer hohen Geschwindigkeit stammen -- der
+  Radius wäre kein eindeutiges Mass für $m$. Erst wenn alle Ionen dank des
+  Filters dieselbe Geschwindigkeit $v_0$ haben, hängt $r$ nur noch von $m$
+  ab, und die Masse lässt sich eindeutig bestimmen.
+  \end{solution}
+
+  \part[2] Ein Wien-Filter hat $E=\SI{8.0e4}{\volt\per\meter}$ und
+  $B_1=\SI{0.20}{\tesla}$. Welche Geschwindigkeit $v_0$ wird selektiert?
+  \begin{answerbox}
+  \vspace{1.8cm}
+  \end{answerbox}
+  \begin{solution}
+  $v_0=\dfrac{E}{B_1}=\dfrac{\SI{8.0e4}{\volt\per\meter}}{\SI{0.20}{\tesla}}
+  =\SI{4.0e5}{\meter\per\second}$.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Gruppe B: Kreisbeschleuniger (Zyklotron und Synchrotron)
+% =============================================================================
+\needspace{14cm}
+\begin{theoriebox}[Gruppe B: Kreisbeschleuniger -- Zyklotron und Synchrotron]
+Beim \textbf{\emph{Zyklotron}} befindet sich das Teilchen in einem homogenen
+Magnetfeld zwischen zwei D-förmigen Hohlelektroden (\glqq Dees\grqq{}) mit
+einer Wechselspannung dazwischen. Bei jedem Durchqueren des Spalts wird es
+durch das $E$-Feld beschleunigt, innerhalb der Dees läuft es feldfrei im
+Kreis -- hier gilt wieder die bereits bekannte Formel $r=mv/qB$, wie am
+Fadenstrahlrohr bereits gezeigt, nur wächst jetzt $v$ mit jeder
+Beschleunigung, also wächst auch $r$ mit: Es entsteht eine Spiralbahn mit
+wachsendem Radius statt eines einzelnen Kreises.
+
+\Bild{8cm}{Bilder/cyclotron-function-static.pdf}
+
+Neu ist die \textbf{\emph{Umlauffrequenz}} $f$, mit der das Teilchen die
+Dees durchläuft. Die Umlaufzeit $T$ ist die Bahnlänge (der Kreisumfang
+$2\pi r$) geteilt durch die Geschwindigkeit:
+\[
+  T=\frac{2\pi r}{v}.
+\]
+Setzt man hier die bereits bekannte Formel $r=mv/qB$ ein, kürzt sich die
+Geschwindigkeit $v$ heraus:
+\[
+  T=\frac{2\pi}{v}\cdot\frac{mv}{qB}=\frac{2\pi m}{qB}.
+\]
+Die Frequenz ist der Kehrwert der Umlaufzeit, $f=1/T$, also
+\[
+  f=\frac{qB}{2\pi m}.
+\]
+Weil $v$ beim Einsetzen verschwunden ist, ist $f$ (nicht-relativistisch)
+geschwindigkeitsunabhängig, weshalb eine konstante Wechselspannungs-Frequenz
+genügt, obwohl das Teilchen laufend schneller wird. Bei sehr hohen Energien
+versagt dieses Prinzip trotzdem (relativistische Massenzunahme, immer
+grösserer Radius). Das
+\textbf{\emph{Synchrotron}} löst das, indem $B$ synchron mit der wachsenden
+Energie erhöht wird, sodass der Radius konstant bleibt: Die Teilchen laufen
+auf einem festen Ring, werden an mehreren Beschleunigungskavitäten
+nachbeschleunigt und von Ablenkmagneten auf der Kreisbahn gehalten.
+
+\Bild{8.5cm}{Bilder/Particles-synchrotron-diagram-alternating-gradient-ring-energies-accelerator.png}
+
+Bekanntestes Beispiel: der LHC am CERN. Ein reales, nahes Beispiel ist das
+Zyklotron am Paul-Scherrer-Institut (PSI) in Villigen.
+
+\Bild{7cm}{Bilder/cyclotron_PSI.png}
+
+\textbf{Simulation zum Ausprobieren:}
+\href{https://www.leifiphysik.de/elektrizitaetslehre/bewegte-ladungen-feldern/ausblick/zyklotron}{Zyklotron}
+und
+\href{https://www.leifiphysik.de/elektrizitaetslehre/bewegte-ladungen-feldern/ausblick/synchro-zyklotron-und-synchrotrone}{Synchro-Zyklotron
+und Synchrotrone}.
+\end{theoriebox}
+
+\begin{questions}
+\setcounter{question}{1}
+\begin{taskbox}[Kontrollfrage: Kreisbeschleuniger (Gruppe B)]
+\question[5]
+\begin{parts}
+  \part[3] Warum lassen sich mit einem Zyklotron nicht beliebig hohe
+  Energien erreichen, mit einem Synchrotron aber schon? Was ist der
+  entscheidende technische Unterschied zwischen den beiden?
+  \begin{answerbox}
+  \vspace{2.6cm}
+  \end{answerbox}
+  \begin{solution}
+  Beim Zyklotron ist $B$ konstant. Wächst $v$ (bei sehr hohen Energien durch
+  relativistische Massenzunahme auch $m$), wächst der Radius $r=mv/qB$
+  laufend, und die Umlauffrequenz $f=qB/2\pi m$ passt irgendwann nicht mehr
+  zur konstanten Wechselspannungs-Frequenz -- das Prinzip versagt. Das
+  Synchrotron erhöht $B$ synchron mit der wachsenden Energie, sodass der
+  Radius konstant bleibt: Die Teilchen laufen auf einem festen Ring, dadurch
+  sind beliebig hohe Energien erreichbar (begrenzt nur durch Ringgrösse und
+  Technik, nicht mehr durch das Prinzip selbst).
+  \end{solution}
+
+  \part[2] Berechnen Sie die Umlauffrequenz $f$ eines Protons
+  ($q=\SI{1.6e-19}{\coulomb}$, $m=\SI{1.67e-27}{\kilogram}$) in einem
+  Zyklotron mit $B=\SI{1.5}{\tesla}$.
+  \begin{answerbox}
+  \vspace{2cm}
+  \end{answerbox}
+  \begin{solution}
+  $f=\dfrac{qB}{2\pi m}=\dfrac{\SI{1.6e-19}{\coulomb}\cdot\SI{1.5}{\tesla}}
+  {2\pi\cdot\SI{1.67e-27}{\kilogram}}\approx\SI{2.3e7}{\hertz}=\SI{23}{\mega\hertz}$.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Gruppe C: MHD-Antrieb
+% =============================================================================
+\needspace{12cm}
+\begin{theoriebox}[Gruppe C: MHD-Antrieb]
+In einem mit Meerwasser (leitfähig, enthält Ionen) gefüllten Kanal wird über
+Elektroden ein Strom $I$ quer zur Strömungsrichtung durch das Wasser
+geschickt, während gleichzeitig ein Magnetfeld $B$ senkrecht dazu steht.
+Auf die bewegten Ionen im Wasser wirkt dabei die bereits bekannte
+Lorentzkraft $F_1=qv_dB$ ($v_d$: Driftgeschwindigkeit der Ionen). Um die
+gesamte Antriebskraft zu erhalten, betrachten wir einen Kanalabschnitt der
+Länge $L$ mit Querschnittsfläche $A$, in dem sich Ionen der Dichte $n$
+(Anzahl pro Volumen) befinden. Darin befinden sich insgesamt
+\[
+  N=n\cdot A\cdot L
+\]
+Ionen, und jedes erfährt die Kraft $F_1$. Die Gesamtkraft ist die Summe
+aller Einzelkräfte:
+\[
+  F=N\cdot F_1=(nAL)\cdot(qv_dB)=(nqv_dA)\cdot(LB).
+\]
+Der Ausdruck $nqv_dA$ ist gerade die über die Ladungsträgerdichte
+definierte Stromstärke $I$ (Ladung pro Zeit durch den Querschnitt), sodass
+\[
+  F=BIL
+\]
+folgt -- dieselbe Formel, die Sie bereits als Kraft auf einen
+stromdurchflossenen Leiter im Magnetfeld kennen, hier aber direkt aus der
+Lorentzkraft auf die einzelnen Ionen hergeleitet. Diese Kraft wirkt als
+\textbf{\emph{direkte Antriebskraft}} in eine dritte, zu $I$ und $B$
+senkrechte Richtung und beschleunigt das Wasser aus dem Kanal -- das
+Schiff wird angetrieben, ganz ohne bewegliche Teile (kein Propeller).
+
+Reales Beispiel: die \textbf{\emph{Yamato-1}} (Japan, 1992), das erste
+Schiff mit funktionierendem MHD-Antrieb.
+
+\Bild{7cm}{Bilder/mhd-ship-yamato-1.jpg}
+
+Trotz des funktionierenden Prinzips wird der MHD-Antrieb heute kaum
+eingesetzt: Meerwasser leitet Strom nur schlecht, weshalb für eine
+nennenswerte Kraft $F=BIL$ entweder ein sehr grosser Strom $I$ oder ein
+sehr starkes Magnetfeld $B$ nötig ist. Ein grosser Strom durch das
+schlecht leitende Wasser erzeugt dabei vor allem Wärme statt Antrieb, und
+ein starkes Magnetfeld braucht schwere, teure supraleitende Magnete samt
+Kühlung. Wie klein der Wirkungsgrad dadurch tatsächlich ausfällt, finden
+Sie in der Kontrollfrage selbst heraus.
+
+\textbf{Mehr dazu:}
+\href{https://www.leifiphysik.de/elektrizitaetslehre/bewegte-ladungen-feldern/ausblick/mhd-generator-und-mhd-pumpe}{MHD-Generator
+und MHD-Pumpe} (LEIFIphysik).
+\end{theoriebox}
+
+\begin{questions}
+\setcounter{question}{2}
+\begin{taskbox}[Kontrollfrage: MHD-Antrieb (Gruppe C)]
+\question[12]
+\begin{parts}
+  \part[3] Zeichnen Sie eine beschriftete Skizze des MHD-Kanals von oben.
+  Markieren Sie darin die Strömungsrichtung des Meerwassers (= Richtung
+  der Kraft $F$), die Elektroden, die Richtung des Magnetfelds $B$ und die
+  Richtung des Stroms $I$.
+  \begin{answerbox}
+  \vspace{5.5cm}
+  \end{answerbox}
+  \begin{solution}
+  \begin{center}
+  \begin{tikzpicture}[scale=1,>=Latex]
+    \draw[thick] (0,0) rectangle (4,2);
+    \foreach \x in {0.6,1.6,2.6,3.6}
+      \foreach \y in {0.5,1.5}
+        \node[gray] at (\x,\y) {$\times$};
+    \node[gray] at (2,2.5) {$B$ (ins Blatt hinein)};
+    \draw[very thick,red] (0,2) -- (4,2) node[midway,above]{Elektrode $+$};
+    \draw[very thick,red] (0,0) -- (4,0) node[midway,below]{Elektrode $-$};
+    \foreach \x in {1,2,3}
+      \draw[-{Latex},thick,red] (\x,1.7) -- (\x,0.3);
+    \node[red] at (3.85,1) {$I$};
+    \draw[-{Latex},ultra thick,blue] (4.2,1) -- (5.8,1);
+    \node[blue] at (5.8,1.4) {$F$ (Wasserfluss)};
+  \end{tikzpicture}
+  \end{center}
+  $I$ fliesst von der Plus- zur Minuselektrode durchs Wasser, $B$ steht
+  senkrecht dazu ins Blatt hinein; nach der Drei-Finger-Regel zeigt die
+  Kraft $F$ (und damit die Wasserströmung) dann seitlich aus dem Kanal.
+  \end{solution}
+
+  \part[2] Woher kommt die Kraft, die das Meerwasser im MHD-Kanal
+  beschleunigt, wenn es doch gar keine Schraube gibt? Nennen Sie die
+  beiden Grössen, die dafür senkrecht zueinander stehen müssen, damit die
+  Kraft in die gewünschte dritte Richtung wirkt.
+  \begin{answerbox}
+  \vspace{2.2cm}
+  \end{answerbox}
+  \begin{solution}
+  Die Kraft ist die Lorentzkraft auf die im Meerwasser bewegten
+  Ladungsträger, hier über den Strom ausgedrückt: $F=BIL$. Damit sie in
+  die gewünschte dritte Richtung wirkt, müssen der Strom $I$ (quer durch
+  das Wasser) und das Magnetfeld $B$ senkrecht zueinander stehen.
+  \end{solution}
+
+  \part[2] Durch einen MHD-Kanal mit Elektrodenabstand $L=\SI{1.0}{\meter}$
+  fliesst ein Strom $I=\SI{1000}{\ampere}$ senkrecht zu einem Magnetfeld
+  $B=\SI{0.50}{\tesla}$. Berechnen Sie die Antriebskraft $F$. Diese Formel
+  kennen Sie bereits aus einem anderen Zusammenhang -- aus welchem?
+  \begin{answerbox}
+  \vspace{2.2cm}
+  \end{answerbox}
+  \begin{solution}
+  $F=BIL=\SI{0.50}{\tesla}\cdot\SI{1000}{\ampere}\cdot\SI{1.0}{\meter}
+  =\SI{500}{\newton}$. Die Formel kennen Sie bereits als Kraft auf einen
+  stromdurchflossenen Leiter im Magnetfeld (Teil 1, z.\,B. beim
+  Leiterschaukel-Experiment).
+  \end{solution}
+
+  \part[3] Bei $v=\SI{4.0}{\meter\per\second}$ Schiffsgeschwindigkeit
+  leistet die Antriebskraft $F$ aus Teilaufgabe b) die mechanische
+  Leistung $P_{mech}=Fv$. Die Elektroden werden dazu mit
+  $U=\SI{25}{\volt}$ betrieben, sodass die aufgewendete elektrische
+  Leistung $P_{el}=UI$ beträgt. Berechnen Sie $P_{mech}$, $P_{el}$ und
+  daraus den Wirkungsgrad $\eta=P_{mech}/P_{el}$ (in Prozent).
+  \begin{answerbox}
+  \vspace{2.8cm}
+  \end{answerbox}
+  \begin{solution}
+  $P_{mech}=Fv=\SI{500}{\newton}\cdot\SI{4.0}{\meter\per\second}=\SI{2000}{\watt}$.\\
+  $P_{el}=UI=\SI{25}{\volt}\cdot\SI{1000}{\ampere}=\SI{25000}{\watt}$.\\
+  $\eta=\dfrac{P_{mech}}{P_{el}}=\dfrac{\SI{2000}{\watt}}{\SI{25000}{\watt}}=0{,}08=\SI{8}{\percent}$.
+  \end{solution}
+
+  \part[2] Ein gewöhnlicher Propellerantrieb erreicht einen Wirkungsgrad
+  von rund $\SI{70}{\percent}$. Vergleichen Sie mit Ihrem berechneten Wert
+  aus Teilaufgabe c): Was bedeutet das für die Wirtschaftlichkeit des
+  MHD-Antriebs im Vergleich zu einem herkömmlichen Schiff?
+  \begin{answerbox}
+  \vspace{2.2cm}
+  \end{answerbox}
+  \begin{solution}
+  Der berechnete Wirkungsgrad von rund $\SI{8}{\percent}$ liegt weit unter
+  dem eines Propellerantriebs ($\SI{70}{\percent}$). Für dieselbe
+  Antriebsleistung braucht der MHD-Antrieb also fast neunmal mehr
+  elektrische Energie -- er ist damit trotz des funktionierenden Prinzips
+  wirtschaftlich klar unterlegen, was erklärt, wieso er sich gegenüber dem
+  klassischen Propeller nie durchgesetzt hat.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Gruppe D: Polarlichter
+% =============================================================================
+\needspace{16cm}
+\begin{theoriebox}[Gruppe D: Polarlichter]
+Sie kennen dieses Beispiel schon aus Teil 1 -- jetzt schauen wir uns an,
+wieso das genau so passiert. Der Sonnenwind (geladene Teilchen von der
+Sonne) trifft auf die Magnetosphäre der Erde.
+
+\Bild{7cm}{Bilder/Nordlichter-Beitragsbild.jpg}
+
+\textbf{Wie die Spiralbahn entsteht:} Ein Teilchen, das schräg zu einer
+Feldlinie einfliegt, hat eine Geschwindigkeitskomponente $v_\parallel$
+entlang der Feldlinie und eine Komponente $v_\perp$ quer dazu -- die
+bereits bekannte Schraubenbahn-Zerlegung. Nur $v_\perp$ erzeugt über die
+Lorentzkraft eine Kreisbewegung um die Feldlinie; $v_\parallel$ bleibt
+davon unbeeinflusst und trägt das Teilchen gleichzeitig die Feldlinie
+entlang. Kreisbewegung quer plus gleichförmige Bewegung längs ergibt
+zusammen die Spiralbahn, die die Feldlinie wie eine Feder umwickelt -- die
+Feldlinie selbst ist dabei die \glqq Achse\grqq{} der Spirale.
+
+\Bild{7cm}{Bilder/charge-helix-trajectory-static.pdf}
+\Bild{6cm}{Bilder/polarlicht_illustration_flugbahn.png}
+
+\textbf{Wie daraus die magnetische Flasche wird:} Neu ist, was passiert,
+wenn das Teilchen auf diesem Spiralweg in ein stärker werdendes Feld
+hineinläuft -- genau das passiert an den Polen, wo die Feldlinien der Erde
+zusammenlaufen und $B$ deshalb zunimmt. Wie schon beim Fadenstrahlrohr
+gilt: Die Lorentzkraft steht immer senkrecht zur Geschwindigkeit und kann
+deshalb nur deren \emph{Richtung} ändern, nie ihren \emph{Betrag} -- die
+Gesamtgeschwindigkeit $v=\sqrt{v_\parallel^2+v_\perp^2}$ des Teilchens
+bleibt während der ganzen Bewegung konstant. Wird $B$ stärker, wächst also
+$v_\perp$ genau so weit, wie $v_\parallel$ abnimmt, sodass die
+Gesamtgeschwindigkeit gleich bleibt. Irgendwann ist die gesamte
+Geschwindigkeit in $v_\perp$ umgewandelt, $v_\parallel=0$: An diesem
+Umkehrpunkt wirkt die Lorentzkraft wie ein \textbf{\emph{Spiegel}} und
+schickt das Teilchen die Feldlinie wieder zurück, Richtung Äquator und
+weiter zum gegenüberliegenden Pol, wo sich derselbe Effekt wiederholt.
+
+Ein Teilchen kann so wiederholt zwischen Nord- und Südpol hin- und
+herpendeln, ohne je die Atmosphäre zu erreichen -- es ist in einer
+natürlichen \textbf{\emph{magnetischen Flasche}} gefangen (den
+Van-Allen-Gürteln), mit den beiden polnahen Zonen starken Feldes als
+\glqq Flaschenhälse\grqq{}. Nur Teilchen, deren Geschwindigkeitsrichtung
+beim Eintritt zu nahe an $v_\parallel$ liegt (zu wenig $v_\perp$,
+sogenannter \textbf{\emph{Verlustkegel}}), erreichen den Umkehrpunkt gar
+nicht, sondern schon vorher die dichte Atmosphäre -- dort erzeugen sie
+durch Stösse mit Luftmolekülen das Polarlicht, bevorzugt in einem Ring
+rund um die Pole (\textbf{\emph{Auroraloval}}), nicht direkt über den
+Polen selbst, weil genau dort die Feldlinien am steilsten und am
+dichtesten zusammenlaufen.
+
+\Bild{6cm}{Bilder/csm_20231218_Polarlicht_iStockWdP_6d45db0da8.png}
+
+\textbf{Mehr dazu:}
+\href{https://www.leifiphysik.de/elektrizitaetslehre/bewegte-ladungen-feldern/ausblick/polarlicht}{Polarlicht}
+und
+\href{https://www.leifiphysik.de/elektrizitaetslehre/bewegte-ladungen-feldern/ausblick/teilchenbahnen-magnetfeldern}{Teilchenbahnen
+in Magnetfeldern} (beide LEIFIphysik). \textbf{Aufgabe zum Vertiefen:}
+\href{https://www.leifiphysik.de/elektrizitaetslehre/bewegte-ladungen-feldern/aufgabe/magnetische-flasche}{Magnetische
+Flasche}.
+\end{theoriebox}
+
+\begin{questions}
+\setcounter{question}{3}
+\begin{taskbox}[Kontrollfrage: Polarlichter (Gruppe D)]
+\question[8]
+\begin{parts}
+  \part[3] Ein Teilchen fliegt spiralförmig entlang einer Feldlinie in
+  Richtung Nordpol, wo das Feld stärker wird. Was passiert dabei mit
+  $v_\perp$ und $v_\parallel$, und wieso kehrt sich seine Bewegung
+  irgendwann um, statt einfach weiterzufliegen?
+  \begin{answerbox}
+  \vspace{2.4cm}
+  \end{answerbox}
+  \begin{solution}
+  Weil die Lorentzkraft nie Arbeit verrichtet, bleibt die gesamte
+  Geschwindigkeit (Bewegungsenergie) des Teilchens konstant. Mit
+  zunehmendem $B$ wächst $v_\perp$ auf Kosten von $v_\parallel$. Am
+  Umkehrpunkt ist die gesamte Bewegungsenergie in $v_\perp$ umgewandelt
+  ($v_\parallel=0$): Die Lorentzkraft wirkt dort wie ein Spiegel und
+  schickt das Teilchen die Feldlinie wieder zurück.
+  \end{solution}
+
+  \part[2] Wieso entstehen Polarlichter trotzdem nicht überall auf der
+  Erde gleich häufig, sondern vor allem in einem Ring rund um die Pole?
+  \begin{answerbox}
+  \vspace{1.8cm}
+  \end{answerbox}
+  \begin{solution}
+  Nur Teilchen mit einer Geschwindigkeitsrichtung zu nahe an
+  $v_\parallel$ (zu wenig $v_\perp$, Verlustkegel) erreichen den
+  Umkehrpunkt gar nicht, sondern schon vorher die dichte Atmosphäre. Das
+  geschieht bevorzugt in einem Ring rund um die Pole (Auroraloval), nicht
+  direkt über den Polen selbst, weil dort die Feldlinien am steilsten und
+  dichtesten zusammenlaufen.
+  \end{solution}
+
+  \part[3] Begründen Sie, wieso die Gesamtgeschwindigkeit
+  $v=\sqrt{v_\parallel^2+v_\perp^2}$ eines Teilchens während der gesamten
+  Bewegung entlang einer Feldlinie konstant bleibt, obwohl sich
+  $v_\parallel$ und $v_\perp$ einzeln verändern. Nutzen Sie dabei, was Sie
+  bereits vom Fadenstrahlrohr über die Richtung der Lorentzkraft wissen.
+  \begin{answerbox}
+  \vspace{2.4cm}
+  \end{answerbox}
+  \begin{solution}
+  Die Lorentzkraft steht immer senkrecht zur Geschwindigkeit -- genau wie
+  am Fadenstrahlrohr kann sie deshalb nur die Richtung der Bewegung
+  ändern, nie deren Betrag. Die Gesamtgeschwindigkeit $v$ bleibt also
+  konstant. Da $v^2=v_\parallel^2+v_\perp^2$ und $v$ konstant ist, muss
+  $v_\perp$ zunehmen, wenn $v_\parallel$ abnimmt (und umgekehrt) -- die
+  Summe der Quadrate bleibt gleich, auch wenn sich die einzelnen
+  Komponenten gegenläufig verändern.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Gruppe E: Hall-Effekt
+% =============================================================================
+\needspace{14cm}
+\begin{theoriebox}[Gruppe E: Hall-Effekt]
+Bewegen sich Ladungsträger (z.\,B. in einem stromdurchflossenen Leiter oder
+in einer strömenden leitfähigen Flüssigkeit wie Blut) quer zu einem
+angelegten Magnetfeld $B$, wirkt auf sie die bereits bekannte Lorentzkraft
+$qvB$ senkrecht zu $v$ und $B$ -- sie werden dadurch zu einer Seite hin
+abgelenkt. Weil sie den Leiter/das Gefäss aber nicht verlassen können,
+sammelt sich dort ein Ladungsüberschuss an, bis das dadurch entstehende
+elektrische Feld $E_H$ die Lorentzkraft gerade kompensiert; neu ist dieses
+\textbf{\emph{Kräftegleichgewicht}} selbst -- dieselbe Idee wie beim
+Wien-Filter (Thema Massenspektrograph), nur mit vertauschter
+Fragestellung: Dort ist $v_0$ vorgegeben und wird über $E$ und $B$
+eingestellt; hier ist $v$ unbekannt und wird über die resultierende
+Spannung gemessen. Im Gleichgewicht gilt
+\[
+  F_{el}=F_L \quad\Longrightarrow\quad qE_H=qvB
+  \quad\Longrightarrow\quad E_H=vB,
+\]
+wobei die Ladung $q$ beim Teilen wieder herausgekürzt wurde.
+
+\Bild{8cm}{Bilder/hall-voltage.pdf}
+
+Die Feldstärke hängt über den Elektrodenabstand $d$ mit der messbaren
+Spannung zusammen, $E_H=U_H/d$; setzt man dies oben ein und löst nach
+$U_H$ auf,
+\[
+  \frac{U_H}{d}=vB \quad\Longrightarrow\quad U_H=Bvd,
+\]
+erhält man die \textbf{\emph{Hall-Spannung}}. Dabei ist $d$ der Abstand
+der Messelektroden bzw.\ der Durchmesser des Leiters oder Gefässes. Sind
+$U_H$, $B$ und $d$ bekannt, lässt sich daraus umgekehrt die Geschwindigkeit
+\[
+  v=\frac{U_H}{Bd}
+\]
+der Ladungsträger berechnen.
+
+\textbf{Medizinische Anwendung:} Blut enthält geladene Teilchen (Ionen im
+Blutplasma), die sich mit dem Blutfluss bewegen. Legt man von aussen ein
+Magnetfeld $B$ quer über ein Blutgefäss und misst mit zwei Elektroden auf
+gegenüberliegenden Seiten die Hall-Spannung $U_H$, lässt sich bei bekanntem
+Gefässdurchmesser $d$ die Fliessgeschwindigkeit des Blutes berechnen --
+nicht-invasiv, ohne das Gefäss zu öffnen.
+
+\Bild{7cm}{Bilder/blut_messung.png}
+
+\textbf{Aufgabe zum Vertiefen:}
+\href{https://www.leifiphysik.de/elektrizitaetslehre/bewegte-ladungen-feldern/aufgabe/medizinische-anwendung-des-hall-effekts-abitur-2013-ph11-a2-1}{Medizinische
+Anwendung des Hall-Effekts (Abitur BY 2013 Ph11 A2-1)}.
+\end{theoriebox}
+
+\begin{questions}
+\setcounter{question}{4}
+\begin{taskbox}[Kontrollfrage: Hall-Effekt (Gruppe E)]
+\question[5]
+\begin{parts}
+  \part[3] Wie lässt sich mit dem Hall-Effekt die Fliessgeschwindigkeit
+  von Blut messen, ohne das Gefäss zu öffnen? Welche zwei Grössen müssen
+  dafür zusätzlich zur gemessenen Hall-Spannung $U_H$ bekannt sein?
+  \begin{answerbox}
+  \vspace{2.2cm}
+  \end{answerbox}
+  \begin{solution}
+  Legt man ein bekanntes Magnetfeld $B$ quer über das Gefäss (Durchmesser
+  $d$) und misst mit zwei Elektroden die Hall-Spannung $U_H$, lässt sich
+  die Fliessgeschwindigkeit über $v=U_H/(Bd)$ berechnen, ohne das Gefäss
+  zu öffnen. Zusätzlich zur gemessenen Hall-Spannung $U_H$ müssen das
+  Magnetfeld $B$ und der Gefässdurchmesser $d$ bekannt sein.
+  \end{solution}
+
+  \part[2] Über einem stromdurchflossenen Metallleiter der Breite
+  $d=\SI{2.0}{\centi\meter}$ liegt ein Magnetfeld $B=\SI{0.80}{\tesla}$.
+  Die Ladungsträger bewegen sich mit einer typischen
+  Driftgeschwindigkeit $v=\SI{1.5e-3}{\meter\per\second}$. Berechnen Sie
+  die entstehende Hall-Spannung $U_H$.
+  \begin{answerbox}
+  \vspace{1.8cm}
+  \end{answerbox}
+  \begin{solution}
+  $U_H=Bvd=\SI{0.80}{\tesla}\cdot\SI{1.5e-3}{\meter\per\second}\cdot\SI{2.0e-2}{\meter}
+  =\SI{2.4e-5}{\volt}=\SI{24}{\micro\volt}$ -- deutlich kleiner als die
+  Hall-Spannung im Blutgefäss oben, weil die Driftgeschwindigkeit in einem
+  Metall viel kleiner ist als eine typische Blutflussgeschwindigkeit.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Vertiefungsphase: Stammgruppe wieder komplett
+% =============================================================================
+\textbf{Vertiefungsphase: Ihre Stammgruppe ist wieder komplett}
+
+Nachdem in Ihrer Stammgruppe alle fünf Themen einmal erklärt wurden, lösen
+alle fünf Mitglieder gemeinsam die folgenden zwei Aufgaben -- jede Aufgabe
+braucht Wissen aus mindestens zwei verschiedenen Expertenthemen.
+
+\needspace{14cm}
+\begin{questions}
+\setcounter{question}{5}
+\begin{groupbox}[Stammgruppenaufgabe: Massenspektrograph und Hall-Effekt]
+\question[7] Beide Themen beruhen auf demselben Kräftegleichgewicht bei
+gekreuzten Feldern ($qE=qvB$ bzw.\ $qE_H=qvB$), nutzen es aber in
+entgegengesetzter Richtung: Beim Wien-Filter (Stufe 1 des
+Massenspektrographen) wird $E$ so eingestellt, dass genau eine
+\emph{vorgegebene} Geschwindigkeit $v_0$ selektiert wird; beim Hall-Effekt
+wird umgekehrt aus einer \emph{gemessenen} Spannung $U_H$ eine zunächst
+\emph{unbekannte} Geschwindigkeit $v$ berechnet.
+\begin{parts}
+  \part[3] Ein Ionenstrahl durchläuft einen Wien-Filter mit $E=\SI{1.2e5}{\volt\per\meter}$
+  und $B_1=\SI{0.40}{\tesla}$ und anschliessend ein zweites Magnetfeld
+  $B_2=\SI{0.60}{\tesla}$, in dem ein Halbkreis mit Radius
+  $r=\SI{0.125}{\meter}$ gemessen wird. Bestimmen Sie mit
+  $v_0=E/B_1$ und $r=mv_0/qB_2 \Rightarrow m=qB_2r/v_0$ (Ladung
+  $q=\SI{1.6e-19}{\coulomb}$) die Masse $m$ des Ions.
+  \begin{answerbox}
+  \vspace{3cm}
+  \end{answerbox}
+  \begin{solution}
+  $v_0=E/B_1=\SI{1.2e5}{\volt\per\meter}/\SI{0.40}{\tesla}=\SI{3.0e5}{\meter\per\second}$.\\
+  $m=\dfrac{qB_2r}{v_0}=\dfrac{\SI{1.6e-19}{\coulomb}\cdot\SI{0.60}{\tesla}\cdot\SI{0.125}{\meter}}{\SI{3.0e5}{\meter\per\second}}
+  =\SI{4.0e-26}{\kilogram}\approx\SI{24.1}{u}$ -- das entspricht etwa der
+  Masse eines Magnesium-Ions ($^{24}$Mg).
+  \end{solution}
+
+  \part[2] Über ein Blutgefäss mit Durchmesser $d=\SI{4.0}{\milli\meter}$
+  wird ein Magnetfeld $B=\SI{0.50}{\tesla}$ gelegt und eine Hall-Spannung
+  $U_H=\SI{1.0}{\milli\volt}$ gemessen. Bestimmen Sie mit
+  $U_H=Bvd \Rightarrow v=U_H/(Bd)$ die Fliessgeschwindigkeit $v$ des
+  Blutes.
+  \begin{answerbox}
+  \vspace{2.2cm}
+  \end{answerbox}
+  \begin{solution}
+  $v=\dfrac{U_H}{Bd}=\dfrac{\SI{1.0e-3}{\volt}}{\SI{0.50}{\tesla}\cdot\SI{4.0e-3}{\meter}}
+  =\SI{0.50}{\meter\per\second}$ -- eine realistische
+  Blutflussgeschwindigkeit in einem grösseren Gefäss.
+  \end{solution}
+
+  \part[2] Diskutieren Sie zu zweit (Massenspektrograph- und
+  Hall-Effekt-Experte/in): Was ist an den beiden Rechnungen strukturell
+  gleich, und was genau ist vertauscht -- welche Grösse ist jeweils
+  gegeben, welche gesucht?
+  \begin{answerbox}
+  \vspace{2.2cm}
+  \end{answerbox}
+  \begin{solution}
+  Beide Rechnungen beruhen auf demselben Kräftegleichgewicht $qE=qvB$ bei
+  gekreuzten Feldern. Beim Wien-Filter ist die Geschwindigkeit $v_0$ über
+  $E$ und $B_1$ \emph{vorgegeben} (gesucht ist dort in Stufe 2 die Masse
+  $m$); beim Hall-Effekt ist umgekehrt $B$ bekannt und die Geschwindigkeit
+  $v$ \emph{gesucht}, berechnet aus der gemessenen Spannung $U_H$. Es ist
+  also vertauscht, ob die Geschwindigkeit die gegebene oder die gesuchte
+  Grösse ist.
+  \end{solution}
+\end{parts}
+\end{groupbox}
+\end{questions}
+
+\needspace{12cm}
+\begin{questions}
+\setcounter{question}{6}
+\begin{groupbox}[Stammgruppenaufgabe: Synthesetabelle]
+\question[4] Füllen Sie gemeinsam die Tabelle aus: eine Zeile pro Thema,
+mit den beteiligten Feldern, der Rolle der Lorentzkraft und dem Zweck der
+Anwendung. Diskutieren Sie danach zu fünft: Was ist allen fünf Anwendungen
+gemeinsam?
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}P{3.2cm}P{2.9cm}P{3.7cm}Y@{}}
+\toprule
+\textbf{Thema} & \textbf{Beteiligte Felder} & \textbf{Rolle der Lorentzkraft} & \textbf{Zweck} \\
+\midrule
+Massenspektrograph & & & \\[1.4cm]
+Kreisbeschleuniger & & & \\[1.4cm]
+MHD-Antrieb & & & \\[1.4cm]
+Polarlichter & & & \\[1.4cm]
+Hall-Effekt & & & \\[1.4cm]
+\bottomrule
+\end{tabularx}
+\end{center}
+\begin{solution}
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}P{3.2cm}P{2.9cm}P{3.7cm}Y@{}}
+\toprule
+\textbf{Thema} & \textbf{Beteiligte Felder} & \textbf{Rolle der Lorentzkraft} & \textbf{Zweck} \\
+\midrule
+Massenspektrograph & $E$ und $B$ gekreuzt (Stufe 1), nur $B$ (Stufe 2) &
+Kräftegleichgewicht (Stufe 1), Zentripetalkraft (Stufe 2) & Massen (Isotope)
+trennen \\[0.3cm]
+Kreisbeschleuniger & nur $B$ & Zentripetalkraft & Teilchen beschleunigen \\[0.3cm]
+MHD-Antrieb & nur $B$ (plus Strom $I$) & direkte Antriebskraft & Wasser
+antreiben \\[0.3cm]
+Polarlichter & nur $B$ & Zentripetalkraft (Spiralbahn) & Teilchen in die
+Atmosphäre lenken \\[0.3cm]
+Hall-Effekt & $E_H$ und $B$ gekreuzt & Kräftegleichgewicht &
+Geschwindigkeit messen \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Gemeinsam ist allen fünf Anwendungen, dass dieselbe Lorentzkraft $F=qvB$
+(bzw.\ $F=BIL$ über den Strom) je nach Situation entweder als
+Zentripetalkraft eine Kreis- oder Spiralbahn erzeugt, als Teil eines
+Kräftegleichgewichts bei gekreuzten Feldern eine Spannung bzw.\ eine feste
+Geschwindigkeit liefert, oder als direkte Antriebskraft wirkt.
+\end{solution}
+\end{groupbox}
+\end{questions}
+
+\end{document}
