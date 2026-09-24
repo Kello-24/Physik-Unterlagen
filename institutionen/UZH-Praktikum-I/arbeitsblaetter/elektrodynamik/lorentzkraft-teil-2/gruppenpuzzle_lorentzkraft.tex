@@ -217,8 +217,8 @@
 }
 
 % --- Loesungen ein-/ausblenden -----------------------------------------------
-%\noprintanswers
-\printanswers
+\noprintanswers
+%\printanswers
 
 \pointformat{}
 \renewcommand{\solutiontitle}{\noindent\color{titleblue}\textbf{L\"osung:}\enspace}
@@ -301,11 +301,11 @@ Expertenphase nur den Abschnitt Ihrer eigenen Gruppe.}
 Der \textbf{\emph{Bainbridge-Massenspektrograph}} bestimmt die Masse $m$
 geladener Ionen (bekannte Ladung $q$) in zwei Stufen.
 
-\textbf{Stufe 1 -- Geschwindigkeitsfilter (Wien-Filter):} Die Ionen
+\textbf{Stufe 1 (Geschwindigkeitsfilter, Wien-Filter):} Die Ionen
 durchqueren zunächst ein Gebiet mit gekreuzten $E$- und $B_1$-Feldern (beide
 senkrecht zueinander und senkrecht zur Bewegungsrichtung $v$). Die bereits
 bekannte Lorentzkraft $qvB_1$ wirkt hier einer elektrischen Kraft $qE$
-\emph{gleichzeitig und entgegengesetzt} entgegen -- neu ist dieses
+\emph{gleichzeitig und entgegengesetzt} entgegen. Neu ist dieses
 \textbf{\emph{Kräftegleichgewicht}} selbst. Nur Ionen, bei denen sich beide
 Kräfte exakt aufheben, fliegen geradeaus durch die Lochblende; schnellere
 oder langsamere Ionen werden seitlich abgelenkt und damit ausgefiltert. Im
@@ -323,7 +323,7 @@ $B_1$ bekannte Geschwindigkeit $v_0$, unabhängig von ihrer Masse.
 
 \Bild{7.5cm}{Bilder/wien-filter.pdf}
 
-\textbf{Stufe 2 -- Massentrennung im Magnetfeld:} Diese
+\textbf{Stufe 2 (Massentrennung im Magnetfeld):} Diese
 geschwindigkeitsselektierten Ionen treten anschliessend in ein zweites,
 reines Magnetfeld $B_2$ ein, wo wieder die bereits bekannte Formel
 $r=\frac{mv_0}{qB_2}$ gilt, wie am Fadenstrahlrohr bereits gezeigt. Löst
@@ -338,19 +338,13 @@ beide Seiten mit $qB_2$ und teilt anschliessend durch $v_0$:
 \]
 Schwerere Ionen laufen auf grösserem Radius und treffen weiter vom
 Eintrittspunkt entfernt auf den Schirm auf; aus dem gemessenen Abstand
-lässt sich bei bekanntem $v_0$, $B_2$, $q$ die Masse $m$ bestimmen --
-historisch die Methode, mit der \textbf{\emph{Isotope}} (Atome desselben
-Elements mit unterschiedlicher Masse) entdeckt und getrennt wurden. Ohne
-die Geschwindigkeitsfilter-Stufe wäre die Massentrennung ungenau, weil $r$
-sowohl von $m$ als auch von $v$ abhängt -- erst ein für alle Ionen
-identisches $v_0$ macht $r$ zu einem eindeutigen Mass für $m$.
+lässt sich bei bekanntem $v_0$, $B_2$, $q$ die Masse $m$ bestimmen: historisch
+die Methode, mit der \textbf{\emph{Isotope}} (Atome desselben
+Elements mit unterschiedlicher Masse) entdeckt und getrennt wurden.
 
 \Bild{7.5cm}{Bilder/mass-spectrograph.pdf}
 
-\textbf{Zum Ausprobieren:} die
-\href{https://www.leifiphysik.de/elektrizitaetslehre/bewegte-ladungen-feldern/downloads/wienscher-geschwindigkeitsfilter-grundwissen-simulation}{Simulation
-Wienscher Geschwindigkeitsfilter} für Stufe 1 im Detail, ergänzend der
-interaktive
+\textbf{Zum Ausprobieren:} der interaktive
 \href{https://www.leifiphysik.de/elektrizitaetslehre/bewegte-ladungen-feldern/versuche/bainbridge-massenspektrometer}{Versuch
 Bainbridge-Massenspektrometer} (zeigt den vollständigen Aufbau, beide
 Stufen).
@@ -358,7 +352,7 @@ Stufen).
 
 \begin{questions}
 \begin{taskbox}[Kontrollfrage: Massenspektrograph (Gruppe A)]
-\question[5]
+\question[9]
 \begin{parts}
   \part[3] Wozu braucht der Bainbridge-Massenspektrograph den
   Geschwindigkeitsfilter (Stufe 1) überhaupt, wenn für die eigentliche
@@ -372,20 +366,63 @@ Stufen).
   Ohne den Geschwindigkeitsfilter hätten die Ionen beim Eintritt in Stufe 2
   unterschiedliche Geschwindigkeiten $v$. Da $r=mv/qB_2$ sowohl von $m$ als
   auch von $v$ abhängt, könnte ein grosser gemessener Radius entweder von
-  einer grossen Masse oder von einer hohen Geschwindigkeit stammen -- der
+  einer grossen Masse oder von einer hohen Geschwindigkeit stammen. Der
   Radius wäre kein eindeutiges Mass für $m$. Erst wenn alle Ionen dank des
   Filters dieselbe Geschwindigkeit $v_0$ haben, hängt $r$ nur noch von $m$
   ab, und die Masse lässt sich eindeutig bestimmen.
   \end{solution}
 
-  \part[2] Ein Wien-Filter hat $E=\SI{8.0e4}{\volt\per\meter}$ und
-  $B_1=\SI{0.20}{\tesla}$. Welche Geschwindigkeit $v_0$ wird selektiert?
+  \part[2] Was macht den Massenunterschied zwischen den Isotopen eines
+  Elements eigentlich aus?
   \begin{answerbox}
   \vspace{1.8cm}
   \end{answerbox}
   \begin{solution}
-  $v_0=\dfrac{E}{B_1}=\dfrac{\SI{8.0e4}{\volt\per\meter}}{\SI{0.20}{\tesla}}
-  =\SI{4.0e5}{\meter\per\second}$.
+  Isotope eines Elements besitzen dieselbe Anzahl Protonen und damit dieselbe
+  Ordnungszahl $Z$, dieselbe Ladung des Kerns und praktisch dieselben
+  chemischen Eigenschaften. Sie unterscheiden sich aber in der Anzahl
+  Neutronen im Kern. Da Neutronen zur Masse beitragen, aber nicht zur
+  Ladung, ergibt sich für jedes Isotop eine andere Massenzahl
+  $A=$~Protonen~+~Neutronen und damit eine andere Masse $m$, obwohl Ladung
+  $q$ und chemisches Verhalten identisch bleiben.
+  \end{solution}
+
+  \part[2] Wie müsste das Magnetfeld $B_2$ in Stufe 2 angepasst werden,
+  wenn statt positiv geladener Ionen negativ geladene Isotope (gleicher
+  Betrag der Ladung) vermessen werden sollen?
+  \begin{answerbox}
+  \vspace{2.2cm}
+  \end{answerbox}
+  \begin{solution}
+  Bei gleicher Geschwindigkeitsrichtung und gleicher Richtung von $B_2$
+  kehrt sich die Richtung der Lorentzkraft um, sobald sich das Vorzeichen
+  der Ladung umkehrt: Negativ geladene Ionen würden also zur
+  entgegengesetzten Seite hin abgelenkt. Damit sie weiterhin auf denselben
+  Detektorbereich treffen, muss die Richtung von $B_2$ umgekehrt werden. Die
+  Stärke von $B_2$ bleibt dabei gleich, denn in $r=mv_0/(|q|B_2)$ geht nur
+  der Betrag der Ladung $|q|$ ein, und dieser ist bei gleich grosser, nur
+  umgekehrt geladener Ladung unverändert.
+  \end{solution}
+
+  \part[2] Welcher andere Teil des Experiments könnte neben dem
+  Geschwindigkeitsfilter ebenfalls entscheidend für eine korrekte
+  Massendifferenzierung der Isotope sein?
+  \begin{answerbox}
+  \vspace{2.2cm}
+  \end{answerbox}
+  \begin{solution}
+  Entscheidend ist vor allem die Grösse der Ein- und Austrittsspalten
+  (Lochblenden): Sind sie zu breit, können auch Ionen mit leicht
+  abweichender Geschwindigkeit oder Eintrittsrichtung durchgelangen, die der
+  Wien-Filter eigentlich hätte ausfiltern sollen; ihre Bahnen in Stufe 2
+  überlappen dann mit denen benachbarter Isotope, wodurch sich zwei nahe
+  beieinanderliegende Massen nicht mehr sauber trennen lassen (die
+  Auflösung sinkt). Sind die Spalten dagegen zu schmal, gelangen kaum noch
+  Ionen hindurch, was die Messung durch zu wenig Signal erschwert. Daneben
+  ist auch ein gutes Vakuum in der gesamten Apparatur wichtig: Würden die
+  Ionen auf ihrem Weg mit Luftmolekülen zusammenstossen, würden sie von
+  ihrer Kreisbahn abgelenkt, und der gemessene Radius (und damit die
+  daraus bestimmte Masse) wäre verfälscht.
   \end{solution}
 \end{parts}
 \end{taskbox}
@@ -395,15 +432,14 @@ Stufen).
 % Gruppe B: Kreisbeschleuniger (Zyklotron und Synchrotron)
 % =============================================================================
 \needspace{14cm}
-\begin{theoriebox}[Gruppe B: Kreisbeschleuniger -- Zyklotron und Synchrotron]
+\begin{theoriebox}[Gruppe B: Kreisbeschleuniger (Zyklotron und Synchrotron)]
 Beim \textbf{\emph{Zyklotron}} befindet sich das Teilchen in einem homogenen
 Magnetfeld zwischen zwei D-förmigen Hohlelektroden (\glqq Dees\grqq{}) mit
 einer Wechselspannung dazwischen. Bei jedem Durchqueren des Spalts wird es
 durch das $E$-Feld beschleunigt, innerhalb der Dees läuft es feldfrei im
-Kreis -- hier gilt wieder die bereits bekannte Formel $r=mv/qB$, wie am
+Kreis. Hier gilt wieder die bereits bekannte Formel $r=mv/qB$, wie am
 Fadenstrahlrohr bereits gezeigt, nur wächst jetzt $v$ mit jeder
-Beschleunigung, also wächst auch $r$ mit: Es entsteht eine Spiralbahn mit
-wachsendem Radius statt eines einzelnen Kreises.
+Beschleunigung mit.
 
 \Bild{8cm}{Bilder/cyclotron-function-static.pdf}
 
@@ -422,15 +458,14 @@ Die Frequenz ist der Kehrwert der Umlaufzeit, $f=1/T$, also
 \[
   f=\frac{qB}{2\pi m}.
 \]
-Weil $v$ beim Einsetzen verschwunden ist, ist $f$ (nicht-relativistisch)
-geschwindigkeitsunabhängig, weshalb eine konstante Wechselspannungs-Frequenz
-genügt, obwohl das Teilchen laufend schneller wird. Bei sehr hohen Energien
-versagt dieses Prinzip trotzdem (relativistische Massenzunahme, immer
-grösserer Radius). Das
-\textbf{\emph{Synchrotron}} löst das, indem $B$ synchron mit der wachsenden
-Energie erhöht wird, sodass der Radius konstant bleibt: Die Teilchen laufen
-auf einem festen Ring, werden an mehreren Beschleunigungskavitäten
-nachbeschleunigt und von Ablenkmagneten auf der Kreisbahn gehalten.
+Weil $v$ beim Einsetzen verschwunden ist, ist $f$ (nichtrelativistisch)
+geschwindigkeitsunabhängig, weshalb eine konstante Wechselspannungsfrequenz
+genügt, obwohl das Teilchen laufend schneller wird. Das
+\textbf{\emph{Synchrotron}} ist eine Weiterentwicklung, bei der $B$
+synchron mit der wachsenden Energie der Teilchen erhöht wird, sodass der
+Radius konstant bleibt: Die Teilchen laufen auf einem festen Ring, werden
+an mehreren Beschleunigungskavitäten nachbeschleunigt und von
+Ablenkmagneten auf der Kreisbahn gehalten.
 
 \Bild{8.5cm}{Bilder/Particles-synchrotron-diagram-alternating-gradient-ring-energies-accelerator.png}
 
@@ -449,11 +484,26 @@ und Synchrotrone}.
 \begin{questions}
 \setcounter{question}{1}
 \begin{taskbox}[Kontrollfrage: Kreisbeschleuniger (Gruppe B)]
-\question[5]
+\question[8]
 \begin{parts}
+  \part[2] Wieso entsteht beim Zyklotron eine Spiralbahn und keine
+  einfache Kreisbahn?
+  \begin{answerbox}
+  \vspace{2cm}
+  \end{answerbox}
+  \begin{solution}
+  Der Radius folgt weiterhin $r=mv/qB$. $B$, $q$ und (nichtrelativistisch)
+  $m$ bleiben konstant, aber $v$ nimmt bei jedem Durchqueren des
+  Beschleunigungsspalts zu. Deshalb wird $r$ bei jedem Umlauf grösser: Statt
+  eines einzelnen Kreises mit festem Radius ergibt sich eine Bahn mit
+  stetig wachsendem Radius, also eine Spirale.
+  \end{solution}
+
   \part[3] Warum lassen sich mit einem Zyklotron nicht beliebig hohe
   Energien erreichen, mit einem Synchrotron aber schon? Was ist der
-  entscheidende technische Unterschied zwischen den beiden?
+  entscheidende technische Unterschied zwischen den beiden? \textbf{Tipp:}
+  Denken Sie an die relativistische Massenzunahme bei sehr hohen Energien,
+  $m(v)=\dfrac{m_0}{\sqrt{1-v^2/c^2}}$.
   \begin{answerbox}
   \vspace{2.6cm}
   \end{answerbox}
@@ -461,22 +511,32 @@ und Synchrotrone}.
   Beim Zyklotron ist $B$ konstant. Wächst $v$ (bei sehr hohen Energien durch
   relativistische Massenzunahme auch $m$), wächst der Radius $r=mv/qB$
   laufend, und die Umlauffrequenz $f=qB/2\pi m$ passt irgendwann nicht mehr
-  zur konstanten Wechselspannungs-Frequenz -- das Prinzip versagt. Das
+  zur konstanten Wechselspannungsfrequenz. Das Prinzip versagt. Das
   Synchrotron erhöht $B$ synchron mit der wachsenden Energie, sodass der
   Radius konstant bleibt: Die Teilchen laufen auf einem festen Ring, dadurch
   sind beliebig hohe Energien erreichbar (begrenzt nur durch Ringgrösse und
   Technik, nicht mehr durch das Prinzip selbst).
   \end{solution}
 
-  \part[2] Berechnen Sie die Umlauffrequenz $f$ eines Protons
-  ($q=\SI{1.6e-19}{\coulomb}$, $m=\SI{1.67e-27}{\kilogram}$) in einem
-  Zyklotron mit $B=\SI{1.5}{\tesla}$.
+  \part[3] Umgekehrt gefragt: Was ist der Vorteil eines Zyklotrons
+  gegenüber einem Synchrotron? Vergleichen Sie dazu die Bilder des
+  Zyklotrons am PSI und der Synchrotronanlage.
   \begin{answerbox}
-  \vspace{2cm}
+  \vspace{2.6cm}
   \end{answerbox}
   \begin{solution}
-  $f=\dfrac{qB}{2\pi m}=\dfrac{\SI{1.6e-19}{\coulomb}\cdot\SI{1.5}{\tesla}}
-  {2\pi\cdot\SI{1.67e-27}{\kilogram}}\approx\SI{2.3e7}{\hertz}=\SI{23}{\mega\hertz}$.
+  Ein Zyklotron mit konstantem $B$-Feld ist deutlich kleiner, einfacher
+  aufgebaut und günstiger zu bauen und zu betreiben als ein Synchrotron: Es
+  braucht keine synchron mit der Energie mitwachsende Magnetfeldstärke und
+  keinen kilometerlangen Ringtunnel mit vielen einzelnen Ablenkmagneten,
+  sondern kommt (wie am Bild des PSI-Zyklotrons zu sehen) mit einer
+  vergleichsweise kompakten Anlage aus. Ein Synchrotron wie der LHC am CERN
+  braucht dagegen einen Ring von mehreren Kilometern Umfang mit
+  aufwendig synchronisierten Magneten. Für Energien, bei denen die
+  relativistische Massenzunahme noch keine Rolle spielt (z.\,B. für die
+  Erzeugung medizinischer Isotope oder in der Protonentherapie, wie sie am
+  PSI betrieben wird), ist ein Zyklotron deshalb die einfachere und
+  wirtschaftlichere Wahl.
   \end{solution}
 \end{parts}
 \end{taskbox}
@@ -508,11 +568,11 @@ definierte Stromstärke $I$ (Ladung pro Zeit durch den Querschnitt), sodass
 \[
   F=BIL
 \]
-folgt -- dieselbe Formel, die Sie bereits als Kraft auf einen
+folgt: dieselbe Formel, die Sie bereits als Kraft auf einen
 stromdurchflossenen Leiter im Magnetfeld kennen, hier aber direkt aus der
 Lorentzkraft auf die einzelnen Ionen hergeleitet. Diese Kraft wirkt als
 \textbf{\emph{direkte Antriebskraft}} in eine dritte, zu $I$ und $B$
-senkrechte Richtung und beschleunigt das Wasser aus dem Kanal -- das
+senkrechte Richtung und beschleunigt das Wasser aus dem Kanal. Das
 Schiff wird angetrieben, ganz ohne bewegliche Teile (kein Propeller).
 
 Reales Beispiel: die \textbf{\emph{Yamato-1}} (Japan, 1992), das erste
@@ -568,36 +628,53 @@ und MHD-Pumpe} (LEIFIphysik).
   Kraft $F$ (und damit die Wasserströmung) dann seitlich aus dem Kanal.
   \end{solution}
 
-  \part[2] Woher kommt die Kraft, die das Meerwasser im MHD-Kanal
-  beschleunigt, wenn es doch gar keine Schraube gibt? Nennen Sie die
-  beiden Grössen, die dafür senkrecht zueinander stehen müssen, damit die
-  Kraft in die gewünschte dritte Richtung wirkt.
+  \part[2] Damit im MHD-Kanal überhaupt ein Strom $I$ fliesst, wird
+  zwischen den beiden Elektroden eine Spannung $U$ angelegt. Welche
+  Ladungsträger tragen diesen Strom $I$ im Meerwasser eigentlich, und wie
+  unterscheidet sich das von einem gewöhnlichen Metalldraht?
   \begin{answerbox}
-  \vspace{2.2cm}
+  \vspace{2.4cm}
   \end{answerbox}
   \begin{solution}
-  Die Kraft ist die Lorentzkraft auf die im Meerwasser bewegten
-  Ladungsträger, hier über den Strom ausgedrückt: $F=BIL$. Damit sie in
-  die gewünschte dritte Richtung wirkt, müssen der Strom $I$ (quer durch
-  das Wasser) und das Magnetfeld $B$ senkrecht zueinander stehen.
+  Die angelegte Spannung $U$ erzeugt zwischen den Elektroden ein
+  elektrisches Feld im Meerwasser. Anders als in einem Metalldraht, wo nur
+  frei bewegliche Elektronen den Strom tragen, gibt es im Meerwasser keine
+  frei beweglichen Elektronen. Stattdessen wird der Strom $I$ von den im
+  Wasser gelösten Ionen getragen: Positiv geladene Ionen wandern zur
+  negativen Elektrode, negativ geladene Ionen zur positiven Elektrode.
+  Beide Bewegungen zusammen ergeben den Strom $I$ durch den Kanal.
   \end{solution}
 
-  \part[2] Durch einen MHD-Kanal mit Elektrodenabstand $L=\SI{1.0}{\meter}$
-  fliesst ein Strom $I=\SI{1000}{\ampere}$ senkrecht zu einem Magnetfeld
-  $B=\SI{0.50}{\tesla}$. Berechnen Sie die Antriebskraft $F$. Diese Formel
-  kennen Sie bereits aus einem anderen Zusammenhang -- aus welchem?
+  \part[2] Im Meerwasser gibt es sowohl positiv als auch negativ geladene
+  Ionen. Zählen Sie einige typische Ionen im Meerwasser auf. Macht es für
+  die Kraftwirkung (den Antrieb) einen Unterschied, ob der Strom von
+  positiven oder von negativen Ladungsträgern getragen wird?
   \begin{answerbox}
-  \vspace{2.2cm}
+  \vspace{2.8cm}
   \end{answerbox}
   \begin{solution}
-  $F=BIL=\SI{0.50}{\tesla}\cdot\SI{1000}{\ampere}\cdot\SI{1.0}{\meter}
-  =\SI{500}{\newton}$. Die Formel kennen Sie bereits als Kraft auf einen
-  stromdurchflossenen Leiter im Magnetfeld (Teil 1, z.\,B. beim
-  Leiterschaukel-Experiment).
+  Meerwasser enthält unter anderem positiv geladene Ionen wie
+  $\text{Na}^+$, $\text{Mg}^{2+}$, $\text{Ca}^{2+}$, $\text{K}^+$ und
+  negativ geladene Ionen wie $\text{Cl}^-$, $\text{SO}_4^{2-}$. Für die
+  Kraftwirkung macht es keinen Unterschied, welche Ladung überwiegt.
+  Positive Ionen bewegen sich mit einer Geschwindigkeit $v$ in Richtung des
+  $E$-Felds, negative Ionen mit der Geschwindigkeit $-v$ in die
+  entgegengesetzte Richtung. Für die Lorentzkraft auf ein positives Ion
+  gilt $F=qvB$; auf ein negatives Ion mit Ladung $-q$ und Geschwindigkeit
+  $-v$ ergibt sich $F=(-q)(-v)B=qvB$, also exakt dieselbe Richtung und
+  Grösse. Positive und negative Ladungsträger tragen deshalb gleichsinnig
+  zum Antrieb bei, ihre Kraftwirkungen addieren sich statt sich
+  aufzuheben. Genau deshalb funktioniert die Formel $F=BIL$ unabhängig
+  davon, von welchen Ladungsträgern der Strom $I$ tatsächlich getragen
+  wird.
   \end{solution}
 
-  \part[3] Bei $v=\SI{4.0}{\meter\per\second}$ Schiffsgeschwindigkeit
-  leistet die Antriebskraft $F$ aus Teilaufgabe b) die mechanische
+  \part[3] Allgemein gilt für die Leistung $P=\dfrac{W}{t}$ (Arbeit pro
+  Zeit). Ein MHD-Kanal mit Elektrodenabstand $L=\SI{1.0}{\meter}$ und
+  Strom $I=\SI{1000}{\ampere}$ senkrecht zu einem Magnetfeld
+  $B=\SI{0.50}{\tesla}$ erzeugt eine Antriebskraft
+  $F=BIL=\SI{500}{\newton}$. Bei $v=\SI{4.0}{\meter\per\second}$
+  Schiffsgeschwindigkeit leistet diese Kraft daraus die mechanische
   Leistung $P_{mech}=Fv$. Die Elektroden werden dazu mit
   $U=\SI{25}{\volt}$ betrieben, sodass die aufgewendete elektrische
   Leistung $P_{el}=UI$ beträgt. Berechnen Sie $P_{mech}$, $P_{el}$ und
@@ -613,7 +690,7 @@ und MHD-Pumpe} (LEIFIphysik).
 
   \part[2] Ein gewöhnlicher Propellerantrieb erreicht einen Wirkungsgrad
   von rund $\SI{70}{\percent}$. Vergleichen Sie mit Ihrem berechneten Wert
-  aus Teilaufgabe c): Was bedeutet das für die Wirtschaftlichkeit des
+  aus Teilaufgabe d): Was bedeutet das für die Wirtschaftlichkeit des
   MHD-Antriebs im Vergleich zu einem herkömmlichen Schiff?
   \begin{answerbox}
   \vspace{2.2cm}
@@ -622,7 +699,7 @@ und MHD-Pumpe} (LEIFIphysik).
   Der berechnete Wirkungsgrad von rund $\SI{8}{\percent}$ liegt weit unter
   dem eines Propellerantriebs ($\SI{70}{\percent}$). Für dieselbe
   Antriebsleistung braucht der MHD-Antrieb also fast neunmal mehr
-  elektrische Energie -- er ist damit trotz des funktionierenden Prinzips
+  elektrische Energie. Er ist damit trotz des funktionierenden Prinzips
   wirtschaftlich klar unterlegen, was erklärt, wieso er sich gegenüber dem
   klassischen Propeller nie durchgesetzt hat.
   \end{solution}
@@ -635,7 +712,7 @@ und MHD-Pumpe} (LEIFIphysik).
 % =============================================================================
 \needspace{16cm}
 \begin{theoriebox}[Gruppe D: Polarlichter]
-Sie kennen dieses Beispiel schon aus Teil 1 -- jetzt schauen wir uns an,
+Sie kennen dieses Beispiel schon aus Teil 1. Jetzt schauen wir uns an,
 wieso das genau so passiert. Der Sonnenwind (geladene Teilchen von der
 Sonne) trifft auf die Magnetosphäre der Erde.
 
@@ -643,44 +720,60 @@ Sonne) trifft auf die Magnetosphäre der Erde.
 
 \textbf{Wie die Spiralbahn entsteht:} Ein Teilchen, das schräg zu einer
 Feldlinie einfliegt, hat eine Geschwindigkeitskomponente $v_\parallel$
-entlang der Feldlinie und eine Komponente $v_\perp$ quer dazu -- die
-bereits bekannte Schraubenbahn-Zerlegung. Nur $v_\perp$ erzeugt über die
-Lorentzkraft eine Kreisbewegung um die Feldlinie; $v_\parallel$ bleibt
-davon unbeeinflusst und trägt das Teilchen gleichzeitig die Feldlinie
-entlang. Kreisbewegung quer plus gleichförmige Bewegung längs ergibt
-zusammen die Spiralbahn, die die Feldlinie wie eine Feder umwickelt -- die
-Feldlinie selbst ist dabei die \glqq Achse\grqq{} der Spirale.
+entlang der Feldlinie und eine Komponente $v_\perp$ quer dazu: die
+bereits bekannte Schraubenbahnzerlegung. Für die Lorentzkraft
+$F=qv\times B$ zählt nur die Komponente von $v$ senkrecht zu $B$, denn das
+Kreuzprodukt zweier paralleler Vektoren ist null. Auf $v_\parallel$ (parallel
+zur Feldlinie) wirkt deshalb gar keine Kraft: Diese Komponente bleibt
+während der ganzen Bewegung unverändert, das Teilchen bewegt sich
+gleichförmig die Feldlinie entlang. Auf $v_\perp$ dagegen wirkt die
+bereits bekannte Lorentzkraft $qv_\perp B$ stets senkrecht zur eigenen
+Bewegungsrichtung. Genau wie am Fadenstrahlrohr liefert das die
+Zentripetalkraft für eine Kreisbewegung, hier mit Radius
+$r=\dfrac{mv_\perp}{qB}$ um die Feldlinie herum. Die Überlagerung dieser
+beiden unabhängigen Bewegungen (Kreisbewegung quer zur Feldlinie durch
+$v_\perp$, gleichförmige Bewegung längs der Feldlinie durch $v_\parallel$)
+ergibt zusammen die Spiralbahn, die die Feldlinie wie eine Feder
+umwickelt. Die Feldlinie selbst ist dabei die \glqq Achse\grqq{} der
+Spirale.
 
 \Bild{7cm}{Bilder/charge-helix-trajectory-static.pdf}
 \Bild{6cm}{Bilder/polarlicht_illustration_flugbahn.png}
 
 \textbf{Wie daraus die magnetische Flasche wird:} Neu ist, was passiert,
 wenn das Teilchen auf diesem Spiralweg in ein stärker werdendes Feld
-hineinläuft -- genau das passiert an den Polen, wo die Feldlinien der Erde
-zusammenlaufen und $B$ deshalb zunimmt. Wie schon beim Fadenstrahlrohr
-gilt: Die Lorentzkraft steht immer senkrecht zur Geschwindigkeit und kann
-deshalb nur deren \emph{Richtung} ändern, nie ihren \emph{Betrag} -- die
-Gesamtgeschwindigkeit $v=\sqrt{v_\parallel^2+v_\perp^2}$ des Teilchens
-bleibt während der ganzen Bewegung konstant. Wird $B$ stärker, wächst also
-$v_\perp$ genau so weit, wie $v_\parallel$ abnimmt, sodass die
-Gesamtgeschwindigkeit gleich bleibt. Irgendwann ist die gesamte
-Geschwindigkeit in $v_\perp$ umgewandelt, $v_\parallel=0$: An diesem
-Umkehrpunkt wirkt die Lorentzkraft wie ein \textbf{\emph{Spiegel}} und
-schickt das Teilchen die Feldlinie wieder zurück, Richtung Äquator und
-weiter zum gegenüberliegenden Pol, wo sich derselbe Effekt wiederholt.
+hineinläuft. Genau das passiert an den Polen, wo die Feldlinien der Erde
+zusammenlaufen und $B$ deshalb zunimmt. Dabei gilt: Je stärker $B$ wird,
+desto enger und schneller wird die Kreisbewegung um die Feldlinie, das
+heisst $v_\perp$ nimmt zu, während $v_\parallel$ (die Geschwindigkeit
+entlang der Feldlinie) abnimmt. Wird das Feld stark genug, kommt das
+Teilchen entlang der Feldlinie schliesslich ganz zum Stillstand
+($v_\parallel=0$). Ab diesem \textbf{\emph{Umkehrpunkt}} wirkt die
+Lorentzkraft wie ein \textbf{\emph{Spiegel}} und schickt das Teilchen die
+Feldlinie wieder zurück, Richtung Äquator und weiter zum
+gegenüberliegenden Pol, wo sich derselbe Effekt wiederholt.
 
 Ein Teilchen kann so wiederholt zwischen Nord- und Südpol hin- und
-herpendeln, ohne je die Atmosphäre zu erreichen -- es ist in einer
+herpendeln, ohne je die Atmosphäre zu erreichen. Es ist in einer
 natürlichen \textbf{\emph{magnetischen Flasche}} gefangen (den
 Van-Allen-Gürteln), mit den beiden polnahen Zonen starken Feldes als
 \glqq Flaschenhälse\grqq{}. Nur Teilchen, deren Geschwindigkeitsrichtung
 beim Eintritt zu nahe an $v_\parallel$ liegt (zu wenig $v_\perp$,
 sogenannter \textbf{\emph{Verlustkegel}}), erreichen den Umkehrpunkt gar
-nicht, sondern schon vorher die dichte Atmosphäre -- dort erzeugen sie
-durch Stösse mit Luftmolekülen das Polarlicht, bevorzugt in einem Ring
-rund um die Pole (\textbf{\emph{Auroraloval}}), nicht direkt über den
-Polen selbst, weil genau dort die Feldlinien am steilsten und am
-dichtesten zusammenlaufen.
+nicht: Weil sie fast nur in $v_\parallel$-Richtung fliegen, bräuchte es
+ein extrem starkes Magnetfeld, um sie noch abzubremsen und umzukehren, und
+ein derart starkes Feld gibt es erst ganz nah an der Erde, tief über den
+Polen, wo die Feldlinien am dichtesten zusammenlaufen. Diese Teilchen
+dringen deshalb viel tiefer in die Atmosphäre ein als Teilchen mit einem
+Umkehrpunkt weiter oben, typischerweise bis auf Höhen von rund
+\SIrange{100}{300}{\kilo\meter}. Dort ist die Luft schon
+dicht genug, dass sie mit Sauerstoff- und Stickstoffmolekülen
+zusammenstossen, bevor sie gespiegelt werden könnten. Bei diesen Stössen
+wird Energie auf die Luftmoleküle übertragen; diese werden dadurch
+angeregt und strahlen beim Zurückfallen in den Grundzustand Licht ab: das
+Polarlicht, bevorzugt in einem Ring rund um die Pole
+(\textbf{\emph{Auroraloval}}), nicht direkt über den Polen selbst, weil
+genau dort die Feldlinien am steilsten und am dichtesten zusammenlaufen.
 
 \Bild{6cm}{Bilder/csm_20231218_Polarlicht_iStockWdP_6d45db0da8.png}
 
@@ -696,7 +789,7 @@ Flasche}.
 \begin{questions}
 \setcounter{question}{3}
 \begin{taskbox}[Kontrollfrage: Polarlichter (Gruppe D)]
-\question[8]
+\question[7]
 \begin{parts}
   \part[3] Ein Teilchen fliegt spiralförmig entlang einer Feldlinie in
   Richtung Nordpol, wo das Feld stärker wird. Was passiert dabei mit
@@ -706,12 +799,23 @@ Flasche}.
   \vspace{2.4cm}
   \end{answerbox}
   \begin{solution}
-  Weil die Lorentzkraft nie Arbeit verrichtet, bleibt die gesamte
-  Geschwindigkeit (Bewegungsenergie) des Teilchens konstant. Mit
-  zunehmendem $B$ wächst $v_\perp$ auf Kosten von $v_\parallel$. Am
-  Umkehrpunkt ist die gesamte Bewegungsenergie in $v_\perp$ umgewandelt
-  ($v_\parallel=0$): Die Lorentzkraft wirkt dort wie ein Spiegel und
-  schickt das Teilchen die Feldlinie wieder zurück.
+  Je stärker $B$ wird, desto enger wird die Kreisbewegung um die
+  Feldlinie: $v_\perp$ nimmt zu, $v_\parallel$ nimmt ab. Wird $B$ stark
+  genug, kommt das Teilchen entlang der Feldlinie ganz zum Stillstand
+  ($v_\parallel=0$). Ab diesem Punkt wirkt die Lorentzkraft wie ein
+  Spiegel und schickt das Teilchen die Feldlinie wieder zurück.
+  \end{solution}
+
+  \part[2] Wieso wird der Radius der Spiralbahn kleiner, je näher das
+  Teilchen den Polen kommt?
+  \begin{answerbox}
+  \vspace{2cm}
+  \end{answerbox}
+  \begin{solution}
+  Für den Radius gilt weiterhin die bereits bekannte Formel
+  $r=\dfrac{mv_\perp}{qB}$. Da $B$ zu den Polen hin stark zunimmt (die
+  Feldlinien der Erde laufen dort immer dichter zusammen) und $B$ im
+  Nenner steht, wird der Radius $r$ dadurch kleiner.
   \end{solution}
 
   \part[2] Wieso entstehen Polarlichter trotzdem nicht überall auf der
@@ -727,24 +831,6 @@ Flasche}.
   direkt über den Polen selbst, weil dort die Feldlinien am steilsten und
   dichtesten zusammenlaufen.
   \end{solution}
-
-  \part[3] Begründen Sie, wieso die Gesamtgeschwindigkeit
-  $v=\sqrt{v_\parallel^2+v_\perp^2}$ eines Teilchens während der gesamten
-  Bewegung entlang einer Feldlinie konstant bleibt, obwohl sich
-  $v_\parallel$ und $v_\perp$ einzeln verändern. Nutzen Sie dabei, was Sie
-  bereits vom Fadenstrahlrohr über die Richtung der Lorentzkraft wissen.
-  \begin{answerbox}
-  \vspace{2.4cm}
-  \end{answerbox}
-  \begin{solution}
-  Die Lorentzkraft steht immer senkrecht zur Geschwindigkeit -- genau wie
-  am Fadenstrahlrohr kann sie deshalb nur die Richtung der Bewegung
-  ändern, nie deren Betrag. Die Gesamtgeschwindigkeit $v$ bleibt also
-  konstant. Da $v^2=v_\parallel^2+v_\perp^2$ und $v$ konstant ist, muss
-  $v_\perp$ zunehmen, wenn $v_\parallel$ abnimmt (und umgekehrt) -- die
-  Summe der Quadrate bleibt gleich, auch wenn sich die einzelnen
-  Komponenten gegenläufig verändern.
-  \end{solution}
 \end{parts}
 \end{taskbox}
 \end{questions}
@@ -757,15 +843,18 @@ Flasche}.
 Bewegen sich Ladungsträger (z.\,B. in einem stromdurchflossenen Leiter oder
 in einer strömenden leitfähigen Flüssigkeit wie Blut) quer zu einem
 angelegten Magnetfeld $B$, wirkt auf sie die bereits bekannte Lorentzkraft
-$qvB$ senkrecht zu $v$ und $B$ -- sie werden dadurch zu einer Seite hin
+$qvB$ senkrecht zu $v$ und $B$. Sie werden dadurch zu einer Seite hin
 abgelenkt. Weil sie den Leiter/das Gefäss aber nicht verlassen können,
 sammelt sich dort ein Ladungsüberschuss an, bis das dadurch entstehende
-elektrische Feld $E_H$ die Lorentzkraft gerade kompensiert; neu ist dieses
-\textbf{\emph{Kräftegleichgewicht}} selbst -- dieselbe Idee wie beim
-Wien-Filter (Thema Massenspektrograph), nur mit vertauschter
-Fragestellung: Dort ist $v_0$ vorgegeben und wird über $E$ und $B$
-eingestellt; hier ist $v$ unbekannt und wird über die resultierende
-Spannung gemessen. Im Gleichgewicht gilt
+elektrische Feld $E_H$ die Lorentzkraft gerade kompensiert. Neu ist dieses
+\textbf{\emph{Kräftegleichgewicht}} selbst: Die Ladungsträger sammeln sich
+nur so lange an einer Seite an, bis das elektrische Feld $E_H$ genau so
+stark auf sie zurückwirkt, wie die Lorentzkraft sie zur Seite drängt.
+Danach herrscht Gleichgewicht, und es sammelt sich keine weitere Ladung
+mehr an. Aus genau diesem Gleichgewicht lässt sich, wie im Folgenden
+gezeigt, die zunächst unbekannte Geschwindigkeit $v$ der Ladungsträger
+über die dabei entstehende, messbare Spannung bestimmen. Im Gleichgewicht
+gilt
 \[
   F_{el}=F_L \quad\Longrightarrow\quad qE_H=qvB
   \quad\Longrightarrow\quad E_H=vB,
@@ -792,8 +881,8 @@ der Ladungsträger berechnen.
 Blutplasma), die sich mit dem Blutfluss bewegen. Legt man von aussen ein
 Magnetfeld $B$ quer über ein Blutgefäss und misst mit zwei Elektroden auf
 gegenüberliegenden Seiten die Hall-Spannung $U_H$, lässt sich bei bekanntem
-Gefässdurchmesser $d$ die Fliessgeschwindigkeit des Blutes berechnen --
-nicht-invasiv, ohne das Gefäss zu öffnen.
+Gefässdurchmesser $d$ die Fliessgeschwindigkeit des Blutes berechnen,
+nichtinvasiv, ohne das Gefäss zu öffnen.
 
 \Bild{7cm}{Bilder/blut_messung.png}
 
@@ -805,7 +894,7 @@ Anwendung des Hall-Effekts (Abitur BY 2013 Ph11 A2-1)}.
 \begin{questions}
 \setcounter{question}{4}
 \begin{taskbox}[Kontrollfrage: Hall-Effekt (Gruppe E)]
-\question[5]
+\question[6]
 \begin{parts}
   \part[3] Wie lässt sich mit dem Hall-Effekt die Fliessgeschwindigkeit
   von Blut messen, ohne das Gefäss zu öffnen? Welche zwei Grössen müssen
@@ -821,19 +910,28 @@ Anwendung des Hall-Effekts (Abitur BY 2013 Ph11 A2-1)}.
   Magnetfeld $B$ und der Gefässdurchmesser $d$ bekannt sein.
   \end{solution}
 
-  \part[2] Über einem stromdurchflossenen Metallleiter der Breite
-  $d=\SI{2.0}{\centi\meter}$ liegt ein Magnetfeld $B=\SI{0.80}{\tesla}$.
-  Die Ladungsträger bewegen sich mit einer typischen
-  Driftgeschwindigkeit $v=\SI{1.5e-3}{\meter\per\second}$. Berechnen Sie
-  die entstehende Hall-Spannung $U_H$.
+  \part[3] Der Hall-Effekt wird in der Praxis nicht nur zur
+  Geschwindigkeitsmessung genutzt, sondern lässt sich auch nutzen, um
+  herauszufinden, ob der Strom in einem Leiter von positiven oder von
+  negativen Ladungsträgern getragen wird. Erklären Sie, wieso sich das
+  Vorzeichen der Hall-Spannung $U_H$ (also welche Seite höheres Potenzial
+  hat) je nachdem unterscheidet, obwohl der (konventionelle) Strom $I$ in
+  beiden Fällen in dieselbe Richtung fliesst.
   \begin{answerbox}
-  \vspace{1.8cm}
+  \vspace{2.6cm}
   \end{answerbox}
   \begin{solution}
-  $U_H=Bvd=\SI{0.80}{\tesla}\cdot\SI{1.5e-3}{\meter\per\second}\cdot\SI{2.0e-2}{\meter}
-  =\SI{2.4e-5}{\volt}=\SI{24}{\micro\volt}$ -- deutlich kleiner als die
-  Hall-Spannung im Blutgefäss oben, weil die Driftgeschwindigkeit in einem
-  Metall viel kleiner ist als eine typische Blutflussgeschwindigkeit.
+  Für denselben konventionellen Strom $I$ bewegen sich positive
+  Ladungsträger tatsächlich in Stromrichtung, negative Ladungsträger
+  (z.\,B. Elektronen) dagegen genau entgegengesetzt zur Stromrichtung. Die
+  Lorentzkraft lenkt in beiden Fällen zur selben Seite hin ab. Sind es
+  positive Ladungsträger, sammelt sich dort positive Ladung an, und diese
+  Seite wird zum Pluspol der Hall-Spannung. Sind es dagegen negative
+  Ladungsträger, sammeln sich stattdessen Elektronen auf genau dieser
+  Seite an, die also zum Minuspol wird. Das Vorzeichen von $U_H$ ist damit
+  für positive und negative Ladungsträger genau umgekehrt. Historisch
+  liess sich so zum ersten Mal zeigen, dass der elektrische Strom in
+  Metallen tatsächlich von negativen Elektronen getragen wird.
   \end{solution}
 \end{parts}
 \end{taskbox}
@@ -845,12 +943,74 @@ Anwendung des Hall-Effekts (Abitur BY 2013 Ph11 A2-1)}.
 \textbf{Vertiefungsphase: Ihre Stammgruppe ist wieder komplett}
 
 Nachdem in Ihrer Stammgruppe alle fünf Themen einmal erklärt wurden, lösen
-alle fünf Mitglieder gemeinsam die folgenden zwei Aufgaben -- jede Aufgabe
+alle fünf Mitglieder gemeinsam die folgenden zwei Aufgaben. Jede Aufgabe
 braucht Wissen aus mindestens zwei verschiedenen Expertenthemen.
+
+\needspace{16cm}
+\begin{questions}
+\setcounter{question}{5}
+\begin{groupbox}[Stammgruppenaufgabe: Rechentraining zu allen fünf Themen]
+\question[8] Nachdem in Ihrer Stammgruppe alle fünf Themen ausgetauscht
+wurden, kennen Sie jetzt gemeinsam alle fünf Formeln. Rechnen Sie
+gemeinsam die folgenden vier kurzen Aufgaben, eine pro Thema.
+\begin{parts}
+  \part[2] \textbf{Massenspektrograph:} Ein Wien-Filter hat
+  $E=\SI{8.0e4}{\volt\per\meter}$ und $B_1=\SI{0.20}{\tesla}$. Welche
+  Geschwindigkeit $v_0$ wird selektiert?
+  \begin{answerbox}
+  \vspace{1.8cm}
+  \end{answerbox}
+  \begin{solution}
+  $v_0=\dfrac{E}{B_1}=\dfrac{\SI{8.0e4}{\volt\per\meter}}{\SI{0.20}{\tesla}}
+  =\SI{4.0e5}{\meter\per\second}$.
+  \end{solution}
+
+  \part[2] \textbf{Kreisbeschleuniger:} Berechnen Sie die Umlauffrequenz
+  $f$ eines Protons ($q=\SI{1.6e-19}{\coulomb}$,
+  $m=\SI{1.67e-27}{\kilogram}$) in einem Zyklotron mit
+  $B=\SI{1.5}{\tesla}$.
+  \begin{answerbox}
+  \vspace{2cm}
+  \end{answerbox}
+  \begin{solution}
+  $f=\dfrac{qB}{2\pi m}=\dfrac{\SI{1.6e-19}{\coulomb}\cdot\SI{1.5}{\tesla}}
+  {2\pi\cdot\SI{1.67e-27}{\kilogram}}\approx\SI{2.3e7}{\hertz}=\SI{23}{\mega\hertz}$.
+  \end{solution}
+
+  \part[2] \textbf{MHD-Antrieb:} Durch einen MHD-Kanal mit
+  Elektrodenabstand $L=\SI{1.0}{\meter}$ fliesst ein Strom
+  $I=\SI{1000}{\ampere}$ senkrecht zu einem Magnetfeld
+  $B=\SI{0.50}{\tesla}$. Berechnen Sie die Antriebskraft $F$.
+  \begin{answerbox}
+  \vspace{1.8cm}
+  \end{answerbox}
+  \begin{solution}
+  $F=BIL=\SI{0.50}{\tesla}\cdot\SI{1000}{\ampere}\cdot\SI{1.0}{\meter}
+  =\SI{500}{\newton}$.
+  \end{solution}
+
+  \part[2] \textbf{Hall-Effekt:} Über einem stromdurchflossenen
+  Metallleiter der Breite $d=\SI{2.0}{\centi\meter}$ liegt ein Magnetfeld
+  $B=\SI{0.80}{\tesla}$. Die Ladungsträger bewegen sich mit einer
+  typischen Driftgeschwindigkeit $v=\SI{1.5e-3}{\meter\per\second}$.
+  Berechnen Sie die entstehende Hall-Spannung $U_H$.
+  \begin{answerbox}
+  \vspace{1.8cm}
+  \end{answerbox}
+  \begin{solution}
+  $U_H=Bvd=\SI{0.80}{\tesla}\cdot\SI{1.5e-3}{\meter\per\second}\cdot\SI{2.0e-2}{\meter}
+  =\SI{2.4e-5}{\volt}=\SI{24}{\micro\volt}$. Das ist um Grössenordnungen
+  kleiner als die Hall-Spannung im Blutgefäss (Kontrollfrage Hall-Effekt),
+  weil die Driftgeschwindigkeit der Elektronen in einem Metall viel
+  kleiner ist als eine typische Blutflussgeschwindigkeit.
+  \end{solution}
+\end{parts}
+\end{groupbox}
+\end{questions}
 
 \needspace{14cm}
 \begin{questions}
-\setcounter{question}{5}
+\setcounter{question}{6}
 \begin{groupbox}[Stammgruppenaufgabe: Massenspektrograph und Hall-Effekt]
 \question[7] Beide Themen beruhen auf demselben Kräftegleichgewicht bei
 gekreuzten Feldern ($qE=qvB$ bzw.\ $qE_H=qvB$), nutzen es aber in
@@ -872,8 +1032,8 @@ wird umgekehrt aus einer \emph{gemessenen} Spannung $U_H$ eine zunächst
   \begin{solution}
   $v_0=E/B_1=\SI{1.2e5}{\volt\per\meter}/\SI{0.40}{\tesla}=\SI{3.0e5}{\meter\per\second}$.\\
   $m=\dfrac{qB_2r}{v_0}=\dfrac{\SI{1.6e-19}{\coulomb}\cdot\SI{0.60}{\tesla}\cdot\SI{0.125}{\meter}}{\SI{3.0e5}{\meter\per\second}}
-  =\SI{4.0e-26}{\kilogram}\approx\SI{24.1}{u}$ -- das entspricht etwa der
-  Masse eines Magnesium-Ions ($^{24}$Mg).
+  =\SI{4.0e-26}{\kilogram}\approx\SI{24.1}{u}$. Das entspricht etwa der
+  Masse eines Magnesiumions ($^{24}$Mg).
   \end{solution}
 
   \part[2] Über ein Blutgefäss mit Durchmesser $d=\SI{4.0}{\milli\meter}$
@@ -886,13 +1046,13 @@ wird umgekehrt aus einer \emph{gemessenen} Spannung $U_H$ eine zunächst
   \end{answerbox}
   \begin{solution}
   $v=\dfrac{U_H}{Bd}=\dfrac{\SI{1.0e-3}{\volt}}{\SI{0.50}{\tesla}\cdot\SI{4.0e-3}{\meter}}
-  =\SI{0.50}{\meter\per\second}$ -- eine realistische
+  =\SI{0.50}{\meter\per\second}$. Das ist eine realistische
   Blutflussgeschwindigkeit in einem grösseren Gefäss.
   \end{solution}
 
   \part[2] Diskutieren Sie zu zweit (Massenspektrograph- und
   Hall-Effekt-Experte/in): Was ist an den beiden Rechnungen strukturell
-  gleich, und was genau ist vertauscht -- welche Grösse ist jeweils
+  gleich, und was genau ist vertauscht: welche Grösse ist jeweils
   gegeben, welche gesucht?
   \begin{answerbox}
   \vspace{2.2cm}
@@ -912,7 +1072,7 @@ wird umgekehrt aus einer \emph{gemessenen} Spannung $U_H$ eine zunächst
 
 \needspace{12cm}
 \begin{questions}
-\setcounter{question}{6}
+\setcounter{question}{7}
 \begin{groupbox}[Stammgruppenaufgabe: Synthesetabelle]
 \question[4] Füllen Sie gemeinsam die Tabelle aus: eine Zeile pro Thema,
 mit den beteiligten Feldern, der Rolle der Lorentzkraft und dem Zweck der

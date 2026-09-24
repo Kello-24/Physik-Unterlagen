@@ -1,0 +1,476 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Aufgabenblatt 3: Schaltungen
+% UZH Praktikum I -- Sara Romer Urban, Kantonsschule im Lee, HS2026
+% Klasse: 1f (23.09.2026), aus PLAN_Dokumentengenerierung.md.
+%
+% ENTWURF. Uebungsaufgaben zu arbeitsblatt4-schaltungen.tex im selben
+% Ordner (Serie-/Parallelschaltung, Ersatzwiderstand, Mischschaltungen,
+% Kirchhoffsche Regeln, UND-/ODER-Schaltung) -- Aufteilung nach Loris'
+% eigenem Kriterium (Arbeitsblatt = Plenum/Praktisches, Aufgabenblatt =
+% Uebungsaufgaben), analog zu u-i-r/aufgabenblatt-u-i-r.tex. Deshalb
+% bewusst OHNE einleitende Erklaerbox, beginnt direkt mit der ersten
+% Aufgabe.
+%
+% -----------------------------------------------------------------------------
+% Korrektur (24.09.2026, auf Wunsch): Nummerierung (Aufgabenblatt-Zaehlung
+% nach institutionen/UZH-Praktikum-I/CLAUDE.md, Abschnitt "Nummerierung
+% und Dateibenennung") jetzt festgelegt: Aufgabenblatt 3, passend zum
+% bereits vergebenen Arbeitsblatt 4 (arbeitsblatt4-schaltungen.tex im
+% selben Ordner) -- die Nummernpaarung Arbeitsblatt = Aufgabenblatt + 1
+% ist bei jedem anderen Themenpaar in diesem Repo so belegt (z. B.
+% Kondensatoren: Arbeitsblatt 4 / Aufgabenblatt 3, siehe CLAUDE.md).
+% Vorwissen/ im elektrizitaet-Ordner enthaelt keine eindeutig nummerierten
+% Dokumente Sara Romers zu diesem Thema, die Nummer folgt daher aus dieser
+% Paarungskonvention statt direkt aus Vorwissen/ abgeleitet zu sein.
+% Datei entsprechend von aufgabenblatt-schaltungen.tex auf
+% aufgabenblatt3-schaltungen.tex umbenannt (Titel/PDF-Metadaten ebenso
+% angepasst).
+%
+% Aufgaben 1-4 aus institutionen/UZH-Praktikum-I/arbeitsblaetter/
+% elektrizitaet/schaltungen/Aufgaben/ (Loris' eigene Sammlung, Quelle
+% LEIFIphysik.de "Komplexere Schaltkreise") uebernommen und angepasst:
+% eigene Formulierung/eigene circuitikz-Schaltplaene statt der
+% Original-Screenshots, Teilaufgaben zu Leistung/Energie (P=U*I) entfernt,
+% da im Arbeitsblatt nicht behandelt -- nur Widerstand/Spannung/Strom
+% (Ohmsches Gesetz, Ersatzwiderstand) bleibt im Rahmen des Gelernten.
+% - Aufgabe 1 (qualitativ, Serie/Parallel-Vergleich): aus Aufgaben/
+%   Aufgabe_1 "Zweite Lampe im Stromkreis", unveraendert uebernommen
+%   (bereits rein qualitativ, kein Leistungsbezug).
+% - Aufgabe 2 ((R1+R2) parallel zu R3, U0=220V): aus Aufgaben/Aufgabe_2
+%   "Widerstandskombination", nur Teilaufgaben a) Rges und b) Stroeme
+%   uebernommen (Teilaufgaben c/d zur Leistung weggelassen).
+% - Aufgabe 3 ((R1 parallel R2) in Serie mit R3, U0=12V): aus Aufgaben/
+%   Aufgabe_0 "Minimaler und maximaler Widerstand", vollstaendig
+%   uebernommen (a: qualitative Abschaetzung, b: Strom, c: Teilspannungen
+%   -- reine Ersatzwiderstand-/Ohmsches-Gesetz-Anwendung, kein
+%   Leistungsbezug).
+% - Aufgabe 4 ((R1 parallel R2) in Serie mit (R3 parallel R4), U=12V):
+%   aus Aufgaben/Aufgabe_3 "Widerstandsaenderung", vollstaendig
+%   uebernommen (a: Rges und Strom bei A, b: qualitative Folgeueberlegung
+%   bei groesserem R1).
+% (Aufgabe 5, urspruenglich UND-/ODER-Schaltung, siehe Korrektur weiter
+% unten -- inzwischen wieder entfernt.)
+%
+% -----------------------------------------------------------------------------
+% Review-Korrektur (22.09.2026, auf Wunsch -- gemeinsam mit
+% arbeitsblatt4-schaltungen.tex per physics-accuracy-reviewer geprueft):
+% Aufgabe 3c verwendete den in 3b auf 0.102 A gerundeten Strom weiter,
+% was zu einem kleinen Rundungsfehler bei $U_3$ fuehrte (8.16 V statt der
+% praeziseren 8.17 V). Zwischenwert in 3b auf 0.1021 A praezisiert, 3c
+% entsprechend auf 8.17 V/3.83 V angepasst. Ausserdem stellte sich beim
+% Review heraus, dass Aufgabe 3a implizit die allgemeine Regel
+% "Ersatzwiderstand einer Parallelschaltung ist immer kleiner als der
+% kleinste Einzelwiderstand" voraussetzt -- diese stand damals in einer
+% Merksatz-Box in arbeitsblatt4-schaltungen.tex sichtbar; diese Box ist
+% seither wieder entfernt worden (siehe Korrektur unten), die Regel steckt
+% jetzt in der Konklusion-Antwort, die die SuS im Arbeitsblatt selbst zu
+% dieser Schaltung herleiten.
+%
+% -----------------------------------------------------------------------------
+% Korrektur (22.09.2026, auf Wunsch): (1) Aufgabe 5 (UND-/ODER-Schaltung)
+% komplett entfernt: Sie setzte die Begriffe "UND-Schaltung"/
+% "ODER-Schaltung" voraus, die im Arbeitsblatt aber nur in der optionalen
+% "Zusatzaufgabe (fuer schnelle Gruppen)" vorkommen. Nicht jede Gruppe
+% bearbeitet diese, die Begriffe sind also nicht zuverlaessig eingefuehrt.
+% Das Aufgabenblatt hat dadurch nur noch 4 statt 5 Aufgaben (\setcounter
+% -Werte entsprechend unveraendert, da Aufgabe 5 ohnehin die letzte war).
+% (2) Die selbst gezeichneten circuitikz-Schaltplaene in Aufgabe 2, 3 und 4
+% durch die tatsaechlichen Referenzbilder aus den jeweiligen Aufgaben/
+% -Unterordnern ersetzt (von SVG nach PDF konvertiert via Inkscape, siehe
+% gespeicherte Notiz zum SVG-Workflow): Aufgabe_2/
+% widerstandskombination-schaltplan.pdf, Aufgabe_0/
+% minimaler-maximaler-widerstand-schaltplan.pdf (fuer Aufgabe 3) und
+% Aufgabe_3/widerstandsaenderung-schaltplan.pdf (fuer Aufgabe 4):
+% inhaltlich identisch zu den bisherigen eigenen Schaltplaenen, aber die
+% Originalvorlage statt einer Nachzeichnung. Aufgabe 1 hat kein SVG im
+% zugehoerigen Aufgaben/Aufgabe_1/-Ordner (nur die LEIFI-PDF), ihr
+% einfacher Ein-Gluehbirne-Schaltplan bleibt deshalb unveraendert als
+% eigene circuitikz-Zeichnung.
+% =============================================================================
+\documentclass[addpoints,11pt,a4paper]{exam}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.2cm,headheight=14pt]{geometry}
+\usepackage{amsmath}
+\usepackage{siunitx}
+% Hausstil: zusammengesetzte Einheiten immer als echter Bruch (\frac), nicht
+% als Inline-Schraegstrich oder \tfrac -- gilt global fuer jedes \si/\SI.
+\sisetup{per-mode=fraction,fraction-command=\frac}
+\usepackage{array,booktabs,tabularx,multirow}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[european]{circuitikz}
+\usepackage[most]{tcolorbox}
+\usepackage{lastpage}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\usetikzlibrary{arrows.meta,calc,angles,quotes}
+
+\usepackage{setspace}
+\usepackage{needspace}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+\setstretch{1.08}
+\setlist[itemize]{itemsep=0.4em}
+
+% -----------------------------
+% Farben (Corporate-Farbschema Physik KFR)
+% -----------------------------
+\definecolor{titleblue}{HTML}{183A6B}
+\definecolor{accentblue}{HTML}{2E6F9E}
+\definecolor{darkgray}{HTML}{4A4A4A}
+
+% Links (hyperref): farblich ans Corporate-Farbschema angeglichen.
+\hypersetup{
+  colorlinks=true,
+  urlcolor=accentblue,
+  linkcolor=accentblue,
+  pdftitle={Aufgabenblatt 3: Schaltungen},
+  pdfauthor={Loris Keller}
+}
+
+% -----------------------------
+% Boxen
+% -----------------------------
+\tcbset{before skip=10pt, after skip=10pt}
+\newtcolorbox{titlebox}{
+  enhanced,
+  colback=titleblue,
+  colframe=titleblue,
+  boxrule=0pt,
+  arc=3mm,
+  left=3mm,right=3mm,top=3mm,bottom=3mm
+}
+
+\newlength{\aufgabenindent}
+\settowidth{\aufgabenindent}{10.\hskip\labelsep}
+
+\newtcolorbox{taskbox}[1][]{
+  enhanced, breakable,
+  colback=white, colframe=white, boxrule=0pt,
+  left=0mm,right=0mm,top=0mm,bottom=0mm,
+  before skip=10pt, after skip=10pt,
+  before upper={%
+    \def\tmpboxtitle{#1}%
+    \ifx\tmpboxtitle\empty\else\noindent\textbf{#1}\par\smallskip\fi
+  }
+}
+
+\newtcolorbox{answerbox}{
+  breakable,
+  colback=white,
+  colframe=gray!55,
+  boxrule=0.5pt,
+  arc=1.5mm,
+  left=2mm,right=2mm,top=2mm,bottom=2mm
+}
+
+% --- Loesungen ein-/ausblenden -----------------------------------------------
+\noprintanswers
+%\printanswers
+
+\pointformat{}
+\renewcommand{\solutiontitle}{\noindent\color{titleblue}\textbf{L\"osung:}\enspace}
+
+\pagestyle{headandfoot}
+\cfoot{\textcolor{darkgray}{Seite \thepage\ von \pageref{LastPage}}}
+
+\newcommand{\Kopfzeile}[4]{%
+  \begin{titlebox}
+    {\color{white}\sffamily\bfseries\Large #4}
+  \end{titlebox}
+  \vspace{0.5em}
+  \noindent\textbf{Klasse:}~#1 \hfill \textbf{Datum:}~#2 \hfill \textbf{Thema:}~#3
+    \hfill \textbf{Lehrperson:}~Loris Keller
+  \vspace{0.8em}
+  \lhead{\textcolor{darkgray}{#3}}
+  \rhead{\textcolor{darkgray}{#4}}
+}
+
+\newlength{\antwortraumlen}
+\newcommand{\Antwortraum}[1]{%
+  \pgfmathsetlength{\antwortraumlen}{#1*2.5cm}%
+  \begin{answerbox}
+    \rule{0pt}{\antwortraumlen}%
+  \end{answerbox}%
+}
+
+% Werte fuer Kopfzeile zentral setzen
+\newcommand{\Klasse}{1f}
+\newcommand{\Datum}{23.09.2026}
+\newcommand{\Thema}{Schaltungen}
+\newcommand{\ArbeitsblattTitel}{Aufgabenblatt 3: Schaltungen}
+
+\begin{document}
+
+\Kopfzeile{\Klasse}{\Datum}{\Thema}{\ArbeitsblattTitel}
+
+% =============================================================================
+% Aufgabe 1: Zweite Lampe im Stromkreis (qualitativ)
+% =============================================================================
+\begin{questions}
+\begin{taskbox}[Aufgabe 1: Zweite Lampe im Stromkreis]
+\question[4] An eine Spannungsquelle ist zunächst eine einzelne Glühbirne
+angeschlossen. Sie leuchtet in normaler Helligkeit.
+\begin{center}
+\begin{circuitikz}[scale=0.9]
+  \draw (0,0) to[battery1,invert,l=$U_0$] (0,2.5)
+              -- (3,2.5)
+              to[lamp] (3,0)
+              -- (0,0);
+\end{circuitikz}
+\end{center}
+\begin{parts}
+  \part[2] Was ändert sich, wenn eine zweite, baugleiche Glühbirne in
+  \textbf{\emph{Serie}} zur bereits vorhandenen geschaltet wird?
+  Begründen Sie ausführlich, auch bezüglich der Stromstärke, die die
+  Spannungsquelle jetzt liefern muss.
+  \begin{answerbox}
+  \vspace{2.2cm}
+  \end{answerbox}
+  \begin{solution}
+  Die beiden Glühbirnen liegen jetzt in Serie: Der Gesamtwiderstand der
+  Schaltung ist die Summe der beiden (gleich grossen) Einzelwiderstände,
+  er verdoppelt sich also. Da die Spannung der Quelle gleich bleibt,
+  sinkt der Strom (Ohmsches Gesetz $I=U/R$). Beide Glühbirnen leuchten
+  gleich hell, jedoch schwächer als die ursprüngliche einzelne
+  Glühbirne vorher. Die Spannungsquelle muss dabei \textbf{\emph{weniger}}
+  Strom liefern als zuvor.
+  \end{solution}
+
+  \part[2] Was ändert sich, wenn eine zweite, baugleiche Glühbirne
+  stattdessen \textbf{\emph{parallel}} zur vorhandenen geschaltet wird?
+  Begründen Sie wieder ausführlich, auch bezüglich der Stromstärke, die
+  die Spannungsquelle liefern muss.
+  \begin{answerbox}
+  \vspace{2.2cm}
+  \end{answerbox}
+  \begin{solution}
+  Bei einer Parallelschaltung liegt an jeder der beiden Glühbirnen
+  weiterhin die volle Spannung der Quelle an, genau wie vorher an der
+  einzelnen Glühbirne. Beide leuchten deshalb gleich hell wie die
+  ursprüngliche einzelne Glühbirne, ihre Helligkeit ändert sich nicht.
+  Der Gesamtstrom, den die Spannungsquelle liefern muss, verdoppelt sich
+  aber, da sich der Strom nun auf zwei parallele Zweige mit je demselben
+  Strom wie vorher aufteilt.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Aufgabe 2: Widerstandskombination
+% =============================================================================
+\needspace{14cm}
+\begin{questions}
+\setcounter{question}{1}
+\begin{taskbox}[Aufgabe 2: Widerstandskombination]
+\question[5] Gegeben ist die folgende Schaltung mit
+$R_1=\SI{50}{\ohm}$, $R_2=\SI{100}{\ohm}$, $R_3=\SI{200}{\ohm}$ und
+$U_0=\SI{220}{\volt}$:
+\begin{center}
+\includegraphics[width=6.5cm]{Aufgaben/Aufgabe_2/widerstandskombination-schaltplan.pdf}
+\end{center}
+\begin{parts}
+  \part[2] Berechnen Sie den Gesamtwiderstand $R_{ges}$ der Schaltung.
+  \begin{answerbox}
+  \vspace{2.5cm}
+  \end{answerbox}
+  \begin{solution}
+  $R_1$ und $R_2$ liegen in Serie:
+  \[
+    R_{12} = R_1+R_2 = \SI{50}{\ohm}+\SI{100}{\ohm} = \SI{150}{\ohm}.
+  \]
+  Diese Serie liegt parallel zu $R_3$:
+  \[
+    \frac{1}{R_{ges}} = \frac{1}{R_{12}}+\frac{1}{R_3}
+    = \frac{1}{\SI{150}{\ohm}}+\frac{1}{\SI{200}{\ohm}}
+    = \frac{4}{\SI{600}{\ohm}}+\frac{3}{\SI{600}{\ohm}}
+    = \frac{7}{\SI{600}{\ohm}}
+  \]
+  \[
+    \Longrightarrow\quad R_{ges} = \frac{\SI{600}{\ohm}}{7} \approx \SI{85.7}{\ohm}.
+  \]
+  \end{solution}
+
+  \part[3] Berechnen Sie die Stromstärke $I_1$ durch $R_1$ und $R_2$
+  sowie die Stromstärke $I_2$ durch $R_3$.
+  \begin{answerbox}
+  \vspace{2.5cm}
+  \end{answerbox}
+  \begin{solution}
+  Beide Zweige liegen an derselben Spannung $U_0$ (Parallelschaltung),
+  mit dem Ohmschen Gesetz gilt für jeden Zweig einzeln:
+  \[
+    I_1 = \frac{U_0}{R_{12}} = \frac{\SI{220}{\volt}}{\SI{150}{\ohm}}
+    \approx \SI{1.47}{\ampere}.
+  \]
+  \[
+    I_2 = \frac{U_0}{R_3} = \frac{\SI{220}{\volt}}{\SI{200}{\ohm}}
+    = \SI{1.1}{\ampere}.
+  \]
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Aufgabe 3: Minimaler und maximaler Widerstand
+% =============================================================================
+\needspace{16cm}
+\begin{questions}
+\setcounter{question}{2}
+\begin{taskbox}[Aufgabe 3: Minimaler und maximaler Widerstand]
+\question[6] Gegeben ist die folgende Schaltung mit $U_0=\SI{12.0}{\volt}$,
+$R_1=\SI{100}{\ohm}$ und $R_3=\SI{80.0}{\ohm}$. Die Grösse von $R_2$ ist
+zunächst unbekannt.
+\begin{center}
+\includegraphics[width=6cm]{Aufgaben/Aufgabe_0/minimaler-maximaler-widerstand-schaltplan.pdf}
+\end{center}
+\begin{parts}
+  \part[2] Begründen Sie ohne Rechnung, warum der Gesamtwiderstand
+  dieser Schaltung grösser als $\SI{80}{\ohm}$, aber kleiner als
+  $\SI{180}{\ohm}$ sein muss.
+  \begin{answerbox}
+  \vspace{2.5cm}
+  \end{answerbox}
+  \begin{solution}
+  Die Schaltung ist eine Serieschaltung aus einer Parallelschaltung
+  ($R_1\|R_2$) und dem Einzelwiderstand $R_3$. Da $R_3=\SI{80}{\ohm}$
+  ist, muss der Gesamtwiderstand mindestens $\SI{80}{\ohm}$ betragen: Er
+  kann durch die dazu in Serie liegende Parallelschaltung nur noch
+  grösser werden. Der Widerstand einer Parallelschaltung ist aber immer
+  kleiner als ihr kleinster Einzelwiderstand, hier also kleiner als
+  $R_1=\SI{100}{\ohm}$. Der Gesamtwiderstand ist deshalb grösser als
+  $\SI{80}{\ohm}$, aber kleiner als $\SI{80}{\ohm}+\SI{100}{\ohm}=\SI{180}{\ohm}$.
+  \end{solution}
+
+  \needspace{10cm}
+  \part[2] Nun beträgt $R_2=\SI{60.0}{\ohm}$. Berechnen Sie die
+  Stromstärke, die durch die Schaltung fliesst.
+  \begin{answerbox}
+  \vspace{2.5cm}
+  \end{answerbox}
+  \begin{solution}
+  Zuerst $R_1$ parallel zu $R_2$:
+  \[
+    \frac{1}{R_{12}} = \frac{1}{R_1}+\frac{1}{R_2}
+    = \frac{1}{\SI{100}{\ohm}}+\frac{1}{\SI{60}{\ohm}}
+    = \frac{3}{\SI{300}{\ohm}}+\frac{5}{\SI{300}{\ohm}}
+    = \frac{8}{\SI{300}{\ohm}}
+  \]
+  \[
+    \Longrightarrow\quad R_{12} = \frac{\SI{300}{\ohm}}{8} = \SI{37.5}{\ohm}.
+  \]
+  Damit der Gesamtwiderstand (Serie mit $R_3$):
+  \[
+    R_{ges} = R_{12}+R_3 = \SI{37.5}{\ohm}+\SI{80}{\ohm} = \SI{117.5}{\ohm}.
+  \]
+  Mit dem Ohmschen Gesetz:
+  \[
+    I = \frac{U_0}{R_{ges}} = \frac{\SI{12.0}{\volt}}{\SI{117.5}{\ohm}}
+    \approx \SI{0.1021}{\ampere}.
+  \]
+  \end{solution}
+
+  \needspace{8cm}
+  \part[2] Berechnen Sie die Spannungen, die an $R_1$, $R_2$ und $R_3$
+  jeweils abfallen.
+  \begin{answerbox}
+  \vspace{2.5cm}
+  \end{answerbox}
+  \begin{solution}
+  Für $R_3$ gilt mit dem Ohmschen Gesetz:
+  \[
+    U_3 = R_3\cdot I = \SI{80.0}{\ohm}\cdot\SI{0.1021}{\ampere}
+    \approx \SI{8.17}{\volt}.
+  \]
+  An $R_1$ und $R_2$ fällt dieselbe Spannung ab, da sie parallel
+  geschaltet sind. Diese ergibt sich aus der restlichen Spannung:
+  \[
+    U_1 = U_2 = U_0-U_3 = \SI{12.0}{\volt}-\SI{8.17}{\volt}
+    \approx \SI{3.83}{\volt}.
+  \]
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Aufgabe 4: Widerstandsänderung
+% =============================================================================
+\needspace{16cm}
+\begin{questions}
+\setcounter{question}{3}
+\begin{taskbox}[Aufgabe 4: Widerstandsänderung]
+\question[5] Gegeben ist die folgende Schaltung mit $U=\SI{12}{\volt}$,
+$R_1=\SI{10}{\ohm}$, $R_2=\SI{40}{\ohm}$, $R_3=\SI{20}{\ohm}$ und
+$R_4=\SI{20}{\ohm}$:
+\begin{center}
+\includegraphics[width=6cm]{Aufgaben/Aufgabe_3/widerstandsaenderung-schaltplan.pdf}
+\end{center}
+\begin{parts}
+  \part[3] Berechnen Sie den Gesamtwiderstand $R_{ges}$ und die
+  Stromstärke an der Stelle $A$.
+  \begin{answerbox}
+  \vspace{3cm}
+  \end{answerbox}
+  \begin{solution}
+  Die Schaltung ist eine Serieschaltung der beiden Parallelschaltungen
+  $(R_1\|R_2)$ und $(R_3\|R_4)$. Zuerst der obere Teil:
+  \[
+    \frac{1}{R_{oben}} = \frac{1}{R_1}+\frac{1}{R_2}
+    = \frac{1}{\SI{10}{\ohm}}+\frac{1}{\SI{40}{\ohm}}
+    = \frac{4}{\SI{40}{\ohm}}+\frac{1}{\SI{40}{\ohm}}
+    = \frac{5}{\SI{40}{\ohm}}
+  \]
+  \[
+    \Longrightarrow\quad R_{oben} = \frac{\SI{40}{\ohm}}{5} = \SI{8}{\ohm}.
+  \]
+  Dann der untere Teil, auf die gleiche Weise:
+  \[
+    \frac{1}{R_{unten}} = \frac{1}{R_3}+\frac{1}{R_4}
+    = \frac{1}{\SI{20}{\ohm}}+\frac{1}{\SI{20}{\ohm}}
+    = \frac{2}{\SI{20}{\ohm}}
+    \quad\Longrightarrow\quad R_{unten} = \SI{10}{\ohm}.
+  \]
+  Der Gesamtwiderstand ist die Summe der beiden (Serie):
+  \[
+    R_{ges} = R_{oben}+R_{unten} = \SI{8}{\ohm}+\SI{10}{\ohm} = \SI{18}{\ohm}.
+  \]
+  Mit dem Ohmschen Gesetz ergibt sich der Strom bei $A$:
+  \[
+    I = \frac{U}{R_{ges}} = \frac{\SI{12}{\volt}}{\SI{18}{\ohm}}
+    \approx \SI{0.67}{\ampere}.
+  \]
+  \end{solution}
+
+  \part[2] Nun wird $R_1$ durch einen $\SI{100}{\ohm}$-Widerstand
+  ersetzt. Erläutern Sie \textbf{\emph{ohne Rechnung}}, ob die bei $B$
+  gemessene Stromstärke danach kleiner, grösser oder gleich gross ist
+  wie zuvor.
+  \begin{answerbox}
+  \vspace{2.5cm}
+  \end{answerbox}
+  \begin{solution}
+  Durch den grösseren Widerstand an der Stelle $R_1$ wird der
+  Gesamtwiderstand der oberen Parallelschaltung $R_{oben}$ grösser. Da
+  diese in Serie mit der unteren Parallelschaltung liegt, wird dadurch
+  auch der Gesamtwiderstand $R_{ges}$ grösser, und der Gesamtstrom
+  sinkt. Da in einer Serieschaltung überall derselbe Strom fliesst,
+  fliesst dieser kleinere Strom auch durch den unteren Teil der
+  Schaltung, zu dem $B$ gehört: Die Stromstärke bei $B$ ist also
+  \textbf{\emph{kleiner}} als zuvor.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\end{document}

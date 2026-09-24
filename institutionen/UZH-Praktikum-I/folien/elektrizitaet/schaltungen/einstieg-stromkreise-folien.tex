@@ -1,0 +1,348 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Folien: Einstieg zu Stromkreisen (Wiederholung U-I-R)
+% UZH Praktikum I, Sara Romer Urban, Kantonsschule im Lee, HS2026
+% Klasse: 1f (23.09.2026)
+%
+% ENTWURF. Einstiegsaufgaben zur Wiederholung des Stoffs aus der
+% U-I-R-Lektion (elektrizitaet/u-i-r/gruppenpuzzle3-u-i-r.tex), gedacht als
+% Plenumseinstieg vor/zu Beginn der Schaltungslektion, interaktiv an der
+% Wandtafel/Leinwand mit der ganzen Klasse:
+% (1) Leerer Stromkreis: SuS skizzieren im Heft einen vollstaendigen
+%     Stromkreis mit den richtigen Schaltzeichen (Batterie, Widerstand,
+%     Schalter, Energiewandler) und sollen Stromrichtung und die Stelle(n)
+%     der Spannungsnutzung benennen koennen. Die Reveal-Folie zeigt eine
+%     moegliche Loesung.
+% (2) Serie-/Parallelschaltung im Bild wiedererkennen: dieselbe Skizze mit
+%     zwei Gluehbirnen wie im Gruppenpuzzle (Gruppe C), bewusst OHNE
+%     Beschriftung "Serieschaltung"/"Parallelschaltung". SuS ordnen die
+%     beiden Schaltungen selbst zu und beschreiben danach rein
+%     phaenomenologisch (keine Strom-/Spannungserklaerung, das ist Stoff
+%     der naechsten Unterrichtseinheit), wie hell die Gluehbirnen in den
+%     beiden Schaltungen im Vergleich brennen.
+% (3) Beispielrechnung $U=R\cdot I$ an einem einfachen Stromkreis mit genau
+%     einem Widerstand, mit Einheitenpraefixen (kOmega/mA) zur
+%     Wiederholung der Praefixumrechnung.
+% (4) Richtig-oder-falsch-Runde zu gaengigen Fehlvorstellungen (auf Wunsch):
+%     fuenf Aussagen (drei falsche Fehlvorstellungen, zwei richtige zur
+%     Gegenprobe, damit "immer falsch" keine gueltige Ratestrategie ist) zu
+%     Ladungserzeugung vs. Ladungstrennung in der Batterie,
+%     Elektronenwanderung vs. bereits gefuelltem Stromkreis
+%     (Wasserkreislaufanalogie), Batterie als Konstantspannungs- statt
+%     Konstantstromquelle, und Notwendigkeit eines geschlossenen Kreises.
+%     Kein eigenes lernziele.md fuer u-i-r/schaltungen vorhanden, deshalb
+%     aus allgemeiner fachdidaktischer Kenntnis gaengiger
+%     Schuelervorstellungen zum Stromkreis entwickelt, nicht aus einer
+%     Liste bekannter Lernschwierigkeiten uebernommen. Richtig/Falsch wird
+%     direkt auf derselben Folie per Beamer-Overlay eingeblendet (ein
+%     Haekchen/Kreuz je Klick, kumulativ), keine separaten
+%     Auflösungsfolien mit Erklaerungstext.
+%
+% -----------------------------------------------------------------------------
+% Korrektur (23.09.2026, auf Wunsch): Aufgabe 2 "Serie oder Parallel?" war
+% hier komplett entfernt worden (siehe vorherige Korrekturnotiz), da der
+% urspruengliche Aufgabentext Strom-/Spannungsverhalten erklaeren liess:
+% Stoff der naechsten Unterrichtseinheit. Auf Wunsch wieder eingefuegt,
+% diesmal aber bewusst rein phaenomenologisch: Die Aufgabe fragt nur noch,
+% welche der beiden ungekennzeichneten Skizzen Serie- bzw. Parallelschaltung
+% ist (Wiedererkennung im Bild) und wie hell die Gluehbirnen dabei jeweils
+% brennen (reine Beobachtung: in der Serieschaltung beide gleich hell, aber
+% schwaecher als eine einzelne Gluehbirne allein; in der Parallelschaltung
+% beide gleich hell wie eine einzelne Gluehbirne allein), ohne jede
+% Erklaerung ueber Ladungstraeger, Strom oder Spannung. Alle nachfolgenden
+% Aufgaben entsprechend neu durchnummeriert (Beispielrechnung wieder
+% Aufgabe 3, Richtig-oder-falsch-Runde wieder Aufgabe 4).
+%
+% -----------------------------------------------------------------------------
+% Korrektur (23.09.2026, auf Wunsch): Die beiden Auflösungsfolien mit den
+% ausformulierten Erklaerungen zur Richtig-oder-falsch-Runde (Aufgabe 4)
+% entfernt. Stattdessen zeigt jetzt dieselbe Aussagen-Folie per
+% Beamer-Overlay (\only<n->{}) nacheinander ein Haekchen (\ding{51}, gruen)
+% oder Kreuz (\ding{55}, rot) neben jeder Aussage, kumulativ mit jedem
+% Klick -- dafuer neu \usepackage{pifont} in der Praeambel. Die Folie hat
+% dadurch sechs Overlay-Schritte (Ausgangszustand ohne Zeichen, dann ein
+% Schritt je Aussage) statt vorher drei separaten Folien.
+%
+% -----------------------------------------------------------------------------
+% Korrektur (23.09.2026, auf Wunsch): (1) Der Begriff "Verbraucher" im
+% ganzen Dokument fallengelassen, durchgaengig "Wandler" verwendet (Aufgabe
+% 1: Bauteilliste "Energiewandler" ohne die Verbraucherklammer mehr,
+% Schaltplanbeschriftung "Wandler" statt "Verbraucher", Aussage 5 in
+% Aufgabe 4 ebenso), konsistent mit dem in arbeitsblatt4-schaltungen.tex
+% bereits etablierten Begriff "Wandler" (Merksatz Serieschaltung: "die
+% Bauteile, die Wandler"). (2) Neue sechste Aussage in der
+% Richtig-oder-falsch-Runde (Aufgabe 4, auf Wunsch): "Eine Gluehbirne
+% verbraucht Energie." Falsch, analog zur bereits an anderer Stelle
+% behandelten "Stromverbrauch"-Fehlvorstellung: Die Gluehbirne wandelt
+% elektrische Energie um (in Licht und Waerme), sie verbraucht sie nicht
+% im Sinne einer Vernichtung: Energie bleibt erhalten. Overlay-Schritte
+% der Folie entsprechend von sechs auf sieben erweitert.
+% =============================================================================
+\documentclass[14pt,aspectratio=169]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{siunitx}
+% Hausstil: zusammengesetzte Einheiten immer als echter Bruch (\frac), nicht
+% als Inline-Schraegstrich oder \tfrac -- gilt global fuer jedes \si/\SI.
+\sisetup{per-mode=fraction,fraction-command=\frac}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage[european]{circuitikz}
+\usepackage{enumitem}
+\setlist[itemize]{itemsep=0.2em,topsep=0.3em,label=\textbullet}
+\usepackage{pifont}
+
+% --- KFR-Theme: minimal, hoher Kontrast, grosse Schrift ---------------------
+\usetheme{default}
+\usefonttheme{professionalfonts}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{sidebar}{}
+\setbeamertemplate{headline}{}
+\beamertemplatenavigationsymbolsempty
+
+\definecolor{kfrblau}{RGB}{20,58,94}
+\definecolor{kfrgrau}{RGB}{90,90,90}
+
+\setbeamercolor{normal text}{fg=black,bg=white}
+\setbeamercolor{structure}{fg=kfrblau}
+\setbeamercolor{title}{fg=kfrblau,bg=white}
+\setbeamercolor{frametitle}{fg=white,bg=kfrblau}
+\setbeamercolor{footline}{fg=kfrgrau,bg=white}
+\setbeamercolor{page number in head/foot}{fg=kfrgrau}
+\setbeamercolor{itemize item}{fg=kfrblau}
+\setbeamercolor{itemize subitem}{fg=kfrblau}
+
+\setbeamerfont{frametitle}{size=\Large,series=\bfseries}
+\setbeamerfont{title}{size=\LARGE,series=\bfseries}
+\setbeamerfont{itemize item}{size=\normalsize}
+
+\setbeamertemplate{itemize item}{\textbullet}
+\setbeamertemplate{itemize subitem}{--}
+
+% Schlichte Fusszeile: nur Seitenzahl, kein Autoren-/Konferenz-Ballast
+\setbeamertemplate{footline}{%
+  \hfill%
+  \usebeamercolor[fg]{page number in head/foot}%
+  \usebeamerfont{page number in head/foot}%
+  \insertframenumber\,/\,\inserttotalframenumber\hspace{1em}\vspace{0.5em}
+}
+
+% Schlichter Frametitle-Balken (voller Breite, kein Untertitel-Chrome)
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip
+  \begin{beamercolorbox}[wd=\paperwidth,ht=1.4em,dp=0.4em,leftskip=0.5em]{frametitle}
+    \usebeamerfont{frametitle}\insertframetitle
+  \end{beamercolorbox}
+}
+
+\title{Stromkreise}
+\subtitle{Einstieg: Wiederholung U-I-R}
+\author{}
+\institute{UZH Praktikum I, Klasse 1f}
+\date{23.09.2026}
+
+\begin{document}
+
+% --- Titelfolie --------------------------------------------------------------
+\begin{frame}[plain]
+  \centering
+  {\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par}
+  \vspace{0.3em}
+  {\large\insertsubtitle\par}
+  \vspace{1.5em}
+  {\normalsize\insertinstitute, \insertdate\par}
+\end{frame}
+
+% =============================================================================
+% Aufgabe 1: Leerer Stromkreis
+% =============================================================================
+\begin{frame}{Aufgabe 1: Stromkreis skizzieren}
+  \centering
+  \begin{circuitikz}[scale=0.8]
+    \draw (0,0) -- (0,2.2) -- (5,2.2) -- (5,0) -- (0,0);
+  \end{circuitikz}
+
+  \begin{minipage}{0.92\textwidth}
+  \footnotesize
+  Skizzieren Sie in Ihrem Heft einen vollständigen Stromkreis. Verwenden
+  Sie dabei die richtigen Schaltzeichen für:
+  \begin{itemize}
+    \item Batterie (Spannungsquelle)
+    \item Widerstand
+    \item Schalter
+    \item Energiewandler
+  \end{itemize}
+  Zeichnen Sie ausserdem ein: \textbf{Wo und in welche Richtung fliesst
+  der Strom?} \textbf{Wo wird eine Spannung benötigt?}
+  \end{minipage}
+\end{frame}
+
+\begin{frame}{Aufgabe 1: Mögliche Lösung}
+  \centering
+  \begin{circuitikz}[scale=0.75]
+    \draw (0,0) to[battery1,invert,l=$U$] (0,2.2)
+                to[normal open switch] (1.8,2.2)
+                to[R,l=$R$] (4.1,2.2)
+                to[lamp,l=Wandler] (6.4,2.2)
+                -- (6.4,0)
+                to[short,i>=$I$] (0,0);
+  \end{circuitikz}
+
+  \begin{minipage}{0.92\textwidth}
+  \footnotesize
+  Es gibt viele richtige Lösungen. Wichtig ist nur:
+  \begin{itemize}
+    \item Der Strom $I$ fliesst (in der technischen Stromrichtung) vom
+    Pluspol der Batterie durch den ganzen Stromkreis zum Minuspol zurück.
+    \item Eine Spannung wird dort benötigt, wo elektrische Energie
+    umgewandelt wird: am Widerstand und am Energiewandler. Am Schalter
+    und an den Kabeln selbst fällt (bei geschlossenem Schalter) keine
+    Spannung ab.
+  \end{itemize}
+  \end{minipage}
+\end{frame}
+
+% =============================================================================
+% Aufgabe 2: Serie oder Parallel? (rein phaenomenologisch)
+% =============================================================================
+\begin{frame}{Aufgabe 2: Serie oder Parallel?}
+  \centering
+  \begin{tabular}{cc}
+  \begin{circuitikz}[scale=0.8]
+    \draw (0,0) to[battery1,invert,l=$U$] (0,3.4) -- (4,3.4)
+                to[lamp] (4,2.1)
+                -- (4,1.3)
+                to[lamp] (4,0)
+                -- (0,0);
+  \end{circuitikz}
+  &
+  \begin{circuitikz}[scale=0.8]
+    \draw (0,0) to[battery1,invert,l=$U$] (0,3);
+    \draw (0,3) -- (4,3);
+    \draw (0,0) -- (4,0);
+    \draw (2,3) to[lamp] (2,0);
+    \draw (4,3) to[lamp] (4,0);
+  \end{circuitikz}
+  \\
+  {\small Schaltung A} & {\small Schaltung B}
+  \end{tabular}
+
+  \vspace{0.8em}
+  \begin{minipage}{0.85\textwidth}
+  \small
+  Welche der beiden Schaltungen ist eine \textbf{Serieschaltung}, welche
+  eine \textbf{Parallelschaltung}? Woran erkennen Sie das im Bild?
+
+  Stellen Sie sich vor, Sie bauen beide Schaltungen tatsächlich auf: Wie
+  hell brennen die Glühbirnen jeweils?
+  \end{minipage}
+\end{frame}
+
+\begin{frame}{Aufgabe 2: Auflösung}
+  \centering
+  \begin{tabular}{cc}
+  \begin{circuitikz}[scale=0.75]
+    \draw (0,0) to[battery1,invert,l=$U$] (0,3.4) -- (4,3.4)
+                to[lamp] (4,2.1)
+                -- (4,1.3)
+                to[lamp] (4,0)
+                -- (0,0);
+  \end{circuitikz}
+  &
+  \begin{circuitikz}[scale=0.75]
+    \draw (0,0) to[battery1,invert,l=$U$] (0,3);
+    \draw (0,3) -- (4,3);
+    \draw (0,0) -- (4,0);
+    \draw (2,3) to[lamp] (2,0);
+    \draw (4,3) to[lamp] (4,0);
+  \end{circuitikz}
+  \\
+  {\small A: Serieschaltung} & {\small B: Parallelschaltung}
+  \end{tabular}
+
+  \vspace{0.6em}
+  \begin{minipage}{0.92\textwidth}
+  \small
+  \textbf{Serieschaltung (A):} Beide Glühbirnen brennen gleich hell wie
+  einander, aber schwächer als eine einzelne Glühbirne allein an
+  derselben Batterie.
+
+  \textbf{Parallelschaltung (B):} Beide Glühbirnen brennen gleich hell
+  wie einander, und zwar genauso hell wie eine einzelne Glühbirne allein
+  an derselben Batterie.
+  \end{minipage}
+\end{frame}
+
+% =============================================================================
+% Aufgabe 3: Beispielrechnung U = R * I
+% =============================================================================
+\begin{frame}{Aufgabe 3: Beispielrechnung}
+  \centering
+  \begin{circuitikz}[scale=1.15]
+    \draw (0,0) to[battery1,invert,l=$U$] (0,3)
+                to[R,l=$R$] (5,3)
+                -- (5,0)
+                to[short,i>=$I$] (0,0);
+  \end{circuitikz}
+
+  \vspace{0.8em}
+  \begin{minipage}{0.8\textwidth}
+  \small
+  Gegeben: $R=\SI{1.5}{\kilo\ohm}$, $I=\SI{4}{\milli\ampere}$.
+
+  Gesucht: die Spannung $U$.
+  \end{minipage}
+\end{frame}
+
+\begin{frame}{Aufgabe 3: Lösung}
+  \small
+  Formel:
+  \[
+    U = R\cdot I
+  \]
+  Einheiten umrechnen (Kilo $=10^3$, Milli $=10^{-3}$):
+  \[
+    R = \SI{1.5}{\kilo\ohm} = 1.5\times10^{3}\,\Omega = \SI{1500}{\ohm}
+  \]
+  \[
+    I = \SI{4}{\milli\ampere} = 4\times10^{-3}\,\text{A} = \SI{0.004}{\ampere}
+  \]
+  Einsetzen:
+  \[
+    U = \SI{1500}{\ohm}\cdot\SI{0.004}{\ampere}
+  \]
+  Ausrechnen:
+  \[
+    U = \SI{6}{\volt}
+  \]
+\end{frame}
+
+% =============================================================================
+% Aufgabe 4: Richtig oder falsch? (Fehlvorstellungen)
+% =============================================================================
+\begin{frame}{Aufgabe 4: Richtig oder falsch?}
+  \footnotesize
+  \begin{itemize}[leftmargin=1.6em]
+    \item[1.] Die Batterie erzeugt die Elektronen, die als Strom fliessen.
+    \only<2->{\textcolor{red!70!black}{\textbf{\ding{55}}}}
+    \item[2.] Wird der Schalter geschlossen, müssen die Elektronen zuerst
+    von der Batterie zur Glühbirne wandern, bevor diese zu leuchten
+    beginnt.
+    \only<3->{\textcolor{red!70!black}{\textbf{\ding{55}}}}
+    \item[3.] Ein Schalter unterbricht den Stromkreis unabhängig davon,
+    an welcher Stelle der Schleife er eingebaut ist.
+    \only<4->{\textcolor{green!50!black}{\textbf{\ding{51}}}}
+    \item[4.] Die Batterie liefert eine konstante Stromstärke.
+    \only<5->{\textcolor{red!70!black}{\textbf{\ding{55}}}}
+    \item[5.] Damit Strom fliesst, genügt ein einzelnes Kabel von der
+    Batterie zum Wandler.
+    \only<6->{\textcolor{red!70!black}{\textbf{\ding{55}}}}
+    \item[6.] Eine Glühbirne verbraucht Energie.
+    \only<7->{\textcolor{red!70!black}{\textbf{\ding{55}}}}
+  \end{itemize}
+\end{frame}
+
+\end{document}

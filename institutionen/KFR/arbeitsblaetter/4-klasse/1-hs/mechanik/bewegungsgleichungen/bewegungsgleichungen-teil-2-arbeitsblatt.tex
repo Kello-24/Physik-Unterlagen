@@ -1,0 +1,993 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Arbeitsblatt: Bewegungsgleichungen (Teil 2) (nicht bewertet, Übungsmaterial
+% für den Unterricht)
+% Kantonsschule KFR – Physik, 4. Klasse, 1. HS, Mechanik
+%
+% Fortsetzung von bewegungsgleichungen-arbeitsblatt.tex (Teil 1): Teil 1
+% deckt die Herleitung aller drei Bewegungsgleichungen, die Formelwahl
+% (Checkliste "Wie wähle ich die passende Bewegungsgleichung?"), die
+% Vorzeichenkonvention bei Bremsbewegungen (E-Trottinett-Beispiel) und die
+% Treffpunktprobleme mit Beschleunigung ab (dieser letzte Block stand
+% ursprünglich am Ende des ungeteilten Dokuments, wurde aber zu Teil 1
+% verschoben, weil dort auch das dafür nötige Vorwissen -- Gleichsetzen,
+% Formelwahl -- liegt). Teil 2 baut direkt darauf auf und vertieft die
+% Anwendung: Anhalteweg (Reaktionsweg/Bremsweg), Einfluss von Reaktionszeit
+% und Untergrund, Faustregeln aus der Fahrschule sowie quadratische
+% Gleichungen (Mitternachtsformel).
+%
+% Eigenständige Kopie derselben Farbdefinitionen und Boxdefinitionen wie
+% Teil 1 (Templates sind selbstständig/nicht DRY, siehe CLAUDE.md).
+%
+% Stand: Theorie und Aufgaben aus dem vormals ungeteilten Arbeitsblatt
+% übernommen (unverändert bis auf zwei Verweise, die zuvor auf Inhalte
+% "weiter oben" im selben Dokument zeigten und jetzt auf "Teil 1"
+% umformuliert sind, weil der Inhalt zur Parabel und zur
+% Formelwahl-Checkliste, auf den sie zeigen, dort liegt). Lernziele und
+% Einleitung neu für Teil 2 geschrieben, Nummerierung LZ1..LZ7 folgt der
+% Dokumentreihenfolge dieses Teils (eigenständig, nicht identisch mit der
+% Nummerierung in Teil 1 oder in lernziele.md).
+% =============================================================================
+\documentclass[addpoints,11pt,a4paper]{exam}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.2cm,headheight=14pt]{geometry}
+\usepackage{amsmath}
+\usepackage{siunitx}
+% Hausstil: zusammengesetzte Einheiten immer als echter Bruch (\frac), nicht
+% als Schrägstrich inline oder \tfrac. Gilt global für jedes \si/\SI.
+\sisetup{per-mode=fraction,fraction-command=\frac}
+\usepackage{array,booktabs,tabularx,multirow}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{circuitikz}
+\usepackage[most]{tcolorbox}
+\usepackage{lastpage}
+\usepackage{needspace}
+
+\usetikzlibrary{arrows.meta,calc,angles,quotes}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+
+% -----------------------------
+% Farben (Hausfarbschema Physik KFR)
+% -----------------------------
+\definecolor{titleblue}{HTML}{183A6B}
+\definecolor{accentblue}{HTML}{2E6F9E}
+\definecolor{lightblue}{HTML}{EAF4FB}
+\definecolor{verylightblue}{HTML}{F7FBFE}
+\definecolor{lightgray}{HTML}{F4F6F8}
+\definecolor{darkgray}{HTML}{4A4A4A}
+% Für Diagramme mit zwei verschiedenen Funktionen/Linien: titleblue (dunkles
+% Blau) + accentorange (Orange) sind weit genug auseinander (auch in
+% Graustufen/für Farbenblinde unterscheidbar), im Gegensatz zu
+% titleblue+accentblue, die beide Blautöne sind.
+\definecolor{accentorange}{HTML}{D9720C}
+% Für Diagramme mit DREI Linien: dritte Farbe nötig, die sich sowohl von
+% titleblue als auch von accentorange klar unterscheidet, auch in
+% Graustufen/für Farbenblinde. Violett liegt weit genug von Blau und Orange
+% entfernt, um als dritte Linie eindeutig unterscheidbar zu bleiben.
+\definecolor{accentpurple}{HTML}{7B2D8E}
+% Für die Anhalteweg-Diagramme: Reaktionsweg immer titleblue (Blau),
+% Hindernis immer accentorange (Orange, bereits definiert). Für den
+% Bremsweg (Rot) braucht es eine eigene, klar von Blau/Orange
+% unterscheidbare dritte Farbe -- accentpurple ist hier ungeeignet
+% (steht schon für "dritte Linie" in anderen Diagrammen), deshalb ein
+% eigenes gedecktes Rot.
+\definecolor{brakered}{HTML}{C0392B}
+% Kein eigenes Grün mehr für die Theoriebox: siehe Kommentar am
+% Dateianfang, das Boxen-Layout wurde auf das ungerahmte Layout von
+% beschleunigung-arbeitsblatt.tex umgestellt.
+% Gruppenarbeitbox: eigene Farbe (Petrol/Teal) bleibt bewusst erhalten
+% (auch wenn taskbox/theoriebox jetzt ungerahmt sind), damit Partnerarbeit
+% weiterhin auf einen Blick erkennbar ist. Zusätzlich als Linienfarbe in
+% der Glatteis-Parabel weiter unten im Dokument wiederverwendet.
+\definecolor{groupteal}{HTML}{1B7F72}
+\definecolor{lightgroupteal}{HTML}{E8F5F3}
+
+% -----------------------------
+% Spaltentypen
+% -----------------------------
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% -----------------------------
+% Boxen
+% -----------------------------
+\tcbset{before skip=10pt, after skip=10pt}
+\newtcolorbox{titlebox}{
+  enhanced,
+  colback=titleblue,
+  colframe=titleblue,
+  boxrule=0pt,
+  arc=3mm,
+  left=3mm,right=3mm,top=3mm,bottom=3mm
+}
+
+% infobox/theoriebox/beispielbox: ungerahmter Fliesstext statt farbiger Box
+% (Layout wie beschleunigung-arbeitsblatt.tex / institutionen/UZH-Praktikum-I),
+% Titel wird -- wo vorhanden -- manuell/über das optionale Argument fett
+% gesetzt.
+% Regel bleibt unverändert: hervorgehobene/definierte Begriffe INNERHALB
+% einer theoriebox immer mit \textbf{\emph{...}} setzen (fett UND kursiv),
+% nicht mit blossem \emph{...} -- damit Fachbegriffe beim Durchlesen der
+% Theorie sofort auffallen. Ausserhalb von theoriebox (beispielbox,
+% Aufgabentext, ...) bleibt \emph{...} allein korrekt.
+\newenvironment{infobox}{%
+  \par\addvspace{10pt}\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+\newenvironment{theoriebox}[1][Theorie]{%
+  \par\addvspace{10pt}\noindent\textbf{#1}\par\smallskip\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+% taskbox/groupbox bleiben technisch tcolorboxen (taskbox davon unsichtbar
+% gemacht: keine Farbe/kein Rahmen/kein Padding), weil sie innerhalb der
+% exam-Klasse questions-Liste vor dem ersten \question stehen können
+% (Bild/Fliesstext) -- eine reine \newenvironment löst dort "Something's
+% wrong--perhaps a missing \item", sobald z.B. ein \begin{center} vor dem
+% ersten \item der Aussenliste steht.
+% exam.cls rückt die questions-Liste um die Breite von "10." (plus
+% \labelsep) ein (Platz für die Nummerierung); ohne Korrektur würde der
+% Inhalt von taskbox/groupbox (Diagramme, Fliesstext) deshalb sichtbar
+% weiter eingerückt erscheinen als der Inhalt von infobox/theoriebox/
+% beispielbox (die ausserhalb von questions stehen und deshalb bereits die
+% volle Randbreite nutzen) -- gleicher Randabstand im ganzen Dokument, auch
+% bei den Übungen.
+\newlength{\aufgabenindent}
+\settowidth{\aufgabenindent}{10.\hskip\labelsep}
+\newtcolorbox{taskbox}[1][]{
+  enhanced, breakable,
+  colback=white, colframe=white, boxrule=0pt,
+  left=0mm,right=0mm,top=0mm,bottom=0mm,
+  before skip=10pt, after skip=10pt,
+  enlarge left by=-\aufgabenindent,
+  width=\textwidth,
+  before upper={%
+    \def\tmpboxtitle{#1}%
+    \ifx\tmpboxtitle\empty\else\noindent\textbf{#1}\par\smallskip\fi
+  }
+}
+
+\newenvironment{beispielbox}[1][Beispiel]{%
+  \par\addvspace{10pt}\noindent\textbf{#1}\par\smallskip\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+% Regel für groupbox: JEDE Aufgabe, bei der Schülerinnen/Schüler zu zweit
+% oder in einer Gruppe zusammenarbeiten (Partnerarbeit, Gruppenarbeit,
+% Diskussion zu zweit, ...), bekommt diese Box statt der (jetzt ungerahmten)
+% taskbox. groupbox bleibt bewusst farbig (Petrol/Teal, siehe Kommentar bei
+% den Farbdefinitionen oben), damit "hier braucht es eine Partnerin/einen
+% Partner" trotz des sonst ungerahmten Layouts auf einen Blick erkennbar
+% bleibt. Strukturell wie taskbox innerhalb von questions (gleiche
+% Einrückungskorrektur).
+\newtcolorbox{groupbox}[1][Gruppenarbeit]{
+  enhanced,
+  breakable,
+  colback=lightgroupteal,
+  colframe=groupteal,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  enlarge left by=-\aufgabenindent,
+  width=\textwidth,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+% hinweisbox: eigene Farbe (Orange, wiederverwendet accentorange statt einer
+% neuen Farbe), für wichtige Klarstellungen, die über eine normale
+% Bemerkung im Fliesstext (wie "\textbf{Wichtig:}" innerhalb einer
+% theoriebox) hinausgehen, etwa eine explizite Warnung vor einer häufigen
+% Verwechslung. Bleibt trotz des sonst ungerahmten Layouts farbig, damit
+% sie weiterhin auffällt.
+\definecolor{lightorange}{HTML}{FCEEE0}
+\newtcolorbox{hinweisbox}[1][Hinweis]{
+  enhanced,
+  breakable,
+  colback=lightorange,
+  colframe=accentorange,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+% formelbox: eigene Farbe (Violett, wiederverwendet accentpurple), um die
+% drei zentralen Bewegungsgleichungen dieser Einheit visuell klar von
+% normaler Theorie abzuheben, damit sie beim Nachschlagen sofort ins Auge
+% springen. Steht wie infobox/theoriebox/beispielbox ausserhalb von
+% questions, KEINE Einrückungskorrektur nötig (siehe Kommentar bei infobox
+% oben).
+\definecolor{lightpurple}{HTML}{F3EAF7}
+\newtcolorbox{formelbox}[1][Bewegungsgleichung]{
+  enhanced,
+  breakable,
+  colback=lightpurple,
+  colframe=accentpurple,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.9pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+% anleitungbox: eigene Farbe (Gold/Bernstein), für Schritt-für-Schritt-
+% Anleitungen/Checklisten (wie die Formelwahl weiter unten), die sich von
+% einer normalen theoriebox (ungerahmt), einer hinweisbox (Orange, für
+% Klarstellungen) und einer formelbox (Violett, für die Kernformeln)
+% farblich unterscheiden sollen.
+\definecolor{strategygold}{HTML}{9C7A17}
+\definecolor{lightstrategygold}{HTML}{FBF3DE}
+\newtcolorbox{anleitungbox}[1][Anleitung]{
+  enhanced,
+  breakable,
+  colback=lightstrategygold,
+  colframe=strategygold,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+\newtcolorbox{answerbox}{
+  breakable,
+  colback=white,
+  colframe=gray!55,
+  boxrule=0.5pt,
+  arc=1.5mm,
+  left=2mm,right=2mm,top=2mm,bottom=2mm
+}
+
+% --- Lösungen ein-/ausblenden -----------------------------------------------
+% Schülerexemplar (Standard): \noprintanswers
+% Lehrer-/Lösungsexemplar:    \printanswers
+%\noprintanswers
+\printanswers
+
+% --- Punkte bleiben intern, werden aber nicht gedruckt ----------------------
+% Arbeitsblätter sind nicht benotet. \question[n]/\part[n] bekommen trotzdem
+% eine Punktzahl n, rein als interner Anhaltspunkt, der 1:1 an
+% \Antwortraum{n} weitergereicht wird, um die Antwortraumgrösse zu
+% bestimmen. \pointformat{} (Aufruf, nicht \renewcommand!) unterdrückt die
+% von der exam-Klasse sonst automatisch gedruckte Punktanzeige ("(n P.)")
+% vollständig, ohne die interne Punktezählung (\numpoints) zu beeinflussen.
+\pointformat{}
+
+% --- Lösungsbox auf Deutsch, farblich abgesetzt -----------------------------
+\renewcommand{\solutiontitle}{\noindent\color{titleblue}\textbf{Lösung:}\enspace}
+
+% --- Kopf-/Fusszeile: Thema/Titel oben, Seitenzahl unten --------------------
+\pagestyle{headandfoot}
+\cfoot{\textcolor{darkgray}{Seite \thepage\ von \pageref{LastPage}}}
+
+% --- Kopfzeile: Klasse / Datum / Thema / Titel ------------------------------
+% Einheitliches Layout für Arbeitsblatt, Prüfung und Praktikum. Ohne Tabelle:
+% Klasse/Datum/Thema/Lehrperson stehen als einfache Textzeile unter dem
+% Titel-Banner. Fünftes Argument (Untertitel): wie in
+% beschleunigung-arbeitsblatt.tex eine rein optische Ergänzung im
+% Titel-Banner, die vier Kernangaben Klasse/Datum/Thema/Titel bleiben in
+% derselben Reihenfolge/Position wie im Hausstil-Standard.
+\newcommand{\Kopfzeile}[5]{%
+  \begin{titlebox}
+    {\color{white}\sffamily\bfseries\Large #4}\\[3pt]
+    {\color{white}\sffamily\normalsize #5}
+  \end{titlebox}
+  \vspace{0.5em}
+  \noindent\textbf{Klasse:}~#1 \hfill \textbf{Datum:}~#2 \hfill \textbf{Thema:}~#3
+    \hfill \textbf{Lehrperson:}~Loris Keller
+  \vspace{0.8em}
+  \lhead{\textcolor{darkgray}{#3}}
+  \rhead{\textcolor{darkgray}{#4}}
+}
+
+% --- Antwortraum: ca. 2.5 cm Platz pro Punkt, als umrandetes Feld -----------
+\newlength{\antwortraumlen}
+\newcommand{\Antwortraum}[1]{%
+  \pgfmathsetlength{\antwortraumlen}{#1*2.5cm}%
+  \begin{answerbox}
+    \rule{0pt}{\antwortraumlen}%
+  \end{answerbox}%
+}
+
+
+% Werte für Kopfzeile zentral setzen
+\newcommand{\Klasse}{4a}
+\newcommand{\Datum}{TT.MM.JJJJ}
+\newcommand{\Thema}{Bewegungsgleichungen (Teil 2)}
+\newcommand{\ArbeitsblattTitel}{Arbeitsblatt: Bewegungsgleichungen (Teil 2)}
+\newcommand{\ArbeitsblattUntertitel}{Anhalteweg, Faustregeln und quadratische Gleichungen}
+
+\begin{document}
+
+\Kopfzeile{\Klasse}{\Datum}{\Thema}{\ArbeitsblattTitel}{\ArbeitsblattUntertitel}
+
+% --- Lernziele: neu für Teil 2 formuliert, Reihenfolge = Dokumentreihenfolge
+% dieses Teils (Anhalteweg -> s-v-Diagramm -> Reaktionszeit -> Untergrund ->
+% Faustregeln -> kritische Geschwindigkeit -> Mitternachtsformel). Das
+% Vorzeichen-Lernziel (Bremsbewegung, E-Trottinett) und das
+% Treffpunktprobleme-Lernziel wurden nach Teil 1 verschoben, zusammen mit
+% den zugehörigen Beispielen/Übungen; deshalb hier nicht mehr aufgeführt. ---
+\begin{infobox}
+\textbf{Lernziele}\\
+Am Ende dieser Einheit kann ich \dots
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.25em]
+  \item den Anhalteweg als Summe aus Reaktionsweg und Bremsweg berechnen und erklären, welche Rolle die Reaktionszeit dabei spielt. (LZ1)
+  \item am $s$-$v$-Diagramm erklären, weshalb der Reaktionsweg linear und der Bremsweg quadratisch mit $v_0$ wächst, und daraus die höchste sichere Geschwindigkeit vor einem Hindernis ablesen. (LZ2)
+  \item berechnen, wie stark eine verlängerte Reaktionszeit (zum Beispiel unter Alkoholeinfluss) den Anhalteweg vergrössert. (LZ3)
+  \item den Bremsweg auf verschiedenen Untergründen vergleichen und erklären, weshalb Aquaplaning und Glatteis besonders gefährlich sind. (LZ4)
+  \item bekannte Faustregeln aus der Fahrschule (2-Sekunden-Regel, Halber-Tacho-Regel, Bremswegfaustformel) mit dem exakt berechneten Anhalteweg vergleichen und ihre Grenzen benennen. (LZ5)
+  \item aus einer gegebenen Bremsstrecke die kritische Anfangsgeschwindigkeit mit der Mitternachtsformel berechnen und die unphysikalische Lösung verwerfen. (LZ6)
+  \item eine quadratische Bewegungsgleichung mit der Mitternachtsformel nach der Zeit auflösen und unter mehreren mathematischen Lösungen die physikalisch sinnvolle auswählen. (LZ7)
+\end{itemize}
+\end{infobox}
+
+% --- Einleitung: Anhalteweg als konkrete Alltagsgefahr, direkt an Teil 1
+% anschliessend, noch ohne die Anhalteweg-Formel selbst zu nennen (die folgt
+% erst in der ersten Theoriebox). ---------------------------------------
+\begin{beispielbox}[Einleitung: Warum der Anhalteweg über Leben und Tod entscheidet]
+Stell dir vor, du fährst Velo oder sitzt im Auto, als plötzlich ein Ball
+auf die Strasse rollt und ihm ein Kind hinterherläuft. Ab dem Moment, in
+dem du das Kind siehst, bis das Fahrzeug tatsächlich steht, vergeht
+wertvolle Zeit und Strecke, selbst bei einer sofortigen Vollbremsung.
+
+Genau diese Strecke, der Anhalteweg, entscheidet in einer solchen
+Situation, ob ein Unfall verhindert werden kann. Er hängt nicht nur davon
+ab, wie stark gebremst wird, sondern auch davon, wie schnell die fahrende
+Person überhaupt reagiert und wie griffig die Strasse ist. In dieser
+Einheit berechnest du mit den Bewegungsgleichungen aus Teil 1 exakt, wie
+sich diese Faktoren auf den Anhalteweg auswirken, und vergleichst deine
+Ergebnisse mit Faustregeln, die du vielleicht schon aus der Fahrschule
+oder dem Verkehrsunterricht kennst.
+\end{beispielbox}
+
+\begin{theoriebox}[Anwendung: Der Anhalteweg]
+Eine der wichtigsten Alltagsanwendungen von Bewegungsgleichung 3: Wie
+weit fährt ein Auto ab dem Moment, in dem ein Hindernis sichtbar wird,
+bis es nach einer Vollbremsung steht? Dieser \textbf{\emph{Anhalteweg}}
+$s_A$ setzt sich aus zwei Teilen zusammen:
+
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.25em]
+  \item \textbf{\emph{Reaktionsweg}} $s_R$: die Strecke, die das Auto
+  während der \textbf{\emph{Reaktionszeit}} $t_R$ zurücklegt, bevor die
+  Fahrerin oder der Fahrer überhaupt zu bremsen beginnt. In dieser Zeit
+  bleibt $v$ noch konstant bei $v_0$. Für eine nüchterne, aufmerksame
+  Fahrerin oder einen nüchternen, aufmerksamen Fahrer wird meist
+  $t_R\approx\SI{1}{\second}$ angenommen (in diesem Arbeitsblatt immer
+  so, ausser wenn ausdrücklich etwas anderes angegeben ist).
+  \item \textbf{\emph{Bremsweg}} $s_B$: die Strecke, die das Auto
+  während der eigentlichen Bremsung zurücklegt, bis $v=0$ ist.
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[xscale=1.15,yscale=0.32]
+  \draw[->] (-0.3,0) -- (5.7,0) node[right] {\scriptsize $t$ in s};
+  \draw[->] (0,-1) -- (0,23) node[above] {\scriptsize $v$ in $\si{\meter\per\second}$};
+  \filldraw[titleblue!20] (0,0) rectangle (1,20);
+  \filldraw[brakered!20] (1,0) -- (1,20) -- (5,0) -- cycle;
+  \draw[thick,titleblue] (0,20) -- (1,20);
+  \draw[thick,brakered] (1,20) -- (5,0);
+  \draw[dashed,gray] (1,0) -- (1,20);
+  \node at (0.5,9) {\scriptsize $s_R$};
+  \node at (2.5,6) {\scriptsize $s_B$};
+  \draw (1,0.5) -- (1,-0.5) node[below] {\scriptsize $t_R$};
+  \node[left] at (0,20) {\scriptsize $v_0$};
+\end{tikzpicture}
+\end{center}
+
+Wie schon beim $v$-$t$-Diagramm bekannt: Beide Teilwege entsprechen
+Flächen unter der Kurve.
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.25em]
+  \item $s_R$ ist ein \textbf{\emph{Rechteck}} (konstante Geschwindigkeit
+  während $t_R$): $s_R = v_0\cdot t_R$.
+  \item $s_B$ ist ein \textbf{\emph{Dreieck}}. Die Bremsverzögerung
+  schreiben wir als \textbf{\emph{positive}} Zahl $a_B$ (den Betrag der
+  eigentlich negativen Beschleunigung $a=-a_B$ beim Bremsen). Aus
+  Bewegungsgleichung 3, mit Endgeschwindigkeit $v=0$:
+  \[
+    0 = v_0^2 + 2\cdot(-a_B)\cdot s_B
+  \]
+  Schritt 1: das Minuszeichen ausmultiplizieren:
+  \[
+    0 = v_0^2 - 2a_B\,s_B.
+  \]
+  Schritt 2: $2a_B\,s_B$ auf beiden Seiten addieren:
+  \[
+    2a_B\,s_B = v_0^2.
+  \]
+  Schritt 3: auf beiden Seiten durch $2a_B$ teilen:
+  \[
+    s_B = \frac{v_0^2}{2a_B}.
+  \]
+\end{itemize}
+
+Addiert ergibt das den \textbf{\emph{Anhalteweg}}:
+\[
+  \boxed{s_A = s_R + s_B = v_0\,t_R + \frac{v_0^2}{2a_B}}
+\]
+
+\textbf{Beispiel:} $v_0=\SI{20}{\meter\per\second}$
+($\approx\SI{72}{\kilo\meter\per\hour}$), $t_R=\SI{1}{\second}$,
+$a_B=\SI{5}{\meter\per\second\squared}$ (nasse Strasse):
+\[
+  s_R = 20\cdot1=\SI{20}{\meter}, \qquad
+  s_B = \frac{20^2}{2\cdot5} = \frac{400}{10}=\SI{40}{\meter},
+\]
+\[
+  s_A = \SI{20}{\meter}+\SI{40}{\meter} = \SI{60}{\meter}.
+\]
+\end{theoriebox}
+
+\begin{theoriebox}[Wird die Bremse rechtzeitig fertig? Das s-v-Diagramm]
+Die Formel $s_A(v_0)=v_0\,t_R+\dfrac{v_0^2}{2a_B}$ zeigt: Der
+Reaktionsweg wächst \textbf{\emph{linear}} mit $v_0$, der Bremsweg aber
+\textbf{\emph{quadratisch}}. Um das sichtbar zu machen, tragen wir jetzt
+genau wie in der Formel die Anfangsgeschwindigkeit $v_0$ waagrecht auf
+(die unabhängige Grösse) und den zurückgelegten \textbf{\emph{Ort}} $s$
+senkrecht (die abhängige Grösse, also $s$ als Funktion von $v_0$; mit
+$t_R=\SI{1}{\second}$, $a_B=\SI{5}{\meter\per\second\squared}$, wie im
+Beispiel oben):
+
+\begin{center}
+\begin{tikzpicture}[xscale=0.28,yscale=0.075]
+  \draw[->] (-1,0) -- (33,0) node[right] {\scriptsize $v_0$ in $\si{\meter\per\second}$};
+  \draw[->] (0,-4) -- (0,128) node[above] {\scriptsize $s$ in m};
+  \fill[titleblue!18] (0,0) -- (30,0) -- (30,30) -- cycle;
+  \fill[brakered!25,domain=0:30,samples=60]
+    plot (\x,{\x+\x*\x/10}) -- (30,30) -- cycle;
+  \draw[dotted,titleblue,thick] (0,0) -- (30,30);
+  \draw[thick,brakered,domain=0:30,samples=60]
+    plot (\x,{\x+\x*\x/10});
+  \draw[thick,accentorange] (-1,60) -- (33,60);
+  \node[accentorange,above] at (8,60) {\scriptsize Hindernis bei $s=\SI{60}{\meter}$};
+  \draw[dashed,gray] (20,0) -- (20,60);
+  \draw[dashed,gray] (0,60) -- (20,60);
+  \filldraw[black] (20,60) circle (6pt);
+  \node[titleblue] at (13,11) {\scriptsize $s_R=v_0\,t_R$};
+  \node[brakered] at (24,80) {\scriptsize $s_B=\dfrac{v_0^2}{2a_B}$};
+  \foreach \vv in {10,20,30} \draw (\vv,2) -- (\vv,-2) node[below] {\scriptsize \vv};
+  \foreach \sv in {20,40,60,80,100,120} \draw (0.6,\sv) -- (-0.6,\sv) node[left] {\scriptsize \sv};
+\end{tikzpicture}
+\end{center}
+
+Blau: der reine Reaktionsweg $s_R(v_0)=v_0\,t_R$, eine Gerade (die
+gepunktete Linie). Rot: der zusätzliche Bremsweg, der zum Reaktionsweg
+dazukommt, bis der volle Anhalteweg $s_A(v_0)$ erreicht ist (die obere
+Kurve, die sich zunehmend nach oben krümmt, weil der Bremsweg
+quadratisch wächst).
+
+Angenommen, bei $s=\SI{60}{\meter}$ steht ein Hindernis (die orange
+Linie). Für jede Anfangsgeschwindigkeit $v_0$, deren Kurve noch
+unterhalb der orangen Linie bleibt, reicht der Anhalteweg aus: Das Auto
+steht rechtzeitig. Beim markierten Punkt, $v_0=\SI{20}{\meter\per\second}$,
+berührt die Kurve die orange Linie gerade noch: Das ist die
+\textbf{\emph{höchste Geschwindigkeit}}, bei der das Auto genau noch
+rechtzeitig steht (bestätigt das Beispiel der vorigen Theoriebox). Für
+jedes $v_0>\SI{20}{\meter\per\second}$ liegt die Kurve oberhalb der
+orangen Linie: Der Anhalteweg reicht nicht mehr aus, das Auto
+kollidiert mit dem Hindernis, bevor es zum Stehen kommt.
+\end{theoriebox}
+
+\begin{questions}
+\begin{taskbox}[Übung: Reaktionszeit unter Alkoholeinfluss]
+\question[9] Alkohol verlängert die Reaktionszeit deutlich. Als
+Beispielwert nehmen wir für eine leicht durch Alkohol beeinträchtigte
+Fahrerin oder einen leicht beeinträchtigten Fahrer
+$t_R=\SI{2}{\second}$, also doppelt so lang wie bei einer nüchternen
+Person ($t_R=\SI{1}{\second}$). Untergrund und Hindernis bleiben
+gleich: nasse Strasse ($a_B=\SI{5}{\meter\per\second\squared}$),
+Hindernis bei $s=\SI{60}{\meter}$.
+
+\begin{parts}
+  \part[4] Berechne $s_R$, $s_B$ und $s_A$ für $v_0=\SI{20}{\meter\per\second}$
+  mit $t_R=\SI{2}{\second}$.
+  \Antwortraum{4}
+  \begin{solution}
+  $s_R = 20\cdot2=\SI{40}{\meter}$.\\
+  $s_B = \dfrac{20^2}{2\cdot5}=\SI{40}{\meter}$ (unverändert, $a_B$ ist
+  gleich geblieben).\\
+  $s_A = \SI{40}{\meter}+\SI{40}{\meter}=\SI{80}{\meter}$.
+  \end{solution}
+
+  \part[2] Bei $v_0=\SI{20}{\meter\per\second}$ stand die nüchterne
+  Fahrerin aus der Theoriebox gerade noch rechtzeitig (Beispiel oben).
+  Reicht das auch für die beeinträchtigte Person? Begründe mit deinem
+  Ergebnis aus a).
+  \Antwortraum{2}
+  \begin{solution}
+  Nein: $s_A=\SI{80}{\meter}$ ist grösser als die
+  $\SI{60}{\meter}$ bis zum Hindernis. Bei genau derselben Geschwindigkeit,
+  die für die nüchterne Person gerade noch sicher war, kollidiert die
+  beeinträchtigte Person, weil allein die längere Reaktionszeit
+  $\SI{20}{\meter}$ mehr Anhalteweg braucht.
+  \end{solution}
+
+  \part[3] Zeichne unten das $s$-$v$-Diagramm für die beeinträchtigte
+  Person (mit $t_R=\SI{2}{\second}$), rechts direkt neben dem bereits
+  bekannten Diagramm für die nüchterne Person ($t_R=\SI{1}{\second}$).
+  Markiere auch hier den Punkt, an dem die Kurve die orange
+  Hindernislinie erreicht.
+
+  \begin{center}
+  \begin{minipage}{0.47\linewidth}\centering
+  {\scriptsize \textbf{Nüchtern, $t_R=\SI{1}{\second}$} (zur Erinnerung)}\\[0.3em]
+  \begin{tikzpicture}[xscale=0.13,yscale=0.033]
+    \draw[->] (-1,0) -- (33,0) node[right] {\scriptsize $v_0$};
+    \draw[->] (0,-4) -- (0,158) node[above] {\scriptsize $s$};
+    \draw[dotted,titleblue,thick] (0,0) -- (30,30);
+    \draw[thick,brakered,domain=0:30,samples=60] plot (\x,{\x+\x*\x/10});
+    \draw[thick,accentorange] (-1,60) -- (33,60);
+    \filldraw[black] (20,60) circle (5pt);
+    \foreach \vv in {10,20,30} \draw (\vv,2) -- (\vv,-2) node[below] {\scriptsize \vv};
+    \foreach \sv in {60,120} \draw (0.6,\sv) -- (-0.6,\sv) node[left] {\scriptsize \sv};
+  \end{tikzpicture}
+  \end{minipage}\hfill
+  \begin{minipage}{0.47\linewidth}\centering
+  {\scriptsize \textbf{Beeinträchtigt, $t_R=\SI{2}{\second}$} (deine Zeichnung)}\\[0.3em]
+  \begin{tikzpicture}[xscale=0.13,yscale=0.033]
+    \draw[->] (-1,0) -- (33,0) node[right] {\scriptsize $v_0$};
+    \draw[->] (0,-4) -- (0,158) node[above] {\scriptsize $s$};
+    \draw[thick,accentorange] (-1,60) -- (33,60);
+    \foreach \vv in {10,20,30} \draw (\vv,2) -- (\vv,-2) node[below] {\scriptsize \vv};
+    \foreach \sv in {60,120} \draw (0.6,\sv) -- (-0.6,\sv) node[left] {\scriptsize \sv};
+  \end{tikzpicture}
+  \end{minipage}
+  \end{center}
+  \begin{solution}
+  \begin{center}
+  \begin{tikzpicture}[xscale=0.13,yscale=0.033]
+    \draw[->] (-1,0) -- (33,0) node[right] {\scriptsize $v_0$ in $\si{\meter\per\second}$};
+    \draw[->] (0,-4) -- (0,158) node[above] {\scriptsize $s$ in m};
+    \fill[titleblue!18] (0,0) -- (30,0) -- (30,60) -- cycle;
+    \fill[brakered!25,domain=0:30,samples=60] plot (\x,{2*\x+\x*\x/10}) -- (30,60) -- cycle;
+    \draw[dotted,titleblue,thick] (0,0) -- (30,60);
+    \draw[thick,brakered,domain=0:30,samples=60] plot (\x,{2*\x+\x*\x/10});
+    \draw[thick,accentorange] (-1,60) -- (33,60);
+    \draw[dashed,gray] (16.46,0) -- (16.46,60);
+    \filldraw[black] (16.46,60) circle (5pt);
+    \foreach \vv in {10,20,30} \draw (\vv,2) -- (\vv,-2) node[below] {\scriptsize \vv};
+    \foreach \sv in {60,120} \draw (0.6,\sv) -- (-0.6,\sv) node[left] {\scriptsize \sv};
+  \end{tikzpicture}
+  \end{center}
+  Die Kurve steigt jetzt schon zu Beginn steiler an (grössere
+  Anfangssteigung $=t_R=2$) und erreicht die orange Linie schon bei
+  $v_0\approx\SI{16.5}{\meter\per\second}$, also bei einer deutlich
+  \emph{tieferen} Geschwindigkeit als bei der nüchternen Person
+  ($\SI{20}{\meter\per\second}$). Die \glqq sichere\grqq{}
+  Höchstgeschwindigkeit sinkt also allein durch die längere
+  Reaktionszeit.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\begin{questions}
+\begin{taskbox}[Übung: Bremsweg und Untergrund]
+\question[10] Die Bremsverzögerung $a_B$ hängt stark vom Untergrund ab.
+Typische Werte:
+\begin{center}
+{\small
+\begin{tabular}{lc}
+\toprule
+\textbf{Untergrund} & \textbf{$a_B$ in $\si{\meter\per\second\squared}$} \\
+\midrule
+trockene Strasse & 8 \\
+nasse Strasse & 5 \\
+Neuschnee & 2.5 \\
+Glatteis & 1.5 \\
+\bottomrule
+\end{tabular}
+}
+\end{center}
+
+\begin{parts}
+  \part[4] Trägt man den Bremsweg $s_B(v_0)=\dfrac{v_0^2}{2a_B}$ für
+  jeden dieser vier Werte über $v_0$ auf, ergeben sich vier verschiedene
+  Parabeln. Berechne für jeden Untergrund $s_B$ bei
+  $v_0=\SI{10}{\meter\per\second}$ und bei $v_0=\SI{20}{\meter\per\second}$
+  (das reicht für eine grobe Skizze) und zeichne alle vier Parabeln
+  näherungsweise ins Diagramm.
+
+  \begin{center}
+  \begin{tikzpicture}[xscale=0.5,yscale=0.055]
+    \draw[->] (-0.6,0) -- (21,0) node[right] {\scriptsize $v_0$ in $\si{\meter\per\second}$};
+    \draw[->] (0,-4) -- (0,145) node[above] {\scriptsize $s_B$ in m};
+    \foreach \xv in {5,10,15,20} \draw (\xv,3) -- (\xv,-3) node[below] {\scriptsize \xv};
+    \foreach \yv in {25,50,75,100,125} \draw (0.4,\yv) -- (-0.4,\yv) node[left] {\scriptsize \yv};
+  \end{tikzpicture}
+  \end{center}
+  \begin{solution}
+  $v_0=\SI{10}{\meter\per\second}$: trocken $\SI{6.25}{\meter}$, nass
+  $\SI{10}{\meter}$, Neuschnee $\SI{20}{\meter}$, Glatteis
+  $\SI{33.3}{\meter}$.\\
+  $v_0=\SI{20}{\meter\per\second}$: trocken $\SI{25}{\meter}$, nass
+  $\SI{40}{\meter}$, Neuschnee $\SI{80}{\meter}$, Glatteis
+  $\SI{133.3}{\meter}$.
+  \begin{center}
+  \begin{tikzpicture}[xscale=0.5,yscale=0.055]
+    \draw[->] (-0.6,0) -- (21,0) node[right] {\scriptsize $v_0$ in $\si{\meter\per\second}$};
+    \draw[->] (0,-4) -- (0,145) node[above] {\scriptsize $s_B$ in m};
+    \draw[thick,titleblue] plot[domain=0:20,samples=50] (\x,{\x*\x/16})
+      node[right] {\scriptsize trocken};
+    \draw[thick,brakered] plot[domain=0:20,samples=50] (\x,{\x*\x/10})
+      node[right] {\scriptsize nass};
+    \draw[thick,accentpurple] plot[domain=0:20,samples=50] (\x,{\x*\x/5})
+      node[right] {\scriptsize Neuschnee};
+    \draw[thick,groupteal] plot[domain=0:20,samples=50] (\x,{\x*\x/3})
+      node[right] {\scriptsize Glatteis};
+    \foreach \xv in {5,10,15,20} \draw (\xv,3) -- (\xv,-3) node[below] {\scriptsize \xv};
+    \foreach \yv in {25,50,75,100,125} \draw (0.4,\yv) -- (-0.4,\yv) node[left] {\scriptsize \yv};
+  \end{tikzpicture}
+  \end{center}
+  Bei $v_0=\SI{20}{\meter\per\second}$ liegt der Bremsweg auf Glatteis
+  mehr als fünfmal so hoch wie auf trockener Strasse, obwohl die
+  Geschwindigkeit exakt gleich ist: Nur die Bremsverzögerung $a_B$, also
+  die Steilheit der jeweiligen Parabel, hat sich geändert.
+  \end{solution}
+
+  \part[3] Bei Aquaplaning bildet sich zwischen Reifen und Fahrbahn ein
+  Wasserfilm, sodass die Reifen den Kontakt zur Strasse verlieren.
+  Erkläre mithilfe der Formel für $s_B$, weshalb das besonders
+  gefährlich ist.
+  \Antwortraum{3}
+  \begin{solution}
+  Ohne Reibungskontakt zwischen Reifen und Strasse kann das Auto kaum
+  noch gebremst (und auch kaum noch gelenkt) werden: $a_B$ sinkt dabei
+  stark, im Extremfall fast auf $\SI{0}{\meter\per\second\squared}$.
+  Weil $s_B=\dfrac{v_0^2}{2a_B}$ ist, wächst der Bremsweg, wenn $a_B$
+  gegen null geht, über alle Grenzen: Im schlimmsten Fall bremst das
+  Auto praktisch gar nicht mehr ab.
+  \end{solution}
+
+  \part[3] Erkläre, weshalb Glatteis auch im Vergleich zu Neuschnee
+  besonders gefährlich ist (nutze die Tabelle und die Formel für $s_B$).
+  \Antwortraum{3}
+  \begin{solution}
+  Glatteis hat mit $a_B=\SI{1.5}{\meter\per\second\squared}$ die
+  kleinste Bremsverzögerung aller vier Untergründe, kleiner sogar als
+  Neuschnee ($\SI{2.5}{\meter\per\second\squared}$). Weil $s_B$
+  umgekehrt proportional zu $a_B$ ist, wächst der Bremsweg bei
+  kleinerem $a_B$ überproportional an; gleichzeitig wächst $s_B$ auch
+  bei gleichbleibendem $a_B$ quadratisch mit $v_0$. Beide Effekte
+  verstärken sich gegenseitig, weshalb schon eine mässige
+  Geschwindigkeit auf Glatteis zu einem um ein Vielfaches längeren
+  Bremsweg führen kann als auf trockener Strasse.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\begin{hinweisbox}[Rückwärts rechnen: $v_0$ aus dem Bremsweg]
+Manchmal ist nicht $v_0$ gegeben, sondern der Bremsweg, und $v_0$ ist
+gesucht, zum Beispiel: \glqq Wie schnell war ein Auto höchstens
+unterwegs, wenn seine Bremsspur $\SI{40}{\meter}$ lang ist?\grqq{} Das
+bedeutet, $v_0^2=2a_B\,s_B$ nach $v_0$ aufzulösen. Das ist
+\textbf{\emph{einfacher}} als die Mitternachtsformel: Es gibt hier
+keinen linearen Term (keinen $B$-Term wie bei $At^2+Bt+C$), also reicht
+es, auf beiden Seiten die \textbf{\emph{Wurzel}} zu ziehen:
+\[
+  v_0^2 = 2a_B\,s_B
+  \quad\Longrightarrow\quad
+  v_0 = \sqrt{2a_B\,s_B}.
+\]
+\textbf{Beispiel:} $a_B=\SI{5}{\meter\per\second\squared}$,
+$s_B=\SI{40}{\meter}$:
+\[
+  v_0 = \sqrt{2\cdot5\cdot40} = \sqrt{400} = \SI{20}{\meter\per\second}.
+\]
+Achtung: Das funktioniert nur, wenn im Term wirklich nur $v_0^2$
+vorkommt, kein einzelnes $v_0$ daneben (wie es beim vollen Anhalteweg
+$s_A(v_0)=v_0 t_R+\frac{v_0^2}{2a_B}$ der Fall wäre). Dann bleibt es bei
+der Mitternachtsformel, siehe unten.
+\end{hinweisbox}
+
+\begin{questions}
+\begin{taskbox}[Übung: Anhalteweg berechnen]
+\question[14] Ein Auto fährt mit $v_0=\SI{25}{\meter\per\second}$
+($\approx\SI{90}{\kilo\meter\per\hour}$) auf einer nassen Strasse
+($a_B=\SI{5}{\meter\per\second\squared}$). Die Reaktionszeit der
+Fahrerin beträgt $t_R=\SI{1}{\second}$.
+
+\begin{parts}
+  \part[2] Berechne den Reaktionsweg $s_R$.
+  \Antwortraum{2}
+  \begin{solution}
+  $s_R = v_0\cdot t_R = 25\cdot1=\SI{25}{\meter}$.
+  \end{solution}
+
+  \part[3] Berechne den Bremsweg $s_B$ mit Bewegungsgleichung 3
+  ($s_B=\dfrac{v_0^2}{2a_B}$).
+  \Antwortraum{3}
+  \begin{solution}
+  $s_B = \dfrac{25^2}{2\cdot5} = \dfrac{625}{10} = \SI{62.5}{\meter}$.
+  \end{solution}
+
+  \part[2] Wie gross ist der gesamte Anhalteweg $s_A$?
+  \Antwortraum{2}
+  \begin{solution}
+  $s_A = s_R+s_B = \SI{25}{\meter}+\SI{62.5}{\meter}=\SI{87.5}{\meter}$.
+  \end{solution}
+
+  \part[3] Auf trockener Strasse wäre $a_B=\SI{8}{\meter\per\second\squared}$.
+  Berechne den Anhalteweg für diesen Fall (gleiches $v_0$, gleiches
+  $t_R$) und vergleiche mit Teilaufgabe c).
+  \Antwortraum{3}
+  \begin{solution}
+  $s_B = \dfrac{625}{16}\approx\SI{39.1}{\meter}$.
+  $s_A = \SI{25}{\meter}+\SI{39.1}{\meter}\approx\SI{64.1}{\meter}$.
+  Das ist rund $\SI{23}{\meter}$ kürzer als auf nasser Strasse, obwohl
+  $v_0$ und $t_R$ gleich geblieben sind: Nur der Bremsweg hängt vom
+  Untergrund ab, der Reaktionsweg nicht.
+  \end{solution}
+
+  \part[4] Auf einer anderen Fahrt hinterlässt ein Auto auf trockener
+  Strasse ($a_B=\SI{8}{\meter\per\second\squared}$) eine Bremsspur von
+  $s_B=\SI{72}{\meter}$. Wie schnell war das Auto zu Beginn der Bremsung
+  unterwegs? Nutze die Methode aus dem Kasten oben.
+  \Antwortraum{4}
+  \begin{solution}
+  \[
+    v_0 = \sqrt{2a_B\,s_B} = \sqrt{2\cdot8\cdot72} = \sqrt{1152}
+    \approx \SI{33.9}{\meter\per\second} \approx \SI{122}{\kilo\meter\per\hour}.
+  \]
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\begin{theoriebox}[Faustregeln aus der Fahrschule]
+Neben den exakten Bewegungsgleichungen gibt es aus der Fahrschule
+bekannte Faustregeln, die sich im Kopf rechnen lassen. Zwei davon
+betreffen den \textbf{\emph{Sicherheitsabstand}} zu einem
+\emph{vorausfahrenden} Fahrzeug, also einen anderen Fall als unser
+Hindernis, das stillsteht:
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.25em]
+  \item \textbf{\emph{2-Sekunden-Regel}}: Der Abstand zum
+  vorausfahrenden Fahrzeug soll so gross sein, dass mindestens
+  $\SI{2}{\second}$ vergehen, bis man selbst denselben Punkt erreicht:
+  $s_{2\text{s}} = v_0\cdot\SI{2}{\second}$.
+  \item \textbf{\emph{Halber-Tacho-Regel}}: Sicherheitsabstand in
+  Metern $\approx$ die Hälfte der Tachoanzeige in
+  $\si{\kilo\meter\per\hour}$: $s_{\text{Tacho}}
+  \approx \dfrac{v_0\,[\si{\kilo\meter\per\hour}]}{2}$.
+\end{itemize}
+Eine ältere, ebenfalls im Kopf rechenbare Faustformel betrifft dagegen
+speziell den \textbf{\emph{Bremsweg}} allein, nicht den ganzen
+Anhalteweg:
+\[
+  s_B\,[\text{m}] \approx \left(\frac{v_0\,[\si{\kilo\meter\per\hour}]}{10}\right)^{\!2}.
+\]
+\textbf{Wichtig:} Diese drei Faustregeln sind praktische Abschätzungen
+für den Alltag, kein Ersatz für die exakten Bewegungsgleichungen. Die
+ersten beiden schätzen den Abstand zu einem \emph{fahrenden} Fahrzeug
+ab, nicht den vollen Anhalteweg vor einem \emph{stillstehenden}
+Hindernis. Die dritte deckt nur den Bremsweg ab, nicht den
+Reaktionsweg.
+\end{theoriebox}
+
+\begin{questions}
+\begin{taskbox}[Übung: Faustregeln im Vergleich]
+\question[9] Betrachte wieder das Auto von vorhin:
+$v_0=\SI{25}{\meter\per\second}$ ($\approx\SI{90}{\kilo\meter\per\hour}$),
+nasse Strasse.
+
+\begin{parts}
+  \part[3] Berechne alle drei Faustregel-Werte für dieses Auto:
+  $s_{2\text{s}}$, $s_{\text{Tacho}}$ und $s_B$ nach der Faustformel.
+  \Antwortraum{3}
+  \begin{solution}
+  $s_{2\text{s}} = 25\cdot2=\SI{50}{\meter}$.\\
+  $s_{\text{Tacho}} \approx 90/2=\SI{45}{\meter}$.\\
+  $s_B\text{ (Faustformel)} \approx (90/10)^2=\SI{81}{\meter}$.
+  \end{solution}
+
+  \part[3] Vergleiche $s_B$ nach der Faustformel mit dem exakten
+  Bremsweg aus der vorigen Übung ($s_B=\SI{62.5}{\meter}$ auf nasser
+  Strasse). Was passiert, wenn jemand die Faustformel fälschlicherweise
+  für den \emph{gesamten} Anhalteweg hält statt nur für den Bremsweg?
+  Wie gross wäre der Fehler?
+  \Antwortraum{3}
+  \begin{solution}
+  Die Faustformel ($\SI{81}{\meter}$) liegt sogar über dem exakten
+  Bremsweg auf nasser Strasse ($\SI{62.5}{\meter}$): Als reine
+  Bremsweg-Abschätzung ist sie eher grosszügig. Hält man die
+  $\SI{81}{\meter}$ aber fälschlich für den \emph{gesamten} Anhalteweg,
+  fehlt der Reaktionsweg von $\SI{25}{\meter}$ komplett: Der
+  tatsächliche Anhalteweg ($\SI{87.5}{\meter}$) ist grösser als die
+  $\SI{81}{\meter}$ der Faustformel. Genau diese Verwechslung von
+  Bremsweg und gesamtem Anhalteweg ist ein klassischer und gefährlicher
+  Denkfehler.
+  \end{solution}
+
+  \part[3] Angenommen, das Auto folgt einem anderen Fahrzeug mit
+  $\SI{45}{\meter}$ Abstand (Halber-Tacho-Regel eingehalten). Reicht
+  dieser Abstand aus, um vor einem plötzlich \emph{stillstehenden}
+  Hindernis (zum Beispiel ein liegen gebliebenes Auto) rechtzeitig zu
+  stehen? Begründe mit dem exakten Anhalteweg $s_A=\SI{87.5}{\meter}$.
+  \Antwortraum{3}
+  \begin{solution}
+  Nein: $\SI{45}{\meter}$ sind deutlich weniger als der exakte
+  Anhalteweg von $\SI{87.5}{\meter}$. Die Halber-Tacho-Regel (wie auch
+  die 2-Sekunden-Regel) ist für den Abstand zu einem \emph{fahrenden}
+  Fahrzeug gedacht, das im Ernstfall selbst auch bremst; sie ersetzt
+  nicht den vollen Anhalteweg vor einem stillstehenden Hindernis. Wer
+  diese beiden Situationen verwechselt, unterschätzt den nötigen
+  Abstand erheblich.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\begin{theoriebox}[Quadratische Gleichungen lösen: die Mitternachtsformel]
+Löst man die Ortsgleichung $s(t)=s_0+v_0(t-t_0)+\frac{1}{2}a(t-t_0)^2$
+nach $t$ auf (statt nach $s$), steht $t$ im Quadrat: Du bekommst eine
+\textbf{\emph{quadratische Gleichung}}. Für eine allgemeine quadratische
+Gleichung in der Form
+\[
+  A\,t^2 + B\,t + C = 0
+\]
+(dieselben Buchstaben $A,B,C$ wie bei der allgemeinen Parabelgleichung
+$f(t)=At^2+Bt+C$ aus Teil 1, jetzt aber als Gleichung, nicht als
+Funktion) liefert die
+\textbf{\emph{Mitternachtsformel}} beide Lösungen auf einen Schlag:
+\[
+  \boxed{t = \frac{-B \pm \sqrt{B^2-4AC}}{2A}}
+\]
+Das $\pm$ bedeutet: Du rechnest die Formel \textbf{\emph{zweimal}}, einmal
+mit $+$ und einmal mit $-$ vor der Wurzel, und erhältst dabei bis zu zwei
+verschiedene Lösungen für $t$.
+
+\textbf{Beispiel (rein mathematisch, ohne Physik):} Löse
+$2t^2+4t-6=0$. Hier ist $A=2$, $B=4$, $C=-6$:
+\[
+  t = \frac{-4\pm\sqrt{4^2-4\cdot2\cdot(-6)}}{2\cdot2}
+  = \frac{-4\pm\sqrt{64}}{4} = \frac{-4\pm8}{4}.
+\]
+Das ergibt $t_1=1$ und $t_2=-3$.
+
+\textbf{In der Physik:} Um die Ortsgleichung auf diese Form zu bringen,
+bringst du einfach alles auf eine Seite: Aus
+$s_0+v_0(t-t_0)+\frac{1}{2}a(t-t_0)^2 = s_{\text{gesucht}}$ wird (mit
+$t_0=0$)
+\[
+  \underbrace{\tfrac{1}{2}a}_{A}\,t^2 + \underbrace{v_0}_{B}\,t + \underbrace{(s_0-s_{\text{gesucht}})}_{C} = 0,
+\]
+und du kannst $A$, $B$, $C$ direkt in die Mitternachtsformel einsetzen.
+Du brauchst dieses Verfahren immer dann, wenn eine Aufgabe nach der Zeit
+$t$ fragt, aber die Ortsgleichung (nicht die Geschwindigkeitsgleichung)
+die passende Formel ist, siehe Checkliste in Teil 1.
+
+Eine quadratische Gleichung hat mathematisch bis zu \textbf{\emph{zwei}}
+Lösungen (wegen des $\pm$). In der Physik ist aber meistens nur eine
+davon \textbf{\emph{physikalisch sinnvoll}}.
+
+\textbf{Wichtig:} Verwirf nicht automatisch nur negative Zeiten. Prüfe
+bei \emph{jeder} Lösung, ob sie in der Situation überhaupt Sinn ergibt.
+Eine Lösung kann auch aus einem anderen Grund unphysikalisch sein, zum
+Beispiel weil die Bewegung zu diesem Zeitpunkt laut Aufgabenstellung
+längst vorbei ist (siehe Beispiel unten).
+\end{theoriebox}
+
+\begin{questions}
+\begin{taskbox}[Zusatzaufgabe: Die kritische Geschwindigkeit]
+\question[6] Auf einer nassen Strasse ($a_B=\SI{5}{\meter\per\second\squared}$,
+$t_R=\SI{1}{\second}$) steht bei $s=\SI{60}{\meter}$ ein Hindernis, wie
+im $s$-$v$-Diagramm weiter oben. Diesmal ist $v_0$ die gesuchte Grösse.
+
+\begin{parts}
+  \part[2] Stelle die Gleichung $s_A(v_0)=v_0\,t_R+\dfrac{v_0^2}{2a_B}=\SI{60}{\meter}$
+  mit den gegebenen Zahlenwerten auf und bring sie in die Form
+  $A\,v_0^2+B\,v_0+C=0$.
+  \Antwortraum{2}
+  \begin{solution}
+  \[
+    v_0 + \frac{v_0^2}{10} = 60
+  \]
+  Schritt 1: mit dem gemeinsamen Nenner $10$ durchmultiplizieren, um den
+  Bruch zu beseitigen:
+  \[
+    10v_0 + v_0^2 = 600.
+  \]
+  Schritt 2: alles auf eine Seite bringen (Standardform $A\,v_0^2+B\,v_0+C=0$):
+  \[
+    v_0^2 + 10v_0 - 600 = 0.
+  \]
+  Also $A=1$, $B=10$, $C=-600$. (Hier steht sowohl ein $v_0^2$- als auch
+  ein einzelner $v_0$-Term, deshalb reicht die einfache Wurzel aus dem
+  Kasten oben \emph{nicht}: Das ist ein Fall für die Mitternachtsformel.)
+  \end{solution}
+
+  \part[4] Löse mit der Mitternachtsformel nach $v_0$ auf und verwirf die
+  unphysikalische Lösung.
+  \Antwortraum{4}
+  \begin{solution}
+  \[
+    v_0 = \frac{-10\pm\sqrt{10^2-4\cdot1\cdot(-600)}}{2\cdot1}.
+  \]
+  \[
+    v_0 = \frac{-10\pm\sqrt{100+2400}}{2} = \frac{-10\pm\sqrt{2500}}{2}.
+  \]
+  \[
+    v_0 = \frac{-10\pm50}{2}.
+  \]
+  Das ergibt $v_0=\SI{20}{\meter\per\second}$ oder $v_0=-\SI{30}{\meter\per\second}$.
+  Eine negative Anfangsgeschwindigkeit ergibt hier keinen Sinn, also
+  bleibt $v_0=\SI{20}{\meter\per\second}$: genau der Punkt, den das
+  $s$-$v$-Diagramm oben markiert.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\begin{questions}
+\begin{taskbox}[Übung: E-Trottinett bremst, zweiter Teil]
+\question[6] Dasselbe E-Trottinett wie im Beispiel in Teil 1: $v_0=\SI{6}{\meter\per\second}$,
+$a=-\SI{2}{\meter\per\second\squared}$, positive Richtung = Fahrtrichtung.
+
+\begin{parts}
+  \part[2] Nach welcher Zeit $t_{\text{stopp}}$ steht das Trottinett
+  (also $v=0$)? Prüfe dein Ergebnis anschliessend, indem du die
+  Bremsstrecke aus dem Beispiel in Teil 1 ($\Delta s=\SI{9}{\meter}$) über
+  $\Delta s = v_0\cdot t_{\text{stopp}} + \frac{1}{2}a\,t_{\text{stopp}}^2$
+  nachrechnest.
+  \Antwortraum{2}
+  \begin{solution}
+  $0 = 6 - 2\cdot t_{\text{stopp}} \Rightarrow t_{\text{stopp}}=\SI{3}{\second}$.
+  Probe: $\Delta s = 6\cdot3 - \frac{1}{2}\cdot2\cdot3^2 = 18-9=\SI{9}{\meter}$,
+  stimmt mit dem Beispiel in Teil 1 überein.
+  Ab diesem Zeitpunkt gilt die Formel mit konstantem $a$ nicht mehr, das
+  Trottinett bleibt einfach stehen.
+  \end{solution}
+
+  \part[4] Nach welcher Zeit $t$ hat das Trottinett eine Strecke von
+  $\Delta s=\SI{5}{\meter}$ zurückgelegt? Löse mit der Ortsgleichung
+  ($s_0=0$, $t_0=0$) und diskutiere \textbf{beide} Lösungen der
+  quadratischen Gleichung.
+  \Antwortraum{4}
+  \begin{solution}
+  Zuerst alles auf eine Seite bringen (Standardform $At^2+Bt+C=0$):
+  \[
+    5 = 6t - t^2 \quad\Longrightarrow\quad t^2-6t+5=0.
+  \]
+  Koeffizienten ablesen: $A=1$, $B=-6$, $C=5$. In die Mitternachtsformel
+  einsetzen:
+  \[
+    t = \frac{-B\pm\sqrt{B^2-4AC}}{2A} = \frac{6\pm\sqrt{(-6)^2-4\cdot1\cdot5}}{2\cdot1}.
+  \]
+  \[
+    t = \frac{6\pm\sqrt{36-20}}{2} = \frac{6\pm\sqrt{16}}{2}.
+  \]
+  \[
+    t = \frac{6\pm4}{2}.
+  \]
+  Das ergibt $t_1=\frac{6+4}{2}=\SI{5}{\second}$ und
+  $t_2=\frac{6-4}{2}=\SI{1}{\second}$.
+  Mathematisch gibt es also zwei Lösungen: $t=\SI{1}{\second}$ und
+  $t=\SI{5}{\second}$. Aus Teilaufgabe a) weisst du aber, dass das
+  Trottinett bereits bei $t_{\text{stopp}}=\SI{3}{\second}$ steht: Die
+  Formel mit konstantem $a$ gilt also nur für $0\leq t\leq\SI{3}{\second}$.
+  $t=\SI{5}{\second}$ liegt \emph{ausserhalb} dieses gültigen Bereichs
+  (nicht etwa negativ!) und ist deshalb zu verwerfen. Die physikalisch
+  richtige Lösung ist $t=\SI{1}{\second}$.
+  \end{solution}
+\end{parts}
+\end{taskbox}
+\end{questions}
+
+\end{document}

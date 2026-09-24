@@ -1,0 +1,1271 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Arbeitsblatt 4: Schaltungen
+% UZH Praktikum I -- Sara Romer Urban, Kantonsschule im Lee, HS2026
+% Klasse: 1f (23.09.2026), aus PLAN_Dokumentengenerierung.md.
+%
+% ENTWURF. Anleitung zur praktischen Multimeter-Messung (Spannung, Strom,
+% Widerstand), erstellt auf Wunsch von Loris anhand der Fotos in
+% Bilder/Multimeter_Messung/ (Multimeter_Spannung.jpg, Multimeter_Strom.jpg,
+% Multimeter_Widerstand.jpg) und inhaltlich abgeglichen mit "Multimeter --
+% Elektrotechnik einfach erklaert.pdf" im selben Ordner (Vorbereitung/
+% Messvorgang-Struktur pro Messart, Sicherheitshinweise). Jede der drei
+% Messarten hat einen eigenen, selbst gezeichneten Schaltplan (circuitikz)
+% mit dem Messgeraet als Kreis mit V/A/Omega, an genau der Stelle, an der es
+% eingebaut wird -- wie von Loris gewuenscht, statt nur der Fotos.
+%
+% Knuepft an u-i-r/arbeitsblatt3-u-i-r.tex an (Einheiten, Ohmsches Gesetz)
+% und an das bereits vorhandene Vorwissen laut Aufgabenstellung (Wasser-
+% kreislaufanalogie, Grundlagen Multimeter-Messung: Strom in Reihe, Spannung
+% parallel, DC vs. AC) -- deshalb hier keine erneute Herleitung dieser
+% Grundlagen, nur die praktische Anwendung mit einem echten Geraet.
+%
+% Praktischer Versuch am Schluss nutzt das tatsaechlich vorhandene
+% Gruppenmaterial (Netzteil 0-12V in 0.5V-Schritten, Widerstaende 47/100/
+% 200 Ohm, 3 Multimeter pro Gruppe -- ermoeglicht gleichzeitige Spannungs-
+% und Strommessung ohne Umstecken).
+%
+% -----------------------------------------------------------------------------
+% Korrektur (22.09.2026, auf Wunsch): Vier Anpassungen an den Schaltplan-
+% Skizzen von Spannungs-/Strommessung und am Text, nachdem Loris die
+% Original-Fotos genauer eingeordnet hat: (1) Das Bauteil in den Fotos
+% Multimeter_Spannung.jpg/Multimeter_Strom.jpg ist keine Widerstand,
+% sondern eine Gluehbirne -- beide Schaltplaene zeigen jetzt "to[lamp]"
+% statt "to[R,l=$R$]", Fliesstext/Bildunterschriften entsprechend auf
+% "Gluehbirne" umgestellt (Widerstandsmessung-Abschnitt bleibt unveraendert,
+% dort zeigt das Foto tatsaechlich einen Widerstand). (2) Pluspol oben,
+% Minuspol unten am Netzteil -- beide Schaltplaene zeigen das jetzt explizit
+% als "+"/"-"-Beschriftung neben der Batteriesymbol. (3) "Potenzial" ist den
+% SuS noch nicht bekannt (nur Spannung/Strom/Widerstand) -- aus der
+% Polaritaets-Hinweisbox entfernt, ersetzt durch direkten Bezug auf
+% Pluspol/Minuspol wie in der Skizze gezeigt. (4) Beim eingesetzten
+% Fluke-Multimeter muss nach dem Drehschalter zusaetzlich der gelbe Knopf
+% oben links gedrueckt werden, um von Wechsel- auf Gleichstrom zu wechseln
+% -- als Schritt in "Strom messen" ergaenzt.
+%
+% -----------------------------------------------------------------------------
+% Erweiterung (22.09.2026, auf Wunsch): (1) Neue Einleitungsbox "Die
+% Bauelemente auf Ihrem Tisch" direkt nach den Lernzielen, mit den drei
+% Fotos Spannungsquelle.jpg, Steckteile_vonoben.jpg und Multimeter.jpg
+% (neu in Bilder/Multimeter_Messung/) -- stellt PowerModule/Steckerteile/
+% Multimeter als Bauelemente des Stromkreises vor, bevor irgendetwas
+% gemessen wird. Darin neu eine rote "warnbox" (eigene Farbe, staerker als
+% die orange Hinweisbox) zum Kurzschluss: Spannungsquelle nie ohne
+% Widerstand/Verbraucher direkt verbinden. (2) Die Anleitungen in
+% "Spannung messen"/"Strom messen"/"Widerstand messen" sind jetzt
+% Bulletpoints (itemize) statt Fliesstext -- nur die Hinweisboxen bleiben
+% als Fliesstext, da sie Erklaerungen sind, keine Schritt-Anleitung. (3)
+% "+"/"-" an der Spannungsquelle jetzt direkt neben dem Batteriesymbol
+% selbst platziert (vorher an den Ecken der Anschlussdraehte, zu weit weg
+% vom eigentlichen Symbol). (4) Neue kurze Einzelaufgabe "Widerstand der
+% Gluehbirne berechnen" nach "Strom messen": Ohmsches Gesetz $R=U/I$
+% gegeben, Loesung mit Beispielwerten $U=4\,$V, $I=0.4\,$A $\to
+% R=10\,\Omega$. (5) Der bisherige "Praktischer Versuch"-Abschnitt (ein
+% einzelner Widerstand, U/I/R einzeln) ersetzt durch "Anwendung:
+% Serieschaltung und Parallelschaltung": SuS bauen die drei vorhandenen
+% Widerstaende (47/100/200 Ohm) einmal in Serie, einmal parallel auf und
+% messen U und I an jedem Widerstand sowie $U_0$ (und bei Parallel
+% zusaetzlich $I_0$), mit selbst gezeichneten circuitikz-Schaltplaenen fuer
+% die Aufgabe und den echten Fotos Serieschaltung.jpg/Parallelschaltung.jpg
+% (neu in Bilder/) plus den tatsaechlichen Messwerten von Loris (aus
+% Messungen_Serie_Parallelschaltung.xlsx im selben Ordner) in der
+% Loesungsversion. Abschliessende Vergleichsfrage: Summe der Einzel-
+% spannungen (Serie) bzw. Einzelstroeme (Parallel) stimmt mit $U_0$ bzw.
+% $I_0$ ueberein.
+%
+% -----------------------------------------------------------------------------
+% Erweiterung (22.09.2026, auf Wunsch): Die bisherige Vergleichsfrage am
+% Schluss ist jetzt "Kirchhoffsche Regeln herleiten" -- zusaetzlich zum
+% numerischen Vergleich (Summe = Gesamtgroesse) verallgemeinern die SuS auf
+% $n$ Widerstaende (bewusst nur diese einfache Verallgemeinerung ueber die
+% Anzahl, keine formale Ladungserhaltungs-/Energieerhaltungs-Herleitung),
+% und die Loesung benennt die beiden Regeln explizit (Maschenregel/
+% Knotenregel). Danach drei neue "Merksatz"-formelboxen (Serieschaltung,
+% Parallelschaltung, Schaltungen allgemein) in einer eigenen theoriebox nach
+% der Gruppenarbeit: Formulierungen direkt aus Loris' Vorgabe (Wasser/Strom
+% an einer Verzweigung: genau so viel kommt hinzu wie wegfliesst; die
+% angelegte Spannung wird von den "Wandlern" umgewandelt; Wasser/Strom auf
+% gleicher Hoehe/Spannung hat dasselbe "Wirkungspotential", daher gleiche
+% Spannung an parallelen Zweigen).
+%
+% -----------------------------------------------------------------------------
+% Korrektur/Erweiterung (22.09.2026, auf Wunsch): (1) Die "battery1"-
+% Symbole waren falsch gepolt: Per Default liegt der laengere Strich
+% (Pluspol) am Start des circuitikz-"to"-Pfads, bei uns also unten -- mit
+% der "invert"-Option jetzt korrekt oben (deckt sich mit den textuellen
+% "+"/"-"-Beschriftungen von vorhin, betrifft alle vier Schaltplaene). (2)
+% Die Gluehbirne-Widerstands-Aufgabe gibt jetzt das Ohmsche Gesetz in der
+% Form $U=R\cdot I$ vor (wie in u-i-r/arbeitsblatt3-u-i-r.tex), SuS stellen
+% selbst nach $R$ um (Schritt gezeigt in der Loesung), statt dass $R=U/I$
+% direkt vorgegeben wird. (3) Die Messwerttabellen (Serie/Parallel) sind
+% jetzt geraeumiger formatiert: groesserer Zeilenabstand
+% (\arraystretch{2.2}), Spaltenkoepfe mit Einheit ("$U$ in V"), breitere
+% Schreiblinien (3cm), Gesamtspannung/-stromstaerke in eigener Zeile mit
+% mehr Weissraum statt gedraengt neben der Tabelle. (4) Die beiden
+% Schaltplaene der Anwendungsaufgabe zeigen jetzt selbst einen Kreis mit
+% $V$ (parallel zu den Widerstaenden) und $A$ (in Reihe), analog zur
+% Konvention aus dem Multimeter-Teil -- vorher zeigten sie nur die
+% Bauteile ohne Messpunkte. (5) Serie und Parallel haben jetzt je eine
+% eigene "Konklusion"-Frage direkt nach ihrer Messtabelle/Loesung (statt
+% nur der gemeinsamen Schlussfrage): Konklusion Serie fragt nach dem
+% Vergleich der drei Stromwerte und der Spannungssumme, Konklusion
+% Parallel nach dem Vergleich der drei Spannungswerte und der Stromsumme.
+% Die bisherige "Kirchhoffsche Regeln herleiten"-Frage heisst jetzt
+% "Kirchhoffsche Regeln verallgemeinern" und wiederholt die numerischen
+% Vergleiche nicht mehr (stehen ja schon in den beiden Konklusionen),
+% sondern verallgemeinert direkt auf $n$ Widerstaende und benennt die
+% beiden Regeln. (6) Der Serieschaltung-Aufgabentext verriet bisher selbst
+% schon "bei einer Serieschaltung [ist der Strom] ueberall gleich gross"
+% -- entfernt, SuS messen jetzt einfach an drei Stellen und sollen die
+% Erkenntnis erst in der Konklusion-Frage selbst ziehen.
+%
+% -----------------------------------------------------------------------------
+% Korrektur/Erweiterung (22.09.2026, auf Wunsch): (1) Die "Kirchhoffsche
+% Regeln verallgemeinern"-Frage (oben, Punkt (6) der letzten Notiz) wieder
+% zurueckgebaut: Keine Verallgemeinerung auf $n$ Widerstaende mehr (SuS
+% verstehen das noch nicht), stattdessen "Kirchhoffsche Regeln benennen"
+% -- bleibt konkret bei den drei gemessenen Widerstaenden
+% ($U_0=U_1+U_2+U_3$ bzw. $I_0=I_1+I_2+I_3$) und fragt nur noch nach den
+% Namen der beiden Regeln. Die drei Merksatz-Boxen wurden entsprechend
+% von "...+U_n"/"...+I_n" auf die konkrete Dreier-Summe zurueckgestellt.
+% (2) Die $V$/$A$-Messpunkt-Kreise in den beiden Schaltplaenen der
+% "Anwendung"-Aufgabe (oben, Punkt (4) der letzten Notiz) wieder entfernt
+% -- Schaltplaene zeigen jetzt wieder nur Batterie/Schalter/Widerstaende,
+% wie vor jener Aenderung. (3) Neuer grosser Abschnitt "Ersatzwiderstand"
+% nach den Merksaetzen: kurze Theoriebox zum Begriff, dann eine
+% Gruppenaufgabe "Serie und Parallel" (beide Male OHNE Netzteil, direkt
+% mit dem Ohmmeter gemessen -- eigene, battery-freie Schaltskizzen mit
+% $\Omega$-Kreis -- Frage nach Trend bei mehr Widerstaenden sowie nach der
+% Formel, SuS leiten $R_{ers}=R_1+R_2+R_3$ bzw.
+% $1/R_{ers}=1/R_1+1/R_2+1/R_3$ selbst her), dann "Mischschaltung"
+% ($R_1$ in Serie mit $R_2\|R_3$, ebenfalls ohne Netzteil, berechnen und
+% zur Kontrolle auf dem Steckbrett messen), und zum Schluss
+% "Schaltungs-Tausch": Jede Gruppe zeichnet selbst eine komplexere
+% Schaltung mit mind. vier frei gewaehlten Widerstaenden, reicht sie an
+% eine andere Gruppe weiter, die den Gesamtwiderstand berechnet -- bewusst
+% ohne Loesung in diesem Dokument, da die Schaltung/Werte von den SuS
+% selbst stammen.
+%
+% -----------------------------------------------------------------------------
+% Korrektur (22.09.2026, auf Wunsch): In allen fuenf Schaltskizzen (beide
+% "Anwendung"-Schaltplaene und alle drei "Ersatzwiderstand"-Schaltplaene)
+% zeigen die Widerstaende jetzt nur noch $R_1$/$R_2$/$R_3$ als
+% Bauteilbeschriftung, nicht mehr den Ohm-Wert direkt im Schaltplan. Die
+% Zuordnung $R_1=\SI{47}{\ohm}$, $R_2=\SI{100}{\ohm}$, $R_3=\SI{200}{\ohm}$
+% wird dafuer einmal, zentral, in der Einleitung der "Anwendung"-
+% Gruppenaufgabe festgelegt (dort, wo die drei Widerstaende zum ersten Mal
+% gemeinsam eingefuehrt werden) und gilt ab dort fuer den Rest des
+% Dokuments. Passend dazu zeigen auch die vier Messwerttabellen
+% (Anwendung Serie/Parallel, je Aufgaben- und Loesungsversion) jetzt
+% $R_1$/$R_2$/$R_3$ als Zeilenbeschriftung statt des Ohm-Werts. Die
+% Wiederholung der Werte in der Ersatzwiderstand-Serieschaltung-Aufgabe
+% (vorher redundant zur neuen zentralen Definition) wurde entsprechend
+% gekuerzt. Unveraendert bleiben: die "Steckerteile"-Bildunterschrift in
+% "Die Bauelemente auf Ihrem Tisch" (beschreibt die real aufgedruckten
+% Ohm-Werte auf dem Foto, keine Schaltskizze) und die generische
+% "$R$"-Beschriftung im "Widerstand messen"-Abschnitt (dort noch kein
+% Bezug zu den drei spezifischen Widerstaenden).
+%
+% -----------------------------------------------------------------------------
+% Korrektur/Erweiterung (22.09.2026, auf Wunsch): (1) Die Formeln
+% $U_0=U_1+U_2+U_3$ bzw. $I_0=I_1+I_2+I_3$ stehen jetzt direkt in den
+% Loesungen von "Konklusion: Serieschaltung" bzw. "Konklusion:
+% Parallelschaltung" (bei der jeweiligen Schaltung selbst), nicht mehr
+% erst in einer eigenen Frage danach. (2) Die bisherige Frage
+% "Kirchhoffsche Regeln benennen" (vorher Aufgabe 6) ist deshalb komplett
+% entfernt -- die Namen der beiden Regeln (Knotenregel/Maschenregel)
+% stehen weiterhin unveraendert im Merksatz "Schaltungen allgemein".
+% Alle \setcounter{question}-Werte der nachfolgenden Gruppenaufgaben
+% (Ersatzwiderstand Serie/Parallel, Mischschaltung, Schaltungs-Tausch) um
+% eins nach unten korrigiert. (3) Die Formel-Anzeigen in den Merksatz-
+% Boxen "Serieschaltung" und "Parallelschaltung" entfernt (nur noch
+% Fliesstext ohne die $U_0=\dots$/$I_0=\dots$-Gleichung) -- die Formeln
+% stehen ja jetzt schon bei den Konklusionen (Punkt (1)). (4) Die Loesung
+% von "Ersatzwiderstand: Parallelschaltung" zeigt jetzt den genauen
+% Rechenweg (Bruch mit den drei Widerstaenden aufschreiben, jeden
+% Summanden einzeln als Dezimalzahl ausrechnen, addieren, dann den
+% Kehrwert bilden) statt direkt von der Summenformel zum Endergebnis zu
+% springen. (5) "Schaltungs-Tausch" hat jetzt ein Beispiel mit
+% vollstaendiger Loesung ($R_a=100\,\Omega$, $R_b=200\,\Omega$ in Serie,
+% parallel zu $R_c=300\,\Omega$, das Ganze in Serie mit $R_d=50\,\Omega$,
+% Ergebnis $\SI{200}{\ohm}$) -- eigene Schaltskizze, offen sichtbar als
+% Anschauungsbeispiel, die Rechnung selbst in einer \solution-Box.
+% Korrektur (22.09.2026, auf Wunsch): Das Beispiel selbst (Schaltskizze
+% plus Kontext-Satz) steckt jetzt ebenfalls in der \solution-Box, nicht
+% mehr offen sichtbar davor -- Loris meinte mit "Beispiel mit Loesung"
+% ein Beispiel, das komplett zur Loesung gehoert (also nur im
+% Lehrpersonen-/\printanswers-Exemplar sichtbar), nicht ein zusaetzliches
+% offenes Anschauungsbeispiel vor der eigentlichen Aufgabe.
+% Ausserdem (auf Wunsch): \Thema und \ArbeitsblattTitel von "Messen mit
+% dem Multimeter" auf "Schaltungen" umbenannt (Dokument deckt inzwischen
+% deutlich mehr als nur die Multimeter-Messung ab: Ersatzwiderstand,
+% Schaltungs-Tausch, UND-/ODER-Schaltung) -- betrifft Kopfzeile,
+% Seitenkopf und PDF-Metadaten (\pdftitle), Dateiname bleibt unveraendert
+% (arbeitsblatt4-schaltungen.tex passt bereits).
+%
+% -----------------------------------------------------------------------------
+% Erweiterung (22.09.2026, auf Wunsch): Neue Zusatzaufgabe fuer schnelle
+% Gruppen ganz am Schluss: "UND- und ODER-Schaltung", zwei Schalter plus
+% eine Gluehbirne. Anders als die bisherigen Aufgaben bekommen die SuS
+% hier den Schaltplan NICHT vorgegeben -- sie sollen ihn nach dem Bauen
+% selbst zeichnen (\Antwortraum statt fertigem circuitikz-Schaltplan in
+% der Aufgabe selbst). Die Loesung zeigt je Loris' eigenes, tatsaechlich
+% gebautes Referenzfoto (Bilder/schaltung_und.jpg: zwei Schalter in Serie
+% vor der Gluehbirne -- Gluehbirne leuchtet nur, wenn beide Schalter zu
+% sind; Bilder/schaltung_oder.jpg: zwei Schalter parallel -- ein
+% einzelner Schalter genuegt) sowie einen eigenen circuitikz-
+% Referenzschaltplan zum Abgleich.
+%
+% -----------------------------------------------------------------------------
+% Review-Korrektur (22.09.2026, auf Wunsch -- Redundanzen/Logik/
+% physikalische Korrektheit von Arbeitsblatt+Aufgabenblatt gemeinsam
+% geprueft, physics-accuracy-reviewer und redundanz-tiefe-reviewer als
+% Subagenten sowie eigene Durchsicht):
+% (1) [physics-accuracy, behoben] Ersatzwiderstand-Mischschaltung-Loesung
+% sprang beim Berechnen von $R_{23}=R_2\|R_3$ direkt von der Bruchsumme
+% zum Endergebnis (ein einziger \Longrightarrow-Schritt fuer
+% Gleichnenner-Bildung UND Kehrwert zugleich) -- jetzt in drei einzelne
+% Schritte aufgeteilt (Bruchsumme aufschreiben, gemeinsamer Nenner, dann
+% erst Kehrwert), konsistent mit jeder anderen Bruchrechnung in beiden
+% Dokumenten. (2) [physics-accuracy, BLOCKING, behoben] Aufgabenblatt-
+% Aufgabe 3a verlangte als Begruendung implizit die allgemeine Regel
+% "Ersatzwiderstand einer Parallelschaltung ist immer kleiner als der
+% kleinste Einzelwiderstand" -- diese Regel stand bisher nirgends
+% sichtbar fuer SuS, nur einmal verdeckt in einer \solution-Box fuer
+% einen einzelnen Zahlenfall. Neue sichtbare Box "Merksatz:
+% Ersatzwiderstand" im Arbeitsblatt (nach der Ersatzwiderstand-
+% Gruppenaufgabe, vor der Mischschaltung) haelt jetzt explizit fest:
+% Serie-Ersatzwiderstand immer groesser als jeder Einzelwiderstand,
+% Parallel-Ersatzwiderstand immer kleiner als der kleinste
+% Einzelwiderstand -- inkl. der beiden Formeln. (3) [eigener Fund]
+% Die Ersatzwiderstand-Serie/Parallel-Loesungen behaupteten faelschlich
+% "Gemessen: $R_{ers}\approx...$", obwohl es sich um den theoretisch
+% berechneten Wert handelt (keine echten Messdaten wie bei der
+% Anwendung-Aufgabe) -- umformuliert zu "Ihr gemessener Wert sollte damit
+% uebereinstimmen", konsistent mit der bereits korrekten Formulierung bei
+% der Mischschaltung. (4) [redundanz-tiefe, behoben] Die dritte
+% Merksatz-Box "Schaltungen allgemein" wiederholte die Kernsaetze aus den
+% Boxen "Serieschaltung"/"Parallelschaltung" fast woertlich und fuegte
+% nur die Regelnamen hinzu -- auf einen kurzen Rueckverweis gekuerzt, der
+% nur noch die Namen Knotenregel/Maschenregel an die bereits
+% festgehaltenen Regeln haengt, ohne sie erneut zu definieren.
+% Im Aufgabenblatt: [physics-accuracy, MINOR, behoben] Aufgabe 3c
+% (Teilspannungen) verwendete den auf 0.102 A gerundeten Strom aus 3b
+% weiter, was zu einem 1-Rappen-Rundungsfehler bei $U_3$ fuehrte
+% (8.16 V statt der praeziseren 8.17 V) -- Zwischenwert in 3b auf
+% 0.1021 A praezisiert, 3c entsprechend auf 8.17 V/3.83 V angepasst.
+% Alle anderen von beiden Reviewern geprueften Punkte (Zahlenwerte,
+% Schaltplan-Topologien, Aufgabenschwierigkeit/-progression,
+% Diagrammpaare) waren bereits korrekt bzw. absichtlich so gestaltet --
+% keine weiteren Aenderungen noetig.
+%
+% -----------------------------------------------------------------------------
+% Umbau (22.09.2026, auf Wunsch): (1) Der Ersatzwiderstand wird jetzt
+% direkt bei "Anwendung: Serieschaltung und Parallelschaltung" mitgemessen,
+% statt in einer eigenen, spaeteren Gruppenaufgabe dieselbe Schaltung noch
+% einmal aufzubauen. Die SuS haben den Stromkreis ja schon vor sich.
+% Jede der beiden Teilaufgaben (Serie/Parallel) hat dafuer einen neuen
+% Schritt: Spannungsquelle trennen (Sicherheitsregel fuer Widerstands-
+% messungen, siehe "Widerstand messen"), dann $R_{ges}$ direkt mit dem
+% Ohmmeter messen; die Messwerttabelle hat dafuer eine zusaetzliche Zeile.
+% Die beiden "Konklusion"-Fragen fragen jetzt zusaetzlich nach dem Trend
+% (groesser/kleiner) und nach der Formel fuer $R_{ers}$, analog zur
+% bisherigen Frage in der separaten Gruppenaufgabe. Die eigenstaendige
+% Gruppenaufgabe "Ersatzwiderstand: Serie und Parallel" (mit eigenem
+% Schaltungsaufbau ohne Netzteil) sowie die vorangehende kurze
+% "Ersatzwiderstand"-Theoriebox entfallen dadurch komplett; die
+% Definition des Ersatzwiderstands steckt jetzt in einem Satz in der Einleitung
+% der "Anwendung"-Gruppenaufgabe. (2) Die Box "Merksatz: Ersatzwiderstand"
+% (zwei Formelboxen mit den fertigen Formeln $R_{ers}=R_1+R_2+R_3$ bzw.
+% $1/R_{ers}=1/R_1+1/R_2+1/R_3$) ist ebenfalls entfernt: Das Herleiten
+% dieser Formeln ist Teil der Aufgabe (Konklusion-Fragen oben), sie sollen
+% den SuS nicht vorher schon vorgegeben werden. Die "Ersatzwiderstand:
+% Mischschaltung"-Aufgabe verweist weiterhin auf "die Formeln von oben":
+% Gemeint sind jetzt die Formeln, die die SuS selbst in ihren eigenen
+% Konklusion-Antworten hergeleitet haben. (3) Alle nachfolgenden
+% \setcounter{question}-Werte (Mischschaltung, Schaltungs-Tausch,
+% Zusatzaufgabe) um zwei nach unten korrigiert, da die entfallene
+% Gruppenaufgabe zwei Fragennummern belegt hatte. (4) Die Lernzielbox
+% deckt jetzt knapp das gesamte Dokument ab (Multimeter-Messung inkl.
+% Sicherheit, Serie-/Parallelverhalten, Ersatzwiderstand) statt nur die
+% Multimeter-Messung. Die alte dritte Lernzielzeile zur Sicherheit ist
+% dafuer in die erste eingeflossen, um bei drei Punkten zu bleiben.
+%
+% -----------------------------------------------------------------------------
+% Korrektur (23.09.2026, auf Wunsch): (1) "Strom messen": Der gelbe Knopf
+% zum Umschalten auf Gleichstrom sitzt am tatsaechlichen Fluke-Multimeter
+% oben rechts, nicht oben links -- Text korrigiert. (2) Die
+% Kurzschluss-Warnbox erklaert jetzt auch WARUM ein Kurzschluss gefaehrlich
+% ist, nicht nur DASS er es ist: Nach dem Ohmschen Gesetz $I=U/R$ wird die
+% Stromstaerke riesig, wenn der Widerstand fast null ist. (3) "Widerstand
+% messen": Der Hinweis zum Trennen des Widerstands vom Stromkreis erwaehnte
+% bisher "auslöten bzw. ausstecken" -- am Steckbrett wird aber nichts
+% geloetet, nur umgesteckt, deshalb "auslöten" gestrichen (im ganzen
+% Dokument geprueft, war die einzige Stelle). (4) Mehrere Aufgaben stellten
+% bisher zwei oder drei inhaltlich verschiedene Fragen hintereinander vor
+% einer einzigen gemeinsamen Antwortbox: "Konklusion: Serieschaltung" und
+% "Konklusion: Parallelschaltung" (je drei Fragen: Stromvergleich,
+% Spannungssumme, Ersatzwiderstand-Formel) sowie "Schaltungs-Tausch" (Skizze
+% zeichnen und Widerstand berechnen waren zwei verschiedene Antwortraeume,
+% aber ohne \parts-Struktur). Alle drei jetzt in \parts mit je einer Frage
+% und einer eigenen Antwortbox pro \part umgebaut, damit immer nur eine
+% Frage auf einmal gestellt wird. Die Loesungs-Inhalte entsprechend auf die
+% einzelnen \part-Antworten aufgeteilt (bei Schaltungs-Tausch bleibt die
+% Gesamtloesung als ein zusammenhaengendes Beispiel nach den \parts stehen,
+% da sie eine einzige durchgehende Beispielrechnung zeigt).
+%
+% -----------------------------------------------------------------------------
+% Korrektur (23.09.2026, auf Wunsch): (1) Bei "Konklusion: Serieschaltung"
+% und "Konklusion: Parallelschaltung" gibt der letzte \part jetzt die
+% Formel fuer den Ersatzwiderstand direkt vor ($R_{ers}=R_1+R_2+R_3$ bzw.
+% $1/R_{ers}=1/R_1+1/R_2+1/R_3$), statt sie selbst herleiten zu lassen --
+% die SuS ueberpruefen die Formel stattdessen mit ihrem gemessenen $R_{ges}$
+% und den drei Einzelwiderstaenden. Die Loesungen entsprechend umformuliert
+% (erst einsetzen/ausrechnen, dann mit dem Messwert vergleichen, statt
+% umgekehrt). (2) Die Lernziele-Box am Dokumentanfang komplett entfernt.
+%
+% -----------------------------------------------------------------------------
+% Korrektur (23.09.2026, auf Wunsch): Bei "Konklusion: Serieschaltung" (c)
+% wieder zurueckgebaut auf die vorherige Fassung: Die SuS stellen die
+% Formel fuer $R_{ers}$ wieder selbst auf, statt sie vorgegeben zu
+% bekommen und nur zu ueberpruefen (Punkt (1) der letzten Notiz). Bei
+% "Konklusion: Parallelschaltung" (c) bleibt die Formel dagegen vorgegeben
+% -- dort ist das Herleiten (Kehrwertsumme) deutlich anspruchsvoller als
+% die einfache Addition bei der Serieschaltung.
+% =============================================================================
+\documentclass[addpoints,11pt,a4paper]{exam}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.2cm,headheight=14pt]{geometry}
+\usepackage{amsmath}
+\usepackage{siunitx}
+% Hausstil: zusammengesetzte Einheiten immer als echter Bruch (\frac), nicht
+% als Inline-Schraegstrich oder \tfrac -- gilt global fuer jedes \si/\SI.
+\sisetup{per-mode=fraction,fraction-command=\frac}
+\usepackage{array,booktabs,tabularx,multirow}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[european]{circuitikz}
+\usepackage{physics}
+\usepackage[most]{tcolorbox}
+\usepackage{lastpage}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\usetikzlibrary{arrows.meta,calc,angles,quotes}
+
+\usepackage{setspace}
+\usepackage{needspace}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+\setstretch{1.08}
+\setlist[itemize]{itemsep=0.4em}
+
+% -----------------------------
+% Farben (Corporate-Farbschema Physik KFR)
+% -----------------------------
+\definecolor{titleblue}{HTML}{183A6B}
+\definecolor{accentblue}{HTML}{2E6F9E}
+\definecolor{lightblue}{HTML}{EAF4FB}
+\definecolor{lightgray}{HTML}{F4F6F8}
+\definecolor{darkgray}{HTML}{4A4A4A}
+\definecolor{accentorange}{HTML}{D9720C}
+\definecolor{accentpurple}{HTML}{7B2D8E}
+\definecolor{lightorange}{HTML}{FCEEE0}
+\definecolor{lightpurple}{HTML}{F3EAF7}
+
+% Links (hyperref): farblich ans Corporate-Farbschema angeglichen.
+\hypersetup{
+  colorlinks=true,
+  urlcolor=accentblue,
+  linkcolor=accentblue,
+  pdftitle={Arbeitsblatt 4: Schaltungen},
+  pdfauthor={Loris Keller}
+}
+
+% -----------------------------
+% Boxen
+% -----------------------------
+\tcbset{before skip=10pt, after skip=10pt}
+\newtcolorbox{titlebox}{
+  enhanced,
+  colback=titleblue,
+  colframe=titleblue,
+  boxrule=0pt,
+  arc=3mm,
+  left=3mm,right=3mm,top=3mm,bottom=3mm
+}
+
+\newlength{\aufgabenindent}
+\settowidth{\aufgabenindent}{10.\hskip\labelsep}
+
+% Praktikum I: Lernziele/Einleitung/Theorie/Aufgaben werden NICHT farbig
+% gerahmt (nur Formel-, Hinweis- und Antwortbox bleiben Boxen) -- siehe
+% institutionen/UZH-Praktikum-I/CLAUDE.md, Abschnitt "Boxen-Layout".
+\newenvironment{infobox}{%
+  \par\addvspace{10pt}\noindent
+}{%
+  \par\addvspace{10pt}
+}
+
+% Titel von Theorie-/Aufgaben-/Gruppenarbeit-Abschnitten: groesser, farbig
+% und mit duenner Trennlinie statt schlichtem Fettdruck.
+\newcommand{\Teiltitel}[2]{%
+  \noindent{\Large\bfseries\color{#1}#2}\par
+  \vspace{1pt}\noindent{\color{#1}\rule{\linewidth}{0.8pt}}\par\smallskip\noindent
+}
+
+\newenvironment{theoriebox}[1][Theorie]{%
+  \par\addvspace{12pt}\Teiltitel{titleblue}{#1}
+}{%
+  \par\addvspace{10pt}
+}
+
+\newtcolorbox{taskbox}[1][]{
+  enhanced, breakable,
+  colback=white, colframe=white, boxrule=0pt,
+  left=0mm,right=0mm,top=0mm,bottom=0mm,
+  before skip=12pt, after skip=10pt,
+  before upper={%
+    \def\tmpboxtitle{#1}%
+    \ifx\tmpboxtitle\empty\else\Teiltitel{accentblue}{#1}\fi
+  }
+}
+
+\newtcolorbox{groupbox}[1][Gruppenarbeit]{
+  enhanced, breakable,
+  colback=white, colframe=white, boxrule=0pt,
+  left=0mm,right=0mm,top=0mm,bottom=0mm,
+  before skip=12pt, after skip=10pt,
+  before upper={\Teiltitel{accentorange}{#1}}
+}
+
+\newtcolorbox{hinweisbox}[1][Hinweis]{
+  enhanced,
+  breakable,
+  colback=lightorange,
+  colframe=accentorange,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+% Warnbox: eigene rote Farbe, deutlich staerker als die orange Hinweisbox --
+% fuer Sicherheitswarnungen mit Beschaedigungs-/Verletzungsrisiko (hier:
+% Kurzschluss), nicht fuer gewoehnliche Verfahrenshinweise.
+\definecolor{accentred}{HTML}{B3261E}
+\definecolor{lightred}{HTML}{FBE9E7}
+\newtcolorbox{warnbox}[1][Warnung]{
+  enhanced,
+  breakable,
+  colback=lightred,
+  colframe=accentred,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.9pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+\newtcolorbox{formelbox}[1][Formel]{
+  enhanced,
+  breakable,
+  colback=lightpurple,
+  colframe=accentpurple,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.9pt,
+  arc=2mm,
+  left=5mm,right=5mm,top=2mm,bottom=2mm
+}
+
+\newtcolorbox{answerbox}{
+  breakable,
+  colback=white,
+  colframe=gray!55,
+  boxrule=0.5pt,
+  arc=1.5mm,
+  left=2mm,right=2mm,top=2mm,bottom=2mm
+}
+
+% Bild-Helfer: zentriertes Bild mit spuerbarem Abstand zum umgebenden Text.
+% #1 = Breite, #2 = Dateipfad.
+\newcommand{\Bild}[2]{%
+  \par\vspace{0.6cm}
+  \begin{center}
+    \includegraphics[width=#1]{#2}
+  \end{center}
+  \vspace{0.6cm}
+}
+
+% --- Loesungen ein-/ausblenden -----------------------------------------------
+\noprintanswers
+%\printanswers
+
+\pointformat{}
+\renewcommand{\solutiontitle}{\noindent\color{titleblue}\textbf{L\"osung:}\enspace}
+
+\pagestyle{headandfoot}
+\cfoot{\textcolor{darkgray}{Seite \thepage\ von \pageref{LastPage}}}
+
+\newcommand{\Kopfzeile}[4]{%
+  \begin{titlebox}
+    {\color{white}\sffamily\bfseries\Large #4}
+  \end{titlebox}
+  \vspace{0.5em}
+  \noindent\textbf{Klasse:}~#1 \hfill \textbf{Datum:}~#2 \hfill \textbf{Thema:}~#3
+    \hfill \textbf{Lehrperson:}~Loris Keller
+  \vspace{0.8em}
+  \lhead{\textcolor{darkgray}{#3}}
+  \rhead{\textcolor{darkgray}{#4}}
+}
+
+\newlength{\antwortraumlen}
+\newcommand{\Antwortraum}[1]{%
+  \pgfmathsetlength{\antwortraumlen}{#1*2.5cm}%
+  \begin{answerbox}
+    \rule{0pt}{\antwortraumlen}%
+  \end{answerbox}%
+}
+
+% Werte fuer Kopfzeile zentral setzen
+\newcommand{\Klasse}{1f}
+\newcommand{\Datum}{23.09.2026}
+\newcommand{\Thema}{Schaltungen}
+\newcommand{\ArbeitsblattTitel}{Arbeitsblatt 4: Schaltungen}
+
+\begin{document}
+
+\Kopfzeile{\Klasse}{\Datum}{\Thema}{\ArbeitsblattTitel}
+
+% =============================================================================
+% Bauelemente des Stromkreises
+% =============================================================================
+\needspace{10cm}
+\begin{theoriebox}[Die Bauelemente auf Ihrem Tisch]
+Bevor Sie messen, ein kurzer Überblick über die drei Geräte, mit denen Sie
+heute arbeiten:
+
+\Bild{6cm}{Bilder/Multimeter_Messung/Spannungsquelle.jpg}
+{\scriptsize \textbf{Spannungsquelle} (PowerModule): liefert die Spannung
+für Ihren Stromkreis, einstellbar von \SI{0}{\volt} bis \SI{12}{\volt} in
+\SI{0.5}{\volt}-Schritten. Oben der Pluspol, unten der Minuspol.}
+
+\Bild{9cm}{Bilder/Multimeter_Messung/Steckteile_vonoben.jpg}
+{\scriptsize \textbf{Steckerteile}: Sie stecken diese Bauteile auf das
+Steckbrett, um Ihren Stromkreis aufzubauen. Zu sehen sind die Widerstände
+$\SI{47}{\ohm}$, $\SI{100}{\ohm}$, $\SI{200}{\ohm}$, ein leeres
+Verbindungsstück, ein Schalter, eine Glühbirne und eine LED, jeweils mit
+ihrem Schaltzeichen beschriftet.}
+
+\Bild{5cm}{Bilder/Multimeter_Messung/Multimeter.jpg}
+{\scriptsize \textbf{Multimeter}: das Messgerät, mit dem Sie Spannung,
+Strom und Widerstand messen.}
+
+\needspace{5cm}
+\begin{warnbox}[Achtung: Kurzschluss]
+Verbinden Sie die Spannungsquelle \textbf{\emph{nie}} direkt mit sich
+selbst, also ohne einen Widerstand oder Verbraucher (z.\,B. eine
+Glühbirne) im Stromkreis. Nach dem Ohmschen Gesetz $I=U/R$ wird die
+Stromstärke $I$ riesig gross, wenn der Widerstand $R$ fast null ist: Es
+fliesst ein sehr grosser Strom, ein \textbf{\emph{Kurzschluss}}. Die
+Spannungsquelle, die Kabel oder das Steckbrett können dabei beschädigt
+werden. Bauen Sie deshalb immer zuerst Ihren vollständigen Stromkreis mit
+einem Widerstand oder Verbraucher auf, bevor Sie die Spannungsquelle
+einschalten.
+\end{warnbox}
+\end{theoriebox}
+
+% =============================================================================
+% Das Messgeraet im Schaltplan
+% =============================================================================
+\needspace{8cm}
+\begin{theoriebox}[Das Messgerät im Schaltplan]
+Sie wissen bereits: Eine Spannungsmessung wird \textbf{\emph{parallel}} zum
+Bauteil angeschlossen, eine Strommessung \textbf{\emph{in Reihe}} in den
+Stromkreis eingebaut. Im Schaltplan zeichnet man das Multimeter dafür
+vereinfacht als \textbf{\emph{Kreis mit dem Symbol der gemessenen Grösse}}
+darin: $V$ für Spannung, $A$ für Strom, $\Omega$ für Widerstand. Die Lage
+dieses Kreises im Schaltplan zeigt Ihnen sofort, wie das Multimeter
+tatsächlich angeschlossen werden muss.
+\end{theoriebox}
+
+% =============================================================================
+% Spannung messen
+% =============================================================================
+\needspace{6cm}
+\begin{theoriebox}[Spannung messen]
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.3em]
+  \item Schwarzes Messkabel in die COM-Buchse, rotes Messkabel in die
+  Buchse mit dem $V$-Zeichen.
+  \item Drehschalter auf Gleichspannung ($\overline{V}$) stellen.
+  \item Beide Prüfspitzen an die zwei Punkte halten, zwischen denen Sie
+  die Spannung messen möchten, hier an den beiden Enden der Glühbirne im
+  Stromkreis, \textbf{\emph{parallel}} dazu (siehe Schaltplan unten).
+\end{itemize}
+
+\begin{formelbox}[Schaltplan: Spannungsmessung]
+\begin{center}
+\begin{circuitikz}[scale=1.3]
+  \draw (0,0) to[battery1,invert,l=$U_0$] (0,3)
+              to[normal open switch] (2.2,3)
+              -- (4.4,3)
+              to[lamp] (4.4,0)
+              -- (0,0);
+  \node at (0.4,1.85) {$+$};
+  \node at (0.4,1.15) {$-$};
+  \draw (4.4,3) -- (6,3) -- (6,1.9);
+  \node[draw,circle,minimum size=0.8cm] (V) at (6,1.5) {$V$};
+  \draw (6,1.1) -- (6,0) -- (4.4,0);
+\end{circuitikz}
+\end{center}
+{\scriptsize Das Voltmeter (Kreis mit $V$) liegt \emph{parallel} zur
+Glühbirne: Es misst die Spannung, die über ihr abfällt, ohne den
+Stromkreis selbst zu unterbrechen. Am Netzteil oben der Pluspol, unten
+der Minuspol.}
+\end{formelbox}
+
+\Bild{7cm}{Bilder/Multimeter_Messung/Multimeter_Spannung.jpg}
+{\scriptsize Spannungsmessung mit dem Multimeter: Beide Prüfspitzen liegen
+parallel an den beiden Enden der Glühbirne an, hier zeigt das Display
+noch $\SI{0}{\volt}$ (Stromkreis noch nicht eingeschaltet).}
+
+\needspace{5cm}
+\begin{hinweisbox}[Polarität bei Gleichspannung]
+Legen Sie die rote Prüfspitze an die Seite mit dem Pluspol (in der Skizze
+oben) und die schwarze Prüfspitze an die Seite mit dem Minuspol (unten).
+Sie erhalten dann einen positiven Wert. Vertauschen Sie die Spitzen,
+zeigt das Multimeter denselben Betrag mit negativem Vorzeichen an, z.\,B.
+$\SI{-6}{\volt}$.
+\end{hinweisbox}
+\end{theoriebox}
+
+% =============================================================================
+% Strom messen
+% =============================================================================
+\needspace{6cm}
+\begin{theoriebox}[Strom messen]
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.3em]
+  \item Schwarzes Messkabel weiterhin in die COM-Buchse, rotes Messkabel
+  aber in die Buchse mit dem $A$-Zeichen (mA oder A, je nach erwarteter
+  Stromstärke; bei Unsicherheit zuerst die grössere Buchse verwenden).
+  \textbf{\emph{Achtung:}} Für eine Strommessung braucht es eine andere
+  Buchse als für Spannung und Widerstand.
+  \item Drehschalter auf Gleichstrom ($\overline{A}$) stellen. Danach
+  zusätzlich den gelben Knopf oben rechts drücken, um von Wechselstrom auf
+  Gleichstrom umzuschalten.
+  \item Stromkreis spannungsfrei schalten und an einer Stelle auftrennen.
+  Multimeter \textbf{\emph{in Reihe}} in diese Lücke einsetzen (siehe
+  Schaltplan unten), dann den Stromkreis wieder einschalten.
+\end{itemize}
+
+\begin{formelbox}[Schaltplan: Strommessung]
+\begin{center}
+\begin{circuitikz}[scale=1.8]
+  \draw (0,0) to[battery1,invert,l=$U_0$] (0,3)
+              to[normal open switch] (2,3)
+              -- (3.2,3);
+  \node at (0.4,1.85) {$+$};
+  \node at (0.4,1.15) {$-$};
+  \node[draw,circle,minimum size=0.8cm] (A) at (3.6,3) {$A$};
+  \draw (4,3) -- (5.2,3)
+              to[lamp] (5.2,0)
+              -- (0,0);
+\end{circuitikz}
+\end{center}
+{\scriptsize Das Amperemeter (Kreis mit $A$) liegt \emph{in Reihe} in der
+Schleife: Durch das Messgerät fliesst genau derselbe Strom $I$ wie durch
+die Glühbirne. Am Netzteil oben der Pluspol, unten der Minuspol.}
+\end{formelbox}
+
+\needspace{8.5cm}
+\Bild{7cm}{Bilder/Multimeter_Messung/Multimeter_Strom.jpg}
+{\scriptsize Strommessung mit dem Multimeter: Beide Prüfspitzen sind in
+die aufgetrennte Schleife eingesetzt, das Multimeter ist Teil des
+Stromkreises.}
+
+\begin{hinweisbox}[Sicherheit bei der Strommessung]
+Trennen Sie den Stromkreis nur, wenn er spannungsfrei ist (Netzteil aus
+oder Schalter offen). Schliessen Sie danach den Stromkreis wieder, um zu
+messen. Bei falscher Polarität zeigt das Multimeter denselben Betrag mit
+negativem Vorzeichen an, genau wie bei der Spannungsmessung.
+\end{hinweisbox}
+\end{theoriebox}
+
+% =============================================================================
+% Kurze Aufgabe: Widerstand der Gluehbirne berechnen
+% =============================================================================
+\needspace{8cm}
+\begin{questions}
+\begin{taskbox}[Aufgabe: Widerstand der Glühbirne berechnen]
+\question[3] Sie haben oben an derselben Glühbirne bereits die Spannung
+$U$ und die Stromstärke $I$ gemessen. Das Ohmsche Gesetz lautet
+\[
+  U = R\cdot I.
+\]
+Stellen Sie die Formel selbst nach $R$ um und berechnen Sie damit den
+Widerstand $R$ der Glühbirne.
+\begin{answerbox}
+\vspace{2.5cm}
+\end{answerbox}
+\begin{solution}
+Umstellen (beide Seiten durch $I$ teilen):
+\[
+  \frac{U}{I} = \frac{R\cdot I}{I} = R \qquad\Longrightarrow\qquad R=\frac{U}{I}.
+\]
+Zum Beispiel bei $U=\SI{4}{\volt}$ und $I=\SI{0.4}{\ampere}$:
+\[
+  R = \frac{U}{I} = \frac{\SI{4}{\volt}}{\SI{0.4}{\ampere}} = \SI{10}{\ohm}.
+\]
+(Mit Ihren eigenen Messwerten von oben erhalten Sie einen etwas anderen
+Wert.)
+\end{solution}
+\end{taskbox}
+\end{questions}
+
+% =============================================================================
+% Widerstand messen
+% =============================================================================
+\needspace{6cm}
+\begin{theoriebox}[Widerstand messen]
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.3em]
+  \item Schwarzes Messkabel in die COM-Buchse, rotes Messkabel in die
+  Buchse mit dem $\Omega$-Zeichen.
+  \item Drehschalter auf das $\Omega$-Zeichen stellen.
+\end{itemize}
+
+\begin{hinweisbox}[Wichtig: Schaltung muss spannungsfrei sein]
+Für eine Widerstandsmessung darf am zu messenden Bauteil \textbf{\emph{keine
+Spannungsquelle}} angeschlossen sein. Sonst misst das Multimeter einen
+falschen Wert, da es selbst einen kleinen Strom durch das Bauteil
+schickt. Trennen Sie den Widerstand deshalb ganz vom Stromkreis (mindestens auf
+einer Seite ausstecken), bevor Sie messen.
+\end{hinweisbox}
+
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.3em]
+  \item Beide Prüfspitzen direkt an die zwei Anschlüsse des Widerstands
+  halten (siehe Schaltplan unten).
+\end{itemize}
+
+\begin{formelbox}[Schaltplan: Widerstandsmessung]
+\begin{center}
+\begin{circuitikz}[scale=2.0]
+  \draw (0,0) to[R,l=$R$] (0,3);
+  \draw (0,3) -- (4,3) -- (4,1.9);
+  \node[draw,circle,minimum size=0.8cm] (Om) at (4,1.5) {$\Omega$};
+  \draw (4,1.1) -- (4,0) -- (0,0);
+\end{circuitikz}
+\end{center}
+{\scriptsize Der Widerstand $R$ hängt hier an \emph{keinem} Netzteil: Das
+Ohmmeter (Kreis mit $\Omega$) ist direkt mit seinen beiden Anschlüssen
+verbunden.}
+\end{formelbox}
+
+\Bild{9cm}{Bilder/Multimeter_Messung/Multimeter_Widerstand.jpg}
+{\scriptsize Widerstandsmessung mit dem Multimeter: Der Widerstand ist
+vom Steckbrett getrennt, das Display zeigt seinen Wert
+($\SI{46.8}{\ohm}$, gemessen an einem als $\SI{47}{\ohm}$
+beschrifteten Widerstand; kleine Abweichungen dieser Grössenordnung
+sind normal).}
+\end{theoriebox}
+
+% =============================================================================
+% Anwendung: Serieschaltung und Parallelschaltung
+% =============================================================================
+\needspace{10cm}
+\begin{questions}
+\setcounter{question}{1}
+\begin{groupbox}[Anwendung: Serieschaltung und Parallelschaltung]
+Bilden Sie Vierergruppen. Jede Gruppe hat ein Steckbrett, ein Netzteil,
+einen Schalter, die drei Widerstände $R_1=\SI{47}{\ohm}$,
+$R_2=\SI{100}{\ohm}$ und $R_3=\SI{200}{\ohm}$ sowie drei Multimeter. Sie
+bauen nun dieselben drei Widerstände einmal in Serie und einmal parallel
+auf und vergleichen, wie sich Spannung und Strom dabei verteilen. Bei
+beiden Schaltungen messen Sie ausserdem deren
+\textbf{\emph{Ersatzwiderstand}} $R_{ges}$: den Widerstand, den ein
+einziger Widerstand haben müsste, um die ganze Schaltung zu ersetzen.
+
+\needspace{10cm}
+\question[6] \textbf{Serieschaltung}
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.3em]
+  \item Bauen Sie die drei Widerstände gemäss Schaltplan in Serie mit
+  Schalter und Netzteil auf. Stellen Sie das Netzteil auf $\SI{4}{\volt}$
+  ein, schliessen Sie den Schalter aber noch nicht.
+  \item Messen Sie nacheinander die Spannung über jedem der drei
+  Widerstände sowie die Gesamtspannung $U_0$ über der ganzen Schaltung.
+  \item Messen Sie die Stromstärke $I$ jeweils in der Nähe jedes der drei
+  Widerstände (siehe Schaltplan unten) und tragen Sie alle drei Werte in
+  die Tabelle ein.
+  \item Trennen Sie anschliessend die Spannungsquelle vom Stromkreis:
+  Für eine Widerstandsmessung darf keine Spannungsquelle angeschlossen
+  sein (siehe \glqq Widerstand messen\grqq{} weiter oben). Messen Sie
+  dann mit dem Multimeter ($\Omega$-Modus) direkt den Gesamtwiderstand
+  $R_{ges}$ derselben Serieschaltung.
+\end{itemize}
+\begin{center}
+\begin{circuitikz}[scale=1.15]
+  \draw (0,0) to[battery1,invert,l=$U_0$] (0,3)
+              to[normal open switch] (2,3)
+              to[R,l=$R_1$] (4.4,3)
+              to[R,l=$R_2$] (6.4,3)
+              to[R,l=$R_3$] (8.4,3)
+              -- (8.4,0)
+              -- (0,0);
+\end{circuitikz}
+\end{center}
+\begin{center}
+\renewcommand{\arraystretch}{2.2}
+\begin{tabular}{lcc}
+\toprule
+$R$ & $U$ in $\si{\volt}$ & $I$ in $\si{\ampere}$ \\
+\midrule
+$R_1$ & \rule{3cm}{0.4pt} & \rule{3cm}{0.4pt} \\
+$R_2$ & \rule{3cm}{0.4pt} & \rule{3cm}{0.4pt} \\
+$R_3$ & \rule{3cm}{0.4pt} & \rule{3cm}{0.4pt} \\
+\bottomrule
+\end{tabular}
+\renewcommand{\arraystretch}{1}
+
+\vspace{0.5cm}
+Gesamtspannung $U_0 = $ \rule{3cm}{0.4pt}
+
+\vspace{0.3cm}
+Gesamtwiderstand $R_{ges} = $ \rule{3cm}{0.4pt}
+\end{center}
+\begin{solution}
+\Bild{7cm}{Bilder/Serieschaltung.jpg}
+\begin{center}
+\renewcommand{\arraystretch}{2.2}
+\begin{tabular}{lcc}
+\toprule
+$R$ & $U$ in $\si{\volt}$ & $I$ in $\si{\ampere}$ \\
+\midrule
+$R_1$ & $0.552$ & $0.012$ \\
+$R_2$ & $1.173$ & $0.012$ \\
+$R_3$ & $2.321$ & $0.012$ \\
+\bottomrule
+\end{tabular}
+\renewcommand{\arraystretch}{1}
+
+\vspace{0.5cm}
+Gesamtspannung $U_0 = \SI{4}{\volt}$
+
+\vspace{0.3cm}
+Gesamtwiderstand $R_{ges} = \SI{347}{\ohm}$
+\end{center}
+\end{solution}
+
+\needspace{6cm}
+\question[5] \textbf{Konklusion: Serieschaltung}
+\begin{parts}
+  \part[1] Vergleichen Sie Ihre drei gemessenen Stromstärken
+  untereinander. Was schliessen Sie daraus für den Strom in einer
+  Serieschaltung?
+  \begin{answerbox}
+  \vspace{1.8cm}
+  \end{answerbox}
+  \begin{solution}
+  Die drei Stromstärken sind (bis auf kleine Messabweichungen) gleich
+  gross: In einer Serieschaltung ist der Strom überall gleich gross, da
+  es nur einen einzigen Weg für die Ladungsträger gibt.
+  \end{solution}
+
+  \needspace{4.5cm}
+  \part[2] Vergleichen Sie die Summe Ihrer drei gemessenen Spannungen
+  mit $U_0$. Was schliessen Sie daraus?
+  \begin{answerbox}
+  \vspace{1.8cm}
+  \end{answerbox}
+  \begin{solution}
+  Die Summe der drei Spannungen ($\SI{0.552}{\volt}+\SI{1.173}{\volt}
+  +\SI{2.321}{\volt}=\SI{4.046}{\volt}$) stimmt mit $U_0=\SI{4}{\volt}$
+  überein: Die angelegte Spannung wird auf die einzelnen Widerstände
+  aufgeteilt. Als Formel:
+  \[
+    U_0 = U_1+U_2+U_3.
+  \]
+  \end{solution}
+
+  \needspace{5cm}
+  \part[2] Stellen Sie mit Ihrem gemessenen $R_{ges}$ und den drei
+  Einzelwiderständen $R_1$, $R_2$, $R_3$ eine Formel für den
+  Ersatzwiderstand $R_{ers}$ einer Serieschaltung auf: Ist er grösser
+  oder kleiner als jeder einzelne Widerstand?
+  \begin{answerbox}
+  \vspace{2cm}
+  \end{answerbox}
+  \begin{solution}
+  Der gemessene Gesamtwiderstand $R_{ges}=\SI{347}{\ohm}$ ist
+  \textbf{\emph{grösser}} als jeder einzelne Widerstand: Jeder
+  zusätzliche Widerstand bremst die Ladungsträger zusätzlich. Als Formel
+  für den Ersatzwiderstand einer Serieschaltung:
+  \[
+    R_{ers} = R_1+R_2+R_3 = \SI{47}{\ohm}+\SI{100}{\ohm}+\SI{200}{\ohm}
+    = \SI{347}{\ohm}.
+  \]
+  \end{solution}
+\end{parts}
+
+\needspace{10cm}
+\question[6] \textbf{Parallelschaltung}
+\begin{itemize}[leftmargin=1.2cm,itemsep=0.3em]
+  \item Bauen Sie dieselben drei Widerstände gemäss Schaltplan parallel
+  mit Schalter und Netzteil auf. Netzteil wieder auf $\SI{4}{\volt}$.
+  \item Messen Sie die Spannung über jedem der drei Widerstände sowie
+  die Gesamtspannung $U_0$.
+  \item Messen Sie die Stromstärke $I$ durch jeden der drei Widerstände
+  sowie die Gesamtstromstärke $I_0$, die aus dem Netzteil fliesst.
+  \item Trennen Sie anschliessend die Spannungsquelle vom Stromkreis:
+  Für eine Widerstandsmessung darf keine Spannungsquelle angeschlossen
+  sein (siehe \glqq Widerstand messen\grqq{} weiter oben). Messen Sie
+  dann mit dem Multimeter ($\Omega$-Modus) direkt den Gesamtwiderstand
+  $R_{ges}$ derselben Parallelschaltung.
+\end{itemize}
+\begin{center}
+\begin{circuitikz}[scale=1.15]
+  \draw (0,0) to[battery1,invert,l=$U_0$] (0,3)
+              to[normal open switch] (2,3);
+  \draw (2,3) -- (8,3);
+  \draw (0,0) -- (8,0);
+  \draw (2,3) to[R,l=$R_1$] (2,0);
+  \draw (5,3) to[R,l=$R_2$] (5,0);
+  \draw (8,3) to[R,l=$R_3$] (8,0);
+\end{circuitikz}
+\end{center}
+\begin{center}
+\renewcommand{\arraystretch}{2.2}
+\begin{tabular}{lcc}
+\toprule
+$R$ & $U$ in $\si{\volt}$ & $I$ in $\si{\ampere}$ \\
+\midrule
+$R_1$ & \rule{3cm}{0.4pt} & \rule{3cm}{0.4pt} \\
+$R_2$ & \rule{3cm}{0.4pt} & \rule{3cm}{0.4pt} \\
+$R_3$ & \rule{3cm}{0.4pt} & \rule{3cm}{0.4pt} \\
+\bottomrule
+\end{tabular}
+\renewcommand{\arraystretch}{1}
+
+\vspace{0.5cm}
+Gesamtspannung $U_0 = $ \rule{3cm}{0.4pt} \hspace{1cm}
+Gesamtstromstärke $I_0 = $ \rule{3cm}{0.4pt}
+
+\vspace{0.3cm}
+Gesamtwiderstand $R_{ges} = $ \rule{3cm}{0.4pt}
+\end{center}
+\begin{solution}
+\Bild{7cm}{Bilder/Parallelschaltung.jpg}
+\begin{center}
+\renewcommand{\arraystretch}{2.2}
+\begin{tabular}{lcc}
+\toprule
+$R$ & $U$ in $\si{\volt}$ & $I$ in $\si{\ampere}$ \\
+\midrule
+$R_1$ & $4$ & $0.086$ \\
+$R_2$ & $4$ & $0.041$ \\
+$R_3$ & $4$ & $0.02$ \\
+\bottomrule
+\end{tabular}
+\renewcommand{\arraystretch}{1}
+
+\vspace{0.5cm}
+Gesamtspannung $U_0 = \SI{4}{\volt}$ \hspace{1cm}
+Gesamtstromstärke $I_0 = \SI{0.148}{\ampere}$
+
+\vspace{0.3cm}
+Gesamtwiderstand $R_{ges} \approx \SI{27.6}{\ohm}$
+\end{center}
+\end{solution}
+
+\needspace{6cm}
+\question[5] \textbf{Konklusion: Parallelschaltung}
+\begin{parts}
+  \part[1] Vergleichen Sie Ihre drei gemessenen Spannungen
+  untereinander. Was schliessen Sie daraus für die Spannung in einer
+  Parallelschaltung?
+  \begin{answerbox}
+  \vspace{1.8cm}
+  \end{answerbox}
+  \begin{solution}
+  Die drei Spannungen sind (bis auf kleine Messabweichungen) gleich
+  gross: In einer Parallelschaltung liegt an allen Zweigen dieselbe
+  Spannung an, da sie zwischen denselben zwei Punkten liegen.
+  \end{solution}
+
+  \needspace{4.5cm}
+  \part[2] Vergleichen Sie die Summe Ihrer drei gemessenen
+  Stromstärken mit $I_0$. Was schliessen Sie daraus?
+  \begin{answerbox}
+  \vspace{1.8cm}
+  \end{answerbox}
+  \begin{solution}
+  Die Summe der drei Stromstärken ($\SI{0.086}{\ampere}
+  +\SI{0.041}{\ampere}+\SI{0.02}{\ampere} = \SI{0.147}{\ampere}$) stimmt
+  mit $I_0=\SI{0.148}{\ampere}$ überein: Der Gesamtstrom teilt sich auf
+  die einzelnen Zweige auf. Als Formel:
+  \[
+    I_0 = I_1+I_2+I_3.
+  \]
+  \end{solution}
+
+  \needspace{10cm}
+  \part[2] Für den Ersatzwiderstand einer Parallelschaltung gilt die
+  Formel
+  \[
+    \frac{1}{R_{ers}} = \frac{1}{R_1}+\frac{1}{R_2}+\frac{1}{R_3}.
+  \]
+  Überprüfen Sie mit Ihrem gemessenen $R_{ges}$ und den drei
+  Einzelwiderständen, ob diese Formel stimmt. Ist $R_{ers}$ grösser oder
+  kleiner als der kleinste der drei Einzelwiderstände?
+  \begin{answerbox}
+  \vspace{2cm}
+  \end{answerbox}
+  \begin{solution}
+  Rechenweg: Zuerst die drei Widerstände in die Formel einsetzen:
+  \[
+    \frac{1}{R_{ers}} = \frac{1}{R_1}+\frac{1}{R_2}+\frac{1}{R_3}
+    = \frac{1}{\SI{47}{\ohm}}+\frac{1}{\SI{100}{\ohm}}+\frac{1}{\SI{200}{\ohm}}.
+  \]
+  Jeden Bruch einzeln als Dezimalzahl ausrechnen:
+  \[
+    \frac{1}{R_{ers}} \approx \frac{0.02128}{\si{\ohm}}+\frac{0.01}{\si{\ohm}}
+    +\frac{0.005}{\si{\ohm}}.
+  \]
+  Addieren:
+  \[
+    \frac{1}{R_{ers}} \approx \frac{0.03628}{\si{\ohm}}.
+  \]
+  Beide Seiten invertieren (Kehrwert bilden), um nach $R_{ers}$
+  aufzulösen:
+  \[
+    R_{ers} \approx \frac{\si{\ohm}}{0.03628} \approx \SI{27.6}{\ohm}.
+  \]
+  Das stimmt mit dem gemessenen Gesamtwiderstand
+  $R_{ges}\approx\SI{27.6}{\ohm}$ überein. $R_{ers}$ ist dabei
+  \textbf{\emph{kleiner}} als der kleinste Einzelwiderstand
+  ($R_1=\SI{47}{\ohm}$): Jeder zusätzliche Zweig bietet den
+  Ladungsträgern einen weiteren Weg.
+  \end{solution}
+\end{parts}
+\end{groupbox}
+\end{questions}
+
+% =============================================================================
+% Merksaetze: Kirchhoffsche Regeln
+% =============================================================================
+\needspace{8cm}
+\begin{theoriebox}[Merksätze]
+
+\begin{formelbox}[Merksatz: Serieschaltung]
+Bei einer Serieschaltung gibt es nur einen einzigen Weg für die
+Ladungsträger: Der Strom ist überall gleich gross. Die von der
+Spannungsquelle angelegte Spannung wird von den Bauteilen (den
+\textbf{\emph{Wandlern}}) nacheinander umgewandelt: Die Summe der
+Teilspannungen ergibt die Gesamtspannung.
+\end{formelbox}
+
+\begin{formelbox}[Merksatz: Parallelschaltung]
+Bei einer Parallelschaltung liegen alle Bauteile zwischen denselben zwei
+Punkten, also auf derselben Spannung: Wasser bzw. Strom auf gleicher
+Höhe (gleicher Spannung) hat dasselbe \textbf{\emph{Wirkungspotential}},
+deshalb liegt an allen parallelen Zweigen dieselbe Spannung $U_0$ an. An
+jeder Verzweigung kommt genau so viel Strom hinzu, wie wegfliesst: Die
+Summe der Teilströme ergibt den Gesamtstrom.
+\end{formelbox}
+
+\begin{formelbox}[Merksatz: Schaltungen allgemein]
+Die beiden Regeln, die Sie oben für Serie- und Parallelschaltung
+festgehalten haben, gelten so in jeder Schaltung, egal ob Serie,
+Parallel oder eine Mischung aus beidem, und haben eigene Namen: Die
+Stromregel an einer Verzweigung heisst \textbf{\emph{Knotenregel}}, die
+Spannungsregel in der Schleife heisst \textbf{\emph{Maschenregel}}.
+\end{formelbox}
+
+\end{theoriebox}
+
+% =============================================================================
+% Ersatzwiderstand: Mischschaltung
+% =============================================================================
+\needspace{11cm}
+\begin{questions}
+\setcounter{question}{5}
+\begin{groupbox}[Ersatzwiderstand: Mischschaltung]
+\question[4] Die folgende Schaltung enthält Ihre drei Widerstände sowohl
+in Serie als auch parallel geschaltet (wieder ohne Netzteil):
+\begin{center}
+\begin{circuitikz}[scale=1.7]
+  \draw (0,1.5) to[R,l=$R_1$] (2.5,1.5);
+  \filldraw (2.5,1.5) circle (0.05);
+  \draw (2.5,1.5) -- (2.5,2.8) to[R,l=$R_2$] (5.5,2.8) -- (5.5,1.5);
+  \draw (2.5,1.5) -- (2.5,0.2) to[R,l=$R_3$] (5.5,0.2) -- (5.5,1.5);
+  \filldraw (5.5,1.5) circle (0.05);
+  \draw (5.5,1.5) -- (7,1.5) -- (7,-1) -- (3.9,-1);
+  \node[draw,circle,minimum size=0.8cm] (Om) at (3.5,-1) {$\Omega$};
+  \draw (3.1,-1) -- (0,-1) -- (0,1.5);
+\end{circuitikz}
+\end{center}
+Berechnen Sie den Ersatzwiderstand $R_{ers}$ dieser Schaltung mit den
+Formeln von oben. Bauen Sie die Schaltung anschliessend auf dem
+Steckbrett auf und messen Sie zur Kontrolle.
+\begin{answerbox}
+\vspace{2.5cm}
+\end{answerbox}
+\begin{solution}
+Zuerst die Parallelschaltung von $R_2$ und $R_3$:
+\[
+  \frac{1}{R_{23}} = \frac{1}{\SI{100}{\ohm}}+\frac{1}{\SI{200}{\ohm}}
+\]
+Gemeinsamer Nenner $\SI{200}{\ohm}$:
+\[
+  \frac{1}{R_{23}} = \frac{2}{\SI{200}{\ohm}}+\frac{1}{\SI{200}{\ohm}}
+  = \frac{3}{\SI{200}{\ohm}}
+\]
+Beide Seiten invertieren (Kehrwert bilden), um nach $R_{23}$ aufzulösen:
+\[
+  \Longrightarrow\quad R_{23} = \frac{\SI{200}{\ohm}}{3} \approx \SI{66.7}{\ohm}.
+\]
+Diese liegt in Serie mit $R_1$:
+\[
+  R_{ers} = R_1+R_{23} = \SI{47}{\ohm}+\SI{66.7}{\ohm} = \SI{113.7}{\ohm}.
+\]
+Der gemessene Wert sollte (bis auf kleine Abweichungen) damit
+übereinstimmen.
+\end{solution}
+\end{groupbox}
+\end{questions}
+
+% =============================================================================
+% Schaltungs-Tausch
+% =============================================================================
+\needspace{16cm}
+\begin{questions}
+\setcounter{question}{6}
+\begin{groupbox}[Schaltungs-Tausch: Komplexere Schaltung berechnen]
+\question[6]
+\begin{parts}
+  \part[2] Zeichnen Sie in Ihrer Gruppe eine eigene, etwas komplexere
+  Schaltung mit mindestens vier Widerständen, die sowohl Serie- als auch
+  Parallelteile enthält. Wählen Sie selbst Widerstandswerte, beschriften
+  Sie diese in Ihrer Skizze, und geben Sie die Skizze an eine andere
+  Gruppe weiter.
+  \Antwortraum{5}
+
+  \part[4] Berechnen Sie den Gesamtwiderstand der Schaltung, die Sie von
+  der anderen Gruppe erhalten haben. Vergleichen Sie anschliessend Ihr
+  Ergebnis mit der Gruppe, die die Schaltung gezeichnet hat.
+  \begin{answerbox}
+  \vspace{3cm}
+  \end{answerbox}
+\end{parts}
+
+\begin{solution}
+\textbf{Beispiel, wie eine getauschte Schaltung aussehen könnte:}
+\begin{center}
+\begin{circuitikz}[scale=0.7]
+  \draw (1,1.5) -- (1,3) to[R,l=$R_a$] (3.5,3) to[R,l=$R_b$] (6,3) -- (6,1.5);
+  \draw (1,1.5) -- (1,0) to[R,l=$R_c$] (6,0) -- (6,1.5);
+  \filldraw (1,1.5) circle (0.05);
+  \filldraw (6,1.5) circle (0.05);
+  \draw (6,1.5) to[R,l=$R_d$] (8.5,1.5);
+  \draw (8.5,1.5) -- (10,1.5) -- (10,-1.5) -- (5.9,-1.5);
+  \node[draw,circle,minimum size=0.8cm] (Om) at (5.5,-1.5) {$\Omega$};
+  \draw (5.1,-1.5) -- (0,-1.5) -- (0,1.5) -- (1,1.5);
+\end{circuitikz}
+\end{center}
+Mit $R_a=\SI{100}{\ohm}$, $R_b=\SI{200}{\ohm}$, $R_c=\SI{300}{\ohm}$ und
+$R_d=\SI{50}{\ohm}$: $R_a$ und $R_b$ liegen in Serie, diese Serie liegt
+parallel zu $R_c$, und das Ganze liegt in Serie mit $R_d$.
+
+Zuerst $R_a$ und $R_b$ (in Serie):
+\[
+  R_{ab} = R_a+R_b = \SI{100}{\ohm}+\SI{200}{\ohm} = \SI{300}{\ohm}.
+\]
+Dann $R_{ab}$ parallel zu $R_c$:
+\[
+  \frac{1}{R_{abc}} = \frac{1}{R_{ab}}+\frac{1}{R_c}
+  = \frac{1}{\SI{300}{\ohm}}+\frac{1}{\SI{300}{\ohm}}
+  = \frac{2}{\SI{300}{\ohm}}
+  \quad\Longrightarrow\quad R_{abc} = \SI{150}{\ohm}.
+\]
+Zuletzt $R_{abc}$ in Serie mit $R_d$:
+\[
+  R_{ges} = R_{abc}+R_d = \SI{150}{\ohm}+\SI{50}{\ohm} = \SI{200}{\ohm}.
+\]
+\end{solution}
+\end{groupbox}
+\end{questions}
+
+% =============================================================================
+% Zusatzaufgabe: UND- und ODER-Schaltung
+% =============================================================================
+\needspace{10cm}
+\begin{questions}
+\setcounter{question}{7}
+\begin{groupbox}[Zusatzaufgabe (für schnelle Gruppen): UND- und ODER-Schaltung]
+Mit zwei Schaltern und einer Glühbirne lassen sich zwei ganz
+unterschiedliche Verhalten bauen. Einmal müssen beide Schalter
+geschlossen sein, damit die Glühbirne leuchtet: Die Schalter hängen
+voneinander ab. Einmal genügt ein einzelner Schalter: Die Schalter
+wirken unabhängig voneinander.
+
+\needspace{10cm}
+\question[4] \textbf{UND-Schaltung}
+Bauen Sie mit dem Netzteil, zwei Schaltern und einer Glühbirne eine
+Schaltung, bei der die Glühbirne nur leuchtet, wenn \textbf{\emph{beide}}
+Schalter gleichzeitig geschlossen sind. Zeichnen Sie anschliessend selbst
+den Schaltplan Ihrer Schaltung.
+\Antwortraum{4}
+\begin{solution}
+\Bild{6cm}{Bilder/schaltung_und.jpg}
+\begin{center}
+\begin{circuitikz}[scale=0.9]
+  \draw (0,0) to[battery1,invert,l=$U_0$] (0,3)
+              to[normal open switch,l=$S_1$] (2.2,3)
+              to[normal open switch,l=$S_2$] (4.4,3)
+              to[lamp] (4.4,0)
+              -- (0,0);
+  \node at (0.4,1.85) {$+$};
+  \node at (0.4,1.15) {$-$};
+\end{circuitikz}
+\end{center}
+Die beiden Schalter liegen in \textbf{\emph{Serie}}: Erst wenn $S_1$
+\textbf{\emph{und}} $S_2$ geschlossen sind, ist die Schleife
+geschlossen und die Glühbirne leuchtet. Daher der Name
+\glqq UND-Schaltung\grqq{}.
+\end{solution}
+
+\needspace{10cm}
+\question[4] \textbf{ODER-Schaltung}
+Bauen Sie eine Schaltung, bei der die Glühbirne bereits leuchtet, wenn
+nur \textbf{\emph{ein einzelner}} Schalter geschlossen ist, unabhängig
+davon, wie der andere Schalter steht. Zeichnen Sie auch hier selbst den
+Schaltplan Ihrer Schaltung.
+\Antwortraum{4}
+\begin{solution}
+\Bild{6cm}{Bilder/schaltung_oder.jpg}
+\begin{center}
+\begin{circuitikz}[scale=0.9]
+  \draw (0,0) to[battery1,invert,l=$U_0$] (0,3) -- (1.5,3);
+  \draw (1.5,3) to[normal open switch,l=$S_1$] (1.5,1.5);
+  \draw (1.5,3) -- (3.5,3) to[normal open switch,l=$S_2$] (3.5,1.5);
+  \draw (1.5,1.5) -- (2.5,1.5) -- (3.5,1.5);
+  \draw (2.5,1.5) to[lamp] (2.5,0);
+  \draw (2.5,0) -- (0,0);
+  \node at (0.4,1.85) {$+$};
+  \node at (0.4,1.15) {$-$};
+\end{circuitikz}
+\end{center}
+Die beiden Schalter liegen \textbf{\emph{parallel}}: Schon $S_1$
+\textbf{\emph{oder}} $S_2$ allein schliesst einen Weg für den Strom.
+Daher der Name \glqq ODER-Schaltung\grqq{}.
+\end{solution}
+\end{groupbox}
+\end{questions}
+
+\end{document}
