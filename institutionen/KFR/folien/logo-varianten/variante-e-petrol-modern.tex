@@ -1,0 +1,68 @@
+% !TeX program = pdflatex
+% Variante E: Petrol modern. Schrift Source Sans, Farben Petrol und Orange.
+% Folientitel ohne Balken: kleine Kapitälchenzeile (Thema) über dem Titel,
+% darunter ein kurzer oranger Strich. Logo rechts oben auf Weiss. Fusszeile
+% mit Thema links und Seitenzahl rechts. Titelfolie: Text links, rechts eine
+% hellpetrolfarbene Fläche mit dem Logo.
+\documentclass[14pt,aspectratio=169]{beamer}
+\input{gemeinsam-praeambel}
+\usepackage[default]{sourcesanspro}
+
+\definecolor{petrol}{HTML}{14555F}
+\definecolor{hellpetrol}{HTML}{E4F0F1}
+\definecolor{orangeakzent}{HTML}{E07A1F}
+\colorlet{boxrahmen}{petrol}
+\colorlet{boxgrund}{hellpetrol}
+
+\setbeamercolor{structure}{fg=petrol}
+\setbeamercolor{title}{fg=petrol}
+\setbeamercolor{frametitle}{fg=petrol,bg=white}
+\setbeamercolor{footline}{fg=kfrgrau,bg=white}
+
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip
+  \vspace*{0.3cm}%
+  \begin{beamercolorbox}[wd=\paperwidth,leftskip=1cm,rightskip=3.2cm plus 1fil]{frametitle}
+    \hyphenpenalty=10000
+    {\scriptsize\scshape\color{orangeakzent}\insertshorttitle\par}
+    {\usebeamerfont{frametitle}\insertframetitle\par}
+    \vspace{0.1em}
+    {\color{orangeakzent}\rule{2.4cm}{2pt}}\par\vspace{-0.6em}
+  \end{beamercolorbox}%
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north east,inner sep=0pt] at ([xshift=-0.5cm,yshift=-0.4cm]current page.north east)
+      {\includegraphics[height=0.6cm]{kfr_logo}};
+  \end{tikzpicture}%
+}
+
+\setbeamertemplate{footline}{%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=0.45cm,dp=0.25cm,leftskip=1cm,rightskip=1cm]{footline}
+    \scriptsize\insertshorttitle\hfill\insertframenumber\,/\,\inserttotalframenumber
+  \end{beamercolorbox}
+}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[hellpetrol] ([xshift=-5.6cm]current page.north east) rectangle (current page.south east);
+    \node[inner sep=0pt] at ([xshift=-2.8cm]current page.east)
+      {\includegraphics[width=4.4cm]{kfr_logo}};
+    \fill[orangeakzent] ([xshift=-5.6cm]current page.north east) rectangle ++(0.12cm,-\paperheight);
+  \end{tikzpicture}
+  \begin{minipage}{0.58\textwidth}
+    {\small\scshape\color{orangeakzent}Physik \textperiodcentered{} 4. Klasse\par}
+    \vspace{0.4em}
+    {\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par}
+    \vspace{0.3em}
+    {\color{orangeakzent}\rule{2.4cm}{2pt}\par}
+    \vspace{0.5em}
+    {\large\insertsubtitle\par}
+    \vspace{1em}
+    {\small\color{kfrgrau}\insertdate\par}
+  \end{minipage}
+\end{frame}
+
+\input{gemeinsam-inhalt}
+
+\end{document}

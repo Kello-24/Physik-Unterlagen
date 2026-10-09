@@ -1,0 +1,55 @@
+% !TeX program = pdflatex
+% Variante D: Volles Logo nur auf der Titelfolie. Auf den Inhaltsfolien nur der
+% Zürcher Löwe als sehr blasses Wasserzeichen unten rechts (aus dem Logo
+% herausgeschnitten), sonst unverändertes Layout mit blauem Titelbalken.
+\documentclass[14pt,aspectratio=169]{beamer}
+\input{gemeinsam-praeambel}
+
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip
+  \begin{beamercolorbox}[wd=\paperwidth,ht=1.4em,dp=0.4em,leftskip=0.5em]{frametitle}
+    \usebeamerfont{frametitle}\insertframetitle
+  \end{beamercolorbox}
+}
+
+\setbeamertemplate{footline}{%
+  \hfill%
+  \usebeamercolor[fg]{page number in head/foot}%
+  \usebeamerfont{page number in head/foot}%
+  \insertframenumber\,/\,\inserttotalframenumber\hspace{1em}\vspace{0.5em}
+}
+
+% Löwe = linke 23.5 % des Logos. Logo in 3.2 cm Höhe ist 10.51 cm breit, der
+% Löwe also rund 2.47 cm; per clip auf diesen Bereich zugeschnitten.
+\setbeamertemplate{background}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \coordinate (P) at ([xshift=-3.0cm,yshift=0.2cm]current page.south east);
+    \begin{scope}
+      \clip (P) rectangle ++(2.47cm,3.2cm);
+      \node[anchor=south west,inner sep=0pt,opacity=0.12] at (P)
+        {\includegraphics[height=3.2cm]{kfr_logo}};
+    \end{scope}
+  \end{tikzpicture}%
+}
+
+\begin{document}
+
+{\setbeamertemplate{background}{}
+\begin{frame}[plain]
+  \centering
+  \vspace{0.4cm}
+  \includegraphics[height=2.1cm]{kfr_logo}\par
+  \vspace{0.9em}
+  {\color{kfrblau}\rule{6cm}{1.5pt}}\par
+  \vspace{0.7em}
+  {\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par}
+  \vspace{0.3em}
+  {\large\insertsubtitle\par}
+  \vspace{1em}
+  {\normalsize\color{kfrgrau}\insertinstitute, \insertdate\par}
+\end{frame}
+}
+
+\input{gemeinsam-inhalt}
+
+\end{document}

@@ -1,0 +1,43 @@
+% !TeX program = pdflatex
+% Variante C: Blauer Titelbalken bleibt, rechts darin ein weisses Feld mit dem
+% Logo (das Logo ist schwarz und wäre direkt auf Blau unsichtbar).
+% Titelfolie: blaues Band mit weissem Titel, Logo darüber auf Weiss.
+\documentclass[14pt,aspectratio=169]{beamer}
+\input{gemeinsam-praeambel}
+
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip
+  \begin{beamercolorbox}[wd=\paperwidth,sep=0.35em,leftskip=0.5em,rightskip=2.6cm plus 1fil]{frametitle}
+    \usebeamerfont{frametitle}\insertframetitle
+  \end{beamercolorbox}%
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north east,fill=white,inner xsep=0.15cm,inner ysep=0.08cm,
+          rounded corners=2pt] at ([xshift=-0.25cm,yshift=-0.17cm]current page.north east)
+      {\includegraphics[height=0.52cm]{kfr_logo}};
+  \end{tikzpicture}%
+}
+
+\setbeamertemplate{footline}{%
+  \hfill%
+  \usebeamercolor[fg]{page number in head/foot}%
+  \usebeamerfont{page number in head/foot}%
+  \insertframenumber\,/\,\inserttotalframenumber\hspace{1em}\vspace{0.5em}
+}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north,inner sep=0pt] at ([yshift=-0.6cm]current page.north)
+      {\includegraphics[height=1.4cm]{kfr_logo}};
+    \fill[kfrblau] ([yshift=1.3cm]current page.west) rectangle ([yshift=-1.3cm]current page.east);
+    \node[white,align=center] at (current page.center)
+      {{\usebeamerfont{title}\inserttitle}\\[0.3em]{\large\insertsubtitle}};
+    \node[kfrgrau,anchor=south] at ([yshift=0.8cm]current page.south)
+      {\normalsize\insertinstitute, \insertdate};
+  \end{tikzpicture}
+\end{frame}
+
+\input{gemeinsam-inhalt}
+
+\end{document}

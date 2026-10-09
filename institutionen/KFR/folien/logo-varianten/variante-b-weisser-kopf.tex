@@ -1,0 +1,51 @@
+% !TeX program = pdflatex
+% Variante B: Weisser Kopfbereich statt blauem Balken. Titel in Blau, darunter
+% eine blaue Linie über die ganze Breite, Logo rechts oben neben dem Titel.
+% Titelfolie: Logo oben rechts, Titel linksbündig mit blauer Akzentlinie.
+\documentclass[14pt,aspectratio=169]{beamer}
+\input{gemeinsam-praeambel}
+
+\setbeamercolor{frametitle}{fg=kfrblau,bg=white}
+
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip
+  \vspace{0.25cm}%
+  \begin{beamercolorbox}[wd=\paperwidth,sep=0.2em,leftskip=0.5cm,rightskip=2.7cm plus 1fil]{frametitle}
+    \usebeamerfont{frametitle}\insertframetitle
+  \end{beamercolorbox}%
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north east,inner sep=0pt] at ([xshift=-0.35cm,yshift=-0.25cm]current page.north east)
+      {\includegraphics[height=0.62cm]{kfr_logo}};
+  \end{tikzpicture}%
+  \par\nointerlineskip
+  \makebox[0pt][l]{\color{kfrblau}\rule{\paperwidth}{1.5pt}}
+}
+
+\setbeamertemplate{footline}{%
+  \hfill%
+  \usebeamercolor[fg]{page number in head/foot}%
+  \usebeamerfont{page number in head/foot}%
+  \insertframenumber\,/\,\inserttotalframenumber\hspace{1em}\vspace{0.5em}
+}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north east,inner sep=0pt] at ([xshift=-0.6cm,yshift=-0.5cm]current page.north east)
+      {\includegraphics[height=1.3cm]{kfr_logo}};
+    \fill[kfrblau] ([yshift=-0.9cm]current page.west) rectangle ++(0.35cm,3.2cm);
+  \end{tikzpicture}
+  \vspace{1.5cm}
+  \hspace*{0.4cm}\begin{minipage}{0.85\textwidth}
+    {\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par}
+    \vspace{0.3em}
+    {\large\insertsubtitle\par}
+    \vspace{1em}
+    {\normalsize\color{kfrgrau}\insertinstitute, \insertdate\par}
+  \end{minipage}
+\end{frame}
+
+\input{gemeinsam-inhalt}
+
+\end{document}

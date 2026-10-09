@@ -1,0 +1,66 @@
+% !TeX program = pdflatex
+% Variante F: Nachtblau und Gold. Titelfolie ganz in Nachtblau mit weissem
+% Titel, goldenem Strich und weisser Logokarte unten rechts. Inhaltsfolien:
+% weisser Hintergrund, dünner goldener Fortschrittsbalken ganz oben (wächst
+% von Folie zu Folie), Folientitel dunkelblau mit goldenem Quadrat davor,
+% Logo klein in der Fusszeile rechts.
+\documentclass[14pt,aspectratio=169]{beamer}
+\input{gemeinsam-praeambel}
+
+\definecolor{nachtblau}{HTML}{0F2440}
+\definecolor{gold}{HTML}{E0A100}
+\definecolor{hellgold}{HTML}{FDF5DC}
+\colorlet{boxrahmen}{nachtblau}
+\colorlet{boxgrund}{hellgold}
+
+\setbeamercolor{structure}{fg=nachtblau}
+\setbeamercolor{frametitle}{fg=nachtblau,bg=white}
+
+% Fortschrittsbalken: Breite = Foliennummer / Gesamtzahl der Folien
+\setbeamertemplate{headline}{%
+  \begin{tikzpicture}
+    \path (0,0) rectangle (\paperwidth,4pt);
+    \fill[nachtblau!12] (0,0) rectangle (\paperwidth,4pt);
+    \fill[gold] (0,0) rectangle ({\insertframenumber/\inserttotalframenumber*\paperwidth},4pt);
+  \end{tikzpicture}%
+}
+
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip
+  \vspace*{0.2cm}%
+  \begin{beamercolorbox}[wd=\paperwidth,sep=0.2em,leftskip=0.7cm,rightskip=1cm plus 1fil]{frametitle}
+    \hyphenpenalty=10000
+    \usebeamerfont{frametitle}{\color{gold}\rule{0.28cm}{0.28cm}}\hspace{0.35em}\insertframetitle
+  \end{beamercolorbox}
+}
+
+\setbeamertemplate{footline}{%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=0.6cm,dp=0.2cm,leftskip=0.7cm,rightskip=0.4cm]{footline}
+    \raisebox{0.15cm}{\scriptsize\color{kfrgrau}\insertframenumber\,/\,\inserttotalframenumber}%
+    \hfill\includegraphics[height=0.5cm]{kfr_logo}
+  \end{beamercolorbox}
+}
+
+\begin{document}
+
+{\setbeamertemplate{headline}{}
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[nachtblau] (current page.south west) rectangle (current page.north east);
+    \node[anchor=west,white,align=left,text width=11cm] at ([xshift=1.2cm,yshift=0.9cm]current page.west)
+      {{\small\color{gold}PHYSIK \textperiodcentered{} 4. KLASSE}\\[0.4em]
+       {\usebeamerfont{title}\inserttitle}\\[0.2em]
+       {\color{gold}\rule{3cm}{2.5pt}}\\[0.5em]
+       {\large\insertsubtitle}};
+    \node[anchor=south east,fill=white,rounded corners=3pt,inner sep=0.25cm]
+      at ([xshift=-0.8cm,yshift=0.7cm]current page.south east)
+      {\includegraphics[height=0.9cm]{kfr_logo}};
+    \node[anchor=south west,white!75!nachtblau] at ([xshift=1.2cm,yshift=0.9cm]current page.south west)
+      {\small\insertdate};
+  \end{tikzpicture}
+\end{frame}
+}
+
+\input{gemeinsam-inhalt}
+
+\end{document}

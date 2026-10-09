@@ -1,0 +1,64 @@
+% !TeX program = pdflatex
+% Variante H: Hellgrau mit Karten. Hellgrauer Folienhintergrund, Folientitel
+% als blaugrüne Lasche mit abgerundeten Ecken oben links, Logo direkt auf dem
+% hellen Grund rechts oben, Aufgabenboxen als weisse Karten. Schrift Fira
+% Sans. Titelfolie zweigeteilt: links dunkle Fläche mit Titel, rechts Logo.
+\documentclass[14pt,aspectratio=169]{beamer}
+\input{gemeinsam-praeambel}
+\usepackage[sfdefault,lining]{FiraSans}
+
+\definecolor{tiefblau}{HTML}{1D4E89}
+\definecolor{blaugruen}{HTML}{0E7C7B}
+\definecolor{hellgrau}{HTML}{EEF1F4}
+\colorlet{boxrahmen}{blaugruen}
+\colorlet{boxgrund}{white}
+
+\setbeamercolor{background canvas}{bg=hellgrau}
+\setbeamercolor{structure}{fg=blaugruen}
+\setbeamercolor{frametitle}{fg=white,bg=blaugruen}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip
+  \vspace*{0.3cm}%
+  \hspace*{0.6cm}%
+  \begin{tikzpicture}[baseline]
+    \node[fill=blaugruen,text=white,rounded corners=4pt,inner xsep=0.35cm,
+          inner ysep=0.18cm,anchor=base west,text width=\dimexpr\paperwidth-5.2cm\relax,
+          align=left,execute at begin node={\hyphenpenalty=10000\relax}]
+      {\usebeamerfont{frametitle}\strut\insertframetitle};
+  \end{tikzpicture}%
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north east,inner sep=0pt] at ([xshift=-0.5cm,yshift=-0.35cm]current page.north east)
+      {\includegraphics[height=0.62cm]{kfr_logo}};
+  \end{tikzpicture}%
+}
+
+\setbeamertemplate{footline}{%
+  \hfill%
+  \usebeamercolor[fg]{page number in head/foot}%
+  \usebeamerfont{page number in head/foot}%
+  \insertframenumber\,/\,\inserttotalframenumber\hspace{1em}\vspace{0.5em}
+}
+
+\begin{document}
+
+{\setbeamercolor{background canvas}{bg=white}
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[tiefblau] (current page.south west) rectangle ([xshift=8.9cm]current page.north west);
+    \fill[blaugruen] ([xshift=8.9cm]current page.south west) rectangle ([xshift=9.1cm]current page.north west);
+    \node[anchor=west,white,align=left,text width=7.7cm,
+          execute at begin node={\hyphenpenalty=10000\relax}] at ([xshift=0.7cm]current page.west)
+      {{\Large\bfseries\inserttitle}\\[0.5em]
+       {\large\insertsubtitle}\\[1.2em]
+       {\small\color{white!75!tiefblau}Physik, 4. Klasse\\\insertdate}};
+    \node[inner sep=0pt] at ([xshift=4.5cm]current page.center)
+      {\includegraphics[width=5.4cm]{kfr_logo}};
+  \end{tikzpicture}
+\end{frame}
+}
+
+\input{gemeinsam-inhalt}
+
+\end{document}

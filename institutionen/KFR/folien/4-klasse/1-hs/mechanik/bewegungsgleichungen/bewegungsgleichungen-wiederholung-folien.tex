@@ -1,0 +1,1050 @@
+% !TeX program = pdflatex
+% =============================================================================
+% Folien: Bewegungsgleichungen, Wiederholung und Verbindung zur Kinematik
+% Kantonsschule KFR, 4. Klasse, 1. HS, Mechanik
+%
+% Anlass: Die Bewegungsgleichungen waren für die SuS schwierig, weil sie eine
+% neue Schreibweise (Index 0, t-t_0) und neue Terme enthalten. Die SuS kennen
+% vor allem Delta s (zurückgelegter Weg) und Delta t (vergangene Zeit). Dieses
+% Deck verbindet das Bekannte aus den Arbeitsblättern s-t-Diagramm,
+% v-t-Diagramm und Beschleunigung mit den Bewegungsgleichungen:
+%   (1) Wiederholung: Delta-Schreibweise, Steigung und Fläche in den
+%       Diagrammen (+ Aufgabe 1).
+%   (2) Neue Schreibweise: s_0, v_0, t_0 und vor allem t-t_0 = Delta t
+%       (+ Aufgabe 2).
+%   (3) Jede Bewegungsgleichung wird aus v = Delta s/Delta t, a = Delta v/Delta t
+%       bzw. aus der Fläche im v-t-Diagramm hergeleitet, danach folgt jeweils
+%       eine Aufgabe mit Lösungsfolie (Aufgaben 3 bis 6).
+% Bewusst NICHT enthalten: die Theorie der quadratischen Funktion
+% (Koeffizienten A, B, C) aus bewegungsgleichungen-arbeitsblatt.tex.
+%
+% Farbcode (durchgehend gleich): s_0 blau, v_0 orange, a violett,
+% t-t_0 bzw. Delta t grün (petrol).
+% =============================================================================
+\documentclass[14pt,aspectratio=169]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{siunitx}
+% Hausstil: zusammengesetzte Einheiten immer als echter Bruch (\frac), nicht
+% als Inline-Schrägstrich oder \tfrac -- gilt global für jedes \si/\SI.
+\sisetup{per-mode=fraction,fraction-command=\frac}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathreplacing,arrows.meta,calc}
+\usepackage{physics}
+\usepackage{circuitikz}
+\usepackage{booktabs}
+\usepackage[most]{tcolorbox}
+\usepackage{cancel}
+\renewcommand{\CancelColor}{\color{orangeakzent}}
+\usepackage{graphicx}
+\usepackage[default]{sourcesanspro}
+% Schullogo liegt in institutionen/KFR/kfr_logo.png (fünf Ebenen höher)
+\graphicspath{{../../../../../}}
+
+% --- Layout "Petrol modern" (Variante E aus folien/logo-varianten/) ---------
+% Source Sans, Petrol und Orange. Folientitel ohne Balken: kleine
+% Kapitälchenzeile mit dem Thema über dem Titel, darunter ein kurzer oranger
+% Strich, Schullogo rechts oben. Fusszeile mit Thema links, Seitenzahl rechts.
+\usetheme{default}
+\usefonttheme{professionalfonts}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{sidebar}{}
+\setbeamertemplate{headline}{}
+\beamertemplatenavigationsymbolsempty
+
+\definecolor{kfrgrau}{RGB}{90,90,90}
+\definecolor{petrol}{HTML}{14555F}
+\definecolor{hellpetrol}{HTML}{E4F0F1}
+\definecolor{orangeakzent}{HTML}{E07A1F}
+
+\setbeamercolor{normal text}{fg=black,bg=white}
+\setbeamercolor{structure}{fg=petrol}
+\setbeamercolor{title}{fg=petrol,bg=white}
+\setbeamercolor{frametitle}{fg=petrol,bg=white}
+\setbeamercolor{footline}{fg=kfrgrau,bg=white}
+\setbeamercolor{page number in head/foot}{fg=kfrgrau}
+\setbeamercolor{itemize item}{fg=petrol}
+\setbeamercolor{itemize subitem}{fg=petrol}
+
+\setbeamerfont{frametitle}{size=\Large,series=\bfseries}
+\setbeamerfont{title}{size=\LARGE,series=\bfseries}
+\setbeamerfont{itemize item}{size=\normalsize}
+
+\setbeamertemplate{itemize item}{\textbullet}
+\setbeamertemplate{itemize subitem}{--}
+
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip
+  \vspace*{0.15cm}%
+  \begin{beamercolorbox}[wd=\paperwidth,leftskip=1cm,rightskip=3.2cm plus 1fil]{frametitle}
+    \hyphenpenalty=10000
+    {\scriptsize\scshape\color{orangeakzent}\insertshorttitle\par}\vspace{-0.15em}
+    {\usebeamerfont{frametitle}\insertframetitle\par}
+    \vspace{0.05em}
+    {\color{orangeakzent}\rule{2.4cm}{2pt}}\par\vspace{-0.9em}
+  \end{beamercolorbox}%
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north east,inner sep=0pt] at ([xshift=-0.5cm,yshift=-0.4cm]current page.north east)
+      {\includegraphics[height=0.6cm]{kfr_logo}};
+  \end{tikzpicture}%
+}
+
+\setbeamertemplate{footline}{%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=0.35cm,dp=0.15cm,leftskip=1cm,rightskip=1cm]{footline}
+    \scriptsize\insertshorttitle\hfill\insertframenumber\,/\,\inserttotalframenumber
+  \end{beamercolorbox}
+}
+
+% --- Farben wie in den Arbeitsblättern ---------------------------------------
+\definecolor{titleblue}{HTML}{183A6B}
+\definecolor{lightblue}{HTML}{EAF4FB}
+\definecolor{accentorange}{HTML}{D9720C}
+\definecolor{lightorange}{HTML}{FCEEE0}
+\definecolor{accentpurple}{HTML}{7B2D8E}
+\definecolor{lightpurple}{HTML}{F3EAF7}
+\definecolor{groupteal}{HTML}{1B7F72}
+\definecolor{lightgroupteal}{HTML}{E8F5F3}
+\definecolor{theoriegreen}{HTML}{2E7D32}
+\definecolor{lighttheoriegreen}{HTML}{EDF7EE}
+
+% --- Boxen: Merksatz (grün, wie theoriebox) und Aufgabe (Petrol, Layoutfarbe) -
+\newtcolorbox{merkbox}[1][Merke]{enhanced,colback=lighttheoriegreen,
+  colframe=theoriegreen,fonttitle=\bfseries\small,title={#1},boxrule=0.8pt,
+  arc=2pt,left=4pt,right=4pt,top=2pt,bottom=2pt}
+\newtcolorbox{aufgabebox}[1][Aufgabe]{enhanced,colback=hellpetrol,
+  colframe=petrol,fonttitle=\bfseries\small,title={#1},boxrule=0.8pt,
+  arc=2pt,left=4pt,right=4pt,top=2pt,bottom=2pt}
+
+% --- Farbige Symbole (Farbcode siehe Dateikopf) ------------------------------
+\newcommand{\Szero}{\textcolor{titleblue}{s_0}}
+\newcommand{\Vzero}{\textcolor{accentorange}{v_0}}
+\newcommand{\Tzero}{\textcolor{groupteal}{t_0}}
+\newcommand{\Acol}{\textcolor{accentpurple}{a}}
+\newcommand{\Tdiff}{\textcolor{groupteal}{(t-t_0)}}
+\newcommand{\Dt}{\textcolor{groupteal}{\Delta t}}
+
+% --- Einheiten sichtbar mitrechnen --------------------------------------------
+% \ein{m}: Einheit als aufrechtes Zeichen, \kue{s}: gekürzte Einheit (orange
+% durchgestrichen), \Eh{...}: graue Randnotiz, was mit den Einheiten passiert.
+\newcommand{\ein}[1]{\mathrm{#1}}
+\newcommand{\kue}[1]{\cancel{\mathrm{#1}}}
+\newcommand{\Eh}[1]{\text{\footnotesize\color{kfrgrau}#1}}
+
+\title{Bewegungsgleichungen}
+\subtitle{Vom Diagramm zur Formel}
+\author{}
+\institute{Kantonsschule KFR, 4. Klasse}
+\date{\today}
+
+\begin{document}
+
+% --- Titelfolie --------------------------------------------------------------
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[hellpetrol] ([xshift=-5.6cm]current page.north east) rectangle (current page.south east);
+    \node[inner sep=0pt] at ([xshift=-2.8cm]current page.east)
+      {\includegraphics[width=4.4cm]{kfr_logo}};
+    \fill[orangeakzent] ([xshift=-5.6cm]current page.north east) rectangle ++(0.12cm,-\paperheight);
+  \end{tikzpicture}
+  \begin{minipage}{0.66\textwidth}
+    {\small\scshape\color{orangeakzent}Physik \textperiodcentered{} 4. Klasse\par}
+    \vspace{0.4em}
+    {\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par}
+    \vspace{0.3em}
+    {\color{orangeakzent}\rule{2.4cm}{2pt}\par}
+    \vspace{0.5em}
+    {\large\insertsubtitle\par}
+    \vspace{1em}
+    {\small\color{kfrgrau}\insertdate\par}
+  \end{minipage}
+\end{frame}
+
+\begin{frame}{Fahrplan}
+  \small
+  \begin{enumerate}
+    \item \textbf{Was wir schon kennen:} $\Delta s$, $\Delta t$, Steigung
+      und Fläche in den Diagrammen
+    \item \textbf{Neue Schreibweise:} $s_0$, $v_0$, $t_0$ und vor allem
+      $t-t_0$
+    \item \textbf{Die Bewegungsgleichungen:} jede Gleichung aus Bekanntem
+      hergeleitet, danach jeweils eine Aufgabe zum Selberlösen
+  \end{enumerate}
+  \vspace{0.2em}
+  \begin{merkbox}[Die gute Nachricht]
+    Die Bewegungsgleichungen enthalten keine neue Physik. Sie sind nur
+    $v=\Delta s/\Delta t$, $a=\Delta v/\Delta t$ und die Fläche im
+    $v$-$t$-Diagramm, in einer neuen Schreibweise.
+  \end{merkbox}
+\end{frame}
+
+% =============================================================================
+% Teil 1: Wiederholung
+% =============================================================================
+\begin{frame}{Was wir schon kennen: Differenzen}
+  \small
+  Das Zeichen $\Delta$ (Delta) bedeutet immer: \textbf{Ende minus Anfang}.
+  \[
+    \Delta s = s_2 - s_1 \quad\text{(Ortsänderung)}, \qquad
+    \Delta t = t_2 - t_1 \quad\text{(vergangene Zeit)}
+  \]
+  Damit haben wir zwei Grössen definiert:
+  \begin{columns}[T]
+    \begin{column}{0.47\textwidth}
+      \begin{merkbox}[Geschwindigkeit]
+        \[
+          v = \frac{\Delta s}{\Delta t}
+        \]
+        Einheit: $\si{\meter\per\second}$
+      \end{merkbox}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \begin{merkbox}[Beschleunigung]
+        \[
+          a = \frac{\Delta v}{\Delta t}
+        \]
+        Einheit: $\si{\meter\per\second\squared}$
+      \end{merkbox}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Mit Einheiten rechnen}
+  \small
+  Einheiten rechnen wir wie Zahlen mit: Wir multiplizieren, dividieren und
+  kürzen sie. So sieht man am Schluss, ob das Resultat die richtige
+  Einheit hat.
+  \begin{columns}[T]
+    \begin{column}{0.5\textwidth}
+      \textbf{Malnehmen und Kürzen}
+      \begin{align*}
+        \SI{5}{\meter\per\second}\cdot\SI{240}{\second}
+          &= 5\cdot240\cdot\frac{\ein{m}}{\kue{s}}\cdot\kue{s}
+           = \SI{1200}{\meter}\\
+        \SI{2}{\meter\per\second\squared}\cdot\SI{5}{\second}
+          &= 2\cdot5\cdot\frac{\ein{m}}{\ein{s}\cdot\kue{s}}\cdot\kue{s}
+           = \SI{10}{\meter\per\second}
+      \end{align*}
+      \textbf{Addieren} nur bei gleicher Einheit:
+      \[
+        \SI{12}{\meter}+\SI{18}{\meter}=\SI{30}{\meter}
+      \]
+    \end{column}
+    \begin{column}{0.46\textwidth}
+      \textbf{Durch einen Bruch teilen}\\
+      heisst: mit dem Kehrwert malnehmen.
+      \begin{align*}
+        \frac{\SI{1000}{\meter}}{\SI{5}{\meter\per\second}}
+          &= \frac{1000}{5}\cdot\ein{m}\cdot\frac{\ein{s}}{\ein{m}}\\
+          &= 200\cdot\frac{\kue{m}\cdot\ein{s}}{\kue{m}}
+           = \SI{200}{\second}
+      \end{align*}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Steigung im Diagramm}
+  \small
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.8]
+        \draw[->] (-0.2,0) -- (5,0) node[right] {$t$};
+        \draw[->] (0,-0.2) -- (0,3.6) node[above] {$s$};
+        \draw[very thick,titleblue] (0.3,0.4) -- (4.5,3.1);
+        \draw[thick,groupteal] (1.5,1.171) -- (3.5,1.171);
+        \draw[thick,accentorange] (3.5,1.171) -- (3.5,2.457);
+        \node[below,groupteal] at (2.5,1.171) {\footnotesize $\Delta t$};
+        \node[right,accentorange] at (3.5,1.814) {\footnotesize $\Delta s$};
+      \end{tikzpicture}\\[0.3em]
+      $s$-$t$-Diagramm:\\
+      Steigung $=\dfrac{\Delta s}{\Delta t}=v$
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.8]
+        \draw[->] (-0.2,0) -- (5,0) node[right] {$t$};
+        \draw[->] (0,-0.2) -- (0,3.6) node[above] {$v$};
+        \draw[very thick,accentorange] (0.3,0.6) -- (4.5,3.1);
+        \draw[thick,groupteal] (1.5,1.314) -- (3.5,1.314);
+        \draw[thick,accentpurple] (3.5,1.314) -- (3.5,2.505);
+        \node[below,groupteal] at (2.5,1.314) {\footnotesize $\Delta t$};
+        \node[right,accentpurple] at (3.5,1.91) {\footnotesize $\Delta v$};
+      \end{tikzpicture}\\[0.3em]
+      $v$-$t$-Diagramm:\\
+      Steigung $=\dfrac{\Delta v}{\Delta t}=a$
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Fläche unter dem Diagramm}
+  \small
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.8]
+        \fill[lightorange] (1,0) rectangle (4,2);
+        \draw[->] (-0.2,0) -- (5,0) node[right] {$t$};
+        \draw[->] (0,-0.2) -- (0,3.2) node[above] {$v$};
+        \draw[very thick,accentorange] (0.2,2) -- (4.6,2);
+        \draw[dashed,gray] (1,0) -- (1,2);
+        \draw[dashed,gray] (4,0) -- (4,2);
+        \draw[decorate,decoration={brace,mirror,amplitude=4pt}]
+          (1,-0.1) -- (4,-0.1) node[midway,below=4pt,groupteal] {\footnotesize $\Delta t$};
+        \node[left] at (0,2) {\footnotesize $v$};
+        \node at (2.5,1) {\footnotesize $v\cdot\Delta t$};
+      \end{tikzpicture}\\[0.3em]
+      $v$-$t$-Diagramm:\\
+      Fläche $=v\cdot\Delta t=\Delta s$ \ (Weg)
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.8]
+        \fill[lightpurple] (1,0) rectangle (4,1.5);
+        \draw[->] (-0.2,0) -- (5,0) node[right] {$t$};
+        \draw[->] (0,-0.2) -- (0,3.2) node[above] {$a$};
+        \draw[very thick,accentpurple] (0.2,1.5) -- (4.6,1.5);
+        \draw[dashed,gray] (1,0) -- (1,1.5);
+        \draw[dashed,gray] (4,0) -- (4,1.5);
+        \draw[decorate,decoration={brace,mirror,amplitude=4pt}]
+          (1,-0.1) -- (4,-0.1) node[midway,below=4pt,groupteal] {\footnotesize $\Delta t$};
+        \node[left] at (0,1.5) {\footnotesize $a$};
+        \node at (2.5,0.75) {\footnotesize $a\cdot\Delta t$};
+      \end{tikzpicture}\\[0.3em]
+      $a$-$t$-Diagramm:\\
+      Fläche $=a\cdot\Delta t=\Delta v$ \ (Geschwindigkeitsänderung)
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Übersicht: Steigung und Fläche}
+  \centering
+  \begin{tikzpicture}[
+      box/.style={draw,thick,rounded corners,minimum width=3.2cm,minimum height=1.1cm,align=center}]
+    \node[box,draw=titleblue]     (s) at (0,0)  {$s$-$t$-Diagramm};
+    \node[box,draw=accentorange]  (v) at (5,0)  {$v$-$t$-Diagramm};
+    \node[box,draw=accentpurple]  (a) at (10,0) {$a$-$t$-Diagramm};
+    \draw[-{Latex[length=3mm]},thick] (s.north east) to[bend left=25]
+      node[above,align=center] {\small Steigung $=v$} (v.north west);
+    \draw[-{Latex[length=3mm]},thick] (v.north east) to[bend left=25]
+      node[above,align=center] {\small Steigung $=a$} (a.north west);
+    \draw[-{Latex[length=3mm]},thick] (v.south west) to[bend left=25]
+      node[below,align=center] {\small Fläche $=\Delta s$} (s.south east);
+    \draw[-{Latex[length=3mm]},thick] (a.south west) to[bend left=25]
+      node[below,align=center] {\small Fläche $=\Delta v$} (v.south east);
+  \end{tikzpicture}
+
+  \vspace{1em}
+  \small
+  Nach rechts: Steigung ablesen. \quad Nach links: Fläche berechnen.
+\end{frame}
+
+% --- Aufgabe 1 ----------------------------------------------------------------
+\begin{frame}{Aufgabe 1: Steigung und Fläche}
+  \begin{columns}[c]
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}[xscale=0.72,yscale=0.42]
+        \draw[gray!30,step=1] (0,0) grid (7,9);
+        \draw[->] (0,0) -- (7.5,0) node[right] {\footnotesize $t$ in s};
+        \draw[->] (0,0) -- (0,9.6) node[above] {\footnotesize $v$ in $\si{\meter\per\second}$};
+        \foreach \x in {1,...,7} \node[below] at (\x,0) {\scriptsize \x};
+        \foreach \y in {2,4,6,8} \node[left] at (0,\y) {\scriptsize \y};
+        \node[below left] at (0,0) {\scriptsize 0};
+        \draw[very thick,accentorange] (0,2) -- (6,8);
+        \filldraw[accentorange] (0,2) circle (2pt) (6,8) circle (2pt);
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{aufgabebox}[Aufgabe 1]
+        \small
+        Das Diagramm zeigt die Fahrt eines Velos während
+        $\SI{6}{\second}$.
+        \begin{enumerate}
+          \item[a)] Bestimme die Beschleunigung $a$ aus der
+            \textbf{Steigung}.
+          \item[b)] Bestimme den zurückgelegten Weg $\Delta s$ aus der
+            \textbf{Fläche}. Tipp: Rechteck und Dreieck.
+        \end{enumerate}
+      \end{aufgabebox}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Aufgabe 1: Lösung a)}
+  \small
+  a) Steigung aus zwei Punkten der Geraden: Anfang
+  $(\SI{0}{\second}\,|\,\SI{2}{\meter\per\second})$, Ende
+  $(\SI{6}{\second}\,|\,\SI{8}{\meter\per\second})$.
+  \begin{align*}
+    a &= \frac{\Delta v}{\Delta t}
+       = \frac{\SI{8}{\meter\per\second}-\SI{2}{\meter\per\second}}{\SI{6}{\second}-\SI{0}{\second}}
+      && \Eh{Ende minus Anfang}\\
+      &= \frac{\SI{6}{\meter\per\second}}{\SI{6}{\second}}
+      && \Eh{gleiche Einheiten: einfach subtrahieren}\\
+      &= \frac{6}{6}\cdot\frac{\;\frac{\ein{m}}{\ein{s}}\;}{\ein{s}}
+      && \Eh{Zahlen und Einheiten getrennt}\\
+      &= 1\cdot\frac{\ein{m}}{\ein{s}\cdot\ein{s}}
+       = \SI{1}{\meter\per\second\squared}
+      && \Eh{durch s teilen: ein zweites s in den Nenner}
+  \end{align*}
+\end{frame}
+
+\begin{frame}{Aufgabe 1: Lösung b)}
+  \begin{columns}[c]
+    \begin{column}{0.4\textwidth}
+      \centering
+      \begin{tikzpicture}[xscale=0.55,yscale=0.38]
+        \fill[lightorange] (0,0) rectangle (6,2);
+        \fill[lightpurple] (0,2) -- (6,8) -- (6,2) -- cycle;
+        \draw[gray!30,step=1] (0,0) grid (7,9);
+        \draw[->] (0,0) -- (7.5,0) node[right] {\footnotesize $t$};
+        \draw[->] (0,0) -- (0,9.6) node[above] {\footnotesize $v$};
+        \foreach \x in {1,...,7} \node[below] at (\x,0) {\scriptsize \x};
+        \foreach \y in {2,4,6,8} \node[left] at (0,\y) {\scriptsize \y};
+        \draw[very thick,accentorange] (0,2) -- (6,8);
+        \node at (3,1) {\scriptsize Rechteck};
+        \node at (4.3,3.6) {\scriptsize Dreieck};
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.58\textwidth}
+      \small
+      \textbf{Rechteck:} Breite $\SI{6}{\second}$, Höhe $\SI{2}{\meter\per\second}$
+      \[
+        \SI{2}{\meter\per\second}\cdot\SI{6}{\second}
+        = 2\cdot6\cdot\frac{\ein{m}}{\kue{s}}\cdot\kue{s}
+        = \SI{12}{\meter}
+      \]
+      \textbf{Dreieck:} Breite $\SI{6}{\second}$, Höhe
+      $\SI{8}{\meter\per\second}-\SI{2}{\meter\per\second}=\SI{6}{\meter\per\second}$
+      \[
+        \tfrac12\cdot\SI{6}{\second}\cdot\SI{6}{\meter\per\second}
+        = \tfrac12\cdot6\cdot6\cdot\kue{s}\cdot\frac{\ein{m}}{\kue{s}}
+        = \SI{18}{\meter}
+      \]
+      \textbf{Zusammen} (gleiche Einheit, also addieren):
+      \[
+        \Delta s=\SI{12}{\meter}+\SI{18}{\meter}=\SI{30}{\meter}
+      \]
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% =============================================================================
+% Teil 2: Neue Schreibweise
+% =============================================================================
+\begin{frame}{Neu: Der Index 0 heisst \glqq am Anfang\grqq}
+  \small
+  Wir schauen einer Bewegung ab einem bestimmten \textbf{Startzeitpunkt}
+  zu. Alles, was zu diesem Startzeitpunkt gilt, bekommt den Index $0$:
+
+  \vspace{0.3em}
+  \centering
+  \begin{tikzpicture}[scale=0.95]
+    \draw[->,thick] (-0.3,0) -- (12.5,0) node[right] {$s$};
+    \draw (0,0.15) -- (0,-0.15) node[below] {\footnotesize $0$};
+    \filldraw[titleblue] (3,0) circle (3pt);
+    \filldraw[kfrgrau] (9,0) circle (3pt);
+    \node[above,align=center] at (3,0.15) {\footnotesize Zeitpunkt $\Tzero$\\
+      \footnotesize Ort $\Szero$, Geschw. $\Vzero$};
+    \node[above,align=center] at (9,0.15) {\footnotesize späterer Zeitpunkt $t$\\
+      \footnotesize Ort $s$, Geschw. $v$};
+    \draw[decorate,decoration={brace,mirror,amplitude=5pt}]
+      (3,-0.25) -- (9,-0.25) node[midway,below=5pt] {\footnotesize $\Delta s = s-s_0$};
+  \end{tikzpicture}
+
+  \vspace{0.4em}
+  \begin{tabular}{lcc}
+    \toprule
+    & \textbf{Start} & \textbf{später} \\
+    \midrule
+    Zeitpunkt      & $\Tzero$ & $t$ \\
+    Ort            & $\Szero$ & $s$ \\
+    Geschwindigkeit & $\Vzero$ & $v$ \\
+    \bottomrule
+  \end{tabular}
+\end{frame}
+
+\begin{frame}{Das Wichtigste: $t-t_0$ ist einfach $\Delta t$}
+  \small
+  $t$ und $t_0$ sind \textbf{Zeitpunkte} (wie eine Uhrzeit).
+  $t-t_0$ ist die \textbf{Zeitdauer} dazwischen: die Zeit, die seit dem
+  Start vergangen ist.
+
+  \centering
+  \begin{tikzpicture}[scale=0.95]
+    \draw[->,thick] (-0.3,0) -- (12.5,0) node[right] {Uhrzeit};
+    \foreach \x/\l in {0/18,2/20,4/22,6/24,8/26,10/28}
+      \draw (\x,0.12) -- (\x,-0.12) node[below] {\footnotesize $7^{\l}$};
+    \filldraw[groupteal] (2,0) circle (3pt) node[above=3pt] {$t_0$};
+    \filldraw[groupteal] (8,0) circle (3pt) node[above=3pt] {$t$};
+    \draw[decorate,decoration={brace,amplitude=6pt},groupteal,thick]
+      (2,0.75) -- (8,0.75) node[midway,above=6pt]
+      {$t-t_0 = 7^{26}-7^{20} = \SI{6}{\minute}$};
+  \end{tikzpicture}
+
+  \begin{merkbox}[Übersetzung: neue Schreibweise $=$ alte Schreibweise]
+    \centering
+    $t-t_0=\Delta t$ \qquad $s-s_0=\Delta s$ \qquad $v-v_0=\Delta v$\\[0.2em]
+    Nur wenn die Stoppuhr beim Start auf null steht ($t_0=0$), gilt $t-t_0=t$.
+  \end{merkbox}
+\end{frame}
+
+% --- Aufgabe 2 ----------------------------------------------------------------
+\begin{frame}{Aufgabe 2: Start und später}
+  \begin{aufgabebox}[Aufgabe 2]
+    \small
+    Lara fährt mit konstanter Geschwindigkeit mit dem Velo zur Kanti. Der
+    Nullpunkt ist bei ihr zuhause. Um $7^{20}$ Uhr fährt sie am Bahnhof
+    vorbei, $\SI{1.5}{\kilo\meter}$ von zuhause entfernt. Um $7^{26}$ Uhr
+    kommt sie bei der Kanti an, $\SI{3.3}{\kilo\meter}$ von zuhause
+    entfernt. Wir beginnen beim Bahnhof zu beobachten.
+    \begin{enumerate}
+      \item[a)] Notiere $t_0$, $s_0$, $t$ und $s$.
+      \item[b)] Berechne $t-t_0$ (in Sekunden) und $s-s_0$ (in Metern).
+      \item[c)] Berechne Laras Geschwindigkeit $v$ in
+        $\si{\meter\per\second}$ und in $\si{\kilo\meter\per\hour}$.
+    \end{enumerate}
+  \end{aufgabebox}
+\end{frame}
+
+\begin{frame}{Aufgabe 2: Lösung a) und b)}
+  \small
+  a) $t_0=7^{20}$ Uhr, \ $s_0=\SI{1.5}{\kilo\meter}$ \ (Bahnhof);
+  \quad $t=7^{26}$ Uhr, \ $s=\SI{3.3}{\kilo\meter}$ \ (Kanti)
+
+  \vspace{0.5em}
+  b)
+  \begin{align*}
+    t-t_0 &= 7^{26}-7^{20} = \SI{6}{\minute}
+      && \Eh{Zeitdauer zwischen zwei Uhrzeiten}\\
+          &= 6\cdot\SI{60}{\second} = \SI{360}{\second}
+      && \Eh{$\SI{1}{\minute}=\SI{60}{\second}$}\\[0.4em]
+    s-s_0 &= \SI{3.3}{\kilo\meter}-\SI{1.5}{\kilo\meter} = \SI{1.8}{\kilo\meter}
+      && \Eh{gleiche Einheit: einfach subtrahieren}\\
+          &= 1.8\cdot\SI{1000}{\meter} = \SI{1800}{\meter}
+      && \Eh{$\SI{1}{\kilo\meter}=\SI{1000}{\meter}$}
+  \end{align*}
+\end{frame}
+
+\begin{frame}{Aufgabe 2: Lösung c)}
+  \small
+  c) Geschwindigkeit in $\si{\meter\per\second}$:
+  \begin{align*}
+    v &= \frac{s-s_0}{t-t_0}
+       = \frac{\SI{1800}{\meter}}{\SI{360}{\second}}
+       = \frac{1800}{360}\cdot\frac{\ein{m}}{\ein{s}}
+       = \SI{5}{\meter\per\second}
+      && \Eh{m geteilt durch s ergibt m/s}
+  \end{align*}
+  Umrechnen in $\si{\kilo\meter\per\hour}$, mit
+  $\SI{1}{\meter}=\tfrac{1}{1000}\,\si{\kilo\meter}$ und
+  $\SI{1}{\second}=\tfrac{1}{3600}\,\si{\hour}$:
+  \begin{align*}
+    \SI{5}{\meter\per\second}
+      &= 5\cdot\frac{\tfrac{1}{1000}\,\ein{km}}{\tfrac{1}{3600}\,\ein{h}}
+      && \Eh{m und s durch km und h ersetzen}\\
+      &= 5\cdot\frac{3600}{1000}\cdot\frac{\ein{km}}{\ein{h}}
+       = 5\cdot3.6\cdot\frac{\ein{km}}{\ein{h}}
+      && \Eh{daher kommt der Faktor 3.6}\\
+      &= \SI{18}{\kilo\meter\per\hour}
+  \end{align*}
+\end{frame}
+
+% =============================================================================
+% Teil 3: Die Bewegungsgleichungen
+% =============================================================================
+
+% --- Gleichung 1: gleichförmige Bewegung ------------------------------------
+\begin{frame}{Gleichung 1: Ort ($v$ konstant)}
+  \begin{columns}[T]
+    \begin{column}{0.54\textwidth}
+      \small
+      Start mit der bekannten Formel:
+      \begin{align*}
+        v &= \frac{\Delta s}{\Delta t}
+          && \text{\footnotesize bekannt}\\
+        v\cdot\Dt &= \Delta s
+          && \text{\footnotesize mal } \Delta t\\
+        v\cdot\Tdiff &= s-\Szero
+          && \text{\footnotesize $\Delta$ ausschreiben}\\
+        \Szero+v\cdot\Tdiff &= s
+          && \text{\footnotesize plus } s_0
+      \end{align*}
+      \vspace{-0.6em}
+      \begin{merkbox}[Gleichung 1 ($v$ konstant)]
+        \centering
+        $s(t)=\Szero+v\cdot\Tdiff$
+      \end{merkbox}
+    \end{column}
+    \begin{column}{0.43\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.75]
+        \draw[->] (-0.2,0) -- (5.3,0) node[right] {$t$};
+        \draw[->] (0,-0.2) -- (0,4.2) node[above] {$s$};
+        \draw[dashed,gray] (0,1.2) -- (1,1.2);
+        \draw[dashed,gray] (1,0) -- (1,1.2);
+        \draw[dashed,gray] (4.5,0) -- (4.5,3.6);
+        \draw[very thick,titleblue] (1,1.2) -- (4.8,3.8);
+        \filldraw[titleblue] (1,1.2) circle (2pt);
+        \node[left] at (0,1.2) {$\Szero$};
+        \node[below] at (1,0) {$\Tzero$};
+        \node[below] at (4.5,0) {$t$};
+        \draw[thick,accentorange] (4.5,1.2) -- (4.5,3.595);
+        \draw[dashed,gray] (1,1.2) -- (4.5,1.2);
+        \node[right,accentorange,align=left] at (4.5,2.3) {\scriptsize $v\cdot(t-t_0)$};
+      \end{tikzpicture}\\[0.3em]
+      \footnotesize
+      Ort jetzt $=$ Startort $+$ zurückgelegter Weg
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Aufgabe 3: Gleichung 1 anwenden}
+  \begin{aufgabebox}[Aufgabe 3]
+    \small
+    Lara aus Aufgabe 2: Sie ist um $t_0=7^{20}$ Uhr beim Bahnhof
+    ($s_0=\SI{1.5}{\kilo\meter}$) und fährt mit
+    $v=\SI{5}{\meter\per\second}$.
+    \begin{enumerate}
+      \item[a)] Wo ist Lara um $7^{24}$ Uhr? Rechne mit Gleichung 1.
+      \item[b)] Um welche Uhrzeit ist Lara $\SI{2.5}{\kilo\meter}$ von
+        zuhause entfernt?
+    \end{enumerate}
+    \textbf{Tipp:} Berechne zuerst immer $t-t_0$, also die Zeit seit dem
+    Start.
+  \end{aufgabebox}
+\end{frame}
+
+\begin{frame}{Aufgabe 3: Lösung a)}
+  \small
+  a) Zeit seit dem Start:
+  $t-t_0=7^{24}-7^{20}=\SI{4}{\minute}=4\cdot\SI{60}{\second}=\SI{240}{\second}$.
+  Startort in Metern: $s_0=\SI{1.5}{\kilo\meter}=\SI{1500}{\meter}$.
+  \begin{align*}
+    s &= s_0+v\cdot(t-t_0)\\
+      &= \SI{1500}{\meter}+\SI{5}{\meter\per\second}\cdot\SI{240}{\second}
+      && \Eh{Werte mit Einheiten einsetzen}\\
+      &= \SI{1500}{\meter}+5\cdot240\cdot\frac{\ein{m}}{\kue{s}}\cdot\kue{s}
+      && \Eh{s kürzt sich weg, es bleibt m}\\
+      &= \SI{1500}{\meter}+\SI{1200}{\meter}\\
+      &= \SI{2700}{\meter}=\SI{2.7}{\kilo\meter}
+      && \Eh{gleiche Einheit: einfach addieren}
+  \end{align*}
+\end{frame}
+
+\begin{frame}{Aufgabe 3: Lösung b)}
+  \small
+  b) Gesucht ist zuerst die Zeitdauer $t-t_0$:
+  \begin{align*}
+    \SI{2500}{\meter} &= \SI{1500}{\meter}+\SI{5}{\meter\per\second}\cdot(t-t_0)
+      && \Eh{$-\SI{1500}{\meter}$ auf beiden Seiten}\\
+    \SI{1000}{\meter} &= \SI{5}{\meter\per\second}\cdot(t-t_0)
+      && \Eh{$:\SI{5}{\meter\per\second}$ auf beiden Seiten}\\
+    t-t_0 &= \frac{\SI{1000}{\meter}}{\SI{5}{\meter\per\second}}
+           = 200\cdot\ein{m}\cdot\frac{\ein{s}}{\ein{m}}
+      && \Eh{durch m/s teilen heisst mal s/m}\\
+          &= 200\cdot\frac{\kue{m}\cdot\ein{s}}{\kue{m}}
+           = \SI{200}{\second} = \SI{3}{\minute}\;\SI{20}{\second}
+      && \Eh{m kürzt sich weg, es bleibt s}
+  \end{align*}
+  $\SI{200}{\second}$ ist eine \textbf{Dauer}, keine Uhrzeit! Also
+  $t=7^{20}\text{ Uhr}+\SI{3}{\minute}\;\SI{20}{\second}$, das heisst
+  $7^{23}$ Uhr und $\SI{20}{\second}$.
+\end{frame}
+
+% --- Gleichung 2: Geschwindigkeit -------------------------------------------
+\begin{frame}{Gleichung 2: Geschwindigkeit}
+  \begin{columns}[T]
+    \begin{column}{0.54\textwidth}
+      \small
+      Genau gleich, nur mit $a$ statt $v$:
+      \begin{align*}
+        \Acol &= \frac{\Delta v}{\Delta t}
+          && \text{\footnotesize bekannt}\\
+        \Acol\cdot\Dt &= \Delta v
+          && \text{\footnotesize mal } \Delta t\\
+        \Acol\cdot\Tdiff &= v-\Vzero
+          && \text{\footnotesize $\Delta$ ausschreiben}\\
+        \Vzero+\Acol\cdot\Tdiff &= v
+          && \text{\footnotesize plus } v_0
+      \end{align*}
+      \vspace{-0.6em}
+      \begin{merkbox}[Gleichung 2 ($a$ konstant)]
+        \centering
+        $v(t)=\Vzero+\Acol\cdot\Tdiff$
+      \end{merkbox}
+    \end{column}
+    \begin{column}{0.43\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.75]
+        \draw[->] (-0.2,0) -- (5.3,0) node[right] {$t$};
+        \draw[->] (0,-0.2) -- (0,4.2) node[above] {$v$};
+        \draw[dashed,gray] (0,1.2) -- (1,1.2);
+        \draw[dashed,gray] (1,0) -- (1,1.2);
+        \draw[dashed,gray] (4.5,0) -- (4.5,1.2);
+        \draw[very thick,accentorange] (1,1.2) -- (4.8,3.8);
+        \filldraw[accentorange] (1,1.2) circle (2pt);
+        \node[left] at (0,1.2) {$\Vzero$};
+        \node[below] at (1,0) {$\Tzero$};
+        \node[below] at (4.5,0) {$t$};
+        \draw[thick,accentpurple] (4.5,1.2) -- (4.5,3.595);
+        \draw[thick,groupteal] (1,1.2) -- (4.5,1.2);
+        \node[below,groupteal] at (2.75,1.2) {\scriptsize $t-t_0$};
+        \node[right,accentpurple] at (4.5,2.3) {\scriptsize $a\cdot(t-t_0)$};
+      \end{tikzpicture}\\[0.3em]
+      \footnotesize
+      Geschw. jetzt $=$ Startgeschw. $+$ Änderung
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Aufgabe 4: Gleichung 2 anwenden}
+  \begin{aufgabebox}[Aufgabe 4]
+    \small
+    Ein Auto fährt auf einem Autobahnbeschleunigungsstreifen. Eine
+    Stoppuhr läuft schon. Bei $t_0=\SI{3}{\second}$ hat das Auto
+    $v_0=\SI{15}{\meter\per\second}$. Ab da beschleunigt es konstant mit
+    $a=\SI{2}{\meter\per\second\squared}$.
+    \begin{enumerate}
+      \item[a)] Welche Geschwindigkeit hat das Auto, wenn die Stoppuhr
+        $t=\SI{8}{\second}$ zeigt? Gib sie auch in
+        $\si{\kilo\meter\per\hour}$ an.
+      \item[b)] Welche Zeit zeigt die Stoppuhr, wenn das Auto
+        $\SI{27}{\meter\per\second}$ erreicht?
+    \end{enumerate}
+  \end{aufgabebox}
+\end{frame}
+
+\begin{frame}{Aufgabe 4: Lösung a)}
+  \small
+  a) Zeit seit dem Start:
+  $t-t_0=\SI{8}{\second}-\SI{3}{\second}=\SI{5}{\second}$
+  \begin{align*}
+    v &= v_0+a\cdot(t-t_0)\\
+      &= \SI{15}{\meter\per\second}+\SI{2}{\meter\per\second\squared}\cdot\SI{5}{\second}
+      && \Eh{Werte mit Einheiten einsetzen}\\
+      &= \SI{15}{\meter\per\second}+2\cdot5\cdot\frac{\ein{m}}{\ein{s}\cdot\kue{s}}\cdot\kue{s}
+      && \Eh{$\si{\second\squared}=\ein{s}\cdot\ein{s}$, ein s kürzt sich}\\
+      &= \SI{15}{\meter\per\second}+\SI{10}{\meter\per\second}
+       = \SI{25}{\meter\per\second}
+      && \Eh{gleiche Einheit: einfach addieren}\\
+      &= 25\cdot3.6\,\si{\kilo\meter\per\hour}
+       = \SI{90}{\kilo\meter\per\hour}
+      && \Eh{m/s mal 3.6 ergibt km/h}
+  \end{align*}
+\end{frame}
+
+\begin{frame}{Aufgabe 4: Lösung b)}
+  \small
+  b) Gesucht ist zuerst die Zeitdauer $t-t_0$:
+  \begin{align*}
+    \SI{27}{\meter\per\second} &= \SI{15}{\meter\per\second}+\SI{2}{\meter\per\second\squared}\cdot(t-t_0)
+      && \Eh{$-\SI{15}{\meter\per\second}$ auf beiden Seiten}\\
+    \SI{12}{\meter\per\second} &= \SI{2}{\meter\per\second\squared}\cdot(t-t_0)
+      && \Eh{$:\SI{2}{\meter\per\second\squared}$ auf beiden Seiten}\\
+    t-t_0 &= \frac{\SI{12}{\meter\per\second}}{\SI{2}{\meter\per\second\squared}}
+           = 6\cdot\frac{\ein{m}}{\ein{s}}\cdot\frac{\ein{s}\cdot\ein{s}}{\ein{m}}
+      && \Eh{durch m/s$^2$ teilen heisst mal s$^2$/m}\\
+          &= 6\cdot\frac{\kue{m}\cdot\kue{s}\cdot\ein{s}}{\kue{s}\cdot\kue{m}}
+           = \SI{6}{\second}
+      && \Eh{m und ein s kürzen sich, es bleibt s}
+  \end{align*}
+  Die Stoppuhr zeigt also
+  $t=t_0+\SI{6}{\second}=\SI{3}{\second}+\SI{6}{\second}=\SI{9}{\second}$.
+\end{frame}
+
+% --- Gleichung 3: Ort bei konstanter Beschleunigung --------------------------
+\begin{frame}{Gleichung 3: Ort ($a$ konstant), Teil 1}
+  \begin{columns}[T]
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.8]
+        \fill[lightorange] (1,0) rectangle (4.6,1.4);
+        \fill[lightpurple] (1,1.4) -- (4.6,1.4) -- (4.6,3.9) -- cycle;
+        \draw[->] (-0.2,0) -- (5.4,0) node[right] {$t$};
+        \draw[->] (0,-0.2) -- (0,4.4) node[above] {$v$};
+        \draw[very thick,accentorange] (1,1.4) -- (4.6,3.9);
+        \draw[dashed,gray] (0,1.4) -- (1,1.4);
+        \draw[dashed,gray] (1,0) -- (1,1.4);
+        \draw[dashed,gray] (4.6,0) -- (4.6,3.9);
+        \node[left] at (0,1.4) {$\Vzero$};
+        \node[below] at (1,0) {$\Tzero$};
+        \node[below] at (4.6,0) {$t$};
+        \node at (2.8,0.7) {\scriptsize Rechteck};
+        \node at (3.75,2.1) {\scriptsize Dreieck};
+        \draw[decorate,decoration={brace,amplitude=4pt},accentpurple]
+          (4.7,3.9) -- (4.7,1.4) node[midway,right=4pt] {\scriptsize $a(t-t_0)$};
+      \end{tikzpicture}\\[0.2em]
+      \footnotesize Fläche $=$ zurückgelegter Weg $\Delta s$
+    \end{column}
+    \begin{column}{0.53\textwidth}
+      \small
+      Beide Flächen haben die Breite $\Tdiff$.\\[0.4em]
+      \textbf{Rechteck:} Höhe $\Vzero$
+      \[
+        \text{Fläche} = \Vzero\cdot\Tdiff
+      \]
+      \textbf{Dreieck:} Höhe $\Acol\Tdiff$ (aus Gleichung 2)
+      \begin{align*}
+        \text{Fläche} &= \tfrac12\cdot\Tdiff\cdot\Acol\Tdiff\\
+                      &= \tfrac12\,\Acol\,\Tdiff^2
+      \end{align*}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Gleichung 3: Ort ($a$ konstant), Teil 2}
+  \small
+  Weg $=$ Rechteck $+$ Dreieck, und $\Delta s=s-s_0$:
+  \begin{align*}
+    \Delta s &= \Vzero\Tdiff+\tfrac12\,\Acol\Tdiff^2\\
+    s-\Szero &= \Vzero\Tdiff+\tfrac12\,\Acol\Tdiff^2
+      && \text{\footnotesize $\Delta$ ausschreiben, dann plus } s_0
+  \end{align*}
+  \vspace{-0.8em}
+  \begin{merkbox}[Gleichung 3 ($a$ konstant)]
+    \centering
+    $s(t)=\underbrace{\Szero}_{\text{Startort}}
+      +\underbrace{\Vzero\Tdiff}_{\text{Weg ohne Beschleunigung}}
+      +\underbrace{\tfrac12\,\Acol\Tdiff^2}_{\text{Zusatzweg durch }a}$
+  \end{merkbox}
+  \footnotesize
+  Mittlerer Term $=$ Rechteck (Weg mit konstantem $v_0$), letzter Term
+  $=$ Dreieck.
+\end{frame}
+
+\begin{frame}{Das kennst du schon!}
+  \small
+  Gleichung 3 enthält alles, was wir bisher hatten, als Spezialfall:
+  \vspace{0.3em}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{merkbox}[Keine Beschleunigung: $a=0$]
+        Der Dreiecksterm fällt weg:
+        \[
+          s(t)=s_0+v_0\,(t-t_0)
+        \]
+        Das ist Gleichung 1.
+      \end{merkbox}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{merkbox}[Aus dem Stand: $s_0=0$, $v_0=0$, $t_0=0$]
+        Es bleibt nur das Dreieck:
+        \[
+          s=\tfrac12\,a\,t^2
+        \]
+        Das ist der \glqq Weg aus dem Stand\grqq{} vom
+        Beschleunigungsblatt.
+      \end{merkbox}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Aufgabe 5: Gleichung 3 anwenden}
+  \begin{aufgabebox}[Aufgabe 5]
+    \small
+    Das Auto aus Aufgabe 4: Bei $t_0=\SI{3}{\second}$ ist es
+    $s_0=\SI{40}{\meter}$ nach dem Anfang des Beschleunigungsstreifens,
+    fährt mit $v_0=\SI{15}{\meter\per\second}$ und beschleunigt mit
+    $a=\SI{2}{\meter\per\second\squared}$.
+    \begin{enumerate}
+      \item[a)] Wo ist das Auto, wenn die Stoppuhr $t=\SI{8}{\second}$
+        zeigt? Rechne mit Gleichung 3.
+      \item[b)] Kontrolle: Zeichne das $v$-$t$-Diagramm von $t_0$ bis $t$.
+        Berechne die Fläche von Rechteck und Dreieck einzeln. Welcher Term
+        von Gleichung 3 gehört zu welcher Fläche?
+    \end{enumerate}
+  \end{aufgabebox}
+\end{frame}
+
+\begin{frame}{Aufgabe 5: Lösung a)}
+  \small
+  a) $t-t_0=\SI{8}{\second}-\SI{3}{\second}=\SI{5}{\second}$. Einsetzen:
+  \[
+    s = s_0+v_0(t-t_0)+\tfrac12\,a\,(t-t_0)^2
+      = \SI{40}{\meter}
+       +\SI{15}{\meter\per\second}\cdot\SI{5}{\second}
+       +\tfrac12\cdot\SI{2}{\meter\per\second\squared}\cdot(\SI{5}{\second})^2
+  \]
+  Jeden Term einzeln ausrechnen:
+  \begin{align*}
+    \SI{15}{\meter\per\second}\cdot\SI{5}{\second}
+      &= 15\cdot5\cdot\frac{\ein{m}}{\kue{s}}\cdot\kue{s} = \SI{75}{\meter}
+      && \Eh{s kürzt sich, es bleibt m}\\
+    (\SI{5}{\second})^2 &= 5^2\cdot\ein{s}^2 = \SI{25}{\second\squared}
+      && \Eh{Zahl und Einheit werden quadriert}\\
+    \tfrac12\cdot\SI{2}{\meter\per\second\squared}\cdot\SI{25}{\second\squared}
+      &= \tfrac12\cdot2\cdot25\cdot\frac{\ein{m}}{\kue{\ein{s}^2}}\cdot\kue{\ein{s}^2} = \SI{25}{\meter}
+      && \Eh{s$^2$ kürzt sich, es bleibt m}
+  \end{align*}
+  Alle drei Terme sind in Metern, also darf man sie addieren:
+  \[
+    s=\SI{40}{\meter}+\SI{75}{\meter}+\SI{25}{\meter}=\SI{140}{\meter}
+  \]
+\end{frame}
+
+\begin{frame}{Aufgabe 5: Lösung b)}
+  \small
+  \begin{columns}[c]
+    \begin{column}{0.43\textwidth}
+      \centering
+      \begin{tikzpicture}[xscale=0.52,yscale=0.1]
+        \fill[lightorange] (3,0) rectangle (8,15);
+        \fill[lightpurple] (3,15) -- (8,25) -- (8,15) -- cycle;
+        \draw[->] (0,0) -- (9.3,0) node[right] {\scriptsize $t$ in s};
+        \draw[->] (0,0) -- (0,29) node[above] {\scriptsize $v$ in $\si{\meter\per\second}$};
+        \foreach \x in {3,8} \node[below] at (\x,0) {\scriptsize \x};
+        \foreach \y in {15,25} \node[left] at (0,\y) {\scriptsize \y};
+        \draw[dashed,gray] (0,15) -- (3,15) (0,25) -- (8,25);
+        \draw[very thick,accentorange] (3,15) -- (8,25);
+        \node at (5.5,7.5) {\scriptsize $\SI{75}{\meter}$};
+        \node at (6.8,18.8) {\scriptsize $\SI{25}{\meter}$};
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.55\textwidth}
+      \textbf{Rechteck:} Breite $\SI{5}{\second}$, Höhe $\SI{15}{\meter\per\second}$
+      \[
+        \SI{15}{\meter\per\second}\cdot\SI{5}{\second}
+        = 15\cdot5\cdot\frac{\ein{m}}{\kue{s}}\cdot\kue{s}=\SI{75}{\meter}
+      \]
+      \textbf{Dreieck:} Breite $\SI{5}{\second}$, Höhe
+      $\SI{25}{\meter\per\second}-\SI{15}{\meter\per\second}=\SI{10}{\meter\per\second}$
+      \[
+        \tfrac12\cdot\SI{5}{\second}\cdot\SI{10}{\meter\per\second}
+        = \tfrac12\cdot5\cdot10\cdot\kue{s}\cdot\frac{\ein{m}}{\kue{s}}=\SI{25}{\meter}
+      \]
+      \footnotesize
+      Rechteck $=v_0(t-t_0)$, Dreieck $=\tfrac12a(t-t_0)^2$: Die Flächen
+      ergeben dieselben $\SI{75}{\meter}$ und $\SI{25}{\meter}$ wie in a).
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% --- Gleichung 4: zeitfrei ---------------------------------------------------
+\begin{frame}{Gleichung 4: Ohne die Zeit}
+  \small
+  Manchmal ist die Zeit weder gegeben noch gesucht, zum Beispiel beim
+  Bremsweg. Dann kann man $\Tdiff$ loswerden:
+  \begin{enumerate}
+    \item Gleichung 2 nach der Zeitdauer auflösen:
+      $\Tdiff=\dfrac{v-v_0}{a}$
+    \item Das in Gleichung 3 einsetzen und vereinfachen (alle Schritte
+      stehen auf dem Arbeitsblatt).
+  \end{enumerate}
+  \vspace{0.2em}
+  \begin{merkbox}[Gleichung 4 ($a$ konstant, ohne Zeit)]
+    \centering
+    $v^2=\Vzero^2+2\,\Acol\,\Delta s$ \qquad mit $\Delta s=s-\Szero$
+  \end{merkbox}
+  \footnotesize
+  Achtung Vorzeichen: Wird ein Objekt langsamer, zeigt $a$ gegen die
+  Bewegungsrichtung. Ist die Fahrtrichtung positiv, ist $a$ dann negativ.
+\end{frame}
+
+\begin{frame}{Aufgabe 6: Gleichung 4 anwenden}
+  \begin{aufgabebox}[Aufgabe 6]
+    \small
+    Ein Velofahrer fährt mit $\SI{8}{\meter\per\second}$ und bremst dann
+    gleichmässig, bis er steht. Die Bremsverzögerung beträgt
+    $\SI{2}{\meter\per\second\squared}$. Die Fahrtrichtung ist positiv.
+    \begin{enumerate}
+      \item[a)] Welches Vorzeichen hat $a$? Begründe.
+      \item[b)] Wie lang ist der Bremsweg $\Delta s$?
+      \item[c)] Wie lange dauert das Bremsen, also wie gross ist $t-t_0$?
+        Welche Gleichung passt hier?
+    \end{enumerate}
+  \end{aufgabebox}
+\end{frame}
+
+\begin{frame}{Aufgabe 6: Lösung a)}
+  \small
+  a) $a=-\SI{2}{\meter\per\second\squared}$.
+
+  \vspace{0.4em}
+  Das Velo fährt in die positive Richtung ($v>0$) und wird langsamer.
+  Dann zeigt $a$ gegen die Fahrtrichtung, also in die negative Richtung.
+
+  \vspace{0.4em}
+  \begin{merkbox}[Merke]
+    $v$ und $a$ mit verschiedenen Vorzeichen: langsamer werden.\\
+    $v$ und $a$ mit gleichem Vorzeichen: schneller werden.
+  \end{merkbox}
+\end{frame}
+
+\begin{frame}{Aufgabe 6: Lösung b)}
+  \small
+  b) Am Ende steht das Velo, $v=0$. Die Zeit kommt nicht vor: Gleichung 4.
+  \begin{align*}
+    v^2 &= v_0^2+2\,a\,\Delta s\\
+    0 &= \left(\SI{8}{\meter\per\second}\right)^2+2\cdot\left(-\SI{2}{\meter\per\second\squared}\right)\cdot\Delta s
+      && \Eh{Werte mit Einheiten einsetzen}\\
+    0 &= \SI{64}{\meter\squared\per\second\squared}-\SI{4}{\meter\per\second\squared}\cdot\Delta s
+      && \Eh{$\left(8\,\tfrac{\ein{m}}{\ein{s}}\right)^2=8^2\cdot\tfrac{\ein{m}^2}{\ein{s}^2}$: Zahl und Einheit quadrieren}\\
+    \SI{4}{\meter\per\second\squared}\cdot\Delta s &= \SI{64}{\meter\squared\per\second\squared}
+      && \Eh{$+\SI{4}{\meter\per\second\squared}\cdot\Delta s$ auf beiden Seiten}
+  \end{align*}
+\end{frame}
+
+\begin{frame}{Aufgabe 6: Lösung b), Teil 2}
+  \small
+  Jetzt nach $\Delta s$ auflösen:
+  \begin{align*}
+    \SI{4}{\meter\per\second\squared}\cdot\Delta s &= \SI{64}{\meter\squared\per\second\squared}
+      && \Eh{von der letzten Folie}\\
+    \Delta s &= \frac{\SI{64}{\meter\squared\per\second\squared}}{\SI{4}{\meter\per\second\squared}}
+              = 16\cdot\frac{\ein{m}^2}{\ein{s}^2}\cdot\frac{\ein{s}^2}{\ein{m}}
+      && \Eh{$:\SI{4}{\meter\per\second\squared}$, also mal s$^2$/m}\\
+             &= 16\cdot\frac{\ein{m}\cdot\kue{m}\cdot\kue{\ein{s}^2}}{\kue{\ein{s}^2}\cdot\kue{m}}
+              = \SI{16}{\meter}
+      && \Eh{s$^2$ und ein m kürzen sich, es bleibt m}
+  \end{align*}
+\end{frame}
+
+\begin{frame}{Aufgabe 6: Lösung c)}
+  \small
+  c) Gesucht ist eine Zeitdauer, der Ort spielt keine Rolle: also
+  Gleichung 2.
+  \begin{align*}
+    v &= v_0+a\cdot(t-t_0)\\
+    0 &= \SI{8}{\meter\per\second}+\left(-\SI{2}{\meter\per\second\squared}\right)\cdot(t-t_0)
+      && \Eh{Werte mit Einheiten einsetzen}\\
+    0 &= \SI{8}{\meter\per\second}-\SI{2}{\meter\per\second\squared}\cdot(t-t_0)
+      && \Eh{$+\SI{2}{\meter\per\second\squared}\cdot(t-t_0)$ auf beiden Seiten}\\
+    \SI{2}{\meter\per\second\squared}\cdot(t-t_0) &= \SI{8}{\meter\per\second}
+      && \Eh{$:\SI{2}{\meter\per\second\squared}$ auf beiden Seiten}\\
+    t-t_0 &= \frac{\SI{8}{\meter\per\second}}{\SI{2}{\meter\per\second\squared}}
+           = 4\cdot\frac{\kue{m}\cdot\kue{s}\cdot\ein{s}}{\kue{s}\cdot\kue{m}}
+           = \SI{4}{\second}
+      && \Eh{wie in Aufgabe 4b: es bleibt s}
+  \end{align*}
+  Das Velo braucht $\SI{4}{\second}$ bis zum Stillstand.
+\end{frame}
+
+% --- Zusammenfassung ----------------------------------------------------------
+\begin{frame}{Zusammenfassung}
+  \small
+  \centering
+  \begin{tabular}{lll}
+    \toprule
+    & \textbf{Gleichung} & \textbf{Woher?} \\
+    \midrule
+    1 & $s(t)=s_0+v\,(t-t_0)$ & $v=\Delta s/\Delta t$ \ ($a=0$) \\[0.2em]
+    2 & $v(t)=v_0+a\,(t-t_0)$ & $a=\Delta v/\Delta t$ \\[0.2em]
+    3 & $s(t)=s_0+v_0(t-t_0)+\tfrac12\,a\,(t-t_0)^2$ & Fläche: Rechteck $+$ Dreieck \\[0.2em]
+    4 & $v^2=v_0^2+2\,a\,\Delta s$ & Gl.\ 2 und 3 ohne Zeit \\
+    \bottomrule
+  \end{tabular}
+
+  \vspace{0.6em}
+  \begin{merkbox}[Die drei wichtigsten Übersetzungen]
+    \centering
+    $t-t_0=\Delta t$ \ (Zeit seit dem Start) \qquad
+    $s-s_0=\Delta s$ \qquad
+    $v-v_0=\Delta v$
+  \end{merkbox}
+\end{frame}
+
+\end{document}

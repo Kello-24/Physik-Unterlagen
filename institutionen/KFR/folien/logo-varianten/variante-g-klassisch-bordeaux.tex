@@ -1,0 +1,59 @@
+% !TeX program = pdflatex
+% Variante G: Klassisch in Bordeaux. Serifenschrift, Folientitel zentriert in
+% Kapitälchen mit feiner Linie darunter, keine farbigen Flächen. Fusszeile
+% mit Logo links, Fach und Thema in der Mitte, Seitenzahl rechts, getrennt
+% durch eine feine Linie. Titelfolie mit Doppellinien oben und unten.
+\documentclass[14pt,aspectratio=169]{beamer}
+\input{gemeinsam-praeambel}
+\usefonttheme{serif}
+
+\definecolor{bordeaux}{HTML}{7A1F35}
+\definecolor{hellbordeaux}{HTML}{F8EEF0}
+\colorlet{boxrahmen}{bordeaux}
+\colorlet{boxgrund}{hellbordeaux}
+
+\setbeamercolor{structure}{fg=bordeaux}
+\setbeamercolor{title}{fg=bordeaux}
+\setbeamercolor{frametitle}{fg=bordeaux,bg=white}
+\setbeamerfont{frametitle}{size=\Large,series=\mdseries,shape=\scshape}
+
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip
+  \vspace*{0.3cm}%
+  \begin{beamercolorbox}[wd=\paperwidth,center,leftskip=1cm,rightskip=1cm]{frametitle}
+    \centering\hyphenpenalty=10000
+    \usebeamerfont{frametitle}\insertframetitle\par
+    \vspace{0.15em}
+    {\color{bordeaux!60}\rule{0.5\paperwidth}{0.5pt}}\par
+  \end{beamercolorbox}
+}
+
+\setbeamertemplate{footline}{%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=0.75cm,dp=0.2cm,leftskip=0.6cm,rightskip=0.6cm]{footline}
+    \makebox[0pt][l]{\raisebox{0.62cm}{\color{bordeaux!40}\rule{\dimexpr\paperwidth-1.2cm\relax}{0.4pt}}}%
+    \includegraphics[height=0.45cm]{kfr_logo}%
+    \hfill\raisebox{0.12cm}{\scriptsize\scshape Physik \textperiodcentered{} \insertshorttitle}\hfill
+    \raisebox{0.12cm}{\scriptsize\insertframenumber\,/\,\inserttotalframenumber}
+  \end{beamercolorbox}
+}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \centering
+  \includegraphics[height=1.3cm]{kfr_logo}\par
+  \vspace{0.8em}
+  {\color{bordeaux}\rule{0.7\textwidth}{1.2pt}\par\vspace{-0.9em}\rule{0.7\textwidth}{0.4pt}\par}
+  \vspace{0.5em}
+  {\LARGE\scshape\color{bordeaux}\inserttitle\par}
+  \vspace{0.3em}
+  {\large\itshape\insertsubtitle\par}
+  \vspace{0.5em}
+  {\color{bordeaux}\rule{0.7\textwidth}{0.4pt}\par\vspace{-0.9em}\rule{0.7\textwidth}{1.2pt}\par}
+  \vspace{0.8em}
+  {\normalsize\insertinstitute, \insertdate\par}
+\end{frame}
+
+\input{gemeinsam-inhalt}
+
+\end{document}

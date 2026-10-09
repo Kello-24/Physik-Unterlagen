@@ -1,0 +1,39 @@
+% !TeX program = pdflatex
+% Variante A: Logo klein in der Fusszeile (unten links), Seitenzahl rechts.
+% Blauer Titelbalken bleibt unverändert. Titelfolie: Logo gross über dem Titel.
+\documentclass[14pt,aspectratio=169]{beamer}
+\input{gemeinsam-praeambel}
+
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip
+  \begin{beamercolorbox}[wd=\paperwidth,ht=1.4em,dp=0.4em,leftskip=0.5em]{frametitle}
+    \usebeamerfont{frametitle}\insertframetitle
+  \end{beamercolorbox}
+}
+
+\setbeamertemplate{footline}{%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=0.75cm,dp=0.15cm,leftskip=0.35cm,rightskip=0.35cm]{footline}
+    {\color{kfrgrau!40}\rule[0.72cm]{\dimexpr\paperwidth-0.7cm\relax}{0.4pt}}%
+    \hspace*{-\dimexpr\paperwidth-0.7cm\relax}%
+    \raisebox{0.05cm}{\includegraphics[height=0.55cm]{kfr_logo}}%
+    \hfill
+    \raisebox{0.2cm}{\usebeamerfont{page number in head/foot}\insertframenumber\,/\,\inserttotalframenumber}
+  \end{beamercolorbox}
+}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \centering
+  \includegraphics[height=1.6cm]{kfr_logo}\par
+  \vspace{1.2em}
+  {\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par}
+  \vspace{0.3em}
+  {\large\insertsubtitle\par}
+  \vspace{1.2em}
+  {\normalsize\insertinstitute, \insertdate\par}
+\end{frame}
+
+\input{gemeinsam-inhalt}
+
+\end{document}

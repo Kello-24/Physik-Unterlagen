@@ -1,0 +1,68 @@
+% =============================================================================
+% Gemeinsame Musterfolien für alle Logovarianten: eine Folie mit Diagrammen,
+% eine mit Aufgabenbox und eine mit bewusst langem Titel (prüft, ob Titel und
+% Logo kollidieren). Inhalt aus bewegungsgleichungen-wiederholung-folien.tex.
+% =============================================================================
+\begin{frame}{Steigung im Diagramm}
+  \small
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.8]
+        \draw[->] (-0.2,0) -- (5,0) node[right] {$t$};
+        \draw[->] (0,-0.2) -- (0,3.6) node[above] {$s$};
+        \draw[very thick,titleblue] (0.3,0.4) -- (4.5,3.1);
+        \draw[thick,groupteal] (1.5,1.171) -- (3.5,1.171);
+        \draw[thick,accentorange] (3.5,1.171) -- (3.5,2.457);
+        \node[below,groupteal] at (2.5,1.171) {\footnotesize $\Delta t$};
+        \node[right,accentorange] at (3.5,1.814) {\footnotesize $\Delta s$};
+      \end{tikzpicture}\\[0.3em]
+      $s$-$t$-Diagramm:\\
+      Steigung $=\dfrac{\Delta s}{\Delta t}=v$
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.8]
+        \draw[->] (-0.2,0) -- (5,0) node[right] {$t$};
+        \draw[->] (0,-0.2) -- (0,3.6) node[above] {$v$};
+        \draw[very thick,accentorange] (0.3,0.6) -- (4.5,3.1);
+        \draw[thick,groupteal] (1.5,1.314) -- (3.5,1.314);
+        \draw[thick,accentpurple] (3.5,1.314) -- (3.5,2.505);
+        \node[below,groupteal] at (2.5,1.314) {\footnotesize $\Delta t$};
+        \node[right,accentpurple] at (3.5,1.91) {\footnotesize $\Delta v$};
+      \end{tikzpicture}\\[0.3em]
+      $v$-$t$-Diagramm:\\
+      Steigung $=\dfrac{\Delta v}{\Delta t}=a$
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Aufgabe 4: Gleichung 2 anwenden}
+  \begin{aufgabebox}[Aufgabe 4]
+    \small
+    Ein Auto fährt auf einem Autobahnbeschleunigungsstreifen. Eine
+    Stoppuhr läuft schon. Bei $t_0=\SI{3}{\second}$ hat das Auto
+    $v_0=\SI{15}{\meter\per\second}$. Ab da beschleunigt es konstant mit
+    $a=\SI{2}{\meter\per\second\squared}$.
+    \begin{enumerate}
+      \item[a)] Welche Geschwindigkeit hat das Auto, wenn die Stoppuhr
+        $t=\SI{8}{\second}$ zeigt? Gib sie auch in
+        $\si{\kilo\meter\per\hour}$ an.
+      \item[b)] Welche Zeit zeigt die Stoppuhr, wenn das Auto
+        $\SI{27}{\meter\per\second}$ erreicht?
+    \end{enumerate}
+  \end{aufgabebox}
+\end{frame}
+
+\begin{frame}{Gleichung 2: Geschwindigkeit ($a$ konstant)}
+  \small
+  \begin{itemize}
+    \item Bekannt: $a=\dfrac{\Delta v}{\Delta t}$
+    \item Mal $\Delta t$ und $\Delta$ ausschreiben:
+      $a\cdot(t-t_0)=v-v_0$
+    \item Plus $v_0$: $\quad v(t)=v_0+a\cdot(t-t_0)$
+  \end{itemize}
+  \vspace{0.5em}
+  Diese Folie hat einen langen Titel, damit man sieht, ob Titel und Logo
+  sich in die Quere kommen.
+\end{frame}

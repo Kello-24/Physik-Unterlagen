@@ -1,66 +1,163 @@
+% !TeX program = pdflatex
+% !BIB program = biber
 \documentclass[12pt,a4paper]{article}
 
-% ------------------------------------------------
-% Basis-Pakete (robust für Overleaf / pdfLaTeX)
-% ------------------------------------------------
+% =================================================
+% Entwurfsmodus
+% =================================================
+% \Entwurftrue:  Platzhalter grau sichtbar, Seitenzähler für den Hauptteil
+%                in der Fusszeile (Merkblatt: 6 bis 8 Seiten Reflexion
+%                und Standortbestimmung).
+% \Entwurffalse: Abgabeversion, Seitenzähler ausgeblendet.
+\newif\ifEntwurf
+\Entwurffalse
+
+% =================================================
+% Basis-Pakete (pdfLaTeX / MiKTeX)
+% =================================================
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[ngerman]{babel}
-\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage[a4paper,margin=2.5cm,headheight=15pt]{geometry}
+
+% Merkblatt 3. Formalia: Times 12 Pkt., Zeilenabstand 1.5
+\usepackage{newtxtext,newtxmath}
 \usepackage{setspace}
-\usepackage{mathptmx}      % Times-Schrift, meist robust
+\onehalfspacing
+\usepackage{microtype}
+
 \usepackage{graphicx}
-\usepackage{hyperref}
+\usepackage{xcolor}
 \usepackage{longtable}
 \usepackage{array}
 \usepackage{booktabs}
 \usepackage{enumitem}
 \usepackage{fancyhdr}
+\usepackage{pdfpages}   % ganze PDF-Seiten im Anhang einbinden
+\usepackage{refcount}   % Seitenzähler Hauptteil
+\usepackage[breakable,skins]{tcolorbox} % Rahmenfelder des Standortbestimmungsformulars
 
-% ------------------------------------------------
-% Formatierung
-% ------------------------------------------------
-\onehalfspacing
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0.6em}
+% Anführungszeichen im Schweizer Stil: \enquote{...} ergibt «...».
+% Nie ein nacktes " im Text verwenden (ngerman-Shorthand-Falle).
+\usepackage[autostyle=true,german=swiss]{csquotes}
 
+% =================================================
+% Literatur: biblatex + biber, APA 7
+% =================================================
+% literatur.bib wird von Zotero (Better BibTeX, «Keep updated») automatisch
+% aktuell gehalten. Zitieren mit \textcite{key} (Autor (Jahr)) oder
+% \parencite{key} ((Autor, Jahr)), Seiten: \parencite[S.~12]{key}.
+\usepackage[style=apa,backend=biber]{biblatex}
+\addbibresource{literatur.bib}
+% Buchkapitel, die (noch) nicht in Zotero angelegt sind; siehe Kommentar dort
+\addbibresource{literatur-kapitel.bib}
+
+% hyperref als (fast) letztes Paket laden
+\usepackage{hyperref}
 \hypersetup{
     colorlinks=true,
     linkcolor=black,
-    urlcolor=blue,
-    pdftitle={Praktikumsjournal},
-    pdfauthor={Vorname Nachname}
+    citecolor=black,
+    urlcolor=blue!50!black,
+    pdftitle={Praktikumsjournal Unterrichtspraktikum I},
+    pdfauthor={Loris Keller}
 }
+
+% =================================================
+% Formatierung
+% =================================================
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+\setlist{leftmargin=1.5em,itemsep=0.2em}
+% Tabellenspalte mit fester Breite im Flattersatz (keine Blocksatz-Lücken)
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[L]{Praktikumsjournal}
-\fancyhead[R]{\leftmark}
+\fancyhead[R]{\nouppercase{\rightmark}}
 \fancyfoot[C]{\thepage}
+% Kopfzeile rechts: erster Abschnitt, der auf der Seite beginnt
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+\renewcommand{\subsectionmark}[1]{}
 
-% ------------------------------------------------
-% Eigene Angaben
-% ------------------------------------------------
+% Platzhalter: grau und kursiv, damit Unfertiges im PDF sofort auffällt.
+% Vor der Abgabe: im Quelltext nach \Platzhalter suchen, es darf keiner
+% mehr übrig sein.
+\newcommand{\Platzhalter}[1]{\texorpdfstring{\leavevmode{\color{gray}\itshape[#1]}}{[#1]}}
+
+% Einheitliche, unnummerierte Zwischentitel innerhalb eines Schwerpunkts
+\newcommand{\Teil}[1]{\subsubsection*{#1}}
+
+% Formular «Standortbestimmung nach dem Praktikum I im Hinblick auf das
+% Praktikum II»: Rahmenfeld mit fetter Überschrift und Leitfrage, wie im
+% Original (dünner Rahmen, über Seitenumbrüche teilbar). Der Titel erscheint
+% zusätzlich als Unterabschnitt im Inhaltsverzeichnis.
+\newtcolorbox{Formularfeld}[2]{%
+  enhanced, breakable, sharp corners, colback=white, colframe=black, boxrule=0.4pt,
+  left=5pt, right=5pt, top=3pt, bottom=5pt, before skip=0.8em, after skip=0.8em,
+  before upper={\phantomsection\addcontentsline{toc}{subsection}{#1}%
+    \textbf{#1}\par\smallskip #2\par\smallskip}}
+\newcommand{\Formularangabe}[2]{\noindent\makebox[7cm][l]{#1}#2\par}
+\newcommand{\Unterschriftslinie}[1]{\par\vspace{2.2em}\noindent
+  \makebox[7cm][l]{#1}\hrulefill\par}
+
+% Anhang: einzelne Seiten aus den Unterrichtsmaterialien (PDFs im Ordner
+% anhang/, neu erzeugen mit anhang/erstellen.sh) mit dünnem Rahmen.
+% \Anhanginfo{Text}            kurze Angabe zu Herkunft und Einsatz
+% \Anhangseite[Breite]{Datei}{Seite}   Breite als Anteil der Textbreite;
+% die Höhe wird zusätzlich auf den Restplatz der Seite begrenzt, damit
+% Titel, Beschreibung und Auszug immer auf derselben Seite stehen
+\newcommand{\Anhanginfo}[1]{\noindent{\small\itshape #1}\par}
+\newlength{\Anhanghoehe}
+\newcommand{\Anhangseite}[3][0.9]{%
+  \begin{center}\setlength{\fboxsep}{0pt}%
+  \ifdim\pagegoal=\maxdimen
+    \setlength{\Anhanghoehe}{\textheight}%
+  \else
+    \setlength{\Anhanghoehe}{\dimexpr\pagegoal-\pagetotal-2\baselineskip\relax}%
+  \fi
+  \fbox{\includegraphics[page=#3,width=#1\textwidth,height=\Anhanghoehe,
+    keepaspectratio]{#2}}%
+  \end{center}}
+
+% Seitenzähler für den Hauptteil (Reflexion + Standortbestimmung)
+\newcommand{\UmfangHauptteil}{%
+  \number\numexpr\getpagerefnumber{hauptteil-ende}
+    -\getpagerefnumber{hauptteil-start}+1\relax}
+\ifEntwurf
+  \fancyfoot[R]{\scriptsize\color{gray}Entwurf: Hauptteil
+    \UmfangHauptteil\ S. (Soll 6 bis 8)}
+\fi
+
+% =================================================
+% Eigene Angaben (Titelblatt laut Merkblatt: Titel, Name, Fach,
+% Adresse, E-Mail-Adresse, Datum)
+% =================================================
+\newcommand{\Titel}{Praktikumsjournal}
+\newcommand{\Untertitel}{Unterricht aus der Perspektive der Schülerinnen und Schüler}
 \newcommand{\Name}{Loris Keller}
 \newcommand{\Fach}{Physik}
-\newcommand{\Adresse}{Rychenbergstrasse 140, 8400 Winterthur}
-\newcommand{\Email}{Loris.keller@uzh.ch}
-\newcommand{\Datum}{\today}
+\newcommand{\Adresse}{Birchstrasse 41, 8057 Zürich}
+\newcommand{\Email}{loris.keller@uzh.ch}
+\newcommand{\Datum}{\today} % vor der Abgabe fixes Datum eintragen
 \newcommand{\Praktikum}{Unterrichtspraktikum I}
-\newcommand{\Schule}{Kantonsschule Im Lee}
+\newcommand{\Zeitraum}{Herbstsemester 2026}
+\newcommand{\Schule}{Kantonsschule Im Lee, Winterthur}
 \newcommand{\Lehrperson}{Sara Romer}
 
 \begin{document}
+
+% Titelblatt und Inhaltsverzeichnis ohne sichtbare Seitenzahl (intern
+% römisch, damit hyperref eindeutige Seitenanker hat); die arabische
+% Zählung beginnt mit 1 bei der Einleitung.
+\pagenumbering{Roman}
 
 % =================================================
 % TITELSEITE
 % =================================================
 \begin{titlepage}
-    \thispagestyle{empty}
-    
-    % ---------- Logo oben rechts ----------
     \begin{flushright}
-        % Falls du ein Logo hochlädst, z.B. uzh_logo.png, dann ersetze die nächste Zeile durch:
         \includegraphics[width=4cm]{UZH_logo.png}
     \end{flushright}
 
@@ -75,9 +172,11 @@
 
         \vspace{2.5cm}
 
-        {\Huge\bfseries Praktikumsjournal\par}
+        {\Huge\bfseries \Titel\par}
         \vspace{0.6cm}
         {\Large \Praktikum\par}
+        \vspace{0.4cm}
+        {\large \Untertitel\par}
 
         \vspace{2cm}
     \end{center}
@@ -86,10 +185,11 @@
     \begin{tabular}{>{\bfseries}p{4.5cm}p{9cm}}
         Name: & \Name \\
         Fach: & \Fach \\
-        Schule: & \Schule \\
-        Praktikumslehrperson: & \Lehrperson \\
         Adresse: & \Adresse \\
-        E-Mail: & \Email \\
+        E-Mail: & \href{mailto:\Email}{\Email} \\
+        Praktikumsschule: & \Schule \\
+        Praktikumslehrperson: & \Lehrperson \\
+        Zeitraum: & \Zeitraum \\
         Datum: & \Datum \\
     \end{tabular}
 
@@ -99,179 +199,648 @@
 % =================================================
 % INHALTSVERZEICHNIS
 % =================================================
+\setcounter{page}{2}
+\begin{singlespace}
 \tableofcontents
-\newpage
+\end{singlespace}
+\thispagestyle{empty}
+\clearpage
+\pagenumbering{arabic}
 
 % =================================================
-% EINLEITUNG
+% EINLEITUNG (kurz, ca. eine halbe Seite)
 % =================================================
 \section{Einleitung}
 
-Dieses Praktikumsjournal dokumentiert und reflektiert zentrale Erfahrungen aus dem \Praktikum. 
-Im Zentrum stehen zwei bis drei thematische Schwerpunkte beziehungsweise Fragestellungen, anhand 
-derer eigene Unterrichtserfahrungen, Beobachtungen und Entwicklungsmöglichkeiten analysiert werden.
+Mein Unterrichtspraktikum~I absolvierte ich im Herbstsemester 2026 an der
+Kantonsschule Im Lee in Winterthur bei \Lehrperson. Ich unterrichtete
+30~Lektionen in vier Klassen. In der 1f behandelte ich die
+Elektrizitätslehre, in der 2e die Kräfte und in der 4fh und der 4cdeg
+Kondensatoren, Magnetfelder und Lorentzkraft. Weitere 20~Lektionen hospitierte ich. Alle Lektionen und
+die Stufen der Klassen sind in Anhang~\ref{anh:lektionen} aufgeführt.
 
-\subsection{Ausgangslage und Zielsetzung}
+Durch die Rückmeldungen und meine eigenen Beobachtungen zog sich ein roter
+Faden. Unterricht muss aus der Perspektive der Schülerinnen und Schüler geplant
+und durchgeführt werden, mit Blick auf ihr Vorwissen, ihre Sprache, ihr Tempo
+und die Stolpersteine eines Themas. Für meine Entwicklung standen
+zwei Aspekte davon im Zentrum, nämlich auf welchem Weg ich neue Inhalte einführe und wie gut
+ich Niveau und Tempo auf die Klasse abstimme.
 
-Beschreibe hier kurz:
-\begin{itemize}[leftmargin=1.5cm]
-    \item den Kontext des Praktikums,
-    \item die Lerngruppe oder Klasse,
-    \item deine Rolle im Praktikum,
-    \item deine Ziele für das Journal.
-\end{itemize}
-
-\subsection{Gewählte thematische Schwerpunkte}
-
-Formuliere hier zwei bis drei zentrale Fragestellungen.
-
-Beispiel:
-\begin{enumerate}[leftmargin=1.5cm]
-    \item Wie gelang mir die Strukturierung von Unterricht?
-    \item Inwiefern konnte ich Lernprozesse der Schülerinnen und Schüler unterstützen?
-    \item Welche Herausforderungen zeigten sich im Bereich Klassenführung?
-\end{enumerate}
+Die beiden Schwerpunkte beziehen sich auf die im Merkblatt genannten Bereiche
+\enquote{Initiierung und Förderung der kognitiven Aktivierung der
+Schülerinnen und Schüler} (III) und \enquote{Klärung der fachspezifischen
+Voraussetzungen der Schülerinnen und Schüler} (II). Jeder Schwerpunkt wird
+anhand einer eigenen Fragestellung bearbeitet (Abschnitte~\ref{sec:schwerpunkt1}
+und~\ref{sec:schwerpunkt2}).
 
 % =================================================
-% REFLEXION
+% REFLEXION (Hauptteil)
 % =================================================
+% Aufbau jedes Schwerpunkts angelehnt an den Reflexionszyklus (ALACT) nach
+% Korthagen: Situation, Rückblick/Analyse, Theoriebezug, Handlungs-
+% alternativen und deren Erprobung, Fazit.
 \section{Reflexion}
+\label{hauptteil-start}
 
-\subsection{Thematischer Schwerpunkt 1: [Titel einfügen]}
+\subsection{Kognitive Aktivierung: vom Phänomen zur Formel}
+\label{sec:schwerpunkt1}
 
-\subsubsection*{Fragestellung}
-Formuliere hier die konkrete Fragestellung.
+\noindent\textit{Fragestellung: Wie habe ich im Verlauf des Praktikums gelernt,
+physikalische Konzepte zuerst qualitativ über Phänomene und Experimente zu
+erarbeiten, bevor ich die Formel einführe?}
 
-\subsubsection*{Beschreibung der Situation}
-Beschreibe eine konkrete Unterrichtssituation, Beobachtung, Planung oder ein Material, auf das du dich beziehst.
+Physikalische Modelle und Formeln stehen nicht am Anfang der Physik, sondern
+entstehen aus der Auseinandersetzung mit Phänomenen. Ein Modell ist dabei
+nur eine mögliche Erklärung für ein beobachtetes Phänomen. Beginnt der
+Unterricht mit der Formel, fehlt den Schülerinnen und Schülern dieser
+Ausgangspunkt. Ist zudem ihr Vorwissen noch klein, können sie die
+physikalische Gesetzmässigkeit hinter der Formel kaum verstehen. Die Formel
+ist dann zwar mathematisch sinnvoll, bildet aber kein physikalisches
+Verständnis ab. Die Lernenden kommen so zu korrekten Zahlenwerten,
+\enquote{ohne sich über die hinter den Gleichungen stehende Physik genauere
+Gedanken zu machen} \parencite[5]{scheckerduit2018}. Aus dem Studium war ich es gewohnt, vom Modell auszugehen.
+Im Praktikum begann ich deshalb manche Lektionen mit dem Modell oder der
+Formel, andere mit dem Phänomen, und beides wirkte sich unterschiedlich aus.
+Zunächst zu zwei Lektionen, in denen ich vom Modell ausging.
 
-\subsubsection*{Analyse}
-Analysiere die Situation:
-\begin{itemize}[leftmargin=1.5cm]
-    \item Was ist gelungen?
-    \item Wo zeigten sich Schwierigkeiten?
-    \item Welche Ursachen könnten dafür verantwortlich gewesen sein?
-    \item Welche Schlüsse ziehst du daraus?
-\end{itemize}
+In der Kondensatorenlektion der 4fh erstellten die Schülerinnen und Schüler mit
+einer PhET-Simulation und Excel Diagramme, aus denen wir Schritt für Schritt
+die Kapazitätsformel des Plattenkondensators zusammensetzten
+(Anhänge~\ref{anh:kond-aufgb} und~\ref{anh:kond-ab}). Erst danach folgten die Wassertankanalogie und
+das Experiment, in dem Kondensatoren unterschiedlicher Kapazität eine
+Lichtquelle unterschiedlich lange leuchten lassen (Anhang~\ref{anh:kond-ab}).
+Die Herleitung funktionierte schlecht. Die Klasse war unkonzentriert und hatte
+kaum Ansporn, eine Formel für ein Phänomen herzuleiten, das sie noch nicht
+verstanden hatte. Wagenschein beschreibt genau diese Situation. Er nennt es die
+häufigste Versuchung von Lehrpersonen, \enquote{Abstraktionen zu verfrühen},
+etwa wenn es für die Lernenden \enquote{noch kein sachliches Motiv gibt}, das
+ihr \enquote{produktives Suchen in Anspruch nähme}
+\parencite[98--99]{wagenschein2013}. Hätte die Klasse zuerst das Experiment mit
+der Lichtquelle gesehen, hätte sich die Frage nach der Kapazität aus dem
+Phänomen ergeben. Die vorgängige Auseinandersetzung mit einem Problem, im
+Physikunterricht etwa mit einem noch unerklärten Phänomen, bereitet auf die
+Instruktion vor, \enquote{because such an experience activates prior knowledge
+and shows why the learning content is relevant} \parencite[8]{dejong2023}.
 
-\subsubsection*{Bezug zu Theorie und Literatur}
-Hier kannst du Bezüge zu allgemeindidaktischen, fachdidaktischen oder pädagogisch-psychologischen Konzepten herstellen.
+Die 1f zeigte, dass eine solche eigene Auseinandersetzung nur gelingt, wenn
+die Klasse genügend Anknüpfungspunkte hat. Dort führte ich die
+elektrischen Feldlinien ohne Experiment ein und liess die Klasse ausgehend von
+der Wechselwirkung geladener Teilchen überlegen, wie ein Modell des Feldes
+aussehen könnte (Anhang~\ref{anh:ladung}). Ohne die Coulombkraft liess sich
+die Richtung der Feldlinien aber kaum begründen, und der Klasse fehlte das
+Vorwissen, um ein solches Modell selbst aufzubauen. Eine eigenständige
+Auseinandersetzung setzt eine gewisse Vertrautheit mit dem Thema voraus
+\parencite[7]{dejong2023}. Ein Experiment zum elektrischen Feld hätte der
+Klasse diese Vertrautheit verschafft, bevor sie ein Modell entwickeln sollte.
 
-\subsubsection*{Zwischenfazit}
-Fasse die wichtigsten Erkenntnisse kurz zusammen.
+Wo ich mit dem Phänomen begann, beobachtete ich einen deutlichen Unterschied.
+Stand die Formel noch nicht fest, waren die Schülerinnen und Schüler
+neugieriger und stellten eigene Vermutungen auf. Stand das Modell bereits,
+wähnten sie sich in falscher Sicherheit, schon alles zu wissen. Vermutungen
+formulieren, Fragen stellen und Antworten hinterfragen nennt
+\textcite[92]{lipowsky2020} als Merkmale kognitiv aktivierten Lernens. Neue
+Konzepte entstehen demnach, wenn Phänomene den bisherigen Vorstellungen
+widersprechen. Die falsche Sicherheit beschreibt Wagenschein mit den Worten \enquote{Das
+Vorwegnehmen nimmt dem Schüler etwas, wo es ihm zu geben glaubt}
+\parencite[107]{wagenschein2013}. Weil eigene Vermutungen auch
+Fehlvorstellungen enthalten, müssen sie vor dem Experiment ausdrücklich als
+Vorhersagen eingefordert werden \parencite[43]{wilhelmschecker2018}.
 
-\subsection{Thematischer Schwerpunkt 2: [Titel einfügen]}
+Bei der Lorentzkraft drehte ich die Reihenfolge schliesslich ganz um. Die
+Lektion begann mit der Leiterschaukel in Partnerarbeit, Theorie und Formel
+folgten erst danach, und zum Schluss sollten die Schülerinnen und Schüler ihre
+eigene Beobachtung erklären (Anhang~\ref{anh:lorentz}). Das Fadenstrahlrohr
+setzte ich nach dem Schema Predict, Observe, Explain ein
+(Anhang~\ref{anh:fadenstrahlrohr}). Diese Abfolge entspricht Wagenscheins Regel
+\enquote{Erst das Phänomen, dann die Theorie und die Modellvorstellung}
+\parencite[121]{wagenschein2013}. Entscheidend war der Auftrag, die Beobachtung
+zu erklären, denn Wissenserwerb hängt nicht von der sichtbaren Aktivität wie
+dem Experimentieren ab, sondern von der gedanklichen Auseinandersetzung
+\parencite[449--450]{wild2020}.
 
-\subsubsection*{Fragestellung}
-Formuliere hier die konkrete Fragestellung.
+Auch die Lektion zur Wechselwirkung in der 2e begann ich mit einem Experiment
+nach Predict, Observe, Explain. Zwei Personen auf Skateboards zogen sich in
+drei Varianten an einem Seil zueinander, und erst danach formulierten wir das
+Wechselwirkungsgesetz (Anhang~\ref{anh:wechselwirkung}). Schwierig war für
+mich, dass am Ende keine Formel steht, die man herleiten könnte. Das dritte
+Newtonsche Gesetz ist im Grunde die Beschreibung des Phänomens selbst. Daran
+merkte ich, wie sehr ich gewohnt bin, Physik über Formeln zu fassen.
 
-\subsubsection*{Beschreibung der Situation}
-Beschreibe die relevante Unterrichtssituation oder das Material.
+In der 1f trug dieser Weg ebenfalls. Bei den Schaltungen bauten die
+Schülerinnen und Schüler die Schaltungen weitgehend selbständig auf und massen
+zuerst, die Merksätze folgten erst danach (Anhang~\ref{anh:schaltungen}).
+Begleitet wurden sie dabei nicht durch Instruktionen im Plenum, sondern durch
+eine genaue schriftliche Anleitung auf dem Arbeitsblatt. Eine solche
+Begleitung braucht forschendes Lernen, denn Untersuchungen der Lernenden
+gelingen nur mit \enquote{adequate guidance, possibly including direct
+instruction} \parencite[5]{dejong2023}.
 
-\subsubsection*{Analyse}
-Reflektiere die Situation vertieft und begründet.
+Insgesamt hat sich mein Zugang von \enquote{Formel zuerst} zu
+\enquote{Phänomen zuerst, Erklärung durch die Klasse, Formel danach}
+verschoben. Besonders in den unteren Klassen will ich nicht mit
+Formeln erklären, solange die mathematischen Strukturen fehlen. Mit dem
+Phänomen zu beginnen, ist aber noch in keiner Klassenstufe Routine, wie die
+Feldlinien in der 1f und die Kondensatoren in der 4fh zeigen. Diesen Weg in
+allen Klassen konsequent anzuwenden, ist
+deshalb ein Entwicklungsziel für das Praktikum~II
+(Abschnitt~\ref{sec:standort}).
 
-\subsubsection*{Bezug zu Theorie und Literatur}
-Verknüpfe deine Beobachtungen mit Literatur oder theoretischen Modellen.
+\subsection{Voraussetzungen klären: Vorwissen, Niveau und Tempo}
+\label{sec:schwerpunkt2}
 
-\subsubsection*{Zwischenfazit}
-Fasse die wichtigsten Erkenntnisse zusammen.
+\noindent\textit{Fragestellung: Wie kann ich die Voraussetzungen einer Klasse
+erfassen und Niveau und Tempo meines Unterrichts darauf abstimmen?}
 
-\subsection{Thematischer Schwerpunkt 3: [optional]}
+Ich unterrichtete auf drei Stufen, nämlich in der 1f, in der 2e sowie in der 4fh und
+der 4cdeg. Die Praktikumslehrperson sagte mir vorab, welches Profil die
+Klassen haben und ob sie mathematisch stark sind. Das Niveau schätzte ich
+zudem aus den Hospitationen ab, das Vorwissen aus den Unterlagen der
+Praktikumslehrperson und aus verbreiteten Schülervorstellungen
+\parencite{schecker2018}. Getroffen habe ich das Niveau aber nicht immer.
 
-Diesen Abschnitt kannst du verwenden, falls du drei Fragestellungen bearbeitest.
+In der 1f führte ich Spannung, Stromstärke und Widerstand sehr langsam ein,
+mit schrittweise hergeleiteten Einheiten und Umformungen
+(Anhang~\ref{anh:uir}) und im Gruppenpuzzle mit einem Bauteil pro
+Expertengruppe (Anhang~\ref{anh:gruppenpuzzle}). Mir kam das zu langsam vor, für die Klasse
+war es das richtige Tempo, weil Einheiten, Potenzen und das Umformen von
+Gleichungen noch nicht gefestigt sind. In der 2e gestaltete ich dagegen den
+Einstieg in die Kraftaddition zu träge, obwohl die Klasse auch mathematisch
+mehr mitbrachte. Ich hatte ihr Vorwissen vor der Lektion nicht geprüft. Ein
+langsames Vorgehen half also der einen Klasse und bremste die andere. Kalyuga
+et al.\ bezeichnen dies als \textit{expertise reversal effect}.
+\enquote{Instructional techniques that are highly effective with inexperienced
+learners can lose their effectiveness and even have negative consequences when
+used with more experienced learners} \parencite[23]{kalyuga2003}. Langeweile
+entsteht im Unterricht oft aus einer \enquote{discrepancy between individuals'
+ability and task demands}, bei Unterforderung ebenso wie bei Überforderung
+\parencite[208]{krannich2019}.
 
-\subsubsection*{Fragestellung}
-Formuliere hier die Fragestellung.
+Gleichzeitig setzte ich in der 2e bei den Aufgaben voraus, dass alle einen
+Kraftmassstab für Vektoren festlegen und anwenden können
+(Anhang~\ref{anh:kraefte}). Den Stärkeren gelang das, den Schwächeren nicht.
+Ähnlich ging es mir bei der schiefen Ebene, wo die Klasse von der Kraft über
+die Beschleunigung auf die Endgeschwindigkeit schliessen sollte, und beim
+Hookeschen Gesetz, wo ich die Federkonstante als Steigung im Diagramm zu
+schnell besprach. Die 2e war also mathematisch stark, hatte aber Mühe,
+Mathematik und Physik zu verbinden, etwa zu verstehen, dass die Steigung im
+Diagramm die Federkonstante ist und was das physikalisch bedeutet. Das Niveau einer Klasse ist keine
+einzelne Grösse, massgebend ist das Vorwissen, das der neue Inhalt konkret
+verlangt. \Textcite[2]{scheckerduit2018} beschreiben die Falle, in die ich
+geraten war. Bei der Planung werde oft \enquote{implizit} angenommen, die
+Lernenden verstünden die Inhalte, wenn die Lehrkraft sie \enquote{fachlich
+korrekt und anschaulich darstellt}. Die Lernvoraussetzungen seien aber
+\enquote{ebenso sorgfältig in den Blick zu nehmen}. Es ist deshalb
+\enquote{unumgänglich, das für neuen Stoff benötigte Vorwissen regelmässig zu
+überprüfen}, etwa mit einem kurzen formativen Assessment zu Beginn der Lektion
+\parencite[78]{greutmannstern2021}.
 
-\subsubsection*{Beschreibung der Situation}
-Beschreibe die relevante Praxissituation.
+Gezielt erhob ich das Vorwissen zum Beispiel in der 4cdeg. Die
+Magnetfelderlektion begann mit einem Socrative-Quiz zum Stoff der
+Kondensatorenlektion (Anhang~\ref{anh:socrative}). Die 14 teilnehmenden
+Schülerinnen und Schüler beantworteten im Durchschnitt 74~\% der Fragen
+richtig, die Frage nach der Ladung eines von der Batterie getrennten
+Kondensators aber nur zur Hälfte, obwohl genau dieser Unterschied im Zentrum
+der Kondensatorenlektion stehen sollte. Ohne das Quiz wäre mir das entgangen.
+So konnten wir diesen Punkt im Plenum gezielt aufnehmen.
+\Textcite[125--126]{hoferschalk2021} beschreiben dieses Vorgehen als
+Fehlkonzept-Check. Die Lehrperson wählt ein bekanntes Fehlkonzept aus
+Unterrichtserfahrung oder Literatur und fragt es anonym ab, etwa über
+Klickersysteme. Zum formativen Assessment wird eine solche Erhebung erst, wenn
+die Informationen \enquote{nicht nur gesammelt, sondern auch zur Anpassung des
+Unterrichts} genutzt werden \parencite[125]{hoferschalk2021}.
 
-\subsubsection*{Analyse}
-Reflektiere die Situation.
+Auf die Rückmeldung, nicht immer dasselbe Format einzusetzen, erprobte ich in
+der 1f einen Einstieg mit Folien im Plenum (Anhang~\ref{anh:folien}). Die
+Klasse skizzierte einen Stromkreis und entschied in einer
+Richtig-oder-falsch-Runde über Aussagen zu Fehlvorstellungen aus der Forschung
+wie \enquote{Es genügt ein Kabel von der Batterie zur Lampe}
+\parencite[116]{wilhelmhopf2018}. Formatives Assessment ist \enquote{keine einzelne
+Technik} \parencite[124]{hoferschalk2021} und wirkt offenbar stärker, wenn der
+Unterricht zugleich kognitiv aktiviert \parencite[100]{lipowsky2020}.
 
-\subsubsection*{Bezug zu Theorie und Literatur}
-Ordne deine Beobachtungen theoretisch ein.
+Ob das Tempo passte, merkte ich während der Lektion an der Atmosphäre, an
+Beteiligung und Aufmerksamkeit, an Störungen und an Fragen, die ausblieben.
+Diese Beobachtungen gaben mir Hinweise auf das Tempo. Zu lange
+Phasen wie die Wiederholung der Permanentmagnete in der 4fh oder der träge
+Einstieg in die Kraftaddition entsprechen Kounins
+\enquote{Überproblematisierungen}, die den Unterrichtsfluss stören. Ein
+flüssiger Ablauf hängt mit Mitarbeit und ausbleibendem Fehlverhalten
+zusammen \parencite[124]{seidel2020}. Deshalb zeigte sich ein zu langsames
+Tempo gerade an nachlassender Beteiligung und an Störungen. Für die Schnelleren hielt ich
+Zusatzaufgaben bereit. So erhielten sie mehr Aufgaben und die anderen mehr
+Zeit für die Grundaufgaben, eine Form innerer Differenzierung über
+\enquote{unterschiedliche Aufgabenmengen} und \enquote{unterschiedliche
+Lernzeitkontingente} \parencite[97]{lipowsky2020}.
 
-\subsubsection*{Zwischenfazit}
-Formuliere die wichtigsten Erkenntnisse.
+Insgesamt ist der Massstab für Niveau und Tempo das Vorwissen der Klasse, nicht
+mein eigenes, und zwar das Vorwissen, das der neue Inhalt konkret verlangt.
+Die Diagnose zu Beginn muss ich bewusst planen.
+Die Anpassung des Tempos während der Lektion hängt dagegen auch von einem
+Gespür ab, das sich aus der Atmosphäre im Unterricht ergibt. Die Forschung
+spricht von professioneller Unterrichtswahrnehmung, der \enquote{Anwendung
+von Wissen, um Unterrichtssituationen angemessen einordnen zu können}, die
+sich erst im Verlauf der beruflichen Ausbildung entwickelt
+\parencite[273]{kunter2020}. Dieses Gespür habe ich eigentlich, ich muss aber
+noch lernen, den Unterricht dann auch tatsächlich anzupassen. Daraus ergibt
+sich das
+erste Entwicklungsziel meiner Standortbestimmung
+(Abschnitt~\ref{sec:standort}).
+
+% Optionaler dritter Schwerpunkt, nur falls am Schluss Seiten frei sind
+% (Kandidaten: Anforderungsniveau oder Stoffmenge reduzieren, siehe
+% nachbesprechungen.md):
+% \subsection{...}
+% \label{sec:schwerpunkt3}
 
 % =================================================
 % STANDORTBESTIMMUNG
+% 1:1 nach dem Formular «Standortbestimmung nach dem Praktikum I im Hinblick
+% auf das Praktikum II» (formular_standortbestimmung_nach-upI-vor-upII.docx):
+% Kopf, Einleitungstext, Angaben, drei Rahmenfelder, Hinweis, Datum,
+% Unterschriften. Kompetenzbezeichnungen in «...» wörtlich aus dem Merkblatt
+% «Kompetenzen von Lehrpersonen an Maturitätsschulen» (Bereiche I bis IV).
 % =================================================
 \section{Standortbestimmung mit Entwicklungszielen}
+\label{sec:standort}
 
-\subsection{Bereits vorhandene Kompetenzen}
+\noindent Lehrdiplom für Maturitätsschulen:\par
+\noindent\textbf{Standortbestimmung nach dem Praktikum I im Hinblick auf das
+Praktikum II}
 
-Reflektiere hier, welche Kompetenzen bereits sichtbar geworden sind.
+Die Studentin bzw. der Student verfasst die Standortbestimmung als Schlussteil
+des Praktikumsjournals nach dem ersten Unterrichtspraktikum (Praktikum I) im
+Hinblick auf das zweite Unterrichtspraktikum (Praktikum II). Darin beschreibt
+sie/er bereits vorhandene Kompetenzen und skizziert wichtige
+Entwicklungsziele. Diese Standortbestimmung kann vor dem Praktikum II den
+aktuellen Entwicklungsbedingungen angepasst werden und soll bei dessen Vor-
+und Nachbesprechungen angemessen berücksichtigt werden.
 
-Beispiele:
-\begin{itemize}[leftmargin=1.5cm]
-    \item fachliche Sicherheit,
-    \item verständliche Erklärungen,
-    \item klare Strukturierung,
-    \item lernförderliche Interaktion,
-    \item Klassenführung,
-    \item reflektierter Umgang mit Rückmeldungen.
+\Formularangabe{Name der Studentin / des Studenten:}{\Name}
+\Formularangabe{Unterrichtsfach Praktikum I:}{\Fach}
+\Formularangabe{Unterrichtsfach Praktikum II:}{\Fach}
+
+% -------------------------------------------------
+\begin{Formularfeld}{Vorhandene Kompetenzen}{Welche Kompetenzen (vgl.
+Dokument \emph{Kompetenzen von Lehrpersonen an Maturitätsschulen}) sind in
+meinem Unterricht bereits vorhanden?}
+
+\begin{itemize}
+  \item \textbf{Fachliches Wissen und Können (I).} Ich kann physikalische
+  Inhalte fachlich korrekt aufbereiten, Herleitungen nachvollziehbar aufbauen
+  und vollständige Lösungswege ausarbeiten.
+
+  \item \textbf{Lernziele (II).} Ich formuliere für jede Doppellektion
+  überprüfbare Lernziele als Kompetenzen und mache sie der Klasse transparent.
+  Dabei orientiere ich mich am Lehrplan der Schule und am Semesterplan der
+  Praktikumslehrperson.
+
+  \item \textbf{Planung (II).} Ich plane Lektionen mit klaren Phasen und
+  Zeitangaben und wechsle bewusst zwischen Einzel-, Partner-, Gruppen- und
+  Plenumsarbeit.
+
+  \item \textbf{Didaktische Methoden (II).} Ich setze verschiedene
+  didaktische Methoden ein, vom Lehrervortrag und Demonstrationsexperiment über
+  kooperative Lernformen bis zu Experimenten in Gruppen, und wähle sie passend
+  zum Inhalt.
+
+  \item \textbf{Medien (II).} Ich setze Experimente, Simulationen und digitale
+  Werkzeuge so ein, dass die Klasse ihre Zeit für das Wesentliche nutzen kann,
+  und fördere dabei den Umgang der Schülerinnen und Schüler mit Simulationen und
+  Tabellenkalkulation.
+
+  \item \textbf{Aufgaben (II).} Typische Fehlvorstellungen zu einem Thema kenne
+  ich aus der Literatur. Ich nutze Aufgaben und Quizfragen, um Vorwissen und
+  solche Fehlvorstellungen zu erfassen, und biete Schnelleren zusätzliche
+  Aufgaben an.
+
+  \item \textbf{Klassenführung und Motivation (III).} Ich gebe eindeutige
+  Aufträge mit Sozialform und Zeitrahmen und wecke Interesse über Anwendungen
+  aus Alltag und Forschung. Lernprozesse unterstütze ich mit Rückmeldungen
+  sowie mit Kontrollfragen und Lösungen zur Selbstkontrolle.
+
+  \item \textbf{Professionelle Selbstregulation, Kooperation und Reflexion
+  (IV).} Ich verhalte mich situationsgerecht und meiner Rolle als Lehrperson
+  entsprechend und wahre die Integrität der Schülerinnen und Schüler. Mit der
+  Praktikumslehrperson arbeite ich eng zusammen und spreche Planung und
+  Experimente mit ihr ab. Rückmeldungen nehme ich ernst, setze sie in der
+  nächsten Lektion um und passe meine Unterlagen entsprechend an.
 \end{itemize}
+\end{Formularfeld}
 
-\subsection{Entwicklungsziele für das nächste Praktikum}
+% -------------------------------------------------
+\begin{Formularfeld}{Entwicklungsziele}{Welche (zwei bis vier) Kompetenzen
+möchte ich besonders weiterentwickeln?}
 
-Formuliere zwei bis vier konkrete Entwicklungsziele.
+\begin{enumerate}
+  \item \textbf{Voraussetzungen der Klasse klären, Niveau und Tempo
+  anpassen (II).} Ich will das Vorwissen, das ein neuer Inhalt verlangt, vor
+  der Lektion zuverlässig klären und Niveau und Tempo danach ausrichten. Das
+  Tempo soll je nach Phase und Klasse bewusst gewählt sein, und auf Signale
+  der Klasse will ich im Moment reagieren können.
 
-\renewcommand{\arraystretch}{1.3}
-\begin{longtable}{p{0.28\textwidth}p{0.30\textwidth}p{0.34\textwidth}}
-\toprule
-\textbf{Entwicklungsziel} & \textbf{Begründung} & \textbf{Konkrete Umsetzung} \\
-\midrule
-Ziel 1 & Warum ist dieses Ziel wichtig? & Welche konkreten Schritte planst du? \\
-Ziel 2 & Warum ist dieses Ziel wichtig? & Welche konkreten Schritte planst du? \\
-Ziel 3 & Optional & Optional \\
-Ziel 4 & Optional & Optional \\
-\bottomrule
-\end{longtable}
+  \item \textbf{Kognitive Aktivierung über Phänomene (III).} Ich will neue
+  Inhalte in allen Klassenstufen konsequent vom Phänomen aus erarbeiten, die
+  Klasse Vermutungen und Erklärungen formulieren lassen und die Formel erst
+  danach einführen.
 
-\subsection{Persönliche Schlussreflexion}
+  \item \textbf{Lernförderliche Gespräche und präzise Sprache (III).} Ich will
+  Antworten der Klasse schneller einordnen und produktiv aufgreifen. Meine
+  Fragen und Erklärungen sollen sprachlich präzise, auf das Wesentliche
+  beschränkt und dem Vorwissen der Klasse angepasst sein.
 
-Formuliere ein kurzes Gesamtfazit:
-\begin{itemize}[leftmargin=1.5cm]
-    \item Was nimmst du aus dem Praktikum mit?
-    \item Welche Entwicklung ist bereits sichtbar?
-    \item Worauf willst du im nächsten Praktikum besonders achten?
-\end{itemize}
-
-% =================================================
-% ANHANG
-% =================================================
-\newpage
-\section{Anhang}
-
-Hier können ausgewählte Materialien aus dem Praktikum dokumentiert werden, zum Beispiel:
-\begin{itemize}[leftmargin=1.5cm]
-    \item Unterrichtsplanungen,
-    \item Arbeitsblätter,
-    \item Beobachtungsnotizen,
-    \item Schülerarbeiten,
-    \item Tafelbilder oder Präsentationsfolien.
-\end{itemize}
-
-\subsection{Übersicht der Anhangsdokumente}
-
-\begin{enumerate}[leftmargin=1.5cm]
-    \item Anhang A: Unterrichtsplanung vom [Datum]
-    \item Anhang B: Arbeitsblatt zum Thema [Thema]
-    \item Anhang C: Beobachtungsprotokoll
-    \item Anhang D: Beispiel einer Schülerarbeit
+  \item \textbf{Inhalte auswählen, strukturieren und darstellen (II, IV).} Ich
+  will den Stoff gezielter auswählen, weniger, dafür klar strukturiertes
+  Material abgeben und mehr Vorbereitungszeit in die fachliche Klärung meiner
+  Erklärungen investieren. Auch das Tafelbild will ich bewusst planen.
 \end{enumerate}
+\end{Formularfeld}
+
+% -------------------------------------------------
+\begin{Formularfeld}{Erste konkrete Ideen zur Erreichung der
+Entwicklungsziele im Praktikum II}{}
+
+\begin{enumerate}
+  \item \textbf{Voraussetzungen der Klasse klären, Niveau und Tempo anpassen
+  (II).} Vor jeder neuen Einheit kläre ich mit der Praktikumslehrperson, was
+  die Klasse bereits kann, und erhebe das benötigte Vorwissen mit wenigen
+  gezielten Fragen zu typischen Schülervorstellungen. Dabei wechsle ich die
+  Formate (Quiz, Fragen auf Folien, Richtig-oder-falsch-Runden) und achte
+  darauf, dass sie lernfördernd bleiben. Für eine neue Klasse stelle ich zu
+  Beginn eine Aufgabe, die physikalisches Verständnis und mathematisches
+  Vorwissen zugleich prüft, gefolgt von einer kurzen Umfrage, ob die Lösung am
+  Fachlichen oder am Mathematischen gescheitert ist. Bei der Planung überlege
+  ich aus Sicht der Schülerinnen und Schüler, wo Schwierigkeiten liegen, und
+  plane für jüngere Klassen ausdrücklich Zeit für Begriffe und Umformungen
+  ein. Für jeden Abschnitt lege ich ein passendes Tempo und einen festen
+  Zeitrahmen fest, zügig bei Repetitionen und Bekanntem, langsamer bei neuen
+  Begriffen und Herleitungen. Für Signale der Klasse (Beteiligung,
+  Konzentration, Fragen, Arbeitsfortschritt) lege ich vorab fest, wie ich
+  reagiere, etwa eine Phase abkürzen, eine aktivierende Frage stellen oder ein
+  Beispiel zeigen. Die Praktikumslehrperson bitte ich, gezielt auf das Tempo
+  zu achten.
+
+  \item \textbf{Kognitive Aktivierung über Phänomene (III).} Jede neue Grösse
+  und jedes neue Gesetz beginnt mit einem Phänomen, einem Experiment oder einer
+  Vorhersageaufgabe nach Predict, Observe, Explain. Die Klasse formuliert
+  zuerst Vermutungen und erhält nach dem Experiment den Auftrag, ihre
+  Beobachtung selbst zu erklären. Die Formel folgt erst, wenn der Zusammenhang
+  qualitativ formuliert ist. Selbständige Experimentierphasen begleite ich mit
+  einer genauen schriftlichen Anleitung, und die Experimente halte ich für die
+  Klasse schriftlich fest. Bei der Planung prüfe ich, ob das gewählte Phänomen
+  auch mich selbst neugierig machen würde.
+
+  \item \textbf{Lernförderliche Gespräche und präzise Sprache (III).} Die
+  zentralen Fragen einer Lektion formuliere ich in der Planung wörtlich aus,
+  prüfe sie auf sprachliche Korrektheit und Eindeutigkeit und achte darauf,
+  dass sie die Antwort nicht schon enthalten. Dazu notiere ich erwartbare
+  Antworten und Fehlvorstellungen. Pro Klasse führe ich eine kurze Liste der
+  eingeführten Fachbegriffe und verwende neue Begriffe erst, nachdem ich sie
+  bewusst eingeführt habe. Nach einer Frage warte ich drei bis fünf Sekunden.
+  Eine Antwort, die ich nicht sofort verstehe, kläre ich durch Nachfragen, gebe
+  sie mit eigenen Worten wieder oder gebe sie an die Klasse weiter, statt sie
+  sofort zu bewerten. Die Praktikumslehrperson bitte ich, gezielt auf meine
+  Gesprächsführung und Sprache zu achten.
+
+  \item \textbf{Inhalte auswählen, strukturieren und darstellen (II, IV).} Für
+  jede Doppellektion lege ich zuerst die Schlüsselkonzepte fest, die am Ende
+  verstanden sein müssen, und wähle Inhalte und Aufgaben danach aus. Ich
+  beschränke mich auf ein Arbeitsblatt von wenigen Seiten und einige Folien,
+  gestalte die Blätter übersichtlich und mit wenig Text, kennzeichne Pflicht-
+  und Zusatzaufgaben deutlich und sage auch mündlich, was für die Prüfung
+  gekonnt werden muss. Vorlagen wie Excel-Tabellen bereite ich so vor, dass
+  keine Zeit für Nebensächliches verloren geht. Das Tafelbild plane ich vorab
+  mit einer festen Farbcodierung. Die eingesparte Zeit setze ich für die
+  Sachanalyse und das Durchdenken meiner Erklärungen ein.
+\end{enumerate}
+\end{Formularfeld}
+\label{hauptteil-ende}
+
+\noindent Zusätzliche Zielsetzungen können im Laufe des zweiten Praktikums
+ergänzt werden.
+
+\bigskip
+\Formularangabe{Datum:}{\Datum}
+\Unterschriftslinie{Unterschrift Studentin/Student:}
+
+\bigskip
+\noindent Bestätigung der Kenntnisnahme durch die Praktikumslehrperson des
+Praktikums II:
+\Unterschriftslinie{}
 
 % =================================================
 % LITERATURVERZEICHNIS
 % =================================================
 \newpage
-\section*{Literaturverzeichnis}
-\addcontentsline{toc}{section}{Literaturverzeichnis}
+\printbibliography[heading=bibintoc,title={Literaturverzeichnis}]
 
-% Literatur hier von Hand eintragen, z.B.:
-Autor, A. A. (Jahr). \textit{Titel}. Verlag.
+% =================================================
+% ANHANG: Auswahl aus der Materialsammlung
+% =================================================
+\newpage
+\appendix
+\section{Übersicht der Lektionen und Hospitationen}
+\label{anh:lektionen}
+
+Die Klassenbezeichnungen der Kantonsschule Im Lee zählen ab der ersten Klasse
+der Oberstufe. Die 1f und die 1h entsprechen der 3.~Klasse des Gymnasiums,
+die 2e der 4., die 3e und die 3f der 5.\ sowie die 4fh und die 4cdeg der
+6.~Klasse.
+
+\subsection*{Selbständig unterrichtete Lektionen}
+
+15 Doppellektionen (30 Lektionen).
+
+\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{@{}L{2.0cm}L{1.4cm}L{4.6cm}L{6.2cm}@{}}
+\toprule
+\textbf{Datum} & \textbf{Klasse} & \textbf{Thema} & \textbf{Eingesetzte Unterlagen} \\
+\midrule
+\endhead
+25.08.2026 & 4fh   & Kondensatoren & Arbeitsblatt 4, Aufgabenblatt 3, Zusatzaufgaben \\
+26.08.2026 & 2e    & Gewichtskraft und Federkraft & Arbeitsblatt 2, Aufgabenblatt 1, Zusatzaufgaben \\
+28.08.2026 & 4cdeg & Kondensatoren & wie 4fh (25.08.) \\
+01.09.2026 & 4fh   & Magnetfelder & Arbeitsblatt 5, Aufgabenblatt 4, Quiz \\
+02.09.2026 & 2e    & Kräfte addieren und zerlegen & Arbeitsblatt 3, Aufgabenblatt 2, Demoversuche (reissender Faden, Tischrand) \\
+02.09.2026 & 1f    & Ladung und elektrisches Feld & Arbeitsblatt 1 \\
+04.09.2026 & 4cdeg & Magnetfelder & wie 4fh (01.09.), Einstieg mit Socrative-Quiz Kapazität \\
+09.09.2026 & 2e    & Normalkraft & Arbeitsblatt 4, Aufgabenblatt 3, Demoversuch (Brettbiegung) \\
+09.09.2026 & 1f    & Elektrisches Feld (Vertiefung) & Arbeitsblatt 2 \\
+15.09.2026 & 4fh   & Lorentzkraft (Teil 1) & Arbeitsblatt 6, Aufgabenblatt 5, Fadenstrahlrohr, Zusammenfassung der Experimente \\
+16.09.2026 & 2e    & Wechselwirkung & Arbeitsblatt 5, Aufgabenblatt 4 \\
+16.09.2026 & 1f    & Spannung, Stromstärke, Widerstand & Arbeitsblatt 3, Aufgabenblatt, Gruppenpuzzle \\
+18.09.2026 & 4cdeg & Lorentzkraft (Teil 1) & wie 4fh (15.09.) \\
+23.09.2026 & 1f    & Schaltungen & Arbeitsblatt 4, Aufgabenblatt 3, Einstiegsfolien \\
+25.09.2026 & 4cdeg & Lorentzkraft (Teil 2) & Gruppenpuzzle Anwendungen \\
+\bottomrule
+\end{longtable}
+
+\subsection*{Hospitationen}
+
+\begin{longtable}{@{}L{2.0cm}L{3.4cm}L{7.0cm}r@{}}
+\toprule
+\textbf{Datum} & \textbf{Klasse} & \textbf{Thema} & \textbf{Lektionen} \\
+\midrule
+\endhead
+18.08.2026 & 4fh   & Elektrische Spannung, Kondensatoren & 2 \\
+18.08.2026 & Robotik & Robotik (fächerübergreifend, vier Lehrpersonen) & 2 \\
+19.08.2026 & 2e    & Einführung Kraft, Beschleunigung & 2 \\
+19.08.2026 & 1f    & Einführung Physik, Elektrizität & 2 \\
+21.08.2026 & 4cdeg & Elektrische Spannung, Kondensatoren & 2 \\
+26.08.2026 & 3f (Simon Gallmann) & Harmonische Schwingungen & 4 \\
+21.09.2026 & 1h    & Schaltungen & 2 \\
+21.09.2026 & 3e    & Schwebung & 4 \\
+\midrule
+\multicolumn{3}{@{}l}{\textbf{Total}} & \textbf{20} \\
+\bottomrule
+\end{longtable}
+
+% -------------------------------------------------
+% Auszüge aus den Unterrichtsmaterialien, in der Reihenfolge, in der sie im
+% Text erwähnt werden. Arbeitsblätter als Schülerversion (ohne Lösungen),
+% erzeugt mit anhang/erstellen.sh.
+% -------------------------------------------------
+
+% ---------- zu Schwerpunkt 1 ----------
+\clearpage
+\section{Arbeitsblatt 1: Elektrische Feldlinien zeichnen}
+\label{anh:ladung}
+\Anhanginfo{1f, 02.09.2026. Seiten~1 und~2 von 4 mit der Einführung der
+Feldlinien ohne vorangehendes Experiment. Ausgangspunkt ist die Repetition der
+Wechselwirkung geladener Teilchen. Die Klasse überlegte zuerst selbst, wie ein
+Modell des Feldes aussehen könnte, die Regeln für Feldlinien wurden erst
+danach gemeinsam im Plenum besprochen. Anschliessend zeichnet die Klasse die
+Feldlinien einzelner Ladungen ein. Zu Abschnitt~\ref{sec:schwerpunkt1}.}
+\Anhangseite{anhang/anh-ladung-ab1.pdf}{1}
+\clearpage
+\Anhangseite{anhang/anh-ladung-ab1.pdf}{2}
+
+\clearpage
+\section{Aufgabenblatt 3: Kondensatoren, Lernaufgabe mit Simulation}
+\label{anh:kond-aufgb}
+\Anhanginfo{4fh (25.08.2026) und 4cdeg (28.08.2026). Seiten~1
+und~2 von 6 mit der Lernaufgabe zur PhET-Simulation und Excel-Auswertung.
+Die Diagramme daraus bildeten die Grundlage für die Kapazitätsformel
+(Anhang~\ref{anh:kond-ab}). Zu
+Abschnitt~\ref{sec:schwerpunkt1}.}
+\Anhangseite{anhang/anh-kondensatoren-aufgb3.pdf}{1}
+\clearpage
+\Anhangseite{anhang/anh-kondensatoren-aufgb3.pdf}{2}
+
+\clearpage
+\section{Arbeitsblatt 4: Kondensatoren}
+\label{anh:kond-ab}
+\Anhanginfo{4fh und 4cdeg. Seiten~5 und~6 von 10 mit dem Zusammensetzen
+der Kondensatorformel im Plenum, erst danach das Experiment mit Kondensator
+und Lichtquelle. Zu Abschnitt~\ref{sec:schwerpunkt1}.}
+\Anhangseite{anhang/anh-kondensatoren-ab4.pdf}{5}
+\clearpage
+\Anhangseite{anhang/anh-kondensatoren-ab4.pdf}{6}
+
+\clearpage
+\section{Arbeitsblatt 6: Lorentzkraft (Teil 1)}
+\label{anh:lorentz}
+\Anhanginfo{4fh (15.09.2026) und 4cdeg (18.09.2026). Seiten~1
+bis~3 von 10. Zuerst kommt das Experiment mit der Leiterschaukel in
+Partnerarbeit, danach folgen Theorie und Formel und der Auftrag, die eigene Beobachtung zu
+erklären. Zu Abschnitt~\ref{sec:schwerpunkt1}.}
+\Anhangseite{anhang/anh-lorentzkraft-ab6.pdf}{1}
+\clearpage
+\Anhangseite{anhang/anh-lorentzkraft-ab6.pdf}{2}
+\clearpage
+\Anhangseite{anhang/anh-lorentzkraft-ab6.pdf}{3}
+
+\clearpage
+\section{Fadenstrahlrohr: Predict, Observe, Explain}
+\label{anh:fadenstrahlrohr}
+\Anhanginfo{4fh und 4cdeg, Lorentzkraft Teil~1. Seiten~3 und~4
+von 6 mit Vorhersage, Beobachtung und Erklärung der Elektronenbahn. Zu
+Abschnitt~\ref{sec:schwerpunkt1}.}
+\Anhangseite{anhang/anh-fadenstrahlrohr.pdf}{3}
+\clearpage
+\Anhangseite{anhang/anh-fadenstrahlrohr.pdf}{4}
+
+\clearpage
+\section{Arbeitsblatt 5: Wechselwirkung}
+\label{anh:wechselwirkung}
+\Anhanginfo{2e, 16.09.2026. Seiten~1 bis~3 von 9 mit dem Einstieg über das
+Skateboardexperiment nach Predict, Observe, Explain in drei Varianten, erst
+danach die Formulierung des Wechselwirkungsgesetzes. Zu
+Abschnitt~\ref{sec:schwerpunkt1}.}
+\Anhangseite{anhang/anh-wechselwirkung-ab5.pdf}{1}
+\clearpage
+\Anhangseite{anhang/anh-wechselwirkung-ab5.pdf}{2}
+\clearpage
+\Anhangseite{anhang/anh-wechselwirkung-ab5.pdf}{3}
+
+\clearpage
+\section{Arbeitsblatt 4: Schaltungen}
+\label{anh:schaltungen}
+\Anhanginfo{1f, 23.09.2026. Seiten~7, 8 und~10 von 14 mit dem Messauftrag zur
+Serie- und Parallelschaltung in Gruppen mit schriftlicher
+Schritt-für-Schritt-Anleitung. Die Merksätze folgen erst nach der Auswertung der Messungen. Zu
+Abschnitt~\ref{sec:schwerpunkt1}.}
+\Anhangseite{anhang/anh-schaltungen-ab4.pdf}{7}
+\clearpage
+\Anhangseite{anhang/anh-schaltungen-ab4.pdf}{8}
+\clearpage
+\Anhangseite{anhang/anh-schaltungen-ab4.pdf}{10}
+
+% ---------- zu Schwerpunkt 2 ----------
+\clearpage
+\section{Arbeitsblatt 3: Strom, Spannung und Widerstand}
+\label{anh:uir}
+\Anhanginfo{1f, 16.09.2026. Seiten~2 bis~4 von 4 mit der schrittweisen
+Herleitung der Einheiten, dem Umformen des Ohmschen Gesetzes mit dem
+URI-Dreieck und den Vorsätzen Milli und Kilo. Zu Abschnitt~\ref{sec:schwerpunkt2}.}
+\Anhangseite{anhang/anh-uir-ab3.pdf}{2}
+\clearpage
+\Anhangseite{anhang/anh-uir-ab3.pdf}{3}
+\clearpage
+\Anhangseite{anhang/anh-uir-ab3.pdf}{4}
+
+\clearpage
+\section{Gruppenpuzzle 3: Strom, Spannung und Widerstand}
+\label{anh:gruppenpuzzle}
+\Anhanginfo{1f, 16.09.2026. Seiten~1, 3 und~4 von 13 mit dem Aufbau
+des Gruppenpuzzles mit einem Bauteil pro Expertengruppe, hier Gruppe~A
+(Batterie) mit Kontrollfrage. Zu Abschnitt~\ref{sec:schwerpunkt2}.}
+\Anhangseite{anhang/anh-gruppenpuzzle-uir.pdf}{1}
+\clearpage
+\Anhangseite{anhang/anh-gruppenpuzzle-uir.pdf}{3}
+\clearpage
+\Anhangseite{anhang/anh-gruppenpuzzle-uir.pdf}{4}
+
+\clearpage
+\section{Arbeitsblatt 3: Kraftaddition und Kraftzerlegung}
+\label{anh:kraefte}
+\Anhanginfo{2e, 02.09.2026. Seite~2 von 5 mit Kraftmassstab und
+Kräfteparallelogramm, deren Anwendung in den Aufgaben vorausgesetzt wurde. Zu
+Abschnitt~\ref{sec:schwerpunkt2}.}
+\Anhangseite{anhang/anh-kraefte-ab3.pdf}{2}
+
+\clearpage
+\section{Socrative-Quiz Kapazität: Fragen und Klassenergebnis}
+\label{anh:socrative}
+\Anhanginfo{4cdeg, 04.09.2026, Einstieg in die Magnetfelderlektion
+mit dem Vorwissen aus der Kondensatorenlektion. Der Export aus Socrative zeigt
+zuerst die Übersicht der Resultate pro Person (Namen ausgeblendet, 14 von 18
+Schülerinnen und Schülern nahmen teil), danach die Fragen mit den
+Antworthäufigkeiten. Zu Abschnitt~\ref{sec:schwerpunkt2}.}
+\Anhangseite[0.85]{anhang/anh-socrative-resultate.pdf}{1}
+\clearpage
+\Anhangseite{anhang/anh-socrative-kapazitaet.pdf}{1}
+\clearpage
+\Anhangseite{anhang/anh-socrative-kapazitaet.pdf}{2}
+
+\clearpage
+\section{Einstiegsfolien Schaltungen}
+\label{anh:folien}
+\Anhanginfo{1f, 23.09.2026. Folie~2 mit dem Auftrag, einen Stromkreis zu
+skizzieren, und Folie~8 mit der Richtig-oder-falsch-Runde zu typischen
+Fehlvorstellungen, vor und nach der Auflösung. Zu
+Abschnitt~\ref{sec:schwerpunkt2}.}
+\Anhangseite[0.7]{anhang/anh-folien-schaltungen.pdf}{2}
+\Anhangseite[0.7]{anhang/anh-folien-schaltungen.pdf}{8}
+\Anhangseite[0.7]{anhang/anh-folien-schaltungen.pdf}{14}
 
 \end{document}
