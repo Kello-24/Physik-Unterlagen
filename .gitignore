@@ -42,3 +42,6 @@ Thumbs.db
 
 # Compiled PDFs are build output, not source - keep them out of version control
 *.pdf
+
+# Eingescannte Unterschrift (nicht ins öffentliche Repo)
+Signatur.png

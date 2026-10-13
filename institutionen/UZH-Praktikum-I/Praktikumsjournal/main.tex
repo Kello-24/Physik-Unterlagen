@@ -101,6 +101,14 @@
 \newcommand{\Formularangabe}[2]{\noindent\makebox[7cm][l]{#1}#2\par}
 \newcommand{\Unterschriftslinie}[1]{\par\vspace{2.2em}\noindent
   \makebox[7cm][l]{#1}\hrulefill\par}
+% Eigene Unterschrift: liegt Signatur.png (eingescannt, transparenter
+% Hintergrund) im Journalordner, wird sie auf die Linie gesetzt, sonst
+% bleibt die Linie leer. Die Datei ist per .gitignore vom Repo ausgeschlossen.
+\newcommand{\EigeneUnterschrift}[1]{\par\vspace{2.2em}\noindent
+  \makebox[7cm][l]{#1}%
+  \IfFileExists{Signatur.png}{\rlap{\hspace{0.5em}\raisebox{-0.25em}{%
+    \includegraphics[height=1.6cm]{Signatur.png}}}}{}%
+  \hrulefill\par}
 
 % Anhang: einzelne Seiten aus den Unterrichtsmaterialien (PDFs im Ordner
 % anhang/, neu erzeugen mit anhang/erstellen.sh) mit dünnem Rahmen.
@@ -137,10 +145,12 @@
 \newcommand{\Titel}{Praktikumsjournal}
 \newcommand{\Untertitel}{Unterricht aus der Perspektive der Schülerinnen und Schüler}
 \newcommand{\Name}{Loris Keller}
+\newcommand{\NameVorname}{Keller, Loris} % Selbständigkeitserklärung
 \newcommand{\Fach}{Physik}
 \newcommand{\Adresse}{Birchstrasse 41, 8057 Zürich}
 \newcommand{\Email}{loris.keller@uzh.ch}
 \newcommand{\Datum}{\today} % vor der Abgabe fixes Datum eintragen
+\newcommand{\Ort}{Zürich}    % Ort der Unterschrift (Selbständigkeitserklärung)
 \newcommand{\Praktikum}{Unterrichtspraktikum I}
 \newcommand{\Zeitraum}{Herbstsemester 2026}
 \newcommand{\Schule}{Kantonsschule Im Lee, Winterthur}
@@ -457,7 +467,10 @@ erste Entwicklungsziel meiner Standortbestimmung
 % 1:1 nach dem Formular «Standortbestimmung nach dem Praktikum I im Hinblick
 % auf das Praktikum II» (formular_standortbestimmung_nach-upI-vor-upII.docx):
 % Kopf, Einleitungstext, Angaben, drei Rahmenfelder, Hinweis, Datum,
-% Unterschriften. Kompetenzbezeichnungen in «...» wörtlich aus dem Merkblatt
+% Unterschriften. Abweichung vom Formular: Die Kenntnisnahme bestätigt hier
+% die Praktikumslehrperson des Praktikums I (laut Wegleitung bestätigt sie
+% die Kenntnisnahme des Journals), nicht jene des Praktikums II.
+% Kompetenzbezeichnungen in «...» wörtlich aus dem Merkblatt
 % «Kompetenzen von Lehrpersonen an Maturitätsschulen» (Bereiche I bis IV).
 % =================================================
 \section{Standortbestimmung mit Entwicklungszielen}
@@ -620,11 +633,11 @@ ergänzt werden.
 
 \bigskip
 \Formularangabe{Datum:}{\Datum}
-\Unterschriftslinie{Unterschrift Studentin/Student:}
+\EigeneUnterschrift{Unterschrift Studentin/Student:}
 
 \bigskip
 \noindent Bestätigung der Kenntnisnahme durch die Praktikumslehrperson des
-Praktikums II:
+Praktikums I:
 \Unterschriftslinie{}
 
 % =================================================
@@ -632,6 +645,39 @@ Praktikums II:
 % =================================================
 \newpage
 \printbibliography[heading=bibintoc,title={Literaturverzeichnis}]
+
+% =================================================
+% SELBSTÄNDIGKEITSERKLÄRUNG
+% Freiwillig, weder Merkblatt noch Wegleitung verlangen sie. Offizielles
+% Formular der Philosophischen Fakultät (PhFD_Selbststaendigkeitserklaerung_de.pdf),
+% Felder per picturecommand überlagert (Koordinaten in bp ab unten links).
+% Angekreuzt ist Variante B (KI als erlaubtes Hilfsmittel). Der verlangte
+% Hinweis auf das KI-Programm folgt auf der nächsten Seite.
+% =================================================
+\newpage
+\includepdf[pages=1,
+  pagecommand={\thispagestyle{empty}\phantomsection
+    \addcontentsline{toc}{section}{Selbständigkeitserklärung}},
+  picturecommand={%
+    \put(163,683.5){\sffamily\small \NameVorname}%
+    \put(128,631){\sffamily\small \Titel\ \Praktikum}%
+    \put(243.5,432.5){\makebox(0,0){\sffamily\large\bfseries X}}%
+    \put(68,110){\sffamily\small \Ort, \Datum}%
+    \IfFileExists{Signatur.png}{%
+      \put(245,99){\includegraphics[height=1.0cm]{Signatur.png}}}{}%
+  }]{PhFD_Selbststaendigkeitserklaerung_de.pdf}
+
+% Hinweis auf das verwendete KI-Programm (verlangt von Variante B)
+\section*{Hinweis zur Verwendung von KI-Werkzeugen}
+\phantomsection\addcontentsline{toc}{section}{Hinweis zur Verwendung von KI-Werkzeugen}
+\markboth{Hinweis zur Verwendung von KI-Werkzeugen}{Hinweis zur Verwendung von KI-Werkzeugen}
+
+\noindent Bei der Formulierung und Überarbeitung des Textes, bei der Gestaltung mit
+\LaTeX\ sowie bei der Erstellung der Unterrichtsmaterialien im Anhang habe ich
+das KI-Werkzeug Claude Opus 5.5 (Anthropic, veröffentlicht am 22.~September 2026)
+unterstützend eingesetzt. Die beschriebenen
+Erfahrungen, Reflexionen und Entwicklungsziele sind meine eigenen, und ich
+übernehme die Verantwortung für den gesamten Inhalt.
 
 % =================================================
 % ANHANG: Auswahl aus der Materialsammlung
